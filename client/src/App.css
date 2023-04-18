@@ -20,7 +20,23 @@
 
 .pageMain {
   background-color: black;
-  padding:2rem;
+  padding:5rem;
+}
+
+table {
+	border-collapse: collapse;
+	border: none;
+	text-align: center;
+	vertical-align: middle;
+}
+
+table tr {
+  border: 1px solid grey;
+  margin: 15px;
+}
+
+table tbody td:first-child {
+  background-color: gray;
 }
 
 @keyframes logo-spin {

@@ -1,8 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export default function ClientesTable(props) {
-
-
+    const { data } = props;
 
     return (
         <table>
@@ -17,6 +17,9 @@ export default function ClientesTable(props) {
                         <td>{item.name}</td>
                         <td>{item.plan}</td>
                         <td>{item.estadopago}</td>
+                        <td>
+                            <Link to={`/detallesCliente/${item.name}`}>Ver mas</Link>
+                        </td>
                     </tr>
                 ))}
             </tbody>
