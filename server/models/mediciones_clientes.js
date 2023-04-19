@@ -14,7 +14,7 @@ export default class mediciones_clientes extends Model {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'entrenador_id',
+        model: 'entrenadores',
         key: 'id'
       }
     },

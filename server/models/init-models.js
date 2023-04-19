@@ -43,10 +43,10 @@ export default function initModels(sequelize) {
   clientes.hasMany(planes_de_pagos, { as: "planes_de_pagos", foreignKey: "cliente_id"});
   entrenadores.belongsTo(empleados, { as: "empleado", foreignKey: "empleado_id"});
   empleados.hasMany(entrenadores, { as: "entrenadores", foreignKey: "empleado_id"});
-  mediciones_clientes.belongsTo(entrenador_id, { as: "entrenador", foreignKey: "entrenador_id"});
-  entrenador_id.hasMany(mediciones_clientes, { as: "mediciones_clientes", foreignKey: "entrenador_id"});
-  planes_de_pagos.belongsTo(entrenador_id, { as: "entrenador", foreignKey: "entrenador_id"});
-  entrenador_id.hasMany(planes_de_pagos, { as: "planes_de_pagos", foreignKey: "entrenador_id"});
+  mediciones_clientes.belongsTo(entrenadores, { as: "entrenador", foreignKey: "entrenador_id"});
+  entrenadores.hasMany(mediciones_clientes, { as: "mediciones_clientes", foreignKey: "entrenador_id"});
+  planes_de_pagos.belongsTo(entrenadores, { as: "entrenador", foreignKey: "entrenador_id"});
+  entrenadores.hasMany(planes_de_pagos, { as: "planes_de_pagos", foreignKey: "entrenador_id"});
   entrenadores.belongsTo(especialidades, { as: "especialidad", foreignKey: "especialidad_id"});
   especialidades.hasMany(entrenadores, { as: "entrenadores", foreignKey: "especialidad_id"});
   facturas_detalles.belongsTo(facturas, { as: "factura", foreignKey: "factura_id"});

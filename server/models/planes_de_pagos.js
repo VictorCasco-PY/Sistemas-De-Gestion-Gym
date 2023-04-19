@@ -22,7 +22,7 @@ export default class planes_de_pagos extends Model {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'entrenador_id',
+        model: 'entrenadores',
         key: 'id'
       }
     },

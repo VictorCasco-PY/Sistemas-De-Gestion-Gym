@@ -1,14 +1,22 @@
 import express from 'express'
-import { Clientes } from './models/clientes.js';
-import { database } from './database/database.js';
+import clientesRouter from './routers/clientes.routes.js';
+import bodyParser from 'body-parser';
 
 const app = express();
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+app.use(clientesRouter)
+
 app.get('/', async (req,res)=>{
     try {
-        const r = await Clientes.findAll({attributes:['str_nombre', 'str_ruc', 'str_direccion']})
-        // const r = await database.query('select * from clientes');
-    res.json(r[0])
+        res.json({
+            title:"GymBRO Web Api"
+        })
     } catch (error) {
         res.json({error:error.message})
     }
