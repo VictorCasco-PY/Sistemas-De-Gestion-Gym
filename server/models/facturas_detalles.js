@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class entrenadores extends Model {
+export default class facturas_detalles extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,25 +10,41 @@ export default class entrenadores extends Model {
       allowNull: false,
       primaryKey: true
     },
-    especialidad_id: {
+    factura_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'especialidades',
+        model: 'facturas',
         key: 'id'
       }
     },
-    empleado_id: {
+    producto_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'empleados',
+        model: 'productos',
         key: 'id'
       }
+    },
+    subtotal: {
+      type: DataTypes.DECIMAL(10,0),
+      allowNull: true
+    },
+    cantidad: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    precio: {
+      type: DataTypes.DECIMAL(10,0),
+      allowNull: true
+    },
+    iva: {
+      type: DataTypes.DECIMAL(10,0),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'entrenadores',
+    tableName: 'facturas_detalles',
     timestamps: false,
     indexes: [
       {
@@ -40,17 +56,17 @@ export default class entrenadores extends Model {
         ]
       },
       {
-        name: "empleado_id_idx",
+        name: "factura_id",
         using: "BTREE",
         fields: [
-          { name: "empleado_id" },
+          { name: "factura_id" },
         ]
       },
       {
-        name: "especialidad_id",
+        name: "producto_id",
         using: "BTREE",
         fields: [
-          { name: "especialidad_id" },
+          { name: "producto_id" },
         ]
       },
     ]

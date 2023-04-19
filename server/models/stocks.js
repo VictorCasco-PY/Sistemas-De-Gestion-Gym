@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class clientes extends Model {
+export default class stocks extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -14,22 +14,13 @@ export default class clientes extends Model {
       type: DataTypes.STRING(200),
       allowNull: true
     },
-    edad: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     str_direccion: {
       type: DataTypes.STRING(200),
       allowNull: true
-    },
-    str_ruc: {
-      type: DataTypes.STRING(200),
-      allowNull: true,
-      unique: "str_ruc_UNIQUE"
     }
   }, {
     sequelize,
-    tableName: 'clientes',
+    tableName: 'stocks',
     timestamps: false,
     indexes: [
       {
@@ -38,14 +29,6 @@ export default class clientes extends Model {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "str_ruc_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "str_ruc" },
         ]
       },
     ]

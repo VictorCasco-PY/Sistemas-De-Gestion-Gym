@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class clientes extends Model {
+export default class facturas_proveedores extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,26 +10,25 @@ export default class clientes extends Model {
       allowNull: false,
       primaryKey: true
     },
-    str_nombre: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    edad: {
+    proveedor_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    str_direccion: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    str_ruc: {
-      type: DataTypes.STRING(200),
       allowNull: true,
-      unique: "str_ruc_UNIQUE"
+      references: {
+        model: 'proveedores',
+        key: 'id'
+      }
+    },
+    date_fecha: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    total: {
+      type: DataTypes.DECIMAL(10,0),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'clientes',
+    tableName: 'facturas_proveedores',
     timestamps: false,
     indexes: [
       {
@@ -41,11 +40,10 @@ export default class clientes extends Model {
         ]
       },
       {
-        name: "str_ruc_UNIQUE",
-        unique: true,
+        name: "proveedor_id",
         using: "BTREE",
         fields: [
-          { name: "str_ruc" },
+          { name: "proveedor_id" },
         ]
       },
     ]

@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class mediciones_clientes extends Model {
+export default class facturas extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -9,14 +9,6 @@ export default class mediciones_clientes extends Model {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    entrenador_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'entrenador_id',
-        key: 'id'
-      }
     },
     cliente_id: {
       type: DataTypes.INTEGER,
@@ -26,33 +18,61 @@ export default class mediciones_clientes extends Model {
         key: 'id'
       }
     },
-    date_fecha_medicion: {
+    numero_factura: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    date_fecha: {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
-    peso: {
+    timbrado: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    date_inicio_timbrado: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    date_fin_timbrado: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    str_nombre_cliente: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    str_ruc_cliente: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    condicion: {
+      type: DataTypes.BLOB,
+      allowNull: true
+    },
+    total: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
     },
-    altura: {
+    saldo: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
     },
-    cintura: {
+    iva_5: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
     },
-    piernas: {
+    iva_10: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
     },
-    porcentaje_grasa_corporal: {
+    iva_exenta: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'mediciones_clientes',
+    tableName: 'facturas',
     timestamps: false,
     indexes: [
       {
@@ -68,13 +88,6 @@ export default class mediciones_clientes extends Model {
         using: "BTREE",
         fields: [
           { name: "cliente_id" },
-        ]
-      },
-      {
-        name: "entrenador_id",
-        using: "BTREE",
-        fields: [
-          { name: "entrenador_id" },
         ]
       },
     ]

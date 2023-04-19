@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class mediciones_clientes extends Model {
+export default class planes_de_pagos extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -9,14 +9,6 @@ export default class mediciones_clientes extends Model {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    entrenador_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'entrenador_id',
-        key: 'id'
-      }
     },
     cliente_id: {
       type: DataTypes.INTEGER,
@@ -26,33 +18,53 @@ export default class mediciones_clientes extends Model {
         key: 'id'
       }
     },
-    date_fecha_medicion: {
+    entrenador_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'entrenador_id',
+        key: 'id'
+      }
+    },
+    tipo_modalidad_de_pago_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'tipos_modalidades_de_pagos',
+        key: 'id'
+      }
+    },
+    str_nombre_cliente: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    str_modalidad: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    estado_de_pago: {
+      type: DataTypes.ENUM('pendiente','pagado','atrasado'),
+      allowNull: true
+    },
+    date_fecha_de_vencimiento: {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
-    peso: {
-      type: DataTypes.DECIMAL(10,0),
+    date_fecha_de_pago: {
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
-    altura: {
-      type: DataTypes.DECIMAL(10,0),
+    date_fecha_de_registro: {
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
-    cintura: {
-      type: DataTypes.DECIMAL(10,0),
-      allowNull: true
-    },
-    piernas: {
-      type: DataTypes.DECIMAL(10,0),
-      allowNull: true
-    },
-    porcentaje_grasa_corporal: {
-      type: DataTypes.DECIMAL(10,0),
+    date_fecha_de_actualizacion: {
+      type: DataTypes.DATEONLY,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'mediciones_clientes',
+    tableName: 'planes_de_pagos',
     timestamps: false,
     indexes: [
       {
@@ -75,6 +87,13 @@ export default class mediciones_clientes extends Model {
         using: "BTREE",
         fields: [
           { name: "entrenador_id" },
+        ]
+      },
+      {
+        name: "tipo_modalidad_de_pago_id",
+        using: "BTREE",
+        fields: [
+          { name: "tipo_modalidad_de_pago_id" },
         ]
       },
     ]
