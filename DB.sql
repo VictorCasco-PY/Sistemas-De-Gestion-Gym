@@ -18,7 +18,7 @@ USE `GymDB` ;
 -- Table `GymDB`.`clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`clientes` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+ `id` INT NOT NULL AUTO_INCREMENT,
   `str_nombre` VARCHAR(200) NULL,
   `edad` INT NULL,
   `str_direccion` VARCHAR(200) NULL,
@@ -32,7 +32,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`tipos_modalidades_de_pagos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`tipos_modalidades_de_pagos` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+ `id` INT NOT NULL AUTO_INCREMENT,
   `str_nombre` VARCHAR(200) NULL,
   `precio` DECIMAL(7,2) NULL,
   PRIMARY KEY (`id`))
@@ -43,7 +43,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`usuarios` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+ `id` INT NOT NULL AUTO_INCREMENT,
   `user` VARCHAR(200) NULL,
   `pass` VARCHAR(255) NULL,
   PRIMARY KEY (`id`),
@@ -55,7 +55,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`empleados`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`empleados` (
-  `id` INT ZEROFILL NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `str_nombre` VARCHAR(200) NULL,
   `str_telefono` VARCHAR(200) NULL,
   `str_direccion` VARCHAR(200) NULL,
@@ -64,7 +64,9 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`empleados` (
   `time_fin_trabajo` TIME NULL,
   `usuario_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `usuario_id_idx` (`usuario_id` ASC) VISIBLE)
+  INDEX `usuario_id_idx` (`usuario_id` ASC) VISIBLE,
+  FOREIGN KEY(`usuario_id`) REFERENCES `GymDB`.`usuarios`(`id`)
+  )
 ENGINE = InnoDB;
 
 
@@ -76,7 +78,10 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`entrenadores` (
   `especialidad_id` INT NULL,
   `empleado_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `empleado_id_idx` (`empleado_id` ASC) VISIBLE)
+  INDEX `empleado_id_idx` (`empleado_id` ASC) VISIBLE,
+  FOREIGN KEY(`empleado_id`) REFERENCES `GymDB`.`empleados`(`id`),
+  FOREIGN KEY(`especialidad_id`) REFERENCES `GymDB`.`especialidades`(`id`)
+  )
 ENGINE = InnoDB;
 
 
@@ -84,7 +89,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`especialidades`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`especialidades` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(200) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -94,10 +99,10 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`planes_de_pagos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`planes_de_pagos` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `cliente_id` INT NULL,
   `entrenador_id` INT NULL,
-  `tipo_modalida_de_pago_id` INT NULL,
+  `tipo_modalidad_de_pago_id` INT NULL,
   `str_nombre_cliente` VARCHAR(200) NULL,
   `str_modalidad` VARCHAR(200) NULL,
   `estado_de_pago` ENUM('pendiente', 'pagado', 'atrasado') NULL,
@@ -105,7 +110,12 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`planes_de_pagos` (
   `date_fecha_de_pago` DATE NULL,
   `date_fecha_de_registro` DATE NULL,
   `date_fecha_de_actualizacion` DATE NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(`cliente_id`) REFERENCES `GymDB`.`clientes`(`id`),
+  FOREIGN KEY(`entrenador_id`) REFERENCES `GymDB`.`entrenadores`(`id`),
+  FOREIGN KEY(`tipo_modalidad_de_pago_id`) REFERENCES `GymDB`.`tipos_modalidades_de_pagos`(`id`)
+  )
+  
 ENGINE = InnoDB;
 
 
@@ -113,7 +123,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`mediciones_clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`mediciones_clientes` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `entrenador_id` INT NULL,
   `cliente_id` INT NULL,
   `date_fecha_medicion` DATE NULL,
@@ -122,7 +132,9 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`mediciones_clientes` (
   `cintura` DECIMAL NULL,
   `piernas` DECIMAL NULL,
   `porcentaje_grasa_corporal` DECIMAL NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(`cliente_id`) REFERENCES `GymDB`.`clientes`(`id`),
+  FOREIGN KEY(`entrenador_id`) REFERENCES `GymDB`.`entrenadores`(`id`))
 ENGINE = InnoDB;
 
 
@@ -130,7 +142,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`productos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`productos` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `str_descripcion` VARCHAR(200) NULL,
   `precio` DECIMAL NULL,
   `iva` DECIMAL NULL,
@@ -142,7 +154,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`stocks`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`stocks` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `str_nombre` VARCHAR(200) NULL,
   `str_direccion` VARCHAR(200) NULL,
   PRIMARY KEY (`id`))
@@ -153,11 +165,14 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`stocks_productos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`stocks_productos` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `producto_id` INT NULL,
   `id_stock` INT NULL,
   `cantidad` INT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(`producto_id`) REFERENCES `GymDB`.`productos`(`id`),
+  FOREIGN KEY(`id_stock`) REFERENCES `GymDB`.`stocks`(`id`)
+  )
 ENGINE = InnoDB;
 
 
@@ -165,7 +180,7 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`facturas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`facturas` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `cliente_id` INT NULL,
   `numero_factura` INT NULL,
   `date_fecha` DATE NULL,
@@ -180,6 +195,7 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`facturas` (
   `iva_5` DECIMAL NULL,
   `iva_10` DECIMAL NULL,
   `iva_exenta` DECIMAL NULL,
+  FOREIGN KEY(`cliente_id`) REFERENCES `GymDB`.`clientes`(`id`),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -188,14 +204,17 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`facturas_detalles`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`facturas_detalles` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `factura_id` INT NULL,
   `producto_id` INT NULL,
   `subtotal` DECIMAL NULL,
   `cantidad` INT NULL,
   `precio` DECIMAL NULL,
   `iva` DECIMAL NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(`factura_id`) REFERENCES `GymDB`.`facturas`(`id`),
+  FOREIGN KEY(`producto_id`) REFERENCES `GymDB`.`productos`(`id`)
+  )
 ENGINE = InnoDB;
 
 
@@ -217,11 +236,13 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`facturas_proveedores`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`facturas_proveedores` (
-  `id_factura_proveedor` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `proveedor_id` INT NULL,
   `date_fecha` DATE NULL,
   `total` DECIMAL NULL,
-  PRIMARY KEY (`id_factura_proveedor`))
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(`proveedor_id`) REFERENCES `GymDB`.`proveedores`(`id`)
+  )
 ENGINE = InnoDB;
 
 
@@ -229,14 +250,16 @@ ENGINE = InnoDB;
 -- Table `GymDB`.`facturas_proveedores_detalles`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `GymDB`.`facturas_proveedores_detalles` (
-  `id` INT GENERATED ALWAYS AS () VIRTUAL,
+ `id` INT NOT NULL AUTO_INCREMENT,
   `factura_proveedor_id` INT NULL,
   `producto_id` INT NULL,
   `stock_id` INT NULL,
   `cantidad` INT NULL,
   `precio_compra` DECIMAL NULL,
   `subtotal` DECIMAL NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  FOREIGN KEY(`factura_proveedor_id`) REFERENCES `GymDB`.`facturas_proveedores`(`id`) 
+  )
 ENGINE = InnoDB;
 
 
