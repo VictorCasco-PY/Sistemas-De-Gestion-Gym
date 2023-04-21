@@ -1,5 +1,5 @@
 import { RouterProvider } from 'react-router-dom'
-import './App.css'
+//import './App.css'
 import './main.css'
 import { routes } from "./routes/index"
 import 'bulma/css/bulma.min.css';
