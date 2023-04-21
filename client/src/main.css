@@ -1,0 +1,59 @@
+.pageMain {
+  padding: 5rem;
+}
+
+.clienteHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.clienteHeader h1 {
+  font-size: 2em;
+}
+
+.mainClientInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.clientInfoLeft,
+.clientInfoRight {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoBubble {
+  display: flex;
+  padding: 1rem 0.5rem;
+}
+.infoBubble .bubbleTitle {
+  background-color: #353535;
+  border-radius: 10px 0px 0px 10px;
+  width: 30%;
+}
+.infoBubble .bubbleInfo {
+  background-color: #272727;
+  border-radius: 0px 10px 10px 0px;
+  width: 70%;
+}
+
+.tableNew {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  border: none;
+  text-align: center;
+  vertical-align: middle;
+}
+.tableNew tr {
+  border: 1px solid grey;
+  margin: 15px;
+}
+.tableNew tbody td:first-child {
+  background-color: gray;
+  border-radius: 10px 0px 0px 10px;
+}
+.tableNew tbody td:last-child {
+  border-radius: 0px 10px 10px 0px;
+}
+
+/*# sourceMappingURL=main.css.map */

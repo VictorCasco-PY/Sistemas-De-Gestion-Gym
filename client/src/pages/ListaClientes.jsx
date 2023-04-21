@@ -5,14 +5,14 @@ import { Link, Route, Routes } from 'react-router-dom';
 
 const ListaClientes = () => {
     const data = [
-        { name: 'John', plan: 25, estadopago: 'john@example.com' },
-        { name: 'Jane', plan: 30, estadopago: 'jane@example.com' },
-        { name: 'Bob', plan: 35, estadopago: 'bob@example.com' },
+        { name: 'John', plan: 25, estadopago: 'En regla' },
+        { name: 'Jane', plan: 30, estadopago: 'Pendiente' },
+        { name: 'Bob', plan: 35, estadopago: 'Atrasado' },
     ];
 
     return (
         <div>
-            <h1>Lista de Clientes</h1>
+            <h1 className='has-text-black'>Lista de Clientes</h1>
             <div className='pageMain'>
                 <ClientesTable data={data} />
             </div>

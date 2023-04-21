@@ -18,65 +18,6 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.pageMain {
-  background-color: #0F0F0F;
-  padding:5rem;
-}
-
-table {
-	border-collapse: collapse;
-	border: none;
-	text-align: center;
-	vertical-align: middle;
-}
-
-table tr {
-  border: 1px solid grey;
-  margin: 15px;
-}
-
-table tbody td:first-child {
-  background-color: gray;
-}
-
-.clienteHeader {
-  display:flex;
-  justify-content: center;
-}
-
-.clienteHeader h1{
-  font-size: 2em;
-}
-
-.mainClientInfo {
-  display: flex;
-  justify-content: space-between;
-}
-
-
-.clientInfoLeft,
-.clientInfoRight {
-  display: flex;
-  flex-direction: column;
-}
-
-.infoBubble {
-  display:flex;
-  padding: 1rem 0.5rem;
-}
-
-.infoBubble .bubbleTitle {
-  background-color: #353535;
-  border-radius: 10px 0px 0px 10px;
-  width:30%;
-}
-
-.infoBubble .bubbleInfo {
-  background-color: #272727;
-  border-radius: 0px 10px 10px 0px;
-  width:70%;
-}
-
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
