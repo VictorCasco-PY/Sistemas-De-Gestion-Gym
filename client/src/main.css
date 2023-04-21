@@ -1,14 +1,16 @@
 .pageSkeleton {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  max-width: 80rem;
+}
+.pageSkeleton .headerTitle {
+  display: flex;
+  text-align: left;
 }
 
 .pageMain {
-  align-items: center;
-  justify-content: center;
-  padding: 5rem;
+  border-radius: 8px;
 }
 
 .clienteHeader {
@@ -75,12 +77,13 @@
   padding: 6px;
   width: 150px;
   vertical-align: middle;
+  background-color: #D4D4D4;
 }
 .tableNew tbody td:first-child {
-  background-color: #D4D4D4;
   border-radius: 10px 0px 0px 10px;
   text-align: left;
   padding-left: 10px;
+  background-color: white;
 }
 .tableNew tbody td:nth-child(2) {
   border-inline: none;

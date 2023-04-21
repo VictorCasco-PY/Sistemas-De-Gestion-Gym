@@ -32,11 +32,6 @@ export default function ClientesTable(props) {
                     </tr>
                 ))}
             </tbody>
-            <tfoot>
-                <tr>
-                    <td>Table Footer</td>
-                </tr>
-            </tfoot>
         </table>
     )
 }
