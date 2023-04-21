@@ -12,20 +12,22 @@ export default function ClientesTable(props) {
     
 
     return (
-        <table class="table table is-bordered tableNew">
+        <table class="table table is-bordered tableNew has-background-light is-bordered">
             <thead>
                 <th>Nombre</th>
                 <th>Plan</th>
                 <th>Estado de Pago</th>
+                <th></th>
             </thead>
             <tbody>
                 {props.data.map((item, index) => (
                     <tr key={index}>
                         <td>{item.name}</td>
                         <td>{item.plan}</td>
-                        <td className={colorMap[item.estadopago]}>{item.estadopago}</td>
+                        <td><button className={` ${colorMap[item.estadopago]} button is-static has-text-white`}>{item.estadopago}</button></td>
                         <td>
-                            <Link to={`/detallesCliente/${item.name}`}>Ver mas</Link>
+                            <Link to={`/detallesCliente/${item.name}`}>
+                            <button class="button is-link is-rounded is-outlined">Ver Mas</button></Link>
                         </td>
                     </tr>
                 ))}
