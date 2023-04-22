@@ -1,8 +1,7 @@
 /*
 
 Alumno: Fernando Fabian Brizuela Agüero
-Desc: Maneja 
-
+Desc: Maneja la logica de Clientes (crear, listar, obtener cliente, modificar, dar de baja)
 */
 
 import {models} from "../models/models.js";
@@ -10,13 +9,14 @@ import {bodyValidator} from "../tools/bodyValidator.js";
 
 const {clientes} = models;
 
+/**
+ * Crea y registra un nuevo usuario a la DB
+ */
 export const crearCliente = async (req, res) => {
     try {
         // Verificamos si todos los campos estan
         const validator = bodyValidator(req);
         if (validator) return res.status(400).json(validator);
-
-        return res.send("NO REGISTRO JEJE");
 
         // destructura los datos
         const {str_nombre, edad, str_direccion, str_ruc} = req.body;
@@ -39,6 +39,9 @@ export const crearCliente = async (req, res) => {
     }
 };
 
+/**
+ * Lista todos clientes registrados
+ */
 export const getClientes = async (req, res) => {
     try {
         const result = await clientes.findAll();
@@ -48,6 +51,9 @@ export const getClientes = async (req, res) => {
     }
 };
 
+/**
+ * Obtiene el cliente por parametros /:id
+ */
 export const getClienteByParams = async (req, res) => {
     try {
         const {id} = req.params;
@@ -58,6 +64,9 @@ export const getClienteByParams = async (req, res) => {
     }
 };
 
+/**
+ * Obtiene el cliente desde la BD usando su ID
+ */
 export const getClienteByID = async (id) => {
     try{
         const result = await clientes.findOne({where:{id}});
@@ -66,6 +75,10 @@ export const getClienteByID = async (id) => {
         throw new Error("Error al obtener cliente")
     }
 }
+
+/**
+ * Obtiene el cliente desde la BD usando su ruc
+ */
 export const getClienteByRuc = async (req) => {
     try {
         const {str_ruc} = req;

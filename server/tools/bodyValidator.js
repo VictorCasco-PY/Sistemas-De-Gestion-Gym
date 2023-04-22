@@ -8,7 +8,7 @@ export const bodyValidator = (req) =>{
         const e = errors.array().map((e, n) => {
             return `${e.msg}`;
         });
-        return {errors: e};
+        return {error: e};
     }
     // Si no hay errores, devolvemos un boolean false
     return false;

@@ -10,12 +10,10 @@ const planesPagosRouter = Router();
 
 planesPagosRouter.get('/planes-de-pagos', getAllPlanesDePagos);
 
-planesPagosRouter.get('/planes-de-pagos/cliente/:cliente_id', getPlanPagoClienteByParams)
-
 planesPagosRouter.post('/planes-de-pagos', [
-    check("cliente_id", "cliente_id necesario").notEmpty(),
-    check("tipo_modalidad_de_pago_id", "tipo_modalidad_de_pago_id necesario").notEmpty(),
-    check("date_fecha_de_vencimiento", "date_fecha_de_vencimiento necesario").notEmpty(),
+    check("cliente_id", "cliente_id  es un campo requerido").notEmpty(),
+    check("tipo_modalidad_de_pago_id", "tipo_modalidad_de_pago_id  es un campo requerido").notEmpty(),
+    check("date_fecha_de_vencimiento", "date_fecha_de_vencimiento  es un campo requerido").notEmpty(),
     ], crearPlanDePago);
 
 
