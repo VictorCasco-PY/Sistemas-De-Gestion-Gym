@@ -15,7 +15,7 @@ export default class tipos_modalidades_de_pagos extends Model {
       allowNull: true
     },
     precio: {
-      type: DataTypes.DECIMAL(7,2),
+      type: DataTypes.DECIMAL(8,2),
       allowNull: true
     }
   }, {
