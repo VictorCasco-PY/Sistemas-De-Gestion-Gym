@@ -34,7 +34,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `GymDB`.`tipos_modalidades_de_pagos` (
  `id` INT NOT NULL AUTO_INCREMENT,
   `str_nombre` VARCHAR(200) NULL,
-  `precio` DECIMAL(7,2) NULL,
+  `precio` DECIMAL(8,2) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
