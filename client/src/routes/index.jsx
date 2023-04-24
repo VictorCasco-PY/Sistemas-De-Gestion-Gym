@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import RegistroCliente from "../pages/RegistroCliente";
 import ListaClientes from "../pages/ListaClientes";
 import { DetallesCliente } from "../pages/DetallesCliente";
+import Login from "../pages/Login";
+import RegistroEmpleado from "../pages/RegistroEmpleado"
 
 
 export const routes = createBrowserRouter([
@@ -31,11 +33,11 @@ export const routes = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <></>,
+        element: <Login />,
     },
     {
         path: "/registroEmpleado",
-        element: <></>,
+        element: <RegistroEmpleado/>,
     },
 
 ]);
