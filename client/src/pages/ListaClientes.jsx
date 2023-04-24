@@ -4,11 +4,6 @@ import { DetallesCliente } from './DetallesCliente';
 import { Link, Route, Routes } from 'react-router-dom';
 
 const ListaClientes = () => {
-    const data = [
-        { name: 'John', plan: 'Diario', estadopago: 'En regla' },
-        { name: 'Jane', plan: 'Mensual', estadopago: 'Pendiente' },
-        { name: 'Bob', plan: 'Semanal', estadopago: 'Atrasado' },
-    ];
 
     return (
         <div className='columns is-multiline is-centered'>
@@ -16,7 +11,7 @@ const ListaClientes = () => {
                 <h1 className='is-size-2'>Lista de Clientes</h1>
             </div>
             <div className='column is-four-fifths is-flex is-justify-content-center p-6 pageMain has-background-light'>
-                <ClientesTable data={data} />
+                <ClientesTable />
             </div>
         </div>
     )

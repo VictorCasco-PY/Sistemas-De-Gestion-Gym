@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export function DetallesCliente(props) {
-    const { name } = useParams();
+    const { id } = useParams();
+  const [clientData, setClientData] = useState(null);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/cliente/${id}`).then((response) => {
+      setClientData(response.data);
+    });
+  }, [id]);
+    
+      if (!clientData) {
+        return <div className='title'>Loading client data...</div>;
+      }
 
     return (
-        <div>
-            <div className="clienteHeader">
+        <div className='columns is-multiline is-centered'>
+            <div className="column is-full headerTitle is-four-fifths clienteHeader">
                 <h1>PEdro ppp</h1>
                 <div className="infoBubble">
                     <div className="bubbleTitle">
@@ -18,8 +30,8 @@ export function DetallesCliente(props) {
                 </div>
             </div>
 
-            <div className='pageMain'>
-                <div className="mainClientInfo">
+            <div className='columns is-four-fifths is-flex is-justify-content-center p-6 pageMain has-background-light'>
+                <div className="mainClientInfo column">
                     <div className="clientInfoLeft">
                         <div className="infoBubble">
                             <div className="bubbleTitle">
@@ -58,17 +70,19 @@ export function DetallesCliente(props) {
                     </div>
                 </div>
 
-                <table>
-                    <thead>
-                        <th>Fecha</th>
-                        <th>Peso</th>
-                        <th>Brazos</th>
-                        <th>Piernas</th>
-                    </thead>
-                    <tbody>
-                        MAPEO
-                    </tbody>
-                </table>
+                <div className="column">
+                    <table>
+                        <thead>
+                            <th>Fecha</th>
+                            <th>Peso</th>
+                            <th>Brazos</th>
+                            <th>Piernas</th>
+                        </thead>
+                        <tbody>
+                            MAPEO
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )
