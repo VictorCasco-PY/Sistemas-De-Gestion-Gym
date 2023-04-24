@@ -5,17 +5,20 @@ import React, { useState, useEffect } from "react";
 
 const Login = () => {
 
-    const  [ datos, setDatos ] = useState(
+    const  [ usuario, setUsuario ] = useState(
         {
-            email: "",
+            user: "",
             pass: "",
         }
     );
 
+    const [isLogin, setIsLogin] = useState(false);
+    const [hasError, setHasError] = useState(false);
+
 
     const handleChange = (event) => {
         setDatos({
-            ...datos,
+            ...ususuario,
             [event.target.name]: event.target.value,
         });
     };
@@ -23,9 +26,19 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(datos);
+        login(event);
     };
 
+    function login(e){
+        if(e.email === "admin@gmail.com" && e.pass === "123456"){
+            setIsLogin(true);
+        }else{
+            setIsLogin(false);
+        }
+    }
+
     return (
+        
         <div className="columns is-centered">
         <div className="column is-three-fifths-desktop">
             <div className="box">
@@ -33,7 +46,7 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
             <div className="field">
                 <p className="control has-icons-left has-icons-right">
-                    <input name = "email" value={datos.email} className ="input" type="email" placeholder="Correo Electronico" onChange={handleChange} />
+                    <input name = "email" value={usuario.user} className ="input" type="email" placeholder="Correo Electronico" onChange={handleChange} />
                     <span className="icon is-small is-left">
                         <i className="fas fa-envelope"></i>
                     </span>
@@ -44,7 +57,7 @@ const Login = () => {
             </div>
             <div className="field">
                 <p className="control has-icons-left">
-                    <input name = "pass" value={datos.pass} className="input" type="password" placeholder="Password" onChange={handleChange} />
+                    <input name = "pass" value={usuario.pass} className="input" type="password" placeholder="Password" onChange={handleChange} />
                     <span className="icon is-small is-left">
                         <i className="fas fa-lock"></i>
                     </span>

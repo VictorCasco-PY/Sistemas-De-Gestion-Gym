@@ -3,7 +3,7 @@ import RegistroCliente from "../pages/RegistroCliente";
 import ListaClientes from "../pages/ListaClientes";
 import { DetallesCliente } from "../pages/DetallesCliente";
 import Login from "../pages/Login";
-import RegistroUsuario from "../pages/RegistroUsuario"
+import RegistroEmpleado from "../pages/RegistroEmpleado"
 
 
 export const routes = createBrowserRouter([
@@ -37,7 +37,7 @@ export const routes = createBrowserRouter([
     },
     {
         path: "/registroEmpleado",
-        element: <RegistroUsuario/>,
+        element: <RegistroEmpleado/>,
     },
 
 ]);
