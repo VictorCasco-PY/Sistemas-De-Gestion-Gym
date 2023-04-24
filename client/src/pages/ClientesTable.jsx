@@ -1,13 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-export default function ClientesTable(props) {
-    const { data } = props;
+export default function ClientesTable() {
+    const [clientes, setClientes] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/clientes')
+          .then(response => {
+            setClientes(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }, []);
+
     const colorMap = {
         "En regla": "has-background-success",
         "Pendiente": "has-background-warning",
-        "Atrasado": "has-background-danger",
-        // Add more categories as needed
+        "Atrasado": "has-background-danger"
       };
     
 
@@ -20,13 +31,13 @@ export default function ClientesTable(props) {
                 <th></th>
             </thead>
             <tbody>
-                {props.data.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.name}</td>
-                        <td>{item.plan}</td>
-                        <td><button className={` ${colorMap[item.estadopago]} button is-static has-text-white`}>{item.estadopago}</button></td>
+                {clientes.map(cliente => (
+                    <tr key={cliente.id}>
+                        <td>{cliente.str_nombre}</td>
+                        <td>{cliente.plan}</td>
+                        <td><button className={` ${colorMap[cliente.estadopago]} button is-static has-text-white`}>{cliente.estadopago}</button></td>
                         <td>
-                            <Link to={`/detallesCliente/${item.name}`}>
+                            <Link to={`/detallesCliente/${cliente.name}`}>
                             <button class="button is-link is-rounded is-outlined">Ver Mas</button></Link>
                         </td>
                     </tr>
