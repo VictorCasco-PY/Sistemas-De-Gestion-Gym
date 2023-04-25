@@ -40,7 +40,7 @@ export default function ClientesTable() {
               </button>
             </td>
             <td>
-              <Link to={`/detallesCliente/${cliente.name}`}>
+              <Link to={`/detallesCliente/${cliente.cliente_id}`}>
                 <button class="button is-link is-rounded is-outlined">Ver Mas</button>
               </Link>
             </td>

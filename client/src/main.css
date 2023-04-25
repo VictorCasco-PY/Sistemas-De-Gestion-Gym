@@ -13,11 +13,6 @@
   border-radius: 8px;
 }
 
-.clienteHeader {
-  display: flex;
-  justify-content: center;
-}
-
 .clienteHeader h1 {
   font-size: 2em;
 }
@@ -31,21 +26,24 @@
 .clientInfoRight {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
 .infoBubble {
   display: flex;
-  padding: 1rem 0.5rem;
 }
 .infoBubble .bubbleTitle {
-  background-color: #353535;
+  background-color: #1C96DA;
   border-radius: 10px 0px 0px 10px;
   width: 30%;
+  padding: 0.6rem 0.6rem;
+  color: white;
 }
 .infoBubble .bubbleInfo {
-  background-color: #272727;
+  background-color: #C7C7C7;
   border-radius: 0px 10px 10px 0px;
   width: 70%;
+  padding: 0.6rem 0.6rem;
 }
 
 .tableNew {
@@ -54,6 +52,12 @@
   border: none;
   text-align: center;
   vertical-align: middle;
+}
+.tableNew.table-text-2 {
+  text-align: left;
+}
+.tableNew.table-text-2 td {
+  padding-left: 15px;
 }
 .tableNew tr {
   border: 1px solid grey;
@@ -94,6 +98,4 @@
 .tableNew tbody td:last-child {
   border-radius: 0px 10px 10px 0px;
   border-left: none;
-}
-
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */
