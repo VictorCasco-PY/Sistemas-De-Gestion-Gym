@@ -20,8 +20,8 @@ medicionesClientesRoutes.post(
         check("cintura", "cintura es un campo requerido").notEmpty(),
         check("piernas", "piernas es un campo requerido").notEmpty(),
         check(
-            "porcientaje_masa_corporal",
-            "porcentaje_masa_corporal  es un campo requerido"
+            "porcientaje_grasa_corporal",
+            "porcentaje_grasa_corporal  es un campo requerido"
         ),
     ],
     crearMedicionCliente

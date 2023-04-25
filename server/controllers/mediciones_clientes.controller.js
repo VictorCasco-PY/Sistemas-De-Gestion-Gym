@@ -17,7 +17,7 @@ export const crearMedicionCliente = async (req, res) => {
         // destructura el objeto recibido, si recibe del body (req.body) o de una peticion de la api misma (req)
         const {
             entrenador_id, cliente_id, peso, altura,
-            cintura, piernas, porcentaje_masa_corporal
+            cintura, piernas, porcentaje_grasa_corporal
         } = req.body;
 
         if(!(await getClienteByID(cliente_id))) return res.status(404).json({error: "No existe un usuario con ese ID"});
@@ -31,7 +31,7 @@ export const crearMedicionCliente = async (req, res) => {
             altura,
             cintura,
             piernas,
-            porcentaje_masa_corporal
+            porcentaje_grasa_corporal
         })
 
         res.json(result);
