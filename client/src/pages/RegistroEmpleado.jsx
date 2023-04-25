@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 
 const RegistroEmpleado = () => {
   const [empleados, setEmpleados] = useState({
@@ -88,6 +88,14 @@ const RegistroEmpleado = () => {
                   onChange={handleChange}
                   placeholder="Teléfono"
                 />
+              </div>
+            </div>
+            <div className="columns">
+              <div className="column">
+                <label>Fecha de Inicio</label>
+              </div>
+              <div className="column">
+                <label>Fecha de Fin</label>
               </div>
             </div>
             <div className="columns">

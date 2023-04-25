@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>Home - Inició Sesion</div>
   )
 }
 

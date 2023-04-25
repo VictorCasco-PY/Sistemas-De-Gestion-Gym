@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import RegistroEmpleado from "../pages/RegistroEmpleado";
 
 
 
@@ -12,41 +13,44 @@ const Login = () => {
         }
     );
 
-    const [isLogin, setIsLogin] = useState(false);
-    const [hasError, setHasError] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+
 
 
     const handleChange = (event) => {
-        setDatos({
-            ...ususuario,
+        setUsuario({
+            ...usuario,
             [event.target.name]: event.target.value,
         });
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(datos);
-        login(event);
+        console.log(usuario);
+        if (usuario.user === 'admin@gmail.com' && usuario.pass === '123456') {
+            setLoggedIn(true);
+          } else {
+            alert('Nombre de usuario o contraseña incorrectos');
+          }
+        
     };
 
-    function login(e){
-        if(e.email === "admin@gmail.com" && e.pass === "123456"){
-            setIsLogin(true);
-        }else{
-            setIsLogin(false);
-        }
-    }
+
+    if (loggedIn) {
+        return <RegistroEmpleado/>;
+      }
+
 
     return (
         
         <div className="columns is-centered">
         <div className="column is-three-fifths-desktop">
             <div className="box">
-            <h3>Iniciar Sesión</h3>
+            <h3 className="has-text-centered mb-2 title is-3 has-text-primary">Iniciar Sesión</h3>
             <form onSubmit={handleSubmit}>
             <div className="field">
                 <p className="control has-icons-left has-icons-right">
-                    <input name = "email" value={usuario.user} className ="input" type="email" placeholder="Correo Electronico" onChange={handleChange} />
+                    <input name = "user" value={usuario.user} className ="input has-text-centered" type="email" placeholder="Correo Electronico" onChange={handleChange} />
                     <span className="icon is-small is-left">
                         <i className="fas fa-envelope"></i>
                     </span>
@@ -57,13 +61,15 @@ const Login = () => {
             </div>
             <div className="field">
                 <p className="control has-icons-left">
-                    <input name = "pass" value={usuario.pass} className="input" type="password" placeholder="Password" onChange={handleChange} />
+                    <input name = "pass" value={usuario.pass} className="input has-text-centered" type="password" placeholder="Password" onChange={handleChange} />
                     <span className="icon is-small is-left">
                         <i className="fas fa-lock"></i>
                     </span>
                 </p>
             </div>
-            <button type="submit" className="button is-info is-outlined" >Iniciar Sesión</button>
+            <div className="buttons">
+            <button type="submit" className="m-auto button is-primary is-outlined">Iniciar Sesión</button>
+            </div>
             </form>
         </div>
         </div>
