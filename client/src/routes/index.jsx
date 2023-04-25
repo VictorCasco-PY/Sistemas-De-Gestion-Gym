@@ -39,10 +39,7 @@ export const routes = createBrowserRouter([
                 path: "/detalleCliente/:id",
                 element: <></>,
             },
-            {
-                path: "/login",
-                element: <Login />,
-            },
+
             {
                 path: "/registroEmpleado",
                 element: <RegistroEmpleado />,
@@ -52,7 +49,10 @@ export const routes = createBrowserRouter([
                 element: <Home />
             }
         ]
-    }
-
+    },
+    {
+        path: "/login",
+        element: <Login />,
+    },
 
 ]);

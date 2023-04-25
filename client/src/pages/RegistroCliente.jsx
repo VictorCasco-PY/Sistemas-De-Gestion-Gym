@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const RegistroCliente = () => {
     let id_cliente = null;
+    const navigate = useNavigate();
 
     // Crea una constante con los valores correspondientes a cada tipo de modalidad de pago
     const valoresMontoAPagar = {
@@ -95,16 +98,12 @@ const RegistroCliente = () => {
     const handleSubmitPlanDePago = async (event) => {
         event.preventDefault();
         setPasoActual(3);
-        /* try {
-             const fechaFormateada = new Date(planDePago.date_fecha_de_vencimiento).toLocaleDateString('es-PY', { day: '2-digit', month: '2-digit', year: 'numeric' });
-             const response = await axios.post("http://localhost:8000/planes-de-pagos", {
-                 ...planDePago,
-                 date_fecha_de_vencimiento: fechaFormateada
-             });
-             console.log(response.data);
-         } catch (error) {
-             console.log(error)
-         }*/
+        try {
+            const response = await axios.post("http://localhost:8000/planes-de-pagos", planDePago);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     // manejo de inputs de mediciones
@@ -122,6 +121,12 @@ const RegistroCliente = () => {
         try {
             const response = await axios.post("http://localhost:8000/mediciones-clientes", mediciones);
             console.log(response.data);
+            Swal.fire(
+                'Buen trabajo!',
+                'Cliente creado correctamente!',
+                'success'
+            );
+            navigate("/listaClientes");
         } catch (error) {
             console.log(error);
         }
