@@ -9,13 +9,13 @@ import cors from "cors";
 const app = express();
 
 app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
+    cors({
+        origin: "http://localhost:5173",
+    })
 );
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 // parse application/json
 app.use(bodyParser.json());
@@ -27,9 +27,9 @@ app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
 
 app.get("/", async (req, res) => {
-  res.json({
-    title: "GymBRO Web Api",
-  });
+    res.json({
+        title: "Gym Web Api",
+    });
 });
 
-app.listen(8000, () => console.log("Escuchando en puerto 8000"));
+app.listen(8000);
