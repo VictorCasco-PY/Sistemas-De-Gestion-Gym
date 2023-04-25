@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export function DetallesCliente() {
-    const  id  = useParams().name;
+    const id = useParams().name;
 
     const [cliente, setCliente] = useState(null);
     const [clientePers, setClientePers] = useState(null);
@@ -13,7 +13,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
             .then(response => setClienteMed(response.data))
             .catch(error => console.log(error));
-            
+
 
         axios.get(`http://localhost:8000/cliente/${id}/plan-de-pago`)
             .then(response => setCliente(response.data))
@@ -22,10 +22,10 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}`)
             .then(response => setClientePers(response.data))
             .catch(error => console.log(error));
-            console.log(id)
+        console.log(id)
     }, []);
 
-    if (!cliente || !clientePers ||!clienteMed) {
+    if (!cliente || !clientePers) {
         return <div className='title'>Cliente no encontrado.</div>;
     }
 
@@ -96,12 +96,18 @@ export function DetallesCliente() {
                             <th>Piernas</th>
                         </thead>
                         <tbody>
-                            <tr>
+                            {clienteMed ? <tr>
                                 <td>{clienteMed.date_fecha_medicion}</td>
                                 <td>{clienteMed.peso}</td>
                                 <td>{clienteMed.cintura}</td>
                                 <td>{clienteMed.piernas}</td>
                             </tr>
+                                : <tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>}
                         </tbody>
                     </table>
                 </div>
