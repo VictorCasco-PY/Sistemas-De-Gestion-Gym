@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RegistroEmpleado from "../pages/RegistroEmpleado";
-
+import { BrowserRouter, Route } from 'react-router-dom';
 
 
 
@@ -38,6 +38,7 @@ const Login = () => {
 
     if (loggedIn) {
         return <RegistroEmpleado/>;
+        //return <Redirect to="/registroEmpleado" />;
       }
 
 

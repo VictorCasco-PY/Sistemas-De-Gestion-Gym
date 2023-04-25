@@ -1,5 +1,6 @@
 import React, { useState} from "react";
 
+
 const RegistroEmpleado = () => {
   const [empleados, setEmpleados] = useState({
     user: "",
@@ -36,7 +37,7 @@ const RegistroEmpleado = () => {
             </center>
             <div>
               <input
-                className="input mb-2"
+                className="input mb-2 has-text-centered"
                 type="email"
                 name="user"
                 value={empleados.user}
@@ -46,7 +47,7 @@ const RegistroEmpleado = () => {
             </div>
             <div>
               <input
-                className="input mt-2"
+                className="input mt-2 has-text-centered"
                 type="password"
                 name="pass"
                 value={empleados.pass}
@@ -71,7 +72,7 @@ const RegistroEmpleado = () => {
             <div className="columns">
               <div className="column">
                 <input
-                  className="input"
+                  className="input has-text-centered"
                   type="text"
                   name="str_nombre"
                   value={empleados.str_nombre}
@@ -81,7 +82,7 @@ const RegistroEmpleado = () => {
               </div>
               <div className="column">
                 <input
-                  className="input"
+                  className="input has-text-centered"
                   type="text"
                   name="str_telefono"
                   value={empleados.str_telefono}
@@ -121,7 +122,7 @@ const RegistroEmpleado = () => {
             <div className="columns">
               <div className="column">
                 <input
-                  className="input"
+                  className="input has-text-centered"
                   type="text"
                   name="str_cedula"
                   value={empleados.str_cedula}
@@ -131,7 +132,7 @@ const RegistroEmpleado = () => {
               </div>
               <div className="column">
                 <input
-                  className="input"
+                  className="input has-text-centered"
                   type="text"
                   name="str_direccion"
                   value={empleados.str_direccion}
@@ -144,7 +145,6 @@ const RegistroEmpleado = () => {
                 <button className="ml-auto mt-2 button is-primary is-outlined" type="submit">
                   Registrar
                 </button>
-
             </div>
           </form>
         </div>
