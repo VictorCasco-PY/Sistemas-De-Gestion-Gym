@@ -23,23 +23,23 @@ export default function ClientesTable() {
 
   return (
     <table class="table table is-bordered tableNew has-background-light is-bordered">
-      <thead>
-        <th>Nombre</th>
-        <th>Plan</th>
-        <th>Estado de Pago</th>
-        <th></th>
+      <thead className='has-text-centered'>
+        <th className='is-size-5'>Nombre</th>
+        <th className='is-size-6'>Plan</th>
+        <th className='is-size-6'>Estado de Pago</th>
+        <th className='is-size-6'></th>
       </thead>
       <tbody>
         {clientes.map(cliente => (
           <tr key={cliente.cliente_id}>
-            <td>{cliente.str_nombre_cliente}</td>
-            <td>{cliente.str_modalidad}</td>
-            <td>
+            <td className='is-size-5'>{cliente.str_nombre_cliente}</td>
+            <td className='is-size-5'>{cliente.str_modalidad}</td>
+            <td className='is-size-5'>
               <button className={` ${colorMap[cliente.estado_de_pago]} button is-static has-text-white`}>
                 {cliente.estado_de_pago}
               </button>
             </td>
-            <td>
+            <td className='is-size-5'>
               <Link to={`/detallesCliente/${cliente.cliente_id}`}>
                 <button class="button is-link is-rounded is-outlined">Ver Mas</button>
               </Link>

@@ -69,6 +69,9 @@
   border: 1px solid grey;
   margin: 15px;
 }
+.tableNew thead th {
+  vertical-align: middle;
+}
 .tableNew thead th:first-child {
   border-radius: 10px 0px 0px 10px;
   border-right: none;
@@ -88,6 +91,7 @@
   width: 150px;
   vertical-align: middle;
   background-color: #D4D4D4;
+  font-weight: 400;
 }
 .tableNew tbody td:first-child {
   border-radius: 10px 0px 0px 10px;
