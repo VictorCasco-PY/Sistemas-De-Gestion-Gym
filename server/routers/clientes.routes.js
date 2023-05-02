@@ -1,23 +1,21 @@
 import { Router } from "express";
 import { check } from "express-validator";
 
-import {
-  getClientes,
-  crearCliente,
-  getClienteByParams,
-} from "../controllers/clientes.controller.js";
-
+import {Clientes} from "../controllers/clientes.controller.js";
 import { getPlanPagoClienteByParams } from "../controllers/planes_de_pagos.controller.js";
-
 import { getMedicionesDeCliente } from "../controllers/mediciones_clientes.controller.js";
+
+
+const clientes = new Clientes();
+
 
 const clientesRoutes = Router();
 
 // Obtenemos todos los clientes
-clientesRoutes.get("/clientes", getClientes);
+clientesRoutes.get("/clientes", clientes.getAll);
 
 // Obtenemos cliente por parametro id
-clientesRoutes.get("/cliente/:id", getClienteByParams);
+clientesRoutes.get("/cliente/:id", clientes.getByParams);
 
 // Crear un nuevo cliente, los checks sirven para comprobar que los campos esten completos
 clientesRoutes.post(
@@ -28,8 +26,11 @@ clientesRoutes.post(
     check("str_direccion", "str_direccion es un campo requerido").notEmpty(),
     check("str_ruc", "str_ruc es un campo requerido").notEmpty(),
   ],
-  crearCliente
+  clientes.create
 );
+
+clientesRoutes.put("/cliente/:id", clientes.update)
+clientesRoutes.delete("/cliente/:id", clientes.delete)
 
 // Obtener el plan de pago del cliente
 clientesRoutes.get(
