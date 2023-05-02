@@ -3,10 +3,13 @@ import {models} from "../models/models.js";
 import {getDateNow, toDate} from "../tools/date.js";
 import {bodyValidator} from "../tools/bodyValidator.js";
 import {Clientes} from "./clientes.controller.js";
-import {getNombreModalidad} from "./tipos_modalidades_de_pagos.js";
+
+import {TiposModalidadesDePagos} from "./tipos_modalidades_de_pagos.js";
+
 
 const {planes_de_pagos} = models;
 
+const tiposModalidadesDePagos = new TiposModalidadesDePagos();
 const clientes = new Clientes();
 
 export class PlanesDePagos {
@@ -24,13 +27,15 @@ export class PlanesDePagos {
 
             const {cliente_id} = body;
 
+            const {tipo_modalidad_de_pago_id} = body;
+
             if (!(await clientes.getById(cliente_id))) return res.status(404).json({error: "No existe un usuario con ese ID"});
             // Verificamos que el usuario ya no tenga un plan de pago
             if (await getPlanPagoCliente(cliente_id)) return res.status(409).json({error: "El cliente ya posee un plan de pago"});
 
             // Obtenemos el nombre del cliente
             const {str_nombre} = await clientes.getById(cliente_id);
-            const str_modalidad = await getNombreModalidad(tipo_modalidad_de_pago_id);
+            const str_modalidad = await tiposModalidadesDePagos.getNombreModalidad(tipo_modalidad_de_pago_id);
             const result = await planes_de_pagos.create({
                 ...body,
                 estado_de_pago: "pendiente",
@@ -50,6 +55,7 @@ export class PlanesDePagos {
         try {
             const {id} = body.params;
             const {body} = body.req;
+            const {tipo_modalidad_de_pago_id} = body;
             const [rowsAffected] = await planes_de_pagos.update({...body}, {where: {id}});
             if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun plan de pago");
             res.status(200).send("Plan actualizado")
