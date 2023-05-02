@@ -13,7 +13,7 @@ export default function ClientesTable() {
 
   const colorMap = {
     "En regla": "has-background-success",
-    "pendiente": "has-background-warning",
+    "pendiente": "has-background-warning has-text-black",
     "Atrasado": "has-background-danger"
   };
 
