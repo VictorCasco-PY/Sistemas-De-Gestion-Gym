@@ -36,11 +36,11 @@ export class MedicionesClientes {
 
     update = async (req, res) => {
         try {
-            const {id} = req.body;
+            const {id} = req.params;
             const {body} = req;
             const [rowsAffected] = await clientes.update({...body}, {where: {id}});
-            if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun cliente");
-            res.status(200).send("Cliente actualizado");
+            if (rowsAffected === 0) return res.status(404).json("No se actualizo ninguna medicion");
+            res.status(200).send("Medicion actualizada");
         } catch (error) {
             console.log(error)
             return res.status(500).json({error})
