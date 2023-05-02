@@ -3,11 +3,11 @@ import { check } from "express-validator";
 
 import {Clientes} from "../controllers/clientes.controller.js";
 import { getPlanPagoClienteByParams } from "../controllers/planes_de_pagos.controller.js";
-import { getMedicionesDeCliente } from "../controllers/mediciones_clientes.controller.js";
+import {MedicionesClientes} from "../controllers/mediciones_clientes.controller.js";
 
 
 const clientes = new Clientes();
-
+const medicionesClientes = new MedicionesClientes();
 
 const clientesRoutes = Router();
 
@@ -26,7 +26,7 @@ clientesRoutes.post(
     check("str_direccion", "str_direccion es un campo requerido").notEmpty(),
     check("str_ruc", "str_ruc es un campo requerido").notEmpty(),
   ],
-  clientes.create
+  clientes.crear
 );
 
 clientesRoutes.put("/cliente/:id", clientes.update)
@@ -41,7 +41,7 @@ clientesRoutes.get(
 // Obtener la medicion del cliente
 clientesRoutes.get(
   "/cliente/:cliente_id/medicion-cliente",
-  getMedicionesDeCliente
+  medicionesClientes.getMedicionesDeCliente
 );
 
 export default clientesRoutes;

@@ -1,13 +1,11 @@
 import {models} from "../models/models.js";
 import {bodyValidator} from "../tools/bodyValidator.js";
-import clientesRoutes from "../routers/clientes.routes.js";
 
 const {clientes} = models;
 
 export class Clientes {
 
-
-    create = async (req, res) => {
+    crear = async (req, res) => {
         try {
             const validator = bodyValidator(req);
             if (validator) return res.status(400).json(validator);
@@ -25,17 +23,6 @@ export class Clientes {
         }
     };
 
-    delete = async (req, res) => {
-        try {
-            const {id} = req.params;
-            if (!(await this.getById(id))) return req.status(404).json({error: "No existe un usuario con ese ID"});
-            await clientes.destroy({where: {id}});
-            res.status(200).send("Cliente eliminado");
-        } catch (error) {
-            return res.status(500).json(error)
-        }
-    }
-
     update = async (req, res) => {
         try {
             const {id} = req.params;
@@ -49,6 +36,18 @@ export class Clientes {
         }
 
     }
+
+    delete = async (req, res) => {
+        try {
+            const {id} = req.params;
+            if (!(await this.getById(id))) return req.status(404).json({error: "No existe un usuario con ese ID"});
+            await clientes.destroy({where: {id}});
+            res.status(200).send("Cliente eliminado");
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+    }
+
 
     getAll = async (req, res) => {
         try {
