@@ -2,13 +2,13 @@ import { Router } from "express";
 import { check } from "express-validator";
 
 import {Clientes} from "../controllers/clientes.controller.js";
-import { getPlanPagoClienteByParams } from "../controllers/planes_de_pagos.controller.js";
+import { PlanesDePagos } from "../controllers/planes_de_pagos.controller.js";
 import {MedicionesClientes} from "../controllers/mediciones_clientes.controller.js";
 
 
 const clientes = new Clientes();
 const medicionesClientes = new MedicionesClientes();
-
+const planesDePagos = new PlanesDePagos();
 const clientesRoutes = Router();
 
 // Obtenemos todos los clientes
@@ -35,7 +35,7 @@ clientesRoutes.delete("/cliente/:id", clientes.delete)
 // Obtener el plan de pago del cliente
 clientesRoutes.get(
   "/cliente/:cliente_id/plan-de-pago",
-  getPlanPagoClienteByParams
+  planesDePagos.getPlanDePagoDeClienteByParams
 );
 
 // Obtener la medicion del cliente

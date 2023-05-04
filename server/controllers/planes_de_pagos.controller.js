@@ -28,25 +28,28 @@ export class PlanesDePagos {
             const {cliente_id} = body;
 
             const {tipo_modalidad_de_pago_id} = body;
-
-            if (!(await clientes.getById(cliente_id))) return res.status(404).json({error: "No existe un usuario con ese ID"});
+            const cliente = await clientes.getById(cliente_id);
+            const {str_nombre}= cliente;
+            if (!(cliente)) return res.status(404).json({error: "No existe un usuario con ese ID"});
             // Verificamos que el usuario ya no tenga un plan de pago
-            if (await getPlanPagoCliente(cliente_id)) return res.status(409).json({error: "El cliente ya posee un plan de pago"});
-
+            if (!(await this.getPlanPagoCliente(cliente_id))) {return res.status(409).json({error: "El cliente ya posee un plan de pago"});}
             // Obtenemos el nombre del cliente
-            const {str_nombre} = await clientes.getById(cliente_id);
+
             const str_modalidad = await tiposModalidadesDePagos.getNombreModalidad(tipo_modalidad_de_pago_id);
             const result = await planes_de_pagos.create({
                 ...body,
+                str_modalidad,
+                str_nombre,
                 estado_de_pago: "pendiente",
-                date_fecha_de_vencimiento: toDate(date_fecha_de_vencimiento),
+                date_fecha_de_vencimiento: toDate(body.date_fecha_de_vencimiento),
                 date_fecha_de_pago: null,
                 date_fecha_de_de_registro: getDateNow(),
                 date_fecha_de_actualizacion: getDateNow()
             });
-
+            console.log(result);
             res.json(result)
         } catch (error) {
+            console.log(error);
             res.status(500).json(error);
         }
     }
@@ -97,22 +100,36 @@ export class PlanesDePagos {
         }
     }
 
-    // Devuelve un objeto si es que el usuario ya posee un plan de pago
-    getPlanDePagoDeCliente = async (req, res) => {
-        try {
-            const {cliente_id} = req.params;
-            const result = await getPlanPagoCliente(cliente_id);
+        // Devuelve un objeto si es que el usuario ya posee un plan de pago
+    getPlanDePagoDeClienteByParams = async (req, res) => {
+            try {
+                const {cliente_id} = req.params;
+                const result = await planes_de_pagos.findOne({where:{id}});
+                if (!result) return res.status(404).json({error: "No se encuentra un plan de pago con ese id de cliente"})
+                res.json(result)
+            }catch (error){
+                res.json(error).status(500);
+            }
+        }
+
+
+    getPlanPagoCliente = async(cliente_id) => {
+        try{
+            const result = await planes_de_pagos.findOne({where:{cliente_id}});
             if (!result) return res.status(404).json({error: "No se encuentra un plan de pago con ese id de cliente"})
-            res.json(result)
-        } catch (error) {
-            res.status(500).json(error);
+            return result
+        }catch(error){
+            return {error: "Algo salio mal"};
         }
     }
+
+
 
     getById = async (req, res) => {
         try {
             const result = await planes_de_pagos.findOne({where: {id}});
-            return result;
+
+            res.json(result)
         } catch (error) {
             return {error: "Algo salio mal"}
         }
