@@ -22,12 +22,14 @@ export default function ClientesTable() {
   }
 
   return (
-    <table class="table table is-bordered tableNew has-background-light is-bordered">
+    <table className="table table is-bordered tableNew has-background-light is-bordered">
       <thead className='has-text-centered'>
-        <th className='is-size-5'>Nombre</th>
-        <th className='is-size-6'>Plan</th>
-        <th className='is-size-6'>Estado de Pago</th>
-        <th className='is-size-6'></th>
+        <tr>
+          <th className='is-size-5'>Nombre</th>
+          <th className='is-size-6'>Plan</th>
+          <th className='is-size-6'>Estado de Pago</th>
+          <th className='is-size-6'></th>
+        </tr>
       </thead>
       <tbody>
         {clientes.map(cliente => (
@@ -41,7 +43,7 @@ export default function ClientesTable() {
             </td>
             <td className='is-size-5'>
               <Link to={`/detallesCliente/${cliente.cliente_id}`}>
-                <button class="button is-link is-rounded is-outlined">Ver Mas</button>
+                <button className="button is-link is-rounded is-outlined">Ver Mas</button>
               </Link>
             </td>
           </tr>
