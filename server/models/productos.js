@@ -12,7 +12,7 @@ export default class productos extends Model {
     },
     // agregado por Migracion
     str_nombre: {
-      type:DataValues.STRING(200),
+      type:DataTypes.STRING(200),
       allowNull:false
     },
     str_descripcion: {
