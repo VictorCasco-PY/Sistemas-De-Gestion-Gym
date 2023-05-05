@@ -8,6 +8,8 @@ export class Clase {
     update = async (req,res)=>{}
     delete = async(req,res)=>{}
     getAll = async(req,res)=>{}
-    getByParams = async(req,res)=>{}
+    
+    getByParams = async(req,res)=>{} // obtiene por id
+    
     getById = async(req,res)=>{}
 }

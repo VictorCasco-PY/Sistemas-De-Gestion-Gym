@@ -10,6 +10,11 @@ export default class productos extends Model {
       allowNull: false,
       primaryKey: true
     },
+    // agregado por Migracion
+    str_nombre: {
+      type:DataValues.STRING(200),
+      allowNull:false
+    },
     str_descripcion: {
       type: DataTypes.STRING(200),
       allowNull: true
