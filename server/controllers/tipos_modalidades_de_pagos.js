@@ -15,7 +15,6 @@ export class TiposModalidadesDePagos {
   getNombreModalidad = async (id) => {
     try {
       const result = await tipos_modalidades_de_pagos.findOne({where: {id}});
-      console.log(result)
       return result.str_nombre;
     } catch (error) {
       return new Error("Error al obtener nombre de la modalidad");

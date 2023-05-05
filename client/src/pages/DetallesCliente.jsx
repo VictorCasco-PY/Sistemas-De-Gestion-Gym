@@ -14,7 +14,6 @@ export function DetallesCliente() {
             .then(response => setClienteMed(response.data))
             .catch(error => console.log(error));
 
-
         axios.get(`http://localhost:8000/cliente/${id}/plan-de-pago`)
             .then(response => setCliente(response.data))
             .catch(error => console.log(error));
@@ -22,7 +21,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}`)
             .then(response => setClientePers(response.data))
             .catch(error => console.log(error));
-        console.log(id)
+        //console.log(clienteMed)
     }, []);
 
     if (!cliente || !clientePers) {
@@ -88,26 +87,33 @@ export function DetallesCliente() {
                 </div>
 
                 <div className="is-flex is-justify-content-center">
-                    <table class="table table-text-2 is-bordered tableNew has-background-light is-bordered">
+                    <table className="table table-text-2 is-bordered tableNew has-background-light is-bordered">
                         <thead>
-                            <th>Fecha</th>
-                            <th>Peso</th>
-                            <th>Brazos</th>
-                            <th>Piernas</th>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Peso</th>
+                                <th>Brazos</th>
+                                <th>Piernas</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            {clienteMed ? <tr>
-                                <td>{clienteMed.date_fecha_medicion}</td>
-                                <td>{clienteMed.peso}</td>
-                                <td>{clienteMed.cintura}</td>
-                                <td>{clienteMed.piernas}</td>
-                            </tr>
-                                : <tr>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>}
+                            {clienteMed ? (
+                                clienteMed.map((med, index) => (
+                                    <tr key={index}>
+                                        <td>{med.date_fecha_medicion}</td>
+                                        <td>{med.peso}</td>
+                                        <td>{med.cintura}</td>
+                                        <td>{med.piernas}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>

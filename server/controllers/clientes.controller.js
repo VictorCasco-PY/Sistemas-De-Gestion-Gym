@@ -62,7 +62,6 @@ export class Clientes {
         try {
             const {id} = req.params;
             const result = await this.getById(id);
-            console.log(result)
             return res.json(result);
         } catch (error) {
             res.json(error).status(500);
