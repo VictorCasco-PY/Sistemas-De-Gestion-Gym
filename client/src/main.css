@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .pageSkeleton {
   display: flex;
   flex-direction: column;
@@ -108,4 +109,12 @@
 .tableNew tbody td:last-child {
   border-radius: 0px 10px 10px 0px;
   border-left: none;
+}
+
+.sortIcon.active.desc:after {
+  content: "▲";
+}
+
+.sortIcon.active.asc:after {
+  content: "▼";
 }/*# sourceMappingURL=main.css.map */

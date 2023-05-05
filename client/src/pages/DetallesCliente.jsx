@@ -21,7 +21,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}`)
             .then(response => setClientePers(response.data))
             .catch(error => console.log(error));
-        //console.log(clienteMed)
+        console.log(clienteMed)
     }, []);
 
     if (!cliente || !clientePers) {
@@ -51,7 +51,7 @@ export function DetallesCliente() {
                     <div className="clientInfoLeft d-flex ">
                         <div className="infoBubble">
                             <div className="bubbleTitle has-text-white">
-                                <p className='is-size-5'>Telefono</p>
+                                <p className='is-size-6'>Telefono</p>
                             </div>
                             <div className="bubbleInfo">
                                 <p>-</p>
@@ -59,7 +59,7 @@ export function DetallesCliente() {
                         </div>
                         <div className="infoBubble">
                             <div className="bubbleTitle has-text-white">
-                                <p className='is-size-5'>Dirección</p>
+                                <p className='is-size-6'>Dirección</p>
                             </div>
                             <div className="bubbleInfo">
                                 <p>{clientePers.str_direccion}</p>
@@ -69,7 +69,7 @@ export function DetallesCliente() {
                     <div className="clientInfoRight">
                         <div className="infoBubble">
                             <div className="bubbleTitle has-background-primary-dark has-text-white">
-                                <p className='is-size-5'>Plan</p>
+                                <p className='is-size-6'>Plan</p>
                             </div>
                             <div className="bubbleInfo has-background-primary-light">
                                 <p>{cliente.str_modalidad}</p>
@@ -77,7 +77,7 @@ export function DetallesCliente() {
                         </div>
                         <div className="infoBubble">
                             <div className="bubbleTitle has-background-link-dark has-text-white">
-                                <p className='is-size-5'>RUC</p>
+                                <p className='is-size-6'>RUC</p>
                             </div>
                             <div className="bubbleInfo has-background-link-light">
                                 <p>{clientePers.str_ruc}</p>
@@ -97,7 +97,7 @@ export function DetallesCliente() {
                             </tr>
                         </thead>
                         <tbody>
-                            {clienteMed ? (
+                            {clienteMed.length > 0 ? (
                                 clienteMed.map((med, index) => (
                                     <tr key={index}>
                                         <td>{med.date_fecha_medicion}</td>
