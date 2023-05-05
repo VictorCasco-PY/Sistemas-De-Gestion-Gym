@@ -29,9 +29,7 @@ const Login = () => {
         console.log(usuario);
         if (usuario.user === 'admin@gmail.com' && usuario.pass === '123456') {
             setLoggedIn(true);
-          } else {
-            alert('Nombre de usuario o contraseña incorrectos');
-          }
+        }
         
     };
 
@@ -39,19 +37,19 @@ const Login = () => {
     if (loggedIn) {
         return <RegistroEmpleado/>;
         //return <Redirect to="/registroEmpleado" />;
-      }
+    is-primary }
 
 
     return (
         
         <div className="columns is-centered">
         <div className="column is-three-fifths-desktop">
-            <div className="box">
+            <div className="box mt-5 has-shadow">
             <h3 className="has-text-centered mb-2 title is-3 has-text-primary">Iniciar Sesión</h3>
             <form onSubmit={handleSubmit}>
             <div className="field">
                 <p className="control has-icons-left has-icons-right">
-                    <input name = "user" value={usuario.user} className ="input has-text-centered" type="email" placeholder="Correo Electronico" onChange={handleChange} />
+                    <input name = "user" value={usuario.user} className ="input is-primary has-text-centered" type="email" placeholder="Correo Electronico" onChange={handleChange} />
                     <span className="icon is-small is-left">
                         <i className="fas fa-envelope"></i>
                     </span>
@@ -62,7 +60,7 @@ const Login = () => {
             </div>
             <div className="field">
                 <p className="control has-icons-left">
-                    <input name = "pass" value={usuario.pass} className="input has-text-centered" type="password" placeholder="Password" onChange={handleChange} />
+                    <input name = "pass" value={usuario.pass} className="input is-primary has-text-centered" type="password" placeholder="Password" onChange={handleChange} />
                     <span className="icon is-small is-left">
                         <i className="fas fa-lock"></i>
                     </span>

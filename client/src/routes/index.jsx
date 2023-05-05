@@ -7,6 +7,7 @@ import RegistroEmpleado from "../pages/RegistroEmpleado"
 import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import Layout from "../Layout/Layout";
+import RegistroProveedores from "../pages/RegistroProveedores";
 
 
 export const routes = createBrowserRouter([
@@ -32,8 +33,8 @@ export const routes = createBrowserRouter([
                 element: <DetallesCliente />,
             },
             {
-                path: "/listaClientes",
-                element: <></>,
+                path: "/registroProveedores",
+                element: <RegistroProveedores/>,
             },
             {
                 path: "/detalleCliente/:id",
