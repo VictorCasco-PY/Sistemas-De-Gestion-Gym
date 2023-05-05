@@ -8,7 +8,7 @@ const RegistroEmpleado = () => {
     str_nombre: "",
     time_inicio_trabajo: "",
     time_fin_trabajo: "",
-    str_telefono: "",
+    str_telefono: "", 
     str_cedula: "",
     str_direccion: "",
   });
@@ -37,7 +37,7 @@ const RegistroEmpleado = () => {
             </center>
             <div>
               <input
-                className="input mb-2 has-text-centered"
+                className="input is-primary mb-2 has-text-centered"
                 type="email"
                 name="user"
                 value={empleados.user}
@@ -47,7 +47,7 @@ const RegistroEmpleado = () => {
             </div>
             <div>
               <input
-                className="input mt-2 has-text-centered"
+                className="input is-primary mt-2 has-text-centered"
                 type="password"
                 name="pass"
                 value={empleados.pass}
@@ -72,7 +72,7 @@ const RegistroEmpleado = () => {
             <div className="columns">
               <div className="column">
                 <input
-                  className="input has-text-centered"
+                  className="input is-primary has-text-centered"
                   type="text"
                   name="str_nombre"
                   value={empleados.str_nombre}
@@ -82,7 +82,7 @@ const RegistroEmpleado = () => {
               </div>
               <div className="column">
                 <input
-                  className="input has-text-centered"
+                  className="input is-primary has-text-centered"
                   type="text"
                   name="str_telefono"
                   value={empleados.str_telefono}
@@ -102,7 +102,7 @@ const RegistroEmpleado = () => {
             <div className="columns">
               <div className="column">
                 <input
-                  className="input"
+                  className="input is-primary"
                   type="date"
                   name="time_inicio_trabajo"
                   value={empleados.time_inicio_trabajo}
@@ -111,7 +111,7 @@ const RegistroEmpleado = () => {
               </div>
               <div className="column">
                 <input
-                  className="input"
+                  className="input is-primary"
                   type="date"
                   name="time_fin_trabajo"
                   value={empleados.time_fin_trabajo}
@@ -122,7 +122,7 @@ const RegistroEmpleado = () => {
             <div className="columns">
               <div className="column">
                 <input
-                  className="input has-text-centered"
+                  className="input is-primary has-text-centered"
                   type="text"
                   name="str_cedula"
                   value={empleados.str_cedula}
@@ -132,7 +132,7 @@ const RegistroEmpleado = () => {
               </div>
               <div className="column">
                 <input
-                  className="input has-text-centered"
+                  className="input is-primary has-text-centered"
                   type="text"
                   name="str_direccion"
                   value={empleados.str_direccion}
