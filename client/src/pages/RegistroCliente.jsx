@@ -156,10 +156,10 @@ const RegistroCliente = () => {
                                 <h2 className="title is-2 has-text-centered mt-6">Datos del cliente</h2>
                                 <div className="columns">
                                     <div className="column is-three-fifths">
-                                        <input className="input has-background-grey-light has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_nombre" value={cliente.str_nombre} onChange={handleChangeCliente} placeholder='Nombres Y Apellidos' />
+                                        <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_nombre" value={cliente.str_nombre} onChange={handleChangeCliente} placeholder='Nombres Y Apellidos' />
                                     </div>
                                     <div className="column">
-                                        <input className="input has-background-grey-light has-text-centered has-placeholder-centered has-text-weight-bold" type="number" name="edad" value={cliente.edad} onChange={handleChangeCliente} placeholder='Edad' />
+                                        <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="number" name="edad" value={cliente.edad} onChange={handleChangeCliente} placeholder='Edad' />
                                     </div>
                                 </div>
                                 <div className="columns">
@@ -167,7 +167,7 @@ const RegistroCliente = () => {
                                         <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_direccion" value={cliente.str_direccion} onChange={handleChangeCliente} placeholder='Dirección' />
                                     </div>
                                     <div className="column">
-                                        <input className="input has-background-grey-light has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_ruc" value={cliente.str_ruc} onChange={handleChangeCliente} placeholder='RUC' />
+                                        <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_ruc" value={cliente.str_ruc} onChange={handleChangeCliente} placeholder='RUC' />
                                     </div>
                                 </div>
                                 <div className="buttons">
@@ -207,7 +207,7 @@ const RegistroCliente = () => {
                                             <div className="field-body is-flex is-align-items-center is-justify-content-center">
                                                 <label htmlFor="altura" className="label has-text-centered mr-2">Altura</label>
                                                 <div className="field">
-                                                    <input className="input has-background-grey-light has-text-centered mt-2" type="number" name="altura" value={mediciones.altura} onChange={handleMedicionesChange} />
+                                                    <input className="input has-text-centered mt-2" type="number" name="altura" value={mediciones.altura} onChange={handleMedicionesChange} />
                                                 </div>
                                             </div>
                                         </div>
@@ -216,7 +216,7 @@ const RegistroCliente = () => {
                                             <div className="field-body is-flex is-align-items-center is-justify-content-center">
                                                 <label htmlFor="peso" className="label has-text-centered mr-2">Peso</label>
                                                 <div className="field">
-                                                    <input className="input has-background-grey-light has-text-centered mt-2" type="number" name="peso" value={mediciones.peso} onChange={handleMedicionesChange} />
+                                                    <input className="input has-text-centered mt-2" type="number" name="peso" value={mediciones.peso} onChange={handleMedicionesChange} />
                                                 </div>
                                             </div>
                                         </div>
@@ -225,7 +225,7 @@ const RegistroCliente = () => {
                                             <div className="field-body is-flex is-align-items-center is-justify-content-center">
                                                 <label htmlFor="cintura" className="label has-text-centered mr-2">Cintura</label>
                                                 <div className="field">
-                                                    <input className="input has-background-grey-light has-text-centered mt-2" type="number" name="cintura" value={mediciones.cintura} onChange={handleMedicionesChange} />
+                                                    <input className="input has-text-centered mt-2" type="number" name="cintura" value={mediciones.cintura} onChange={handleMedicionesChange} />
                                                 </div>
                                             </div>
                                         </div>
@@ -235,7 +235,7 @@ const RegistroCliente = () => {
                                             <div className="field-body is-flex is-align-items-center is-justify-content-center">
                                                 <label htmlFor="piernas" className="label has-text-centered mr-2">Piernas</label>
                                                 <div className="field">
-                                                    <input className="input has-background-grey-light has-text-centered mt-2" type="number" name="piernas" value={mediciones.piernas} onChange={handleMedicionesChange} />
+                                                    <input className="input has-text-centered mt-2" type="number" name="piernas" value={mediciones.piernas} onChange={handleMedicionesChange} />
                                                 </div>
                                             </div>
                                         </div>
@@ -244,7 +244,7 @@ const RegistroCliente = () => {
                                             <div className="field-body is-flex is-align-items-center is-justify-content-center">
                                                 <label htmlFor="porcentaje_grasa_corporal" className="label has-text-centered mr-2">% grasa corporal</label>
                                                 <div className="field">
-                                                    <input className="input has-background-grey-light has-text-centered mt-2" type="number" name="porcentaje_grasa_corporal" value={mediciones.porcentaje_grasa_corporal} onChange={handleMedicionesChange} />
+                                                    <input className="input has-text-centered mt-2" type="number" name="porcentaje_grasa_corporal" value={mediciones.porcentaje_grasa_corporal} onChange={handleMedicionesChange} />
                                                 </div>
                                             </div>
                                         </div>
