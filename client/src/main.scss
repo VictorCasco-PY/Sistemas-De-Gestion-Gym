@@ -123,3 +123,10 @@
         
     }
 }
+
+.sortIcon.active.desc:after {
+    content: "▲";
+  }
+  .sortIcon.active.asc:after {
+    content: "▼";
+  }

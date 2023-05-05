@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "sequelize db:migrate --require @babel/register"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +18,19 @@
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "mysql2": "^3.2.3",
+    "nodemon": "^2.0.22",
     "sequelize": "^6.31.0",
     "sequelize-auto": "^0.8.8",
     "sequelize-cli": "^6.6.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-numeric-separator"
+    ],
+    "sourceType": "module",
+    "esModuleInterop": true
   }
 }
