@@ -9,10 +9,11 @@ import _cobros_detalles from  "./cobros_detalles.js";
 import _empleados from  "./empleados.js";
 import _facturas from  "./facturas.js";
 import _facturas_detalles from  "./facturas_detalles.js";
+import _facturas_proveedores from  "./facturas_proveedores.js";
 import _facturas_proveedores_detalles from  "./facturas_proveedores_detalles.js";
 import _formas_de_pagos from  "./formas_de_pagos.js";
 import _mediciones_clientes from  "./mediciones_clientes.js";
-import _pagos_proveedor from  "./pagos_proveedor.js";
+import _pagos_proveedores from  "./pagos_proveedores.js";
 import _planes_de_pagos from  "./planes_de_pagos.js";
 import _productos from  "./productos.js";
 import _proveedores from  "./proveedores.js";
@@ -34,10 +35,11 @@ export default function initModels(sequelize) {
   const empleados = _empleados.init(sequelize, DataTypes);
   const facturas = _facturas.init(sequelize, DataTypes);
   const facturas_detalles = _facturas_detalles.init(sequelize, DataTypes);
+  const facturas_proveedores = _facturas_proveedores.init(sequelize, DataTypes);
   const facturas_proveedores_detalles = _facturas_proveedores_detalles.init(sequelize, DataTypes);
   const formas_de_pagos = _formas_de_pagos.init(sequelize, DataTypes);
   const mediciones_clientes = _mediciones_clientes.init(sequelize, DataTypes);
-  const pagos_proveedor = _pagos_proveedor.init(sequelize, DataTypes);
+  const pagos_proveedores = _pagos_proveedores.init(sequelize, DataTypes);
   const planes_de_pagos = _planes_de_pagos.init(sequelize, DataTypes);
   const productos = _productos.init(sequelize, DataTypes);
   const proveedores = _proveedores.init(sequelize, DataTypes);
@@ -71,18 +73,18 @@ export default function initModels(sequelize) {
   empleados.hasMany(planes_de_pagos, { as: "planes_de_pagos", foreignKey: "id_empleado"});
   sesiones_cajas.belongsTo(empleados, { as: "id_empleado_empleado", foreignKey: "id_empleado"});
   empleados.hasMany(sesiones_cajas, { as: "sesiones_cajas", foreignKey: "id_empleado"});
-  cobros.belongsTo(factura_proveedor, { as: "id_factura_factura_proveedor", foreignKey: "id_factura"});
-  factura_proveedor.hasMany(cobros, { as: "cobros", foreignKey: "id_factura"});
-  pagos_proveedor.belongsTo(factura_proveedor, { as: "id_factura_proveedor_factura_proveedor", foreignKey: "id_factura_proveedor"});
-  factura_proveedor.hasMany(pagos_proveedor, { as: "pagos_proveedors", foreignKey: "id_factura_proveedor"});
   facturas_detalles.belongsTo(facturas, { as: "id_factura_factura", foreignKey: "id_factura"});
   facturas.hasMany(facturas_detalles, { as: "facturas_detalles", foreignKey: "id_factura"});
+  cobros.belongsTo(facturas_proveedores, { as: "id_factura_facturas_proveedore", foreignKey: "id_factura"});
+  facturas_proveedores.hasMany(cobros, { as: "cobros", foreignKey: "id_factura"});
   facturas_proveedores_detalles.belongsTo(facturas_proveedores, { as: "id_factura_proveedor_facturas_proveedore", foreignKey: "id_factura_proveedor"});
   facturas_proveedores.hasMany(facturas_proveedores_detalles, { as: "facturas_proveedores_detalles", foreignKey: "id_factura_proveedor"});
-  arqueos_detalles.belongsTo(formas_de_pago, { as: "id_forma_de_pago_formas_de_pago", foreignKey: "id_forma_de_pago"});
-  formas_de_pago.hasMany(arqueos_detalles, { as: "arqueos_detalles", foreignKey: "id_forma_de_pago"});
-  transacciones_detalles.belongsTo(formas_de_pago, { as: "id_forma_de_pago_formas_de_pago", foreignKey: "id_forma_de_pago"});
-  formas_de_pago.hasMany(transacciones_detalles, { as: "transacciones_detalles", foreignKey: "id_forma_de_pago"});
+  pagos_proveedores.belongsTo(facturas_proveedores, { as: "id_factura_proveedor_facturas_proveedore", foreignKey: "id_factura_proveedor"});
+  facturas_proveedores.hasMany(pagos_proveedores, { as: "pagos_proveedores", foreignKey: "id_factura_proveedor"});
+  arqueos_detalles.belongsTo(formas_de_pagos, { as: "id_forma_de_pago_formas_de_pago", foreignKey: "id_forma_de_pago"});
+  formas_de_pagos.hasMany(arqueos_detalles, { as: "arqueos_detalles", foreignKey: "id_forma_de_pago"});
+  transacciones_detalles.belongsTo(formas_de_pagos, { as: "id_forma_de_pago_formas_de_pago", foreignKey: "id_forma_de_pago"});
+  formas_de_pagos.hasMany(transacciones_detalles, { as: "transacciones_detalles", foreignKey: "id_forma_de_pago"});
   transacciones.belongsTo(pagos_proveedores, { as: "id_pago_proveedor_pagos_proveedore", foreignKey: "id_pago_proveedor"});
   pagos_proveedores.hasMany(transacciones, { as: "transacciones", foreignKey: "id_pago_proveedor"});
   facturas_detalles.belongsTo(planes_de_pagos, { as: "id_plan_de_pago_planes_de_pago", foreignKey: "id_plan_de_pago"});
@@ -120,10 +122,11 @@ export default function initModels(sequelize) {
     empleados,
     facturas,
     facturas_detalles,
+    facturas_proveedores,
     facturas_proveedores_detalles,
     formas_de_pagos,
     mediciones_clientes,
-    pagos_proveedor,
+    pagos_proveedores,
     planes_de_pagos,
     productos,
     proveedores,

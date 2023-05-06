@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class usuarios extends Model {
+export default class pagos_proveedores extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,18 +10,25 @@ export default class usuarios extends Model {
       allowNull: false,
       primaryKey: true
     },
-    user: {
-      type: DataTypes.STRING(200),
+    id_factura_proveedor: {
+      type: DataTypes.INTEGER,
       allowNull: true,
-      unique: "user_UNIQUE"
+      references: {
+        model: 'facturas_proveedores',
+        key: 'id'
+      }
     },
-    pass: {
-      type: DataTypes.STRING(255),
+    date_fecha: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    total: {
+      type: DataTypes.DECIMAL(10,0),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'usuarios',
+    tableName: 'pagos_proveedores',
     timestamps: false,
     indexes: [
       {
@@ -33,11 +40,10 @@ export default class usuarios extends Model {
         ]
       },
       {
-        name: "user_UNIQUE",
-        unique: true,
+        name: "id_factura_proveedor",
         using: "BTREE",
         fields: [
-          { name: "user" },
+          { name: "id_factura_proveedor" },
         ]
       },
     ]

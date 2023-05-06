@@ -22,7 +22,7 @@ export default class transacciones_detalles extends Model {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'formas_de_pago',
+        model: 'formas_de_pagos',
         key: 'id'
       }
     },
