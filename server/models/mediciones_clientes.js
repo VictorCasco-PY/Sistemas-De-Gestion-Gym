@@ -10,19 +10,19 @@ export default class mediciones_clientes extends Model {
       allowNull: false,
       primaryKey: true
     },
-    entrenador_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'entrenadores',
-        key: 'id'
-      }
-    },
-    cliente_id: {
+    id_cliente: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: 'clientes',
+        key: 'id'
+      }
+    },
+    id_empleado: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'empleados',
         key: 'id'
       }
     },
@@ -49,6 +49,10 @@ export default class mediciones_clientes extends Model {
     porcentaje_grasa_corporal: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
+    },
+    brazos: {
+      type: DataTypes.DECIMAL(10,0),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -64,17 +68,17 @@ export default class mediciones_clientes extends Model {
         ]
       },
       {
-        name: "cliente_id",
+        name: "id_empleado_idx",
         using: "BTREE",
         fields: [
-          { name: "cliente_id" },
+          { name: "id_empleado" },
         ]
       },
       {
-        name: "entrenador_id",
+        name: "id_cliente",
         using: "BTREE",
         fields: [
-          { name: "entrenador_id" },
+          { name: "id_cliente" },
         ]
       },
     ]

@@ -23,14 +23,14 @@ export class PlanesDePagos {
             if (validator) return res.status(400).json(validator)
 
             const {body} = req;
-            const {tipo_modalidad_de_pago_id} = body;
-            const {cliente_id} = body;
-            const str_modalidad = await tiposModalidadesDePagos.getNombreModalidad(tipo_modalidad_de_pago_id);
-            const str_nombre_cliente = (await clientes.getById(cliente_id)).str_nombre;
+            const {id_tipo_modalidad_de_pago} = body;
+            const {id_cliente} = body;
+            const str_modalidad = await tiposModalidadesDePagos.getNombreModalidad(id_tipo_modalidad_de_pago);
+            const str_nombre_cliente = (await clientes.getById(id_cliente)).str_nombre;
 
 
             if (!(str_nombre_cliente)) return res.status(404).json({error: "No existe un usuario con ese ID"});
-            if (await this.getPlanPagoCliente(cliente_id)) {return res.status(409).json({error: "El cliente ya posee un plan de pago"});}
+            if (await this.getPlanPagoCliente(id_cliente)) {return res.status(409).json({error: "El cliente ya posee un plan de pago"});}
             
 
 
@@ -57,7 +57,7 @@ export class PlanesDePagos {
         try {
             const {id} = body.params;
             const {body} = body.req;
-            const {tipo_modalidad_de_pago_id} = body;
+            const {id_tipo_modalidad_de_pago} = body;
             const [rowsAffected] = await planes_de_pagos.update({...body}, {where: {id}});
             if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun plan de pago");
             res.status(200).send("Plan actualizado")
@@ -103,8 +103,8 @@ export class PlanesDePagos {
         // Devuelve un objeto si es que el usuario ya posee un plan de pago
     getPlanDePagoDeClienteByParams = async (req, res) => {
             try {
-                const {cliente_id} = req.params;
-                const result = await planes_de_pagos.findOne({where:{cliente_id}});
+                const {id_cliente} = req.params;
+                const result = await planes_de_pagos.findOne({where:{id_cliente}});
                 if (!result) return res.status(404).json({error: "No se encuentra un plan de pago con ese id de cliente"})
                 res.json(result)
             }catch (error){
@@ -113,9 +113,9 @@ export class PlanesDePagos {
         }
 
 
-    getPlanPagoCliente = async(cliente_id) => {
+    getPlanPagoCliente = async(id_cliente) => {
         try{
-            const result = await planes_de_pagos.findOne({where:{cliente_id}});
+            const result = await planes_de_pagos.findOne({where:{id_cliente}});
             return result
         }catch(error){
             return {error: "Algo salio mal"};

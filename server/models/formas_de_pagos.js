@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class tipos_modalidades_de_pagos extends Model {
+export default class formas_de_pagos extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,17 +10,13 @@ export default class tipos_modalidades_de_pagos extends Model {
       allowNull: false,
       primaryKey: true
     },
-    str_nombre: {
+    str_forma: {
       type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    precio: {
-      type: DataTypes.DECIMAL(10,0),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'tipos_modalidades_de_pagos',
+    tableName: 'formas_de_pagos',
     timestamps: false,
     indexes: [
       {

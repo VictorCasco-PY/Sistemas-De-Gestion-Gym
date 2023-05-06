@@ -26,6 +26,10 @@ export default class clientes extends Model {
       type: DataTypes.STRING(200),
       allowNull: true,
       unique: "str_ruc_UNIQUE"
+    },
+    str_cedula: {
+      type: DataTypes.STRING(200),
+      allowNull: true
     }
   }, {
     sequelize,

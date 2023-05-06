@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class tipos_modalidades_de_pagos extends Model {
+export default class cobros extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,17 +10,25 @@ export default class tipos_modalidades_de_pagos extends Model {
       allowNull: false,
       primaryKey: true
     },
-    str_nombre: {
-      type: DataTypes.STRING(200),
+    id_factura: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'factura_proveedor',
+        key: 'id'
+      }
+    },
+    date_fecha: {
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
-    precio: {
-      type: DataTypes.DECIMAL(10,0),
+    time_hora: {
+      type: DataTypes.TIME,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'tipos_modalidades_de_pagos',
+    tableName: 'cobros',
     timestamps: false,
     indexes: [
       {
@@ -29,6 +37,13 @@ export default class tipos_modalidades_de_pagos extends Model {
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "id_factura",
+        using: "BTREE",
+        fields: [
+          { name: "id_factura" },
         ]
       },
     ]

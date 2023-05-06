@@ -10,11 +10,19 @@ export default class facturas extends Model {
       allowNull: false,
       primaryKey: true
     },
-    cliente_id: {
+    id_cliente: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: 'clientes',
+        key: 'id'
+      }
+    },
+    id_timbrado: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'timbrados',
         key: 'id'
       }
     },
@@ -23,18 +31,6 @@ export default class facturas extends Model {
       allowNull: true
     },
     date_fecha: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    timbrado: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    date_inicio_timbrado: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    date_fin_timbrado: {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
@@ -84,10 +80,17 @@ export default class facturas extends Model {
         ]
       },
       {
-        name: "cliente_id",
+        name: "id_cliente",
         using: "BTREE",
         fields: [
-          { name: "cliente_id" },
+          { name: "id_cliente" },
+        ]
+      },
+      {
+        name: "id_timbrado",
+        using: "BTREE",
+        fields: [
+          { name: "id_timbrado" },
         ]
       },
     ]

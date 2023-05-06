@@ -19,9 +19,9 @@ export class MedicionesClientes {
             // destructura el objeto recibido, si recibe del body (req.body) o de una peticion de la api misma (req)
             const {body} = req;
 
-            const {cliente_id} = body;
+            const {id_cliente} = body;
 
-            if (!(await clientes.getById(cliente_id))) return res.status(404).json({error: "No existe un usuario con ese ID"});
+            if (!(await clientes.getById(id_cliente))) return res.status(404).json({error: "No existe un usuario con ese ID"});
 
             // Registramos la medicion
             const result = await mediciones_clientes
@@ -83,8 +83,8 @@ export class MedicionesClientes {
 
     getMedicionesDeCliente = async (req, res) => {
         try {
-            const {cliente_id} = req.params;
-            const result = await mediciones_clientes.findAll({where: {cliente_id}});
+            const {id_cliente} = req.params;
+            const result = await mediciones_clientes.findAll({where: {id_cliente}});
             if (!result) return res.status(404).json({error: "No existe un registro de medicion del usuario o no existe el usuario"});
             return res.json(result);
         } catch (error) {
