@@ -156,18 +156,18 @@ const RegistroCliente = () => {
                                 <h2 className="title is-2 has-text-centered mt-6">Datos del cliente</h2>
                                 <div className="columns">
                                     <div className="column is-three-fifths">
-                                        <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_nombre" value={cliente.str_nombre} onChange={handleChangeCliente} placeholder='Nombres Y Apellidos' />
+                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_nombre" value={cliente.str_nombre} onChange={handleChangeCliente} placeholder='Nombres Y Apellidos' />
                                     </div>
                                     <div className="column">
-                                        <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="number" name="edad" value={cliente.edad} onChange={handleChangeCliente} placeholder='Edad' />
+                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="number" name="edad" value={cliente.edad} onChange={handleChangeCliente} placeholder='Edad' />
                                     </div>
                                 </div>
                                 <div className="columns">
                                     <div className="column is-three-fifths">
-                                        <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_direccion" value={cliente.str_direccion} onChange={handleChangeCliente} placeholder='Dirección' />
+                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_direccion" value={cliente.str_direccion} onChange={handleChangeCliente} placeholder='Dirección' />
                                     </div>
                                     <div className="column">
-                                        <input className="input has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_ruc" value={cliente.str_ruc} onChange={handleChangeCliente} placeholder='RUC' />
+                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_ruc" value={cliente.str_ruc} onChange={handleChangeCliente} placeholder='RUC' />
                                     </div>
                                 </div>
                                 <div className="buttons">
