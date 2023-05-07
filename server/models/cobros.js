@@ -14,7 +14,7 @@ export default class cobros extends Model {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'factura_proveedor',
+        model: 'facturas_proveedores',
         key: 'id'
       }
     },

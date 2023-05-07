@@ -1,10 +1,14 @@
 import express from "express";
-import clientesRouter from "./routers/clientes.routes.js";
 import bodyParser from "body-parser";
+import cors from "cors";
+
+import clientesRouter from "./routers/clientes.routes.js";
 import planesPagosRouter from "./routers/planes-de-pagos.routes.js";
+import empleadosRouter from "./routers/empleados.routes.js";
+
 import medicionesClientesRoutes from "./routers/mediciones-clientes.routes.js";
 import tipoModalidadPagoRouter from "./routers/tipos-modalidades-de-pagos.routes.js";
-import cors from "cors";
+
 
 const app = express();
 
@@ -25,6 +29,7 @@ app.use(planesPagosRouter);
 app.use(clientesRouter);
 app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
+app.use(empleadosRouter)
 
 app.get("/", async (req, res) => {
     res.json({
