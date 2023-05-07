@@ -13,7 +13,7 @@ medicionesClientesRoutes.get("/mediciones-clientes/:id", medicionesClientes.getB
 medicionesClientesRoutes.post(
     "/mediciones-clientes",
     [
-        check("cliente_id", "cliente_id es un campo requerido").notEmpty(),
+        check("id_cliente", "id_cliente es un campo requerido").notEmpty(),
         check("peso", "peso es un campo requerido").notEmpty(),
         check("altura", "altura es un campo requerido").notEmpty(),
         check("cintura", "cintura es un campo requerido").notEmpty(),

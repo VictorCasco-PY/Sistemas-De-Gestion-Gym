@@ -34,13 +34,13 @@ clientesRoutes.delete("/cliente/:id", clientes.delete)
 
 // Obtener el plan de pago del cliente
 clientesRoutes.get(
-  "/cliente/:cliente_id/plan-de-pago",
+  "/cliente/:id_cliente/plan-de-pago",
   planesDePagos.getPlanDePagoDeClienteByParams
 );
 
 // Obtener la medicion del cliente
 clientesRoutes.get(
-  "/cliente/:cliente_id/medicion-cliente",
+  "/cliente/:id_cliente/medicion-cliente",
   medicionesClientes.getMedicionesDeCliente
 );
 

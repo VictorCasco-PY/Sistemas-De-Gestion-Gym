@@ -26,12 +26,12 @@ export class PlanesDePagos {
             const {id_tipo_modalidad_de_pago} = body;
             const {id_cliente} = body;
             const str_modalidad = await tiposModalidadesDePagos.getNombreModalidad(id_tipo_modalidad_de_pago);
-            const str_nombre_cliente = (await clientes.getById(id_cliente)).str_nombre;
 
 
-            if (!(str_nombre_cliente)) return res.status(404).json({error: "No existe un usuario con ese ID"});
+            if (!(await clientes.getById(id_cliente))) return res.status(404).json({error: "No existe un usuario con ese ID"});
             if (await this.getPlanPagoCliente(id_cliente)) {return res.status(409).json({error: "El cliente ya posee un plan de pago"});}
-            
+
+            const str_nombre_cliente = (await clientes.getById(id_cliente)).str_nombre;
 
 
             const result = await planes_de_pagos.create({
@@ -49,7 +49,7 @@ export class PlanesDePagos {
             
             res.json(result)
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).send(error.message);
         }
     }
 

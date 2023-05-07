@@ -74,7 +74,8 @@ export class Cliente {
             const result = await clientes.findOne({where: {id}});
             return result;
         } catch (error) {
-            throw new Error("Error al obtener cliente");
+            console.log(error);
+            return null;
         }
     }
 
