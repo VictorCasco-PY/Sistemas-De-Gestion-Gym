@@ -11,5 +11,5 @@ export class Clase {
     
     getByParams = async(req,res)=>{} // obtiene por id
     
-    getById = async(req,res)=>{}
+    getById = async(id)=>{}
 }
