@@ -9,5 +9,5 @@ authRoutes.post('/auth',
         check('password', 'password es un campo requerido').notEmpty()
     ], auth.login)
 
-
+authRoutes.post('/auth/verify-token', auth.verifyToken)
 export default authRoutes;

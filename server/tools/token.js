@@ -17,15 +17,15 @@ export class Token {
 
             if (!comparePassword) return null;
 
-            const payload = {id:userEmpleado.id, nombre:userEmpleado.str_nombre, rol:userEmpleado.rol}
+            const payload = {id: userEmpleado.id, nombre: userEmpleado.str_nombre, rol: userEmpleado.rol}
 
             const token = jwt.sign(payload, SECRET_KEY);
 
             return {
                 token,
-                nombre:userEmpleado.str_nombre,
-                rol:userEmpleado.rol,
-                id:userEmpleado.id
+                nombre: userEmpleado.str_nombre,
+                rol: userEmpleado.rol,
+                id: userEmpleado.id
             }
 
         } catch (error) {
@@ -33,4 +33,14 @@ export class Token {
             return null;
         }
     }
+
+    verify = (token) => {
+        try{
+            const result = jwt.verify(token, SECRET_KEY);
+            return true;
+        }catch (error){
+            return false
+        }
+    }
+
 }
