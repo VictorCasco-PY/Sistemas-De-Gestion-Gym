@@ -5,7 +5,7 @@ import cors from "cors";
 import clientesRouter from "./routers/clientes.routes.js";
 import planesPagosRouter from "./routers/planes-de-pagos.routes.js";
 import empleadosRouter from "./routers/empleados.routes.js";
-
+import authRouter from "./routers/auth.routes.js";
 import medicionesClientesRoutes from "./routers/mediciones-clientes.routes.js";
 import tipoModalidadPagoRouter from "./routers/tipos-modalidades-de-pagos.routes.js";
 
@@ -30,6 +30,7 @@ app.use(clientesRouter);
 app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
 app.use(empleadosRouter)
+app.use(authRouter);
 
 app.get("/", async (req, res) => {
     res.json({

@@ -86,4 +86,13 @@ export class Empleado {
             return null;
         }
     }
+
+    getByUserName = async(user)=>{
+        try {
+            const empleado = await empleados.findOne({where: {user}});
+            return empleado;
+        } catch (error) {
+            return null;
+        }
+    }
 }
