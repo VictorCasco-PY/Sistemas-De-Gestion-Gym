@@ -52,9 +52,9 @@ export class Clientes {
     getAll = async (req, res) => {
         try {
             const result = await clientes.findAll();
-            res.json(result);
+            return res.json(result);
         } catch (error) {
-            res.json(error.message).status(500);
+            return res.json(error.message).status(500);
         }
     }
 
@@ -62,9 +62,10 @@ export class Clientes {
         try {
             const {id} = req.params;
             const result = await this.getById(id);
+            if(!result) res.status(404).send("No se ha encontrado un cliente con ese ID")
             return res.json(result);
         } catch (error) {
-            res.json(error).status(500);
+            return res.json(error).status(500);
         }
     }
 
