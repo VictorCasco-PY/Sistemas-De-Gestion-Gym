@@ -1,8 +1,8 @@
 import {check} from "express-validator";
 import {Router} from "express";
-import {Empleados} from "../controllers/empleados.controller.js";
+import {Empleado} from "../controllers/empleados.controller.js";
 
-const empleados = new Empleados();
+const empleados = new Empleado();
 const empleadosRoutes = Router();
 
 empleadosRoutes.post('/empleados', [

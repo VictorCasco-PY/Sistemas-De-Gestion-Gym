@@ -2,7 +2,7 @@ import {models} from "../models/models.js";
 
 const {tipos_modalidades_de_pagos} = models;
 
-export class TiposModalidadesDePagos {
+export class TipoModalidadDePago {
   getAll = async (req, res) => {
     try {
       const result = await tipos_modalidades_de_pagos.findAll();

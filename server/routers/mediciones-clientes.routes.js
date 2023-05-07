@@ -1,8 +1,8 @@
 import {Router} from "express";
 import {check} from "express-validator";
-import {MedicionesClientes} from "../controllers/mediciones_clientes.controller.js";
+import {MedicionCliente} from "../controllers/mediciones_clientes.controller.js";
 
-const medicionesClientes = new MedicionesClientes();
+const medicionesClientes = new MedicionCliente();
 
 // Aca vamos a cargar todas las rutas de planes de pagos
 const medicionesClientesRoutes = Router();

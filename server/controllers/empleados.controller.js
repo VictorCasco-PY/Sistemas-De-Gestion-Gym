@@ -4,7 +4,7 @@ import {bodyValidator} from "../tools/bodyValidator.js";
 
 const {empleados} = models;
 
-export class Empleados {
+export class Empleado {
     crear = async (req, res) => {
         try {
             const validator = bodyValidator(req);

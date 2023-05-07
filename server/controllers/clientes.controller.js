@@ -3,7 +3,7 @@ import {bodyValidator} from "../tools/bodyValidator.js";
 
 const {clientes} = models;
 
-export class Clientes {
+export class Cliente {
 
     crear = async (req, res) => {
         try {

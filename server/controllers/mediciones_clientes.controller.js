@@ -1,12 +1,12 @@
 import {models} from "../models/models.js";
 import {bodyValidator} from "../tools/bodyValidator.js";
-import {Clientes} from "./clientes.controller.js";
+import {Cliente} from "./clientes.controller.js";
 import {getDateNow} from "../tools/date.js";
 
-const clientes = new Clientes();
+const clientes = new Cliente();
 const {mediciones_clientes} = models;
 
-export class MedicionesClientes {
+export class MedicionCliente {
     /**
      * Registra una nueva medicion de un cliente
      */

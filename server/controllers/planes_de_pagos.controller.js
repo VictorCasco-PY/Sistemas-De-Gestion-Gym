@@ -2,15 +2,15 @@ import {validationResult} from "express-validator";
 import {models} from "../models/models.js";
 import {getDateNow, toDate} from "../tools/date.js";
 import {bodyValidator} from "../tools/bodyValidator.js";
-import {Clientes} from "./clientes.controller.js";
+import {Cliente} from "./clientes.controller.js";
 
-import {TiposModalidadesDePagos} from "./tipos_modalidades_de_pagos.js";
+import {TipoModalidadDePago} from "./tipos_modalidades_de_pagos.js";
 
 
 const {planes_de_pagos} = models;
 
-const tiposModalidadesDePagos = new TiposModalidadesDePagos();
-const clientes = new Clientes();
+const tiposModalidadesDePagos = new TipoModalidadDePago();
+const clientes = new Cliente();
 
 export class PlanesDePagos {
     /*
