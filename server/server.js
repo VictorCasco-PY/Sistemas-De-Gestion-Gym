@@ -28,7 +28,7 @@ app.use(clientesRouter);
 app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
 app.use(productosRoutes);
-app.use(proveedoresRoutes);
+//app.use(proveedoresRoutes);
 
 app.get("/", async (req, res) => {
     res.json({

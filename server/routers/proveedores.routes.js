@@ -1,11 +1,9 @@
 import { Router } from "express";
 import { check } from "express-validator";
 
-import { proveedores } from "../controllers/proveedores.controller.js";
+import { Proveedores } from "../controllers/proveedores.controller.js";
 
-
-
-const proveedores = new proveedores();
+const proveedores = new Proveedores();
 
 const proveedoresRoutes = Router();
 
