@@ -30,12 +30,18 @@ app.use(planesPagosRouter);
 app.use(clientesRouter);
 app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0b30b03233a8699099cde1eb9a4a7a6351dcd7aa
 app.use(productosRoutes);
 //app.use(proveedoresRoutes);
 app.use(empleadosRouter)
 app.use(authRouter);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0b30b03233a8699099cde1eb9a4a7a6351dcd7aa
 
 app.get("/", async (req, res) => {
     res.json({
