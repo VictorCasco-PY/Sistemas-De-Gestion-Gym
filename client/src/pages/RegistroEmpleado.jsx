@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 const RegistroEmpleado = () => {
   const [empleados, setEmpleados] = useState({
     user: "",
@@ -10,7 +11,7 @@ const RegistroEmpleado = () => {
     str_telefono: "",
     str_cedula: "",
     str_direccion: "",
-    str_rol: "",
+    rol: "",
   });
   const [mostrarInputTexto, setMostrarInputTexto] = useState(false);
   const [radioSeleccionado, setRadioSeleccionado] = useState("");
@@ -26,7 +27,7 @@ const RegistroEmpleado = () => {
     setRadioSeleccionado(event.target.value);
     setEmpleados({
       ...empleados,
-      str_rol: event.target.value,
+      rol: event.target.value,
     });
     setMostrarInputTexto(event.target.value === "entrenador");
   };
