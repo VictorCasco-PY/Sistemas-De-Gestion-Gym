@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const RegistroProveedores = () => {
-  const [proveedores, setEmpleados] = useState({
+  const [proveedores, setProveedores] = useState({
     str_nombre: "",
     str_direccion: "",
     str_telefono: "",
@@ -9,7 +9,7 @@ const RegistroProveedores = () => {
     str_correo: "",
   });
   const handleChange = (event) => {
-    setEmpleados({
+    setProveedores({
       ...proveedores,
       [event.target.name]: event.target.value,
     });
