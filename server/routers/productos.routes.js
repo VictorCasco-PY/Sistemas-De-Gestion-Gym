@@ -9,13 +9,13 @@ const productos = new Productos();
 
 const productosRoutes = Router();
 
-// Obtenemos todos los clientes
+// Obtenemos todos los productos
 productosRoutes.get("/productos", productos.getAll);
 
-// Obtenemos cliente por parametro id
+// Obtenemos producto por parametro id
 productosRoutes.get("/producto/:id", productos.getByParams);
 
-// Crear un nuevo cliente, los checks sirven para comprobar que los campos esten completos
+// Crear un nuevo producto, los checks sirven para comprobar que los campos esten completos
 productosRoutes.post(
     "/productos",
     [
