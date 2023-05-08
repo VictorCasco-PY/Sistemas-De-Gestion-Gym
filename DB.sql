@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`clientes` (
   `str_ruc` VARCHAR(200) NULL,
   `str_cedula` VARCHAR(200) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `str_ruc_UNIQUE` (`str_ruc` ASC) VISIBLE),
+  UNIQUE INDEX `str_ruc_UNIQUE` (`str_ruc` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`tipos_modalidades_de_pagos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `str_nombre` VARCHAR(200) NULL,
   `precio` DECIMAL NULL,
-  PRIMARY KEY (`id`)),
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -58,10 +58,10 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`planes_de_pagos` (
   `date_fecha_de_pago` DATE NULL,
   `date_fecha_de_registro` DATE NULL,
   `date_fecha_de_actualizacion` DATE NULL,
-  PRIMARY KEY (`id`)),
+  PRIMARY KEY (`id`),
   FOREIGN KEY (`id_cliente`) REFERENCES `GymDB`.`clientes`(`id`),
   FOREIGN KEY (`id_empleado`) REFERENCES `GymDB`.`empleados`(`id`),
-  FOREIGN KEY (`id_tipo_modalidad_de_pago`) REFERENCES `GymDB`.`tipos_modalidades_de_pagos`(`id`)
+  FOREIGN KEY (`id_tipo_modalidad_de_pago`) REFERENCES `GymDB`.`tipos_modalidades_de_pagos`(`id`))
 ENGINE = InnoDB;
 
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`empleados` (
   `time_inicio_trabajo` TIME NULL,
   `time_fin_trabajo` TIME NULL,
   `rol` ENUM("caja", "entrenador", "admin") NOT NULL,
-  PRIMARY KEY (`id`)),
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`facturas` (
   `iva_exenta` DECIMAL NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`id_cliente`) REFERENCES `GymDB`.`clientes`(`id`),
-  FOREIGN KEY (`id_timbarado`) REFERENCES `GymDB`.`timbrados`(`id`))
+  FOREIGN KEY (`id_timbrado`) REFERENCES `GymDB`.`timbrados`(`id`))
 ENGINE = InnoDB;
 
 
@@ -215,7 +215,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `GymDB`.`facturas_proveedores`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `GymDB`.`facturas_proveedores` (
+facturas_proveedoresCREATE TABLE IF NOT EXISTS `GymDB`.`facturas_proveedores` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_proveedor` INT NULL,
   `date_fecha` DATE NULL,
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`pagos_proveedor` (
   `date_fecha` DATE NULL,
   `total` DECIMAL NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_factura_proveedor`) REFERENCES `GymDB`.`factura_proveedor`(`id`))
+  FOREIGN KEY (`id_factura_proveedor`) REFERENCES `GymDB`.`facturas_proveedores`(`id`))
 ENGINE = InnoDB;
 
 
@@ -317,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `GymDB`.`cobros` (
   `date_fecha` DATE NULL,
   `time_hora` TIME NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_factura`) REFERENCES `GymDB`.`factura_proveedor`(`id`))
+  FOREIGN KEY (`id_factura`) REFERENCES `GymDB`.`facturas_proveedores`(`id`))
 ENGINE = InnoDB;
 
 

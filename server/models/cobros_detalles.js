@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class entrenadores extends Model {
+export default class cobros_detalles extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,25 +10,21 @@ export default class entrenadores extends Model {
       allowNull: false,
       primaryKey: true
     },
-    especialidad_id: {
+    id_cobro: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'especialidades',
+        model: 'cobros',
         key: 'id'
       }
     },
-    empleado_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'empleados',
-        key: 'id'
-      }
+    monto: {
+      type: DataTypes.DECIMAL(10,0),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'entrenadores',
+    tableName: 'cobros_detalles',
     timestamps: false,
     indexes: [
       {
@@ -40,17 +36,10 @@ export default class entrenadores extends Model {
         ]
       },
       {
-        name: "empleado_id_idx",
+        name: "id_cobro",
         using: "BTREE",
         fields: [
-          { name: "empleado_id" },
-        ]
-      },
-      {
-        name: "especialidad_id",
-        using: "BTREE",
-        fields: [
-          { name: "especialidad_id" },
+          { name: "id_cobro" },
         ]
       },
     ]

@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class especialidades extends Model {
+export default class cajas extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,13 +10,13 @@ export default class especialidades extends Model {
       allowNull: false,
       primaryKey: true
     },
-    nombre: {
+    str_nombre: {
       type: DataTypes.STRING(200),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'especialidades',
+    tableName: 'cajas',
     timestamps: false,
     indexes: [
       {

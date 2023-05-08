@@ -10,7 +10,7 @@ export default class stocks_productos extends Model {
       allowNull: false,
       primaryKey: true
     },
-    producto_id: {
+    id_producto: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
@@ -44,10 +44,10 @@ export default class stocks_productos extends Model {
         ]
       },
       {
-        name: "producto_id",
+        name: "id_producto",
         using: "BTREE",
         fields: [
-          { name: "producto_id" },
+          { name: "id_producto" },
         ]
       },
       {

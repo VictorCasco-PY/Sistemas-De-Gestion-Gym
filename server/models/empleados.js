@@ -10,6 +10,14 @@ export default class empleados extends Model {
       allowNull: false,
       primaryKey: true
     },
+    user: {
+      type: DataTypes.STRING(200),
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING(200),
+      allowNull: false
+    },
     str_nombre: {
       type: DataTypes.STRING(200),
       allowNull: true
@@ -34,13 +42,9 @@ export default class empleados extends Model {
       type: DataTypes.TIME,
       allowNull: true
     },
-    usuario_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'usuarios',
-        key: 'id'
-      }
+    rol: {
+      type: DataTypes.ENUM('caja','entrenador','admin'),
+      allowNull: false
     }
   }, {
     sequelize,
@@ -53,13 +57,6 @@ export default class empleados extends Model {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "usuario_id_idx",
-        using: "BTREE",
-        fields: [
-          { name: "usuario_id" },
         ]
       },
     ]

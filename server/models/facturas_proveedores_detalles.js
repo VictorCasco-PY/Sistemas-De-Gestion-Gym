@@ -10,7 +10,7 @@ export default class facturas_proveedores_detalles extends Model {
       allowNull: false,
       primaryKey: true
     },
-    factura_proveedor_id: {
+    id_factura_proveedor: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
@@ -18,13 +18,21 @@ export default class facturas_proveedores_detalles extends Model {
         key: 'id'
       }
     },
-    producto_id: {
+    id_producto: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'productos',
+        key: 'id'
+      }
     },
-    stock_id: {
+    id_stock: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'stocks',
+        key: 'id'
+      }
     },
     cantidad: {
       type: DataTypes.INTEGER,
@@ -52,10 +60,24 @@ export default class facturas_proveedores_detalles extends Model {
         ]
       },
       {
-        name: "factura_proveedor_id",
+        name: "id_factura_proveedor",
         using: "BTREE",
         fields: [
-          { name: "factura_proveedor_id" },
+          { name: "id_factura_proveedor" },
+        ]
+      },
+      {
+        name: "id_producto",
+        using: "BTREE",
+        fields: [
+          { name: "id_producto" },
+        ]
+      },
+      {
+        name: "id_stock",
+        using: "BTREE",
+        fields: [
+          { name: "id_stock" },
         ]
       },
     ]

@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { check } from "express-validator";
 
-import {Clientes} from "../controllers/clientes.controller.js";
+import {Cliente} from "../controllers/clientes.controller.js";
 import { PlanesDePagos } from "../controllers/planes_de_pagos.controller.js";
-import {MedicionesClientes} from "../controllers/mediciones_clientes.controller.js";
+import {MedicionCliente} from "../controllers/mediciones_clientes.controller.js";
 
 
-const clientes = new Clientes();
-const medicionesClientes = new MedicionesClientes();
+const clientes = new Cliente();
+const medicionesClientes = new MedicionCliente();
 const planesDePagos = new PlanesDePagos();
 const clientesRoutes = Router();
 
@@ -34,13 +34,13 @@ clientesRoutes.delete("/cliente/:id", clientes.delete)
 
 // Obtener el plan de pago del cliente
 clientesRoutes.get(
-  "/cliente/:cliente_id/plan-de-pago",
+  "/cliente/:id_cliente/plan-de-pago",
   planesDePagos.getPlanDePagoDeClienteByParams
 );
 
 // Obtener la medicion del cliente
 clientesRoutes.get(
-  "/cliente/:cliente_id/medicion-cliente",
+  "/cliente/:id_cliente/medicion-cliente",
   medicionesClientes.getMedicionesDeCliente
 );
 

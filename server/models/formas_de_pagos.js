@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class usuarios extends Model {
+export default class formas_de_pagos extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,18 +10,13 @@ export default class usuarios extends Model {
       allowNull: false,
       primaryKey: true
     },
-    user: {
+    str_forma: {
       type: DataTypes.STRING(200),
-      allowNull: true,
-      unique: "user_UNIQUE"
-    },
-    pass: {
-      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'usuarios',
+    tableName: 'formas_de_pagos',
     timestamps: false,
     indexes: [
       {
@@ -30,14 +25,6 @@ export default class usuarios extends Model {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "user_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "user" },
         ]
       },
     ]

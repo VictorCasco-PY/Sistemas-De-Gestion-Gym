@@ -1,12 +1,15 @@
 import express from "express";
-import clientesRouter from "./routers/clientes.routes.js";
 import bodyParser from "body-parser";
+import cors from "cors";
+
+import clientesRouter from "./routers/clientes.routes.js";
 import planesPagosRouter from "./routers/planes-de-pagos.routes.js";
+import empleadosRouter from "./routers/empleados.routes.js";
+import authRouter from "./routers/auth.routes.js";
 import medicionesClientesRoutes from "./routers/mediciones-clientes.routes.js";
 import tipoModalidadPagoRouter from "./routers/tipos-modalidades-de-pagos.routes.js";
 import productosRoutes from "./routers/productos.routes.js"
 import proveedoresRoutes from  "./routers/proveedores.routes.js";
-import cors from "cors";
 
 const app = express();
 
@@ -27,8 +30,13 @@ app.use(planesPagosRouter);
 app.use(clientesRouter);
 app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
+<<<<<<< HEAD
 app.use(productosRoutes);
 //app.use(proveedoresRoutes);
+=======
+app.use(empleadosRouter)
+app.use(authRouter);
+>>>>>>> 7d8edecfdf4fc8283fdce8e81f4dc3e6f119976f
 
 app.get("/", async (req, res) => {
     res.json({

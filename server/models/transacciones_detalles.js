@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class facturas_detalles extends Model {
+export default class transacciones_detalles extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -10,49 +10,33 @@ export default class facturas_detalles extends Model {
       allowNull: false,
       primaryKey: true
     },
-    id_factura: {
+    id_transaccion: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'facturas',
+        model: 'transacciones',
         key: 'id'
       }
     },
-    id_producto: {
+    id_forma_de_pago: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'productos',
+        model: 'formas_de_pagos',
         key: 'id'
       }
     },
-    id_plan_de_pago: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'planes_de_pagos',
-        key: 'id'
-      }
+    str_forma_de_pago: {
+      type: DataTypes.STRING(200),
+      allowNull: true
     },
     subtotal: {
-      type: DataTypes.DECIMAL(10,0),
-      allowNull: true
-    },
-    cantidad: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    precio: {
-      type: DataTypes.DECIMAL(10,0),
-      allowNull: true
-    },
-    iva: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'facturas_detalles',
+    tableName: 'transacciones_detalles',
     timestamps: false,
     indexes: [
       {
@@ -64,24 +48,17 @@ export default class facturas_detalles extends Model {
         ]
       },
       {
-        name: "id_factura",
+        name: "id_transaccion",
         using: "BTREE",
         fields: [
-          { name: "id_factura" },
+          { name: "id_transaccion" },
         ]
       },
       {
-        name: "id_producto",
+        name: "id_forma_de_pago",
         using: "BTREE",
         fields: [
-          { name: "id_producto" },
-        ]
-      },
-      {
-        name: "id_plan_de_pago",
-        using: "BTREE",
-        fields: [
-          { name: "id_plan_de_pago" },
+          { name: "id_forma_de_pago" },
         ]
       },
     ]

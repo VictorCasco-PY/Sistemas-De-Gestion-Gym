@@ -10,13 +10,9 @@ export default class facturas_proveedores extends Model {
       allowNull: false,
       primaryKey: true
     },
-    proveedor_id: {
+    id_proveedor: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'proveedores',
-        key: 'id'
-      }
+      allowNull: true
     },
     date_fecha: {
       type: DataTypes.DATEONLY,
@@ -37,13 +33,6 @@ export default class facturas_proveedores extends Model {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "proveedor_id",
-        using: "BTREE",
-        fields: [
-          { name: "proveedor_id" },
         ]
       },
     ]

@@ -1,8 +1,8 @@
 import {Router} from "express";
 import {check} from "express-validator";
-import {MedicionesClientes} from "../controllers/mediciones_clientes.controller.js";
+import {MedicionCliente} from "../controllers/mediciones_clientes.controller.js";
 
-const medicionesClientes = new MedicionesClientes();
+const medicionesClientes = new MedicionCliente();
 
 // Aca vamos a cargar todas las rutas de planes de pagos
 const medicionesClientesRoutes = Router();
@@ -13,7 +13,7 @@ medicionesClientesRoutes.get("/mediciones-clientes/:id", medicionesClientes.getB
 medicionesClientesRoutes.post(
     "/mediciones-clientes",
     [
-        check("cliente_id", "cliente_id es un campo requerido").notEmpty(),
+        check("id_cliente", "id_cliente es un campo requerido").notEmpty(),
         check("peso", "peso es un campo requerido").notEmpty(),
         check("altura", "altura es un campo requerido").notEmpty(),
         check("cintura", "cintura es un campo requerido").notEmpty(),
