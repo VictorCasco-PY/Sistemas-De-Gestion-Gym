@@ -19,6 +19,10 @@ export default class productos extends Model {
       type: DataTypes.STRING(200),
       allowNull: true
     },
+    str_codigo: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
     precio: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
