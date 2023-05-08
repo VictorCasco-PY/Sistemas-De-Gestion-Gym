@@ -30,13 +30,12 @@ app.use(planesPagosRouter);
 app.use(clientesRouter);
 app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
-<<<<<<< HEAD
+
 app.use(productosRoutes);
 //app.use(proveedoresRoutes);
-=======
 app.use(empleadosRouter)
 app.use(authRouter);
->>>>>>> 7d8edecfdf4fc8283fdce8e81f4dc3e6f119976f
+
 
 app.get("/", async (req, res) => {
     res.json({
