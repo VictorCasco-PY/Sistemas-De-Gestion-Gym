@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function EditableInput({ defaultValue, id, apiUrl, campoCambiar }) { //UTILIZAR EL TERCER PARAMETRO
   const [title, setTitle] = useState(defaultValue);
+  const inputRef = useRef(null);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value.trim());
@@ -14,17 +15,22 @@ function EditableInput({ defaultValue, id, apiUrl, campoCambiar }) { //UTILIZAR 
       .catch(error => console.error(error));
   }, [id, apiUrl]);
 
-  const handleTitleBlur = () => {
-    const newItem = { str_nombre: title }; //ARREGLAR ESTO
+  const handleTitleBlur = (event) => {
+    const input = event.target;
+    const currentValue = input.value.trim();
+
+    const newItem = { ...title, str_nombre: currentValue };
     axios.put(`${apiUrl}/${id}`, newItem)
       .then(() => console.log('Title updated successfully'))
       .catch((error) => console.error(error));
+
+      input.blur();
   };
 
   const handleTitleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      handleTitleBlur();
+      handleTitleBlur(event);
     }
   };
 
