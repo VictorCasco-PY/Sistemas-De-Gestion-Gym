@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function EditableInput({ defaultValue, id, apiUrl, campoCambiar }) {
+function EditableInput({ defaultValue, id, apiUrl, campoCambiar }) { //UTILIZAR EL TERCER PARAMETRO
   const [title, setTitle] = useState(defaultValue);
 
   const handleTitleChange = (event) => {
@@ -15,7 +15,7 @@ function EditableInput({ defaultValue, id, apiUrl, campoCambiar }) {
   }, [id, apiUrl]);
 
   const handleTitleBlur = () => {
-    const newItem = { str_nombre: title };
+    const newItem = { str_nombre: title }; //ARREGLAR ESTO
     axios.put(`${apiUrl}/${id}`, newItem)
       .then(() => console.log('Title updated successfully'))
       .catch((error) => console.error(error));
