@@ -12,6 +12,7 @@ export class Productos {
       const { str_nombre } = body;
       if (await this.getByNombre({ str_nombre })) return res.status(409).json({ error: "El producto ya esta registrado" });
       const result = await productos.create({ ...body });
+      console.log('asdfafsdasdfa');
       res.json(result);
     } catch (error) {
       return res.json(error);
@@ -57,6 +58,16 @@ export class Productos {
       res.json(error).status(500);
     }
   }
+
+  getByNombre = async (str_nombre) =>{
+    try{
+      const result = await productos.findOne({where: {str_nombre}});
+      return result;
+    }catch(error){
+      return null;
+    }
+  }
+
   getById = async (id) => {
     try {
       const result = await productos.findOne({ where: { id } });
