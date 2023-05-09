@@ -16,3 +16,5 @@ module.exports = {
         await queryInterface.bulkDelete('tipos_modalidades_de_pagos');
     }
 };
+//Seeder para cargar los tipos de pago
+//npx sequelize db:seed --seed 20230507034104-tiposDePagos.js
