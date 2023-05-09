@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'
 
 const RegistroCliente = () => {
     let id_cliente = null;
@@ -9,42 +8,16 @@ const RegistroCliente = () => {
     const [pasoActual, setPasoActual] = useState(1);
     const [datosCompletos, setDatosCompletos] = useState(false);
 
-    // valores correspondientes a cada tipo de modalidad de pago
-    const valoresMontoAPagar = {
-        1: "10.000 Gs.",
-        2: "50.000 Gs.",
-        3: "150.000 Gs."
-    };
-
-    // datos personales del cliente
+    // FUNCIONES DE DATOS DEL CLIENTE
     const [cliente, setCliente] = useState(
         {
             str_nombre: "",
             edad: "",
             str_direccion: "",
             str_ruc: "",
+            str_cedula: ""
         }
     );
-
-    // plan de pago del cliente
-    const [planDePago, setPlanDePago] = useState({
-        cliente_id: "",
-        tipo_modalidad_de_pago_id: "",
-        date_fecha_de_vencimiento: "",
-        entrenador_id: null,
-    });
-
-    // mediciones del cliente
-    const [mediciones, setMediciones] = useState({
-        cliente_id: "",
-        peso: "",
-        altura: "",
-        cintura: "",
-        piernas: "",
-        porcentaje_grasa_corporal: ""
-    });
-
-
     // función para manejar cambios en los inputs
     const handleChangeCliente = (event) => {
         setCliente({
@@ -80,6 +53,30 @@ const RegistroCliente = () => {
         setPasoActual(2);
     };
 
+    // comprueba si esos campos estan vacios
+    useEffect(() => {
+        const camposCompletos =
+            cliente.str_nombre !== "" &&
+            cliente.edad !== "" &&
+            cliente.str_direccion !== "" &&
+            cliente.str_ruc !== "" &&
+            cliente.str_cedula !== "";
+        setDatosCompletos(camposCompletos);
+    }, [cliente]);
+
+    // FUNCIONES DE PLAN DE PAGO
+    const [planDePago, setPlanDePago] = useState({
+        cliente_id: "",
+        tipo_modalidad_de_pago_id: "",
+        date_fecha_de_vencimiento: "",
+        entrenador_id: null,
+    });
+    // valores correspondientes a cada tipo de modalidad de pago
+    const valoresMontoAPagar = {
+        1: "10.000 Gs.",
+        2: "50.000 Gs.",
+        3: "150.000 Gs."
+    };
     // Función para manejar la selección del tipo de modalidad de pago
     const handleTipoModalidadDePago = (tipoModalidadDePagoId) => {
         setPlanDePago({
@@ -107,7 +104,15 @@ const RegistroCliente = () => {
             console.log(error)
         }
     }
-
+    // FUNCIONES DE MEDICIONES
+    const [mediciones, setMediciones] = useState({
+        cliente_id: "",
+        peso: "",
+        altura: "",
+        cintura: "",
+        piernas: "",
+        porcentaje_grasa_corporal: ""
+    });
     // manejo de inputs de mediciones
     const handleMedicionesChange = (event) => {
         event.preventDefault();
@@ -116,38 +121,24 @@ const RegistroCliente = () => {
             [event.target.name]: event.target.value,
         })
     }
-
-    // envio de mediciones
-    const handleMedicionesSubmit = async (event) => {
+    // post de mediciones
+    const handleSubmitMediciones = async (event) => {
         event.preventDefault();
         try {
             const response = await axios.post("http://localhost:8000/mediciones-clientes", mediciones);
             console.log(response.data);
-            Swal.fire(
-                'Buen trabajo!',
-                'Cliente creado correctamente!',
-                'success'
-            );
             navigate("/listaClientes");
         } catch (error) {
             console.log(error);
         }
     }
 
-    // comprueba si esos campos estan vacios
-    useEffect(() => {
-        const camposCompletos =
-            cliente.str_nombre !== "" &&
-            cliente.edad !== "" &&
-            cliente.str_direccion !== "" &&
-            cliente.str_ruc !== "";
-        setDatosCompletos(camposCompletos);
-    }, [cliente]);
+
 
     return (
         <div className="columns is-centered mt-6">
             <div className="container is-max-desktop is-centered">
-                <div className="box is-centered">
+                <div className="box is-centered has-background-white-ter">
                     <h1 className="title is-1 mb-6">Registro De Cliente</h1>
                     <hr />
                     <form>
@@ -155,21 +146,29 @@ const RegistroCliente = () => {
                             <>
                                 <h2 className="title is-2 has-text-centered mt-6">Datos del cliente</h2>
                                 <div className="columns">
-                                    <div className="column is-three-fifths">
-                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_nombre" value={cliente.str_nombre} onChange={handleChangeCliente} placeholder='Nombres Y Apellidos' />
+                                    <div className="column is-half">
+                                        <input className="input is-primary mb-2" type="text" name="str_nombre" placeholder="Nombre Y Apellido" value={cliente.str_nombre} onChange={handleChangeCliente} />
                                     </div>
-                                    <div className="column">
-                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="number" name="edad" value={cliente.edad} onChange={handleChangeCliente} placeholder='Edad' />
+                                    <div className="column is-half">
+                                        <input className="input is-primary mb-2" type="text" name="edad" placeholder="Edad" value={cliente.edad} onChange={handleChangeCliente} />
                                     </div>
                                 </div>
+
                                 <div className="columns">
-                                    <div className="column is-three-fifths">
-                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_direccion" value={cliente.str_direccion} onChange={handleChangeCliente} placeholder='Dirección' />
+                                    <div className="column is-half">
+                                        <input className="input is-primary mb-2" type="text" name="str_direccion" placeholder="Dirección" value={cliente.str_direccion} onChange={handleChangeCliente} />
                                     </div>
-                                    <div className="column">
-                                        <input className="input is-primary has-text-centered has-placeholder-centered has-text-weight-bold" type="text" name="str_ruc" value={cliente.str_ruc} onChange={handleChangeCliente} placeholder='RUC' />
+                                    <div className="column is-half">
+                                        <input className="input is-primary mb-2" type="text" name="str_ruc" placeholder="RUC" value={cliente.str_ruc} onChange={handleChangeCliente} />
                                     </div>
                                 </div>
+
+                                <div className="columns">
+                                    <div className="column is-half">
+                                        <input className="input is-primary mb-2" type="text" name="str_cedula" placeholder="Cédula de Identidad" value={cliente.str_cedula} onChange={handleChangeCliente} />
+                                    </div>
+                                </div>
+
                                 <div className="buttons">
                                     <button className="button is-primary is-outlined mt-2 ml-auto" type='button' onClick={handleSubmitCliente} disabled={!datosCompletos}>Siguiente</button>
                                 </div>
@@ -192,7 +191,6 @@ const RegistroCliente = () => {
                                     </div>
                                 </div>
                                 <div className="buttons">
-                                    <button className="button is-outlined mt-2 ml-auto" type='button' onClick={() => setPasoActual(1)}>Atrás</button>
                                     <button className="button is-primary is-outlined mt-2 mx-2" type='button' onClick={handleSubmitPlanDePago}>Siguiente</button>
                                 </div>
                             </>
@@ -252,8 +250,7 @@ const RegistroCliente = () => {
                                 </div>
 
                                 <div className="buttons">
-                                    <button className="button is-outlined mt-2 ml-auto" type='button' onClick={() => setPasoActual(2)}>Atrás</button>
-                                    <button className="button is-primary is-outlined mt-2 mx-2" type="button" onClick={handleMedicionesSubmit}>Registrar</button>
+                                    <button className="button is-primary is-outlined mt-2 mx-2" type="button" onClick={handleSubmitMediciones}>Registrar</button>
                                 </div>
 
                             </>

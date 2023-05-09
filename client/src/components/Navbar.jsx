@@ -6,7 +6,7 @@ const Navbar = () => {
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <a className="navbar-item">
-                    <img src={logo} width="300" />
+                    <img src={logo} />
                 </a>
 
                 <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
