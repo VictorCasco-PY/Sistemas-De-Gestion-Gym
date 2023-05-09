@@ -22,7 +22,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}`)
             .then(response => setClientePers(response.data))
             .catch(error => console.log(error));
-
+        console.log(clientePers)
     }, []);
 
     if (!cliente || !clientePers) {
@@ -33,11 +33,11 @@ export function DetallesCliente() {
         <div className='columns is-flex-direction-column is-align-content-center is-multiline is-centered'>
             <div className="column columns is-half headerTitle clienteHeader m-2">
                 <div className='is-flex is-justify-content-center column headerTitle has-text-centered'>
-                    <h1>{cliente.str_nombre_cliente}</h1>
                     <EditableInput
-                        defaultValue={cliente.str_nombre_cliente}
+                    defaultValue={clientePers.str_nombre}
                         id={id}
                         apiUrl="http://localhost:8000/cliente"
+                        campoCambiar="str_nombre"
                     />
                 </div>
                 <div className="column">
