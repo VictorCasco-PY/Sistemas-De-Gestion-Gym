@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function EditableInput({ defaultValue, id, apiUrl, campoCambiar }) { //UTILIZAR EL TERCER PARAMETRO
   const [title, setTitle] = useState(defaultValue);
-  const inputRef = useRef(null);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value.trim());
