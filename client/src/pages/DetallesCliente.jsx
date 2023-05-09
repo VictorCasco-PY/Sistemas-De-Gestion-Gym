@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import EditableInput from '../components/EditableInput';
 
 export function DetallesCliente() {
     const id = useParams().name;
@@ -13,7 +14,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
             .then(response => setClienteMed(response.data))
             .catch(error => console.log(error));
-        console.log(clienteMed)
+
         axios.get(`http://localhost:8000/cliente/${id}/plan-de-pago`)
             .then(response => setCliente(response.data))
             .catch(error => console.log(error));
@@ -21,7 +22,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}`)
             .then(response => setClientePers(response.data))
             .catch(error => console.log(error));
-        
+
     }, []);
 
     if (!cliente || !clientePers) {
@@ -33,6 +34,11 @@ export function DetallesCliente() {
             <div className="column columns is-half headerTitle clienteHeader m-2">
                 <div className='is-flex is-justify-content-center column headerTitle has-text-centered'>
                     <h1>{cliente.str_nombre_cliente}</h1>
+                    <EditableInput
+                        defaultValue={cliente.str_nombre_cliente}
+                        id={id}
+                        apiUrl="http://localhost:8000/cliente"
+                    />
                 </div>
                 <div className="column">
                     <div className="infoBubble">

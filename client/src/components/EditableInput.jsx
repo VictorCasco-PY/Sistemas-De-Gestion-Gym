@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function EditableTitle({ item, list }) {
-  const [title, setTitle] = useState(item.title);
+function EditableInput({ defaultValue, id, apiUrl }) {
+  const [title, setTitle] = useState(defaultValue);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value.trim());
   };
 
   const handleTitleBlur = () => {
-    const newItem = { ...item, title };
-    axios.put(`/lists/${list.id}/todos/${item.id}`, newItem)
+    const newItem = { title };
+    axios.put(`${apiUrl}/${id}`, newItem)
       .then(() => console.log('Title updated successfully'))
       .catch((error) => console.error(error));
   };
@@ -34,4 +34,4 @@ function EditableTitle({ item, list }) {
   );
 }
 
-export default EditableTitle;
+export default EditableInput;

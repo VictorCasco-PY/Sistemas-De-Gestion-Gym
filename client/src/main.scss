@@ -130,3 +130,24 @@
   .sortIcon.active.asc:after {
     content: "▼";
   }
+
+  .editable-text {
+    padding: 0.3rem;
+    background-color: inherit;
+
+    &:hover {
+        background-color: lightblue;
+    }
+}
+
+.editable-title {
+    padding: 0;
+    background-color: inherit;
+    border: none;
+    box-shadow: none;
+    height: 2rem;
+
+    &:hover {
+        background-color: lightblue;
+    }
+}

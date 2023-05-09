@@ -1,4 +1,9 @@
 @charset "UTF-8";
+.navbar-item img {
+  height: 50px;
+  max-height: 50px;
+}
+
 .pageSkeleton {
   display: flex;
   flex-direction: column;
@@ -117,4 +122,23 @@
 
 .sortIcon.active.asc:after {
   content: "▼";
+}
+
+.editable-text {
+  padding: 0.3rem;
+  background-color: inherit;
+}
+.editable-text:hover {
+  background-color: lightblue;
+}
+
+.editable-title {
+  padding: 0;
+  background-color: inherit;
+  border: none;
+  box-shadow: none;
+  height: 2rem;
+}
+.editable-title:hover {
+  background-color: lightblue;
 }/*# sourceMappingURL=main.css.map */
