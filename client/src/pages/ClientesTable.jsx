@@ -111,7 +111,7 @@ export default function ClientesTable() {
                   </button>
                 </td>
                 <td className='is-size-5'>
-                  <Link to={`/detallesCliente/${cliente.cliente_id}`}>
+                  <Link to={`/detallesCliente/${cliente.id_cliente}`}>
                     <button className="button is-link is-rounded is-outlined">Ver Mas</button>
                   </Link>
                 </td>
