@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
+
 const RegistroCliente = () => {
-    let id_cliente = null;
+    let getIdCliente = null;
     const navigate = useNavigate();
     const [pasoActual, setPasoActual] = useState(1);
     const [datosCompletos, setDatosCompletos] = useState(false);
@@ -31,26 +32,25 @@ const RegistroCliente = () => {
         event.preventDefault();
         try {
             const response = await axios.post("http://localhost:8000/clientes", cliente);
-            id_cliente = response.data.id;
+            getIdCliente = response.data.id;
             console.log(response.data);
-            console.log("id del cliente:", id_cliente);
+            console.log("id del cliente:", getIdCliente);
 
             // Seteamos la id del cliente en el plan de pago
             setPlanDePago({
                 ...planDePago,
-                cliente_id: id_cliente
+                id_cliente: getIdCliente
             });
 
             // Seteamos la id del cliente en las mediciones
             setMediciones({
                 ...mediciones,
-                cliente_id: id_cliente
+                id_cliente: getIdCliente
             });
-
+            setPasoActual(2);
         } catch (error) {
             console.log(error);
         }
-        setPasoActual(2);
     };
 
     // comprueba si esos campos estan vacios
@@ -66,10 +66,9 @@ const RegistroCliente = () => {
 
     // FUNCIONES DE PLAN DE PAGO
     const [planDePago, setPlanDePago] = useState({
-        cliente_id: "",
-        tipo_modalidad_de_pago_id: "",
+        id_cliente: "",
+        id_tipo_modalidad_de_pago: "",
         date_fecha_de_vencimiento: "",
-        entrenador_id: null,
     });
     // valores correspondientes a cada tipo de modalidad de pago
     const valoresMontoAPagar = {
@@ -81,7 +80,7 @@ const RegistroCliente = () => {
     const handleTipoModalidadDePago = (tipoModalidadDePagoId) => {
         setPlanDePago({
             ...planDePago,
-            tipo_modalidad_de_pago_id: tipoModalidadDePagoId
+            id_tipo_modalidad_de_pago: tipoModalidadDePagoId
         });
     };
 
@@ -96,22 +95,23 @@ const RegistroCliente = () => {
     // envio de plan de pago del cliente
     const handleSubmitPlanDePago = async (event) => {
         event.preventDefault();
-        setPasoActual(3);
         try {
             const response = await axios.post("http://localhost:8000/planes-de-pagos", planDePago);
             console.log(response.data);
+            setPasoActual(3);
         } catch (error) {
             console.log(error)
         }
     }
     // FUNCIONES DE MEDICIONES
     const [mediciones, setMediciones] = useState({
-        cliente_id: "",
+        id_cliente: "",
         peso: "",
         altura: "",
         cintura: "",
         piernas: "",
-        porcentaje_grasa_corporal: ""
+        porcentaje_grasa_corporal: "",
+        brazos: ""
     });
     // manejo de inputs de mediciones
     const handleMedicionesChange = (event) => {
@@ -170,7 +170,7 @@ const RegistroCliente = () => {
                                 </div>
 
                                 <div className="buttons">
-                                    <button className="button is-primary is-outlined mt-2 ml-auto" type='button' onClick={handleSubmitCliente} disabled={!datosCompletos}>Siguiente</button>
+                                    <button className="button is-primary is-outlined mt-2 ml-auto" type='button' onClick={handleSubmitCliente}>Siguiente</button>
                                 </div>
                             </>
                         )}
@@ -183,7 +183,7 @@ const RegistroCliente = () => {
                                     <button className="button is-primary is-outlined mx-1" type='button' onClick={() => handleTipoModalidadDePago(2)}>Semanal</button>
                                     <button className="button is-primary is-outlined mx-1" type='button' onClick={() => handleTipoModalidadDePago(3)}>Mensual</button>
                                 </div>
-                                <div className="title is-5 has-text-centered mt-2">Monto a Pagar: {valoresMontoAPagar[planDePago.tipo_modalidad_de_pago_id]}</div>
+                                <div className="title is-5 has-text-centered mt-2">Monto a Pagar: {valoresMontoAPagar[planDePago.id_tipo_modalidad_de_pago]}</div>
                                 <div className="has-text-centered">
                                     <h3 className="title is-3">Fecha de Pago</h3>
                                     <div className="is-flex is-justify-content-center">
@@ -191,7 +191,7 @@ const RegistroCliente = () => {
                                     </div>
                                 </div>
                                 <div className="buttons">
-                                    <button className="button is-primary is-outlined mt-2 mx-2" type='button' onClick={handleSubmitPlanDePago}>Siguiente</button>
+                                    <button className="button is-primary is-outlined mt-2 ml-auto" type='button' onClick={handleSubmitPlanDePago}>Siguiente</button>
                                 </div>
                             </>
                         )}
@@ -200,52 +200,25 @@ const RegistroCliente = () => {
                             <>
                                 <h2 className="title is-2 has-text-centered mt-6">Mediciones</h2>
                                 <div className="columns">
-                                    <div className="column is-half">
-                                        <div className="field is-horizontal">
-                                            <div className="field-body is-flex is-align-items-center is-justify-content-center">
-                                                <label htmlFor="altura" className="label has-text-centered mr-2">Altura</label>
-                                                <div className="field">
-                                                    <input className="input has-text-centered mt-2" type="number" name="altura" value={mediciones.altura} onChange={handleMedicionesChange} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="field is-horizontal">
-                                            <div className="field-body is-flex is-align-items-center is-justify-content-center">
-                                                <label htmlFor="peso" className="label has-text-centered mr-2">Peso</label>
-                                                <div className="field">
-                                                    <input className="input has-text-centered mt-2" type="number" name="peso" value={mediciones.peso} onChange={handleMedicionesChange} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="field is-horizontal">
-                                            <div className="field-body is-flex is-align-items-center is-justify-content-center">
-                                                <label htmlFor="cintura" className="label has-text-centered mr-2">Cintura</label>
-                                                <div className="field">
-                                                    <input className="input has-text-centered mt-2" type="number" name="cintura" value={mediciones.cintura} onChange={handleMedicionesChange} />
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <input className="input is-primary" type="text" name="peso" placeholder="Peso" value={mediciones.peso} onChange={handleMedicionesChange} /><span>cm</span>
                                     </div>
-                                    <div className="column is-half">
-                                        <div className="field is-horizontal">
-                                            <div className="field-body is-flex is-align-items-center is-justify-content-center">
-                                                <label htmlFor="piernas" className="label has-text-centered mr-2">Piernas</label>
-                                                <div className="field">
-                                                    <input className="input has-text-centered mt-2" type="number" name="piernas" value={mediciones.piernas} onChange={handleMedicionesChange} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="field is-horizontal">
-                                            <div className="field-body is-flex is-align-items-center is-justify-content-center">
-                                                <label htmlFor="porcentaje_grasa_corporal" className="label has-text-centered mr-2">% grasa corporal</label>
-                                                <div className="field">
-                                                    <input className="input has-text-centered mt-2" type="number" name="porcentaje_grasa_corporal" value={mediciones.porcentaje_grasa_corporal} onChange={handleMedicionesChange} />
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <input className="input is-primary" type="text" name="altura" placeholder="Altura" value={mediciones.altura} onChange={handleMedicionesChange} /><span>cm</span>
+                                    </div>
+                                    <div>
+                                        <input className="input is-primary" type="text" name="cintura" placeholder="Cintura" value={mediciones.cintura} onChange={handleMedicionesChange} /><span>cm</span>
+                                    </div>
+                                </div>
+                                <div className="columns">
+                                    <div>
+                                        <input className="input is-primary" type="text" name="piernas" placeholder="Piernas" value={mediciones.piernas} onChange={handleMedicionesChange} /><span>cm</span>
+                                    </div>
+                                    <div>
+                                        <input className="input is-primary" type="text" name="porcentaje_grasa_corporal" placeholder="% de grasa corporal" value={mediciones.porcentaje_grasa_corporal} onChange={handleMedicionesChange} /><span>%</span>
+                                    </div>
+                                    <div>
+                                        <input className="input is-primary" type="text" name="brazos" placeholder="Brazos" value={mediciones.brazos} onChange={handleMedicionesChange} /><span>cm</span>
                                     </div>
                                 </div>
 
