@@ -11,7 +11,7 @@ const proveedoresRoutes = Router();
 proveedoresRoutes.get("/proveedores", proveedores.getAll);
 
 // Obtenemos proveedor por parametro id
-proveedoresRoutes.get("/proveedores/:id", proveedores.getByParams);
+proveedoresRoutes.get("/proveedor/:id", proveedores.getByParams);
 
 // Crear un nuevo proveedor, los checks sirven para comprobar que los campos esten completos
 proveedoresRoutes.post(

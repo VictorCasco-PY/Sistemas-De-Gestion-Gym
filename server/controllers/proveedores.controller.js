@@ -5,7 +5,7 @@ const { proveedores } = models;
 
 export class Proveedores {
   crear = async (req, res) => {
-    try {s
+    try {
       const validator = bodyValidator(req);
       if (validator) return res.status(400).json(validator);
       const { body } = req;
@@ -55,6 +55,14 @@ export class Proveedores {
       return res.json(result);
     } catch (error) {
       res.json(error).status(500);
+    }
+  }
+  getByNombre = async (str_nombre) =>{
+    try{
+      const result = await proveedores.findOne({where: {str_nombre}});
+      return result;
+    }catch(error){
+      return null;
     }
   }
   getById = async (id) => {
