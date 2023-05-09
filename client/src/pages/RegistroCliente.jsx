@@ -150,7 +150,7 @@ const RegistroCliente = () => {
                                         <input className="input is-primary mb-2" type="text" name="str_nombre" placeholder="Nombre Y Apellido" value={cliente.str_nombre} onChange={handleChangeCliente} />
                                     </div>
                                     <div className="column is-half">
-                                        <input className="input is-primary mb-2" type="text" name="edad" placeholder="Edad" value={cliente.edad} onChange={handleChangeCliente} />
+                                        <input className="input is-primary mb-2" type="number" name="edad" placeholder="Edad" value={cliente.edad} onChange={handleChangeCliente} />
                                     </div>
                                 </div>
 
