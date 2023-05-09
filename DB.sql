@@ -215,7 +215,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `GymDB`.`facturas_proveedores`
 -- -----------------------------------------------------
-facturas_proveedoresCREATE TABLE IF NOT EXISTS `GymDB`.`facturas_proveedores` (
+CREATE TABLE IF NOT EXISTS `GymDB`.`facturas_proveedores` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_proveedor` INT NULL,
   `date_fecha` DATE NULL,

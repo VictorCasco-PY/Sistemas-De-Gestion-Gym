@@ -13,7 +13,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
             .then(response => setClienteMed(response.data))
             .catch(error => console.log(error));
-
+        console.log(clienteMed)
         axios.get(`http://localhost:8000/cliente/${id}/plan-de-pago`)
             .then(response => setCliente(response.data))
             .catch(error => console.log(error));
@@ -21,7 +21,7 @@ export function DetallesCliente() {
         axios.get(`http://localhost:8000/cliente/${id}`)
             .then(response => setClientePers(response.data))
             .catch(error => console.log(error));
-        console.log(clienteMed)
+        
     }, []);
 
     if (!cliente || !clientePers) {
