@@ -7,7 +7,8 @@ import tipoModalidadPagoRouter from "./routers/tipos-modalidades-de-pagos.routes
 import productosRoutes from "./routers/productos.routes.js"
 import proveedoresRoutes from  "./routers/proveedores.routes.js";
 import cors from "cors";
-
+import empleadosRoutes from "./routers/empleados.routes.js";
+import authRoutes from "./routers/auth.routes.js";
 const app = express();
 
 app.use(
@@ -29,6 +30,8 @@ app.use(medicionesClientesRoutes);
 app.use(tipoModalidadPagoRouter);
 app.use(productosRoutes);
 //app.use(proveedoresRoutes);
+app.use(empleadosRoutes)
+app.use(authRoutes)
 
 app.get("/", async (req, res) => {
     res.json({
