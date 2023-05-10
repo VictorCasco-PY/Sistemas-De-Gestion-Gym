@@ -20,7 +20,7 @@ function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR 
 
     const newItem = { [campoCambiar]: currentValue };
     axios.put(`${apiUrl}/${id}`, newItem)  //PUT PARA MODIFICAR
-      .then(() => console.log('Acutalizado.'))
+      .then(() => console.log('Actualizado.'))
       .catch((error) => console.error(error));
 
       input.blur();
