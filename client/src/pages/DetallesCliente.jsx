@@ -32,9 +32,9 @@ export function DetallesCliente() {
     return (
         <div className='columns is-flex-direction-column is-align-content-center is-multiline is-centered'>
             <div className="column columns is-half headerTitle clienteHeader m-2">
-                <div className='is-flex is-justify-content-center column headerTitle has-text-centered'>
+                <div className='title is-flex is-justify-content-center is-align-items-center column headerTitle has-text-centered'>
                     <EditableInput
-                    defaultValue={clientePers.str_nombre}
+                        valorInicial={clientePers.str_nombre}
                         id={id}
                         apiUrl="http://localhost:8000/cliente"
                         campoCambiar="str_nombre"
@@ -54,7 +54,7 @@ export function DetallesCliente() {
 
             <div className='column is-half is-flex is-flex-direction-column is-justify-content-center p-6 pageMain has-background-light'>
                 <div className="mainClientInfo columns">
-                    <div className="clientInfoLeft d-flex ">
+                    <div className="bubble column is-half is-flex is-flex-direction-column is-align-content-center is-flex-wrap-wrap">
                         <div className="infoBubble">
                             <div className="bubbleTitle has-text-white">
                                 <p className='is-size-6'>Telefono</p>
@@ -68,11 +68,16 @@ export function DetallesCliente() {
                                 <p className='is-size-6'>Dirección</p>
                             </div>
                             <div className="bubbleInfo">
-                                <p>{clientePers.str_direccion}</p>
+                                <EditableInput
+                                    valorInicial={clientePers.str_direccion}
+                                    id={id}
+                                    apiUrl="http://localhost:8000/cliente"
+                                    campoCambiar="str_direccion"
+                                />
                             </div>
                         </div>
                     </div>
-                    <div className="clientInfoRight">
+                    <div className=" bubble column is-half is-flex is-flex-direction-column is-align-content-center is-flex-wrap-wrap">
                         <div className="infoBubble">
                             <div className="bubbleTitle has-background-primary-dark has-text-white">
                                 <p className='is-size-6'>Plan</p>
@@ -86,7 +91,12 @@ export function DetallesCliente() {
                                 <p className='is-size-6'>RUC</p>
                             </div>
                             <div className="bubbleInfo has-background-link-light">
-                                <p>{clientePers.str_ruc}</p>
+                                <EditableInput
+                                    valorInicial={clientePers.str_ruc}
+                                    id={id}
+                                    apiUrl="http://localhost:8000/cliente"
+                                    campoCambiar="str_ruc"
+                                />
                             </div>
                         </div>
                     </div>

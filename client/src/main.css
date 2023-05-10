@@ -28,15 +28,8 @@
   justify-content: space-between;
 }
 
-.clientInfoLeft,
-.clientInfoRight {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  flex-basis: 0;
-  flex-grow: 1;
-  flex-shrink: 1;
-  padding: 0.75rem;
+.bubble {
+  gap: 10px;
 }
 
 .infoBubble {
@@ -45,17 +38,16 @@
 .infoBubble .bubbleTitle {
   background-color: #1C96DA;
   border-radius: 10px 0px 0px 10px;
-  width: 30%;
   padding: 0.6rem 0.6rem;
   color: white;
 }
 .infoBubble .bubbleInfo {
   background-color: #C7C7C7;
   border-radius: 0px 10px 10px 0px;
-  width: 70%;
   padding: 0.6rem 0.6rem;
   display: flex;
   align-items: center;
+  flex-grow: 1;
 }
 
 .tableNew {
@@ -133,12 +125,18 @@
 }
 
 .editable-title {
-  padding: 0;
   background-color: inherit;
   border: none;
   box-shadow: none;
-  height: 2rem;
+  height: auto;
+  max-width: 200px;
+  padding: 0.2rem;
+  font-size: inherit;
 }
 .editable-title:hover {
   background-color: lightblue;
+}
+.editable-title:focus {
+  border: 1px solid lightblue;
+  outline: none;
 }/*# sourceMappingURL=main.css.map */
