@@ -1,3 +1,5 @@
+$infocolor: #d4d4d4;
+
 .navbar-item img {
     height: 50px;
     max-height: 50px;
@@ -43,7 +45,7 @@
     }
 
     .bubbleInfo {
-        background-color: #C7C7C7;
+        background-color: $infocolor;
         border-radius: 0px 10px 10px 0px;
         padding: 0.6rem 0.6rem;
         display: flex;
@@ -68,7 +70,7 @@
     }
 
     tr {
-        border: 1px solid grey;
+        border: 1px solid $infocolor;
         margin: 15px;
     }
 

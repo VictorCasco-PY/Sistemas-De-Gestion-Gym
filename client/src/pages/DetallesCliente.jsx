@@ -110,6 +110,7 @@ export function DetallesCliente() {
                                 <th>Peso</th>
                                 <th>Brazos</th>
                                 <th>Piernas</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -120,6 +121,7 @@ export function DetallesCliente() {
                                         <td>{med.peso}</td>
                                         <td>{med.cintura}</td>
                                         <td>{med.piernas}</td>
+                                        <td><button>Borrar</button></td>
                                     </tr>
                                 ))
                             ) : (
@@ -128,6 +130,7 @@ export function DetallesCliente() {
                                     <td>-</td>
                                     <td>-</td>
                                     <td>-</td>
+                                    <td></td>
                                 </tr>
                             )}
                         </tbody>

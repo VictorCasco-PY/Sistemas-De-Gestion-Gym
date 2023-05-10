@@ -19,6 +19,7 @@ function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR 
     const currentValue = input.value.trim();
 
     const newItem = { [campoCambiar]: currentValue };
+    console.log(newItem) //ERROR 404 NO SE POR QUE
     axios.put(`${apiUrl}/${id}`, newItem)  //PUT PARA MODIFICAR
       .then(() => console.log('Actualizado.'))
       .catch((error) => console.error(error));
