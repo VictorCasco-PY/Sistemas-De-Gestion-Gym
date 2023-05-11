@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"
 
 const RegistroProveedores = () => {
   const [proveedores, setProveedores] = useState({
@@ -18,7 +19,13 @@ const RegistroProveedores = () => {
   // función para manejar el envío del formulario
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(proveedores);
+    axios.post('http://localhost:8000/proveedores', proveedores)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
