@@ -84,11 +84,7 @@ $infocolor: #d4d4d4;
             border-right: none;
         }
 
-        th:nth-child(2) {
-            border-inline: none;
-        }
-
-        th:nth-child(3) {
+        th:not(:first-child):not(:last-child) {
             border-inline: none;
         }
 
@@ -113,12 +109,8 @@ $infocolor: #d4d4d4;
             padding-left: 10px;
             background-color: white;
         }
-
-        td:nth-child(2) {
-            border-inline: none;
-        }
-
-        td:nth-child(3) {
+        
+        td:not(:first-child):not(:last-child) {
             border-inline: none;
         }
 
@@ -163,5 +155,12 @@ $infocolor: #d4d4d4;
     &:focus {
         border: 1px solid lightblue;
         outline: none;
+    }
+}
+
+button {
+    
+    &.button.icon {
+
     }
 }

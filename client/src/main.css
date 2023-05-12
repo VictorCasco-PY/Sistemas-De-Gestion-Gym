@@ -74,10 +74,7 @@
   border-radius: 10px 0px 0px 10px;
   border-right: none;
 }
-.tableNew thead th:nth-child(2) {
-  border-inline: none;
-}
-.tableNew thead th:nth-child(3) {
+.tableNew thead th:not(:first-child):not(:last-child) {
   border-inline: none;
 }
 .tableNew thead th:last-child {
@@ -97,10 +94,7 @@
   padding-left: 10px;
   background-color: white;
 }
-.tableNew tbody td:nth-child(2) {
-  border-inline: none;
-}
-.tableNew tbody td:nth-child(3) {
+.tableNew tbody td:not(:first-child):not(:last-child) {
   border-inline: none;
 }
 .tableNew tbody td:last-child {
