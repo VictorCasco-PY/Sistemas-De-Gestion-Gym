@@ -301,6 +301,9 @@ export function DetallesCliente() {
                                     <td>-</td>
                                     <td>-</td>
                                     <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
                                     <td></td>
                                 </tr>
                             )}
