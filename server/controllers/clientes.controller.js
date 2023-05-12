@@ -1,5 +1,8 @@
 import {models} from "../models/models.js";
 import {bodyValidator} from "../tools/bodyValidator.js";
+import { PlanesDePagos } from "./planes_de_pagos.controller.js";
+
+const planDePago = new PlanesDePagos();
 
 const {clientes} = models;
 
@@ -27,7 +30,9 @@ export class Cliente {
         try {
             const {id} = req.params;
             const {body} = req;
+            const {str_nombre} = req;
             const [rowsAffected] = await clientes.update({...body}, {where: {id}});
+            if(str_nombre) await planDePago.updateClienteNombre(id, str_nombre);
             if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun cliente");
             res.status(200).send("Cliente actualizado");
         } catch (error) {
