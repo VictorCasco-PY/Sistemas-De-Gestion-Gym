@@ -12,7 +12,7 @@ export function DetallesCliente() {
     const [clienteMed, setClienteMed] = useState(null);
 
     const [isAdding, setIsAdding] = useState(false);
-    const [newData, setNewData] = useState({
+    const [nuevaMedicion, setNuevaMedicion] = useState({
         id_cliente: id,
         date_fecha_medicion: moment().format('YYYY-MM-DD'),
         peso: '',
@@ -22,7 +22,7 @@ export function DetallesCliente() {
         cintura: '',
         porcentaje_grasa_corporal: '',
     });
-    const [showInputs, setShowInputs] = useState(false);
+    const [formAceptado, setFormAceptado] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
@@ -56,13 +56,20 @@ export function DetallesCliente() {
     //onchange de los inputs
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setNewData((prevData) => ({ ...prevData, [name]: value }));
-    };
+        setNuevaMedicion((prevMedicion) => ({ ...prevMedicion, [name]: value }));
+      };
     //al hacer click aceptar y enviar la medicion
     const handleAccept = () => {
-        console.log(newData)
+        console.log(nuevaMedicion);
+
+        //checkear si hay valores vacios
+        if (Object.values(nuevaMedicion).some((valor) => valor.trim() === '')) {
+            setFormAceptado(true);
+            return;
+          }
+
         axios
-            .post('http://localhost:8000/mediciones-clientes', newData)
+            .post('http://localhost:8000/mediciones-clientes', nuevaMedicion)
             .then(response => {
                 console.log('Añadido satisfactoriamente');
                 fetchClienteMed();
@@ -73,7 +80,7 @@ export function DetallesCliente() {
     };
     //dejar de renderizar inputs
     const stopAdding = () => {
-        setNewData({
+        setNuevaMedicion({
             date_fecha_medicion: moment().format('YYYY-MM-DD'),
             peso: '',
             brazos: '',
@@ -83,6 +90,7 @@ export function DetallesCliente() {
             porcentaje_grasa_corporal: ''
         });
         setIsAdding(false);
+        setFormAceptado(false);
     };
     ////////
     // delete una medicion
@@ -196,64 +204,77 @@ export function DetallesCliente() {
                             {isAdding && (
                                 <tr>
                                     <td>
-                                        <p>{newData.date_fecha_medicion}</p>
+                                        <p>{nuevaMedicion.date_fecha_medicion}</p>
                                     </td>
                                     <td>
                                         <input
-                                            className="input is-small"
+                                            className={`${
+                                                formAceptado && nuevaMedicion.peso.trim() === '' ? 'is-danger' : ''
+                                              } input is-small`}
+
                                             type="text"
                                             name="peso"
-                                            value={newData.peso}
+                                            value={nuevaMedicion.peso}
                                             onChange={handleInputChange}
                                             placeholder="Peso"
                                         />
                                     </td>
                                     <td>
                                         <input
-                                            className="input is-small"
+                                            className={`${
+                                                formAceptado && nuevaMedicion.brazos.trim() === '' ? 'is-danger' : ''
+                                              } input is-small`}
                                             type="text"
                                             name="brazos"
-                                            value={newData.brazos}
+                                            value={nuevaMedicion.brazos}
                                             onChange={handleInputChange}
                                             placeholder="Brazos"
                                         />
                                     </td>
                                     <td>
                                         <input
-                                            className="input is-small"
+                                            className={`${
+                                                formAceptado && nuevaMedicion.piernas.trim() === '' ? 'is-danger' : ''
+                                              } input is-small`}
                                             type="text"
                                             name="piernas"
-                                            value={newData.piernas}
+                                            value={nuevaMedicion.piernas}
                                             onChange={handleInputChange}
                                             placeholder="Piernas"
                                         />
                                     </td>
                                     <td>
                                         <input
-                                            className="input is-small"
+                                            className={`${
+                                                formAceptado && nuevaMedicion.cintura.trim() === '' ? 'is-danger' : ''
+                                              } input is-small`}
                                             type="text"
                                             name="cintura"
-                                            value={newData.cintura}
+                                            value={nuevaMedicion.cintura}
                                             onChange={handleInputChange}
                                             placeholder="Cintura"
                                         />
                                     </td>
                                     <td>
                                         <input
-                                            className="input is-small"
+                                            className={`${
+                                                formAceptado && nuevaMedicion.altura.trim() === '' ? 'is-danger' : ''
+                                              } input is-small`}
                                             type="text"
                                             name="altura"
-                                            value={newData.altura}
+                                            value={nuevaMedicion.altura}
                                             onChange={handleInputChange}
                                             placeholder="Altura"
                                         />
                                     </td>
                                     <td>
                                         <input
-                                            className="input is-small"
+                                            className={`${
+                                                formAceptado && nuevaMedicion.porcentaje_grasa_corporal.trim() === '' ? 'is-danger' : ''
+                                              } input is-small`}
                                             type="text"
                                             name="porcentaje_grasa_corporal"
-                                            value={newData.porcentaje_grasa_corporal}
+                                            value={nuevaMedicion.porcentaje_grasa_corporal}
                                             onChange={handleInputChange}
                                             placeholder="Grasa Corporal"
                                         />
@@ -270,7 +291,7 @@ export function DetallesCliente() {
                                                 className="button is-info is-outlined is-small"
                                                 onClick={stopAdding}
                                             >
-                                                <span class="material-symbols-outlined">
+                                                <span className="material-symbols-outlined">
                                                     close
                                                 </span>
                                             </button>
