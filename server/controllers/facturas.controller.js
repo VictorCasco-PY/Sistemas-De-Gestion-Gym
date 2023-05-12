@@ -37,10 +37,27 @@ export class Factura {
         }
     }
     
-    getAll = async(req,res)=>{}
+    getAll = async(req,res)=>{
+        try{
+            const result = await facturas.findAll();
+            return result;
+        }catch(error){
+            res.status(505).send(error.message);
+        }
+    }
     
-    getByParams = async(req,res)=>{} // obtiene por id
-    
+    getByParams = async(req,res)=>{
+        try{
+            const {id} = req.params;
+            const result = this.getById(id);
+            if(!result) return res.status(404).json({error:"No existe una factura con ese id"});
+            res.json(result);
+        }catch(error){
+            res.status(505).send(error.message);
+        }
+    } 
+
+    // obtiene por id
     getById = async(id)=>{
         try {
             const result = await facturas.findOne({where:{id}});
