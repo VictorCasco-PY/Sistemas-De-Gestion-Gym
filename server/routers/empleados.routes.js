@@ -2,7 +2,7 @@ import {check} from "express-validator";
 import {Router} from "express";
 import {Empleado} from "../controllers/empleados.controller.js";
 
-const empleados = new Empleado();
+const empleado = new Empleado();
 const empleadosRoutes = Router();
 
 empleadosRoutes.post('/empleados', [
@@ -17,11 +17,15 @@ empleadosRoutes.post('/empleados', [
         check('rol', 'El campo rol es requerido').notEmpty(),
         check('rol', 'El campo rol necesita ser valido (caja, entrenador o admin').isIn(["caja", "entrenador", "admin"])
     ],
-    empleados.crear
+    empleado.crear
 );
 
-empleadosRoutes.get('/empleados', empleados.getAll)
+empleadosRoutes.get('/empleados', empleado.getAll)
 
-empleadosRoutes.get('/empleados/:id', empleados.getByParams);
+empleadosRoutes.get('/empleado/:id', empleado.getByParams);
+
+empleadosRoutes.put('/empleado/:id', empleado.update)
+
+empleadosRoutes.delete('/empleado/:id', empleado.delete)
 
 export default empleadosRoutes;
