@@ -66,17 +66,6 @@ export class PlanesDePagos {
         }
     }
 
-    updateClienteNombre = async(id_cliente, str_nombre_cliente) =>{
-        try{
-            const {id} = this.getPlanPagoCliente(id_cliente);
-            const [rowsAffected] = await planes_de_pagos.update({str_nombre_cliente}, {where:{id}});
-            if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun plan de pago");
-            res.status(200).send("Plan actualizado")
-        }catch(error){
-            return null;
-        }
-    }
-
     delete = async (req, res) => {
         try {
             const {id} = req.params;
@@ -111,11 +100,11 @@ export class PlanesDePagos {
         }
     }
 
-    // Devuelve un objeto si es que el usuario ya posee un plan de pago
+        // Devuelve un objeto si es que el usuario ya posee un plan de pago
     getPlanDePagoDeClienteByParams = async (req, res) => {
             try {
                 const {id_cliente} = req.params;
-                const result = await this.getPlanPagoCliente(id_cliente);
+                const result = await planes_de_pagos.findOne({where:{id_cliente}});
                 if (!result) return res.status(404).json({error: "No se encuentra un plan de pago con ese id de cliente"})
                 res.json(result)
             }catch (error){
@@ -129,9 +118,11 @@ export class PlanesDePagos {
             const result = await planes_de_pagos.findOne({where:{id_cliente}});
             return result
         }catch(error){
-            throw new Error("Error al obtener plan de pago")
+            return {error: "Algo salio mal"};
         }
     }
+
+
 
     getById = async (id) => {
         try {
