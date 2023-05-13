@@ -88,9 +88,4 @@ export class Cliente {
             return {error: "Algo salio mal"};
         }
     }
-}           return result;
-        } catch (error) {
-            return {error: "Algo salio mal"};
-        }
-    }
 }
