@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
-
+import { AuthContext } from "../context/AuthContext"
 const Home = () => {
+  const { userData } = useContext(AuthContext)
   return (
-    <div>Home - Inició Sesion</div>
+    <>
+      <h1>Bienvenido {userData.nombre}</h1>
+      <h3>{userData.rol}</h3>
+    </>
   )
 }
 

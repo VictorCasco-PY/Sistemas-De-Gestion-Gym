@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext"
 
 const Login = () => {
   const [usuario, setUsuario] = useState({
     user: "",
     password: "",
   });
+
+  const { userData, setUserData } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setUsuario({
@@ -17,12 +23,14 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios.post("http://localhost:8000/auth", usuario)
-    .then((response) => {
+      .then((response) => {
         console.log(response.data);
-    })
-    .catch((error) => {
+        setUserData(response.data);
+        navigate("/home");
+      })
+      .catch((error) => {
         console.log(error);
-    });
+      });
   };
 
   return (
