@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
 
-const ProtectedRoute = ({ children }) => {
-    if (!user) { }
-    return (
-        <div>{children}</div>
-    )
+const ProtectedRoute = ({ isAllowed, children, redirectTo = "/" }) => {
+    //const { userData } = useContext(AuthContext);
+    if (!isAllowed) {
+        return <Navigate to={redirectTo} />
+    }
+    return children ? children : <Outlet />;
 }
 
-export default ProtectedRoute
+export default ProtectedRoute;

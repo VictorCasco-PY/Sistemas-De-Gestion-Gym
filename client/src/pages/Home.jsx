@@ -1,12 +1,14 @@
 import React, { useContext } from 'react'
-import { useParams } from 'react-router-dom'
-import { AuthContext } from "../context/AuthContext"
+//import { AuthContext } from "../context/AuthContext"
+
 const Home = () => {
-  const { userData } = useContext(AuthContext)
+  // const { userData } = useContext(AuthContext);
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <>
-      <h1>Bienvenido {userData.nombre}</h1>
-      <h3>{userData.rol}</h3>
+      <h1>Bienvenido {user.nombre}</h1>
+      <h3>{user.rol}</h3>
     </>
   )
 }
