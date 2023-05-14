@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <AuthContextProvider>
           <Routes>
-            <Route index path="/login" element={<Login />} />
+            <Route index element={<Login />} />
             <Route path='/home' element={<Layout><Home /></Layout>} />
             <Route path='/registro_cliente' element={<Layout><RegistroCliente /></Layout>} />
             <Route path='/listaClientes' element={<Layout><ListaClientes /></Layout>} />
