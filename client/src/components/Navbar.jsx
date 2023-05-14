@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../assets/logo.png'
+import CerrarSesion from './CerrarSesion'
 
 const Navbar = () => {
     return (
@@ -59,9 +60,7 @@ const Navbar = () => {
                             <a className="button is-primary" href='/registroEmpleado'>
                                 <strong>Registrarse</strong>
                             </a>
-                            <a className="button is-light" href='/login'>
-                                Iniciar sesión
-                            </a>
+                            <CerrarSesion />
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext"
+//import { AuthContext } from "../context/AuthContext"
 
 const Login = () => {
   const [usuario, setUsuario] = useState({
@@ -9,7 +9,7 @@ const Login = () => {
     password: "",
   });
 
-  const { userData, setUserData } = useContext(AuthContext);
+  //const { userData, setUserData } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const Login = () => {
     axios.post("http://localhost:8000/auth", usuario)
       .then((response) => {
         console.log(response.data);
-        setUserData(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/home");
       })
       .catch((error) => {
