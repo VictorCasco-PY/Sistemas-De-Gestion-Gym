@@ -22,7 +22,7 @@ const Navbar = () => {
                         Inicio
                     </a>
 
-                    <a className="navbar-item" href='/registroClientes'>
+                    <a className="navbar-item" href='/registro_cliente'>
                         Registrar cliente
                     </a>
 
