@@ -1,6 +1,6 @@
 import {check} from "express-validator";
 import {Router} from "express";
-import { Factura } from "../controllers/facturas.controller";
+import { Factura } from "../controllers/facturas.controller.js";
 
 const factura = new Factura();
 const facturasRoutes = Router();

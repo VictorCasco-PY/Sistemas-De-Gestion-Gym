@@ -25,7 +25,7 @@ export class FacturaDetalle {
             if(rowsAffected===0) return res.status(404).json({error:"No se ha actualizado ningun detalle de factura"});
             res.send("factura_detalle actualizado")
         }catch(error){
-            return res.status(505).json(error.message);
+            return res.status(500).json(error.message);
         }
     }
     
@@ -36,7 +36,7 @@ export class FacturaDetalle {
             await facturas_detalles.destroy({where:{id}});
             return res.send("Factura eliminada correctamente");
         } catch (error) {
-            return res.status(505).send(error.message)
+            return res.status(500).send(error.message)
         }
     }
     
@@ -45,7 +45,7 @@ export class FacturaDetalle {
             const result = await facturas_detalles.findAll();
             return result;
         }catch(error){
-            res.status(505).send(error.message);
+            res.status(500).send(error.message);
         }
     }
     
@@ -56,7 +56,7 @@ export class FacturaDetalle {
             if(!result) return res.status(404).json({error:"No existe una factura con ese id"});
             res.json(result);
         }catch(error){
-            res.status(505).send(error.message);
+            res.status(500).send(error.message);
         }
     }
     

@@ -57,7 +57,7 @@ export function DetallesCliente() {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setNuevaMedicion((prevMedicion) => ({ ...prevMedicion, [name]: value }));
-      };
+    };
     //al hacer click aceptar y enviar la medicion
     const handleAccept = () => {
         console.log(nuevaMedicion);
@@ -66,7 +66,7 @@ export function DetallesCliente() {
         if (Object.values(nuevaMedicion).some((valor) => valor.trim() === '')) {
             setFormAceptado(true);
             return;
-          }
+        }
 
         axios
             .post('http://localhost:8000/mediciones-clientes', nuevaMedicion)
@@ -208,9 +208,8 @@ export function DetallesCliente() {
                                     </td>
                                     <td>
                                         <input
-                                            className={`${
-                                                formAceptado && nuevaMedicion.peso.trim() === '' ? 'is-danger' : ''
-                                              } input is-small`}
+                                            className={`${formAceptado && nuevaMedicion.peso.trim() === '' ? 'is-danger' : ''
+                                                } input is-small`}
 
                                             type="text"
                                             name="peso"
@@ -221,9 +220,8 @@ export function DetallesCliente() {
                                     </td>
                                     <td>
                                         <input
-                                            className={`${
-                                                formAceptado && nuevaMedicion.brazos.trim() === '' ? 'is-danger' : ''
-                                              } input is-small`}
+                                            className={`${formAceptado && nuevaMedicion.brazos.trim() === '' ? 'is-danger' : ''
+                                                } input is-small`}
                                             type="text"
                                             name="brazos"
                                             value={nuevaMedicion.brazos}
@@ -233,9 +231,8 @@ export function DetallesCliente() {
                                     </td>
                                     <td>
                                         <input
-                                            className={`${
-                                                formAceptado && nuevaMedicion.piernas.trim() === '' ? 'is-danger' : ''
-                                              } input is-small`}
+                                            className={`${formAceptado && nuevaMedicion.piernas.trim() === '' ? 'is-danger' : ''
+                                                } input is-small`}
                                             type="text"
                                             name="piernas"
                                             value={nuevaMedicion.piernas}
@@ -245,9 +242,8 @@ export function DetallesCliente() {
                                     </td>
                                     <td>
                                         <input
-                                            className={`${
-                                                formAceptado && nuevaMedicion.cintura.trim() === '' ? 'is-danger' : ''
-                                              } input is-small`}
+                                            className={`${formAceptado && nuevaMedicion.cintura.trim() === '' ? 'is-danger' : ''
+                                                } input is-small`}
                                             type="text"
                                             name="cintura"
                                             value={nuevaMedicion.cintura}
@@ -257,9 +253,8 @@ export function DetallesCliente() {
                                     </td>
                                     <td>
                                         <input
-                                            className={`${
-                                                formAceptado && nuevaMedicion.altura.trim() === '' ? 'is-danger' : ''
-                                              } input is-small`}
+                                            className={`${formAceptado && nuevaMedicion.altura.trim() === '' ? 'is-danger' : ''
+                                                } input is-small`}
                                             type="text"
                                             name="altura"
                                             value={nuevaMedicion.altura}
@@ -269,9 +264,8 @@ export function DetallesCliente() {
                                     </td>
                                     <td>
                                         <input
-                                            className={`${
-                                                formAceptado && nuevaMedicion.porcentaje_grasa_corporal.trim() === '' ? 'is-danger' : ''
-                                              } input is-small`}
+                                            className={`${formAceptado && nuevaMedicion.porcentaje_grasa_corporal.trim() === '' ? 'is-danger' : ''
+                                                } input is-small`}
                                             type="text"
                                             name="porcentaje_grasa_corporal"
                                             value={nuevaMedicion.porcentaje_grasa_corporal}

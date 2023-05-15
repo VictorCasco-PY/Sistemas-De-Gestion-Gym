@@ -19,7 +19,7 @@ export class Cliente {
 
             res.json(result);
         } catch (error) {
-            return res.json(error);
+            return res.status(500).json(error);
         }
     };
 
