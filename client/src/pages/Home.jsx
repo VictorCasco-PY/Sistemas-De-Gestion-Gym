@@ -1,9 +1,15 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext } from 'react'
+//import { AuthContext } from "../context/AuthContext"
 
 const Home = () => {
+  // const { userData } = useContext(AuthContext);
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
-    <div>Home - Inició Sesion</div>
+    <>
+      <h1>Bienvenido {user.nombre}</h1>
+      <h3>{user.rol}</h3>
+    </>
   )
 }
 

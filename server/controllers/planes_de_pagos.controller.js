@@ -55,14 +55,13 @@ export class PlanesDePagos {
 
     update = async (req, res) => {
         try {
-            const {id} = body.params;
-            const {body} = body.req;
-            const {id_tipo_modalidad_de_pago} = body;
+            const {id} = req.params;
+            const {body} = req;
             const [rowsAffected] = await planes_de_pagos.update({...body}, {where: {id}});
             if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun plan de pago");
             res.status(200).send("Plan actualizado")
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).send(error.message);
         }
     }
 

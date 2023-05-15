@@ -49,9 +49,9 @@ export default function ClientesTable() {
   const handleFilter = (field, searchString) => {
     //filtrar para que incluya
     const filtered = originalData.filter(
-      (item) =>
-        item[field].toLowerCase().includes(searchString.toLowerCase())
-    );
+        (item) =>
+          item[field].toLowerCase().includes(searchString.toLowerCase())
+      );
     setClientes(filtered);
   };
 
@@ -102,7 +102,7 @@ export default function ClientesTable() {
         <tbody>
           {sortedData.length > 0 ? ( //Solo si hay datos en la tabla se mapea
             sortedData.map(cliente => (
-              <tr key={cliente.cliente_id}>
+              <tr key={cliente.id_cliente}>
                 <td className='is-size-5'>{cliente.str_nombre_cliente}</td>
                 <td className='is-size-5'>{cliente.str_modalidad}</td>
                 <td className='is-size-5'>

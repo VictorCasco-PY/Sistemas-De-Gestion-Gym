@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR EL CUARTO PARAMETRO
+function EditableInputTwoValues({ valorInicial, id, apiUrl, campoCambiar,
+                                                id2, apiUrl2, campoCambiar2 }) { //UTILIZAR EL CUARTO PARAMETRO
   const [title, setTitle] = useState(valorInicial);
 
   const handleTitleChange = (event) => {
@@ -19,9 +20,16 @@ function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR 
     const currentValue = input.value.trim();
 
     const newItem = { [campoCambiar]: currentValue };
-    console.log(newItem) //ERROR 404 NO SE POR QUE
+    //ERROR 404 no se por que
     axios.put(`${apiUrl}/${id}`, newItem)  //PUT PARA MODIFICAR
-      .then(() => console.log('Actualizado.'))
+      .then(() => console.log('Actualizado valor 1'))
+      .catch((error) => console.error(error));
+
+      input.blur();
+
+    const newItem2 = { [campoCambiar2]: currentValue };
+    axios.put(`${apiUrl2}/${id2}`, newItem2)  //PUT PARA MODIFICAR
+      .then(() => console.log('Actualizado valor 2'))
       .catch((error) => console.error(error));
 
       input.blur();
@@ -46,4 +54,4 @@ function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR 
   );
 }
 
-export default EditableInput;
+export default EditableInputTwoValues;
