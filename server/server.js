@@ -9,6 +9,7 @@ import proveedoresRoutes from  "./routers/proveedores.routes.js";
 import cors from "cors";
 import empleadosRoutes from "./routers/empleados.routes.js";
 import authRoutes from "./routers/auth.routes.js";
+import stocksRoutes from "./routers/stocks.routes.js";
 const app = express();
 
 app.use(
@@ -32,6 +33,7 @@ app.use(productosRoutes);
 app.use(proveedoresRoutes);
 app.use(empleadosRoutes)
 app.use(authRoutes)
+app.use(stocksRoutes)
 
 app.get("/", async (req, res) => {
     res.json({
