@@ -51,6 +51,7 @@
 }
 
 .tableNew {
+  font-family: sans-serif;
   border-collapse: separate;
   border-spacing: 0 15px;
   border: none;
@@ -93,6 +94,7 @@
   text-align: left;
   padding-left: 10px;
   background-color: white;
+  white-space: nowrap;
 }
 .tableNew tbody td:not(:first-child):not(:last-child) {
   border-inline: none;

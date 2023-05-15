@@ -25,6 +25,8 @@ export function DetallesCliente() {
     });
     const [formAceptado, setFormAceptado] = useState(false);
 
+    const [sortDirection, setSortDirection] = useState("asc"); //en que dirección
+
     useEffect(() => {
         axios.get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
             .then(response => setClienteMed(response.data))
@@ -81,7 +83,7 @@ export function DetallesCliente() {
     };
     //dejar de renderizar inputs
     const stopAdding = () => {
-        setNuevaMedicion({
+        setNuevaMedicion({ //restaurar valores
             date_fecha_medicion: moment().format('YYYY-MM-DD'),
             peso: '',
             brazos: '',
@@ -103,6 +105,23 @@ export function DetallesCliente() {
             })
             .catch((error) => console.error(error));
     };
+
+    ///SORTING por fecha
+    const handleSort = () => {
+        setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    };
+    const sortedData = [...clienteMed].sort((a, b) => {
+        const aValue = moment(a.date_fecha_medicion, 'YYYY-MM-DD');
+        const bValue = moment(b.date_fecha_medicion, 'YYYY-MM-DD');
+
+        if (aValue.isBefore(bValue)) {
+            return sortDirection === "asc" ? -1 : 1;
+        }
+        if (aValue.isAfter(bValue)) {
+            return sortDirection === "asc" ? 1 : -1;
+        }
+        return 0;
+    });
 
     return (
         <div className='columns is-flex-direction-column is-align-content-center is-multiline is-centered'>
@@ -193,7 +212,7 @@ export function DetallesCliente() {
                     <table className="table table-text-2 is-bordered tableNew has-background-light is-bordered">
                         <thead>
                             <tr>
-                                <th>Fecha</th>
+                                <th style={{ cursor: "pointer" }} onClick={() => handleSort()}>Fecha</th>
                                 <th>Peso</th>
                                 <th>Brazos</th>
                                 <th>Piernas</th>
@@ -300,8 +319,8 @@ export function DetallesCliente() {
                             )}
 
                             {/* Mapeo de los datos, mapea Mediciones de clientes */}
-                            {clienteMed.length > 0 ? (
-                                clienteMed.map((med, index) => (
+                            {sortedData.length > 0 ? (
+                                sortedData.map((med, index) => (
                                     <tr key={index}>
                                         <td>{med.date_fecha_medicion}</td>
                                         <td>{med.peso}</td>
