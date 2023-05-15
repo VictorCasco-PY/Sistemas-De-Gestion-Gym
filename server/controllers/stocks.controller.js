@@ -70,7 +70,7 @@ export class Stocks {
       const result = await stocks.findOne({ where: { id } });
       return result;
     } catch (error) {
-      throw new Error("Error al obtener proveedor");
+      throw new Error("Error al obtener stock");
     }
   }
 }

@@ -13,7 +13,7 @@ const stocksRoutes = Router();
 stocksRoutes.get("/stocks", stocks.getAll);
 
 // Obtenemos stocks por parametro id
-stocksRoutes.get("/stocks:id", stocks.getByParams);
+stocksRoutes.get("/stocks/:id", stocks.getByParams);
 
 // Crear un nuevo stocks los checks sirven para comprobar que los campos esten completos
 stocksRoutes.post(
@@ -25,7 +25,7 @@ stocksRoutes.post(
     stocks.crear
 );
 
-stocksRoutes.put("/stocks:id", stocks.update)
-stocksRoutes.delete("/stocks:id", stocks.delete)
+stocksRoutes.put("/stocks/:id", stocks.update)
+stocksRoutes.delete("/stocks/:id", stocks.delete)
 
 export default stocksRoutes;
