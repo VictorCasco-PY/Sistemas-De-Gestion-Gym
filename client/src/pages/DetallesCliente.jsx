@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import EditableInput from '../components/EditableInput';
+import EditableInputTwoValues from '../components/EditableInputTwoValues';
 import moment from 'moment';
 
 export function DetallesCliente() {
@@ -107,11 +108,15 @@ export function DetallesCliente() {
         <div className='columns is-flex-direction-column is-align-content-center is-multiline is-centered'>
             <div className="column columns is-half headerTitle clienteHeader m-2">
                 <div className='title is-flex is-justify-content-center is-align-items-center column headerTitle has-text-centered'>
-                    <EditableInput
+                    <EditableInputTwoValues
                         valorInicial={clientePers.str_nombre}
                         id={id}
                         apiUrl="http://localhost:8000/cliente"
                         campoCambiar="str_nombre"
+
+                        id2={cliente.id}
+                        apiUrl2="http://localhost:8000/planes-de-pagos"
+                        campoCambiar2="str_nombre_cliente"
                     />
                 </div>
                 <div className="column">
