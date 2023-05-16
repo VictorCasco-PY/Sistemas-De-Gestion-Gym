@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const CerrarSesion = () => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ const CerrarSesion = () => {
     }
     return (
         <>
-            <button className='button is-info' onClick={handleLogout}>Cerrar Sesion</button>
+            <button className='button is-info m-5' onClick={handleLogout}><LogoutIcon /></button>
         </>
     )
 }
