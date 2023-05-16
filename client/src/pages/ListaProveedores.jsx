@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ListaProveedores = () => {
     const [proveedores, setProveedores] = useState([])
@@ -20,9 +22,10 @@ const ListaProveedores = () => {
                     <tr>
                         <th>RUC</th>
                         <th>Nombre</th>
-                        <th>Telefono</th>
-                        <th>Direccion</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
                         <th>Correo</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody className='subtitle is-5'>
@@ -33,6 +36,10 @@ const ListaProveedores = () => {
                             <td>{proveedor.str_telefono}</td>
                             <td>{proveedor.str_direccion}</td>
                             <td>{proveedor.str_correo}</td>
+                            <td>
+                                <button className='button is-info'><EditIcon fontSize='string' /></button>
+                                <button className='button is-danger ml-2'><DeleteIcon fontSize='string' /></button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
