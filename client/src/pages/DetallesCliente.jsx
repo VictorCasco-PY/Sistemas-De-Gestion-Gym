@@ -124,8 +124,8 @@ export function DetallesCliente() {
     });
 
     return (
-        <div className='columns is-flex-direction-column is-align-content-center is-multiline is-centered'>
-            <div className="column columns is-half headerTitle clienteHeader m-2">
+        <div className=' is-flex-direction-column is-align-content-center is-multiline is-centered'>
+            <div className=" columns headerTitle clienteHeader m-2">
                 <div className='title is-flex is-justify-content-center is-align-items-center column headerTitle has-text-centered'>
                     <EditableInputTwoValues
                         valorInicial={clientePers.str_nombre}
@@ -150,7 +150,7 @@ export function DetallesCliente() {
                 </div>
             </div>
 
-            <div className='box column is-two-thirds is-flex is-flex-direction-column is-justify-content-center p-6 pageMain has-background-light'>
+            <div className='box is-flex is-flex-direction-column is-justify-content-center p-6 pageMain has-background-light'>
                 <div className="mainClientInfo columns">
                     <div className="bubble column is-half is-flex is-flex-direction-column is-align-content-center is-flex-wrap-wrap">
                         <div className="infoBubble">
