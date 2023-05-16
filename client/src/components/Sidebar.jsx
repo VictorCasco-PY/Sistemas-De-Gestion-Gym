@@ -56,7 +56,7 @@ const Sidebar = ({ children }) => {
                             <Link to="/registroProveedores"><AddIcon fontSize="string" />  Agregar Proveedor</Link>
                         </li>
                         <li>
-                            <Link to="#"><FormatListBulletedIcon fontSize="string" />  Lista de Proveedores</Link>
+                            <Link to="/lista_proveedores"><FormatListBulletedIcon fontSize="string" />  Lista de Proveedores</Link>
                         </li>
                     </ul>
                     <p className="menu-label has-text-grey-dark title is-4">
