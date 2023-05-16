@@ -4,6 +4,7 @@ import axios from 'axios';
 import EditableInput from '../components/EditableInput';
 import EditableInputTwoValues from '../components/EditableInputTwoValues';
 import moment from 'moment';
+import Swal from 'sweetalert2'
 
 export function DetallesCliente() {
     const id = useParams().name;
@@ -98,12 +99,28 @@ export function DetallesCliente() {
     ////////
     // delete una medicion
     const handleDelete = (medicionId) => {
-        axios.delete(`http://localhost:8000/mediciones-clientes/${medicionId}`)
-            .then(() => {
-                console.log('deleted');
-                fetchClienteMed();
-            })
-            .catch((error) => console.error(error));
+        Swal.fire({
+            title: 'Confirmacion de borrado',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Borrar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Borrado',
+                )
+                axios.delete(`http://localhost:8000/mediciones-clientes/${medicionId}`)
+                    .then(() => {
+                        console.log('deleted');
+                        fetchClienteMed();
+                    })
+                    .catch((error) => console.error(error));
+            }
+        })
+
     };
 
     ///SORTING por fecha
