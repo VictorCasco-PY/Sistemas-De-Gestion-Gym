@@ -13,6 +13,8 @@ import RegistroEmpleado from './pages/RegistroEmpleado';
 import TablaUsuarios from './pages/TablaUsuarios';
 import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import Caja from './pages/Caja';
+import ListaProveedores from './pages/ListaProveedores';
 
 
 function App() {
@@ -43,11 +45,12 @@ function App() {
 
           // Rutas de Cajero
           <Route element={<ProtectedRoute isAllowed={!!user && (isCajero || isAdmin)} redirectTo='/home' />}>
-            <Route path='/caja' element={<Layout>Caja</Layout>} />
+            <Route path='/caja' element={<Layout><Caja /></Layout>} />
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>
             <Route path='/registroProveedores' element={<Layout><RegistroProveedores /></Layout>} />
+            <Route path='/lista_proveedores' element={<Layout><ListaProveedores /></Layout>} />
             <Route path='/registroEmpleado' element={<Layout><RegistroEmpleado /></Layout>} />
             <Route path='/listaEmpleados' element={<Layout><TablaUsuarios /></Layout>} />
           </Route>

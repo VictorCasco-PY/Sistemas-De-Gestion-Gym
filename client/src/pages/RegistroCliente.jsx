@@ -198,27 +198,30 @@ const RegistroCliente = () => {
                             <>
                                 <h2 className="title is-2 has-text-centered mt-6">Mediciones</h2>
                                 <div className="columns">
-                                    <div>
-                                        <input className="input is-primary" type="text" name="peso" placeholder="Peso" value={mediciones.peso} onChange={handleMedicionesChange} /><span>cm</span>
+                                    <div className="column is-half">
+                                        <div>
+                                            <input className="input is-primary mb-4" type="text" name="peso" placeholder="Peso [kg]" value={mediciones.peso} onChange={handleMedicionesChange} />
+                                        </div>
+                                        <div>
+                                            <input className="input is-primary mb-4" type="text" name="altura" placeholder="Altura [cm]" value={mediciones.altura} onChange={handleMedicionesChange} />
+                                        </div>
+                                        <div>
+                                            <input className="input is-primary mb-4" type="text" name="cintura" placeholder="Cintura [cm]" value={mediciones.cintura} onChange={handleMedicionesChange} />
+                                        </div>
                                     </div>
-                                    <div>
-                                        <input className="input is-primary" type="text" name="altura" placeholder="Altura" value={mediciones.altura} onChange={handleMedicionesChange} /><span>cm</span>
-                                    </div>
-                                    <div>
-                                        <input className="input is-primary" type="text" name="cintura" placeholder="Cintura" value={mediciones.cintura} onChange={handleMedicionesChange} /><span>cm</span>
+                                    <div className="column is-half">
+                                        <div>
+                                            <input className="input is-primary mb-4" type="text" name="piernas" placeholder="Piernas [cm]" value={mediciones.piernas} onChange={handleMedicionesChange} />
+                                        </div>
+                                        <div>
+                                            <input className="input is-primary mb-4" type="text" name="porcentaje_grasa_corporal" placeholder="% de grasa corporal" value={mediciones.porcentaje_grasa_corporal} onChange={handleMedicionesChange} />
+                                        </div>
+                                        <div>
+                                            <input className="input is-primary mb-4" type="text" name="brazos" placeholder="Brazos [cm]" value={mediciones.brazos} onChange={handleMedicionesChange} />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="columns">
-                                    <div>
-                                        <input className="input is-primary" type="text" name="piernas" placeholder="Piernas" value={mediciones.piernas} onChange={handleMedicionesChange} /><span>cm</span>
-                                    </div>
-                                    <div>
-                                        <input className="input is-primary" type="text" name="porcentaje_grasa_corporal" placeholder="% de grasa corporal" value={mediciones.porcentaje_grasa_corporal} onChange={handleMedicionesChange} /><span>%</span>
-                                    </div>
-                                    <div>
-                                        <input className="input is-primary" type="text" name="brazos" placeholder="Brazos" value={mediciones.brazos} onChange={handleMedicionesChange} /><span>cm</span>
-                                    </div>
-                                </div>
+
 
                                 <div className="buttons">
                                     <button className="button is-primary is-outlined mt-2 mx-2" type="button" onClick={handleSubmitMediciones}>Registrar</button>
