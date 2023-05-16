@@ -46,7 +46,7 @@ function App() {
             <Route path='/caja' element={<Layout>Caja</Layout>} />
           </Route>
 
-          <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} />}>
+          <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>
             <Route path='/registroProveedores' element={<Layout><RegistroProveedores /></Layout>} />
             <Route path='/registroEmpleado' element={<Layout><RegistroEmpleado /></Layout>} />
             <Route path='/listaEmpleados' element={<Layout><TablaUsuarios /></Layout>} />
