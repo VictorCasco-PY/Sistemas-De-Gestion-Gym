@@ -17,6 +17,7 @@
 
 .pageMain {
   border-radius: 8px;
+  font-family: sans-serif;
 }
 
 .clienteHeader h1 {
@@ -51,7 +52,6 @@
 }
 
 .tableNew {
-  font-family: sans-serif;
   border-collapse: separate;
   border-spacing: 0 15px;
   border: none;

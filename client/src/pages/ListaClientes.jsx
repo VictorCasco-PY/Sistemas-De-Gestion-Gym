@@ -6,11 +6,11 @@ import { Link, Route, Routes } from 'react-router-dom';
 const ListaClientes = () => {
 
     return (
-        <div className='columns is-multiline is-centered'>
-            <div className="column headerTitle is-half">
+        <div className='m-3'>
+            <div className=" headerTitle">
                 <h1 className='is-size-2'>Lista de Clientes</h1>
             </div>
-            <div className='column is-four-fifths is-flex is-justify-content-center p-6 pageMain has-background-light'>
+            <div className='is-flex is-justify-content-center p-6 pageMain has-background-light'>
                 <ClientesTable />
             </div>
         </div>
