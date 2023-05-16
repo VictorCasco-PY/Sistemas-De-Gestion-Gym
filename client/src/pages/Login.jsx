@@ -1,15 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-//import { AuthContext } from "../context/AuthContext"
 
 const Login = () => {
   const [usuario, setUsuario] = useState({
     user: "",
     password: "",
   });
-
-  //const { userData, setUserData } = useContext(AuthContext);
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,7 +20,8 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post("http://localhost:8000/auth", usuario)
+    axios
+      .post("http://localhost:8000/auth", usuario)
       .then((response) => {
         console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
@@ -34,6 +33,10 @@ const Login = () => {
       });
   };
 
+  const toggleMostrarPassword = () => {
+    setMostrarPassword(!mostrarPassword);
+  };
+
   return (
     <div className="columns is-centered">
       <div className="column is-three-fifths-desktop">
@@ -43,36 +46,39 @@ const Login = () => {
           </h3>
           <form onSubmit={handleSubmit}>
             <div className="field">
-              <p className="control has-icons-left has-icons-right">
+              <p className="control">
                 <input
                   name="user"
                   value={usuario.user}
                   className="input is-primary has-text-centered"
                   type="text"
-                  placeholder="Correo Electronico"
+                  placeholder="Correo Electrónico"
                   onChange={handleChange}
                 />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-check"></i>
-                </span>
               </p>
             </div>
             <div className="field">
-              <p className="control has-icons-left">
+              <p className="control">
                 <input
                   name="password"
                   value={usuario.password}
                   className="input is-primary has-text-centered"
-                  type="password"
-                  placeholder="Password"
+                  type={mostrarPassword ? "text" : "password"}
+                  placeholder="Contraseña"
                   onChange={handleChange}
                 />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
+              </p>
+            </div>
+            <div className="field">
+              <p className="control">
+                <label className="checkbox">
+                  <input
+                    type="checkbox"
+                    onChange={toggleMostrarPassword}
+                    checked={mostrarPassword}
+                  />{" "}
+                  Mostrar contraseña
+                </label>
               </p>
             </div>
             <div className="buttons">
