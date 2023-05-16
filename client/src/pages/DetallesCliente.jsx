@@ -85,6 +85,7 @@ export function DetallesCliente() {
     //dejar de renderizar inputs
     const stopAdding = () => {
         setNuevaMedicion({ //restaurar valores
+            id_cliente: id,
             date_fecha_medicion: moment().format('YYYY-MM-DD'),
             peso: '',
             brazos: '',
@@ -99,7 +100,7 @@ export function DetallesCliente() {
     ////////
     // delete una medicion
     const handleDelete = (medicionId) => {
-        Swal.fire({
+        Swal.fire({ //ALERTA DE BORRADO
             title: 'Confirmacion de borrado',
             icon: 'warning',
             showCancelButton: true,
