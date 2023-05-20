@@ -1,6 +1,6 @@
 import {models} from "../models/models.js";
 import {bodyValidator} from "../tools/bodyValidator.js";
-
+import {Op} from "sequelize";
 const {clientes} = models;
 
 export class Cliente {
@@ -19,7 +19,8 @@ export class Cliente {
 
             res.json(result);
         } catch (error) {
-            return res.status(500).json(error);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     };
 
@@ -31,8 +32,8 @@ export class Cliente {
             if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun cliente");
             res.status(200).send("Cliente actualizado");
         } catch (error) {
-            console.log(error)
-            return res.status(500).json({error})
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
 
     }
@@ -44,17 +45,30 @@ export class Cliente {
             await clientes.destroy({where: {id}});
             res.status(200).send("Cliente eliminado");
         } catch (error) {
-            return res.status(500).json(error)
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     }
 
 
     getAll = async (req, res) => {
         try {
-            const result = await clientes.findAll();
+            const {nombre, ...querys} = req.query;
+
+            const where = {
+                ...(nombre && {
+                    str_nombre: {
+                        [Op.like]: `%${nombre}%`,
+                    },
+                }),
+                ...querys,
+            };
+
+            const result = await clientes.findAll({where});
             return res.json(result);
         } catch (error) {
-            return res.json(error.message).status(500);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     }
 
@@ -65,7 +79,8 @@ export class Cliente {
             if(!result) res.status(404).send("No se ha encontrado un cliente con ese ID")
             return res.json(result);
         } catch (error) {
-            return res.json(error).status(500);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     }
 
@@ -74,8 +89,7 @@ export class Cliente {
             const result = await clientes.findOne({where: {id}});
             return result;
         } catch (error) {
-            console.log(error);
-            return null;
+            throw new Error(error.message);
         }
     }
 
@@ -85,7 +99,7 @@ export class Cliente {
             const result = await clientes.findOne({where: {str_ruc}});
             return result;
         } catch (error) {
-            return {error: "Algo salio mal"};
+            throw new Error(error.message);
         }
     }
 }

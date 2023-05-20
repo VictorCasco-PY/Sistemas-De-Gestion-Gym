@@ -5,6 +5,7 @@ import {bodyValidator} from "../tools/bodyValidator.js";
 import {Cliente} from "./clientes.controller.js";
 
 import {TipoModalidadDePago} from "./tipos_modalidades_de_pagos.js";
+import {Op} from "sequelize";
 
 
 const {planes_de_pagos} = models;
@@ -80,7 +81,22 @@ export class PlanesDePagos {
     // Devuelve todos los planes de pago registrados
     getAll = async (req, res) => {
         try {
-            const result = await planes_de_pagos.findAll();
+
+            const {nombre, estado, ...querys} = req.query;
+
+            const where = {
+                ...(nombre && {
+                    str_nombre_cliente: {
+                        [Op.like]: `%${nombre}%`,
+                    },
+                }),
+                ...(estado && {
+                    estado_de_pago:estado,
+                }),
+                ...querys,
+            };
+
+            const result = await planes_de_pagos.findAll({where});
             res.json(result);
         } catch (error) {
             res.status(500).json(error);
