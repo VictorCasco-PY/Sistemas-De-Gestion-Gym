@@ -1,6 +1,6 @@
 import {models} from "../models/models.js";
 import {bodyValidator} from "../tools/bodyValidator.js";
-
+import {Op} from "sequelize";
 const {clientes} = models;
 
 export class Cliente {
@@ -53,7 +53,18 @@ export class Cliente {
 
     getAll = async (req, res) => {
         try {
-            const result = await clientes.findAll();
+            const {nombre, ...querys} = req.query;
+
+            const where = {
+                ...(nombre && {
+                    str_nombre: {
+                        [Op.like]: `%${nombre}%`,
+                    },
+                }),
+                ...querys,
+            };
+
+            const result = await clientes.findAll({where});
             return res.json(result);
         } catch (error) {
             const {message} = error;
