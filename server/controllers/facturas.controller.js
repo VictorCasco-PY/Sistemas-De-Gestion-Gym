@@ -13,7 +13,8 @@ export class Factura {
             const result = await facturas.create({...body});
             return res.json(result)
         }catch(error){
-            return res.status(500).send(error.message);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     }
 
@@ -25,7 +26,8 @@ export class Factura {
             if(rowsAffected===0) return res.status(404).send("No se actualizo nignuna facutra");
             res.send("Factura actualizada")
         }catch(error){
-            return res.status(500).send(error.message);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     }
     
@@ -36,16 +38,18 @@ export class Factura {
             await facturas.destroy({where:{id}});
             return res.send("Factura eliminada correctamente");
         } catch (error) {
-            return res.status(505).send(error.message)
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     }
     
     getAll = async(req,res)=>{
         try{
             const result = await facturas.findAll();
-            return result;
+            res.json(result);
         }catch(error){
-            res.status(505).send(error.message);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     }
     
@@ -56,7 +60,8 @@ export class Factura {
             if(!result) return res.status(404).json({error:"No existe una factura con ese id"});
             res.json(result);
         }catch(error){
-            res.status(505).send(error.message);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     } 
 
@@ -66,7 +71,7 @@ export class Factura {
             const result = await facturas.findOne({where:{id}});
             return result;
         } catch (error) {
-            return null;
+            throw new Error(error.message);
         }
     }
 }
