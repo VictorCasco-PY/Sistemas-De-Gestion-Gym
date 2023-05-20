@@ -29,8 +29,9 @@ export class MedicionCliente {
 
             res.json(result);
 
-        } catch (e) {
-            res.json({e})
+        } catch (error) {
+            const { message } = error;
+            return res.status(500).json({ error: message });
         }
     }
 
@@ -54,7 +55,8 @@ export class MedicionCliente {
             await mediciones_clientes.destroy({where: {id}});
             res.status(200).send("Medicion eliminada");
         } catch (error) {
-            res.status(500).json(error);
+            const { message } = error;
+            return res.status(500).json({ error: message });
         }
     }
 
@@ -77,7 +79,8 @@ export class MedicionCliente {
             if (!result) res.status(404)
             res.json(result);
         } catch (error) {
-            res.status(500).json({error})
+            const { message } = error;
+            return res.status(500).json({ error: message });
         }
     }
 
@@ -88,7 +91,8 @@ export class MedicionCliente {
             if (!result) return res.status(404).json({error: "No existe un registro de medicion del usuario o no existe el usuario"});
             return res.json(result);
         } catch (error) {
-            res.status(500).json(error)
+            const { message } = error;
+            return res.status(500).json({ error: message });
         }
     }
 
@@ -97,7 +101,7 @@ export class MedicionCliente {
             const result = await mediciones_clientes.findOne({where: {id}});
             return result;
         } catch (error) {
-            return {error: "Algo salio mal"};
+            throw new Error(error.message);
         }
     }
 
