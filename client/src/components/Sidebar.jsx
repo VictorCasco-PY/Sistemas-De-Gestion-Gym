@@ -24,52 +24,74 @@ const Sidebar = ({ children }) => {
 
             <div className="columns ml-3">
                 <aside className="menu column is-one-fifth is-2 has-background-light">
-                    <p className="menu-label has-text-grey-dark title is-4">Entrenadores</p>
-                    <ul className="menu-list title is-5">
-                        <li>
-                            <Link to="/registro_cliente"><AddIcon fontSize="string" />  Registrar cliente</Link>
-                        </li>
-                        <li>
-                            <Link to="/listaClientes"><FormatListBulletedIcon fontSize="string" />  Lista de Clientes</Link>
-                        </li>
-                    </ul>
-                    <p className="menu-label has-text-grey-dark title is-4">
-                        Caja
-                    </p>
-                    <ul className="menu-list title is-5">
-                        <li>
-                            <Link to="/caja"><PointOfSaleIcon />  Caja</Link>
-                        </li>
-                        <li>
-                            <Link to="#"><PointOfSaleIcon />  Stock</Link>
-                        </li>
-                        <li>
-                            <Link to="#"><PointOfSaleIcon />  Facturacion</Link>
-                        </li>
+                    {
+                        !user.rol === "admin" || !user.rol === "caja" || !user.rol === "entrenador" ? null :
+                            <>
+                                <p className="menu-label has-text-grey-dark title is-4">Entrenadores</p>
+                                <ul className="menu-list title is-5">
+                                    <li>
+                                        <Link to="/registro_cliente"><AddIcon fontSize="string" />  Registrar cliente</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/listaClientes"><FormatListBulletedIcon fontSize="string" />  Lista de Clientes</Link>
+                                    </li>
+                                </ul>
 
-                    </ul>
-                    <p className="menu-label has-text-grey-dark title is-4">
-                        Proveedores
-                    </p>
-                    <ul className="menu-list title is-5">
-                        <li>
-                            <Link to="/registroProveedores"><AddIcon fontSize="string" />  Agregar Proveedor</Link>
-                        </li>
-                        <li>
-                            <Link to="/lista_proveedores"><FormatListBulletedIcon fontSize="string" />  Lista de Proveedores</Link>
-                        </li>
-                    </ul>
-                    <p className="menu-label has-text-grey-dark title is-4">
-                        Empleados
-                    </p>
-                    <ul className='menu-list title is-5'>
-                        <li>
-                            <Link to="/registroEmpleado"><AddIcon fontSize="string" />  Registrar Empleado</Link>
-                        </li>
-                        <li>
-                            <Link to="/listaEmpleados"><FormatListBulletedIcon fontSize="string" />  Lista de Empleados</Link>
-                        </li>
-                    </ul>
+
+                                <p className="menu-label has-text-grey-dark title is-4">
+                                    Caja
+                                </p>
+                                <ul className="menu-list title is-5">
+                                    <li>
+                                        <Link to="/caja"><PointOfSaleIcon />  Caja</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="#"><PointOfSaleIcon />  Stock</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="#"><PointOfSaleIcon />  Facturacion</Link>
+                                    </li>
+                                </ul>
+                            </>
+                    }
+                    {
+                        user.rol === "entrenador" || user.rol === "admin" ? <>
+                            <p className="menu-label has-text-grey-dark title is-4">Proveedores</p>
+                            <ul className="menu-list title is-5">
+                                <li>
+                                    <Link to="/registroProveedores"><AddIcon fontSize="string" />  Agregar Proveedor</Link>
+                                </li>
+                                <li>
+                                    <Link to="/lista_proveedores"><FormatListBulletedIcon fontSize="string" />  Lista de Proveedores</Link>
+                                </li>
+                            </ul>
+                            <p className="menu-label has-text-grey-dark title is-4">
+                                Empleados
+                            </p>
+                            <ul className='menu-list title is-5'>
+                                <li>
+                                    <Link to="/registroEmpleado"><AddIcon fontSize="string" />  Registrar Empleado</Link>
+                                </li>
+                                <li>
+                                    <Link to="/listaEmpleados"><FormatListBulletedIcon fontSize="string" />  Lista de Empleados</Link>
+                                </li>
+                            </ul>
+                        </> : null
+                    }
+                    {
+                        user.rol === 'admin' ? <>
+                            <p className='menu-label has-text-grey-dark title is-4'>Productos</p>
+                            <ul className='menu-list title is-5'>
+                                <li>
+                                    <Link to="#"><AddIcon fontSize="string" />  Agregar Producto</Link>
+                                </li>
+                                <li>
+                                    <Link to="#"><FormatListBulletedIcon fontSize="string" />  Lista de Productos</Link>
+                                </li>
+                            </ul>
+                        </> : null
+                    }
+
                 </aside>
                 <div className='content column'>
                     {children}
