@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,6 +8,7 @@ import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
 
 const ListaProveedores = () => {
+    const navigate = useNavigate();
     const [proveedores, setProveedores] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -26,7 +28,7 @@ const ListaProveedores = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             getProveedores();
-        }, 500);
+        }, 250);
 
         return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta antes de que se cumpla el tiempo de espera
     }, []);
@@ -105,7 +107,7 @@ const ListaProveedores = () => {
                             <td>{proveedor.str_direccion}</td>
                             <td>{proveedor.str_correo}</td>
                             <td>
-                                <button className='button is-info' ><EditIcon fontSize='string' /></button>
+                                <button className='button is-info' onClick={() => navigate(`/proveedor/detalle/${proveedor.id}`)}><EditIcon fontSize='string' /></button>
                                 <button className='button is-danger ml-2' onClick={() => handleDeleteProveedor(proveedor.id)}><DeleteIcon fontSize='string' /></button>
                             </td>
                         </tr>
