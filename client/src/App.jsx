@@ -16,6 +16,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Caja from './pages/Caja';
 import ListaProveedores from './pages/ListaProveedores';
 import DetalleProveedor from './pages/DetalleProveedor';
+import Ventas from './pages/Ventas';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
           // Rutas de Cajero
           <Route element={<ProtectedRoute isAllowed={!!user && (isCajero || isAdmin)} redirectTo='/home' />}>
             <Route path='/caja' element={<Layout><Caja /></Layout>} />
+            <Route path='/ventas' element={<Layout><Ventas /></Layout>} />
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>
