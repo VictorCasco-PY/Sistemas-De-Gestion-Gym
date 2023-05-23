@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import DeudaTable from '../components/DeudaTable';
+import PagadoTable from '../components/PagadoTable';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Reporte() {
+
+    const [isTableVisible, setTableVisibility] = useState(false);
+    const [isPagadoVisible, setPagadoVisibility] = useState(false);
+
+    const handleClose = () => {
+        setTableVisibility(false);
+    };
+    const handlePagadoClose = () => {
+        setPagadoVisibility(false);
+    };
 
     const dataPagado = {
         labels: ['Pagado'],
@@ -32,7 +44,7 @@ export default function Reporte() {
             if (element.length > 0) {
                 const datos = dataPagado.labels[element[0].index];
                 if (datos === "Pagado") {
-                    alert("Has hecho click en pagado");
+                    setPagadoVisibility(true);
                 }
             }
         }
@@ -73,7 +85,7 @@ export default function Reporte() {
             if (element.length > 0) {
                 const datos = dataDebt.labels[element[0].index];
                 if (datos === "Debe") {
-                    alert("Has hecho click en debe");
+                    setTableVisibility(true);
                 }
             }
         }
@@ -98,6 +110,13 @@ export default function Reporte() {
     return (
         <div className='m-2'>
             <div className='has-background-light p-6'>
+
+                {isTableVisible && <DeudaTable onClose={handleClose} />}
+                {isTableVisible && <div className="overlay" onClick={handleClose} />}
+
+                {isPagadoVisible && <PagadoTable onClose={handlePagadoClose} />}
+                {isPagadoVisible && <div className="overlay" onClick={handlePagadoClose} />}
+
                 <h1>Reporte</h1>
                 <div>
                     <div className="select">
