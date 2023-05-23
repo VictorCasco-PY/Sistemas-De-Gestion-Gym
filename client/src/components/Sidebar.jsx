@@ -11,7 +11,7 @@ const Sidebar = ({ children }) => {
     const user = JSON.parse(localStorage.getItem("user"));
     return (
         <>
-            <nav className='navbar is-light'>
+            <nav className='navbar is-link'>
                 <div className='navbar-brand mt-3 ml-3'>
                     <Link to="/home">
                         <img src={logo} width={270} height={90} />
@@ -23,12 +23,12 @@ const Sidebar = ({ children }) => {
                 </div>
             </nav>
 
-            <div className="columns ml-3">
-                <aside className="menu column is-one-fifth is-2 has-background-light">
+            <div className="columns">
+                <aside className="ml-2 menu column is-one-fifth is-2 has-background-link">
                     {
                         !user.rol === "admin" || !user.rol === "caja" || !user.rol === "entrenador" ? null :
                             <>
-                                <p className="menu-label has-text-grey-dark title is-4">Entrenadores</p>
+                                <p className="menu-label has-text-white title is-4">Entrenadores</p>
                                 <ul className="menu-list title is-5">
                                     <li>
                                         <Link to="/registro_cliente"><AddIcon fontSize="string" />  Registrar cliente</Link>
@@ -42,7 +42,7 @@ const Sidebar = ({ children }) => {
                                 </ul>
 
 
-                                <p className="menu-label has-text-grey-dark title is-4">
+                                <p className="menu-label has-text-white title is-4">
                                     Caja
                                 </p>
                                 <ul className="menu-list title is-5">
@@ -53,15 +53,15 @@ const Sidebar = ({ children }) => {
                                         <Link to="#"><PointOfSaleIcon />  Stock</Link>
                                     </li>
                                     <li>
-                                        <Link to="#"><PointOfSaleIcon />  Facturacion</Link>
+                                        <Link to="/ventas"><PointOfSaleIcon />  Ventas</Link>
                                     </li>
                                 </ul>
                             </>
                     }
                     {
                         user.rol === "entrenador" || user.rol === "admin" ? <>
-                            <p className="menu-label has-text-grey-dark title is-4">Proveedores</p>
-                            <ul className="menu-list title is-5">
+                            <p className="menu-label has-text-white title is-4">Proveedores</p>
+                            <ul className="menu-list title is-5 has-text-white-bis">
                                 <li>
                                     <Link to="/registroProveedores"><AddIcon fontSize="string" />  Agregar Proveedor</Link>
                                 </li>
@@ -69,7 +69,7 @@ const Sidebar = ({ children }) => {
                                     <Link to="/lista_proveedores"><FormatListBulletedIcon fontSize="string" />  Lista de Proveedores</Link>
                                 </li>
                             </ul>
-                            <p className="menu-label has-text-grey-dark title is-4">
+                            <p className="menu-label has-text-white title is-4">
                                 Empleados
                             </p>
                             <ul className='menu-list title is-5'>
@@ -84,7 +84,7 @@ const Sidebar = ({ children }) => {
                     }
                     {
                         user.rol === 'admin' ? <>
-                            <p className='menu-label has-text-grey-dark title is-4'>Productos</p>
+                            <p className='menu-label has-text-white title is-4'>Productos</p>
                             <ul className='menu-list title is-5'>
                                 <li>
                                     <Link to="#"><AddIcon fontSize="string" />  Agregar Producto</Link>

@@ -15,7 +15,12 @@ import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Caja from './pages/Caja';
 import ListaProveedores from './pages/ListaProveedores';
+<<<<<<< HEAD
 import Reporte from './pages/Reporte';
+=======
+import DetalleProveedor from './pages/DetalleProveedor';
+import Ventas from './pages/Ventas';
+>>>>>>> master
 
 
 function App() {
@@ -37,7 +42,7 @@ function App() {
           </Route>
 
           // Rutas de Entrenador
-          <Route element={<ProtectedRoute isAllowed={!!user && (isEntrenador || isAdmin)} redirectTo='/home' />}>
+          <Route element={<ProtectedRoute isAllowed={!!user && (isEntrenador || isAdmin || isCajero)} redirectTo='/home' />}>
             <Route path='/registro_cliente' element={<Layout><RegistroCliente /></Layout>} />
             <Route path='/listaClientes' element={<Layout><ListaClientes /></Layout>} />
             <Route path='/detallesCliente' element={<Layout><DetallesCliente /></Layout>} />
@@ -47,12 +52,14 @@ function App() {
           // Rutas de Cajero
           <Route element={<ProtectedRoute isAllowed={!!user && (isCajero || isAdmin)} redirectTo='/home' />}>
             <Route path='/caja' element={<Layout><Caja /></Layout>} />
+            <Route path='/ventas' element={<Layout><Ventas /></Layout>} />
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>
             <Route path='/reporte' element={<Layout><Reporte /></Layout>} />
             <Route path='/registroProveedores' element={<Layout><RegistroProveedores /></Layout>} />
             <Route path='/lista_proveedores' element={<Layout><ListaProveedores /></Layout>} />
+            <Route path='/proveedor/detalle/:id' element={<Layout><DetalleProveedor /></Layout>} />
             <Route path='/registroEmpleado' element={<Layout><RegistroEmpleado /></Layout>} />
             <Route path='/listaEmpleados' element={<Layout><TablaUsuarios /></Layout>} />
           </Route>
