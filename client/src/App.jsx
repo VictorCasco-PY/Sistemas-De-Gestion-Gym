@@ -15,12 +15,9 @@ import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Caja from './pages/Caja';
 import ListaProveedores from './pages/ListaProveedores';
-<<<<<<< HEAD
 import Reporte from './pages/Reporte';
-=======
 import DetalleProveedor from './pages/DetalleProveedor';
 import Ventas from './pages/Ventas';
->>>>>>> master
 
 
 function App() {
