@@ -12,7 +12,7 @@ function PagadoTable({ onClose }) {
                 <div className='m-2'>
                     <h1>Pagados de (Mes Sleccionado)</h1>
                 </div>
-                <table className='table is-bordered'>
+                <table className='table is-bordered is-striped is-hoverable'>
                     <thead className=''>
                         <tr>
                             <th>Nombre</th>

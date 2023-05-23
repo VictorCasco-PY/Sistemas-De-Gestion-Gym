@@ -47,6 +47,9 @@ export default function Reporte() {
                     setPagadoVisibility(true);
                 }
             }
+        },
+        onHover: (event, chartElement) => {
+            event.native.target.style.cursor = "pointer"
         }
     };
 
@@ -88,6 +91,9 @@ export default function Reporte() {
                     setTableVisibility(true);
                 }
             }
+        },
+        onHover: (event, chartElement) => {
+            event.native.target.style.cursor = "pointer"
         }
     };
     const pluginsDebt = [{
