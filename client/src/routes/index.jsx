@@ -10,6 +10,7 @@ import Layout from "../Layout/Layout";
 import RegistroProveedores from "../pages/RegistroProveedores";
 import TablaUsuarios from "../pages/TablaUsuarios";
 import Reporte from "../pages/Reporte";
+import DetallesUsuario from "../pages/DetallesUsuario";
 
 
 export const routes = createBrowserRouter([
@@ -59,6 +60,10 @@ export const routes = createBrowserRouter([
             {
                 path: "/listaEmpleados",
                 element: <TablaUsuarios />,
+            },
+            {
+                path: "/empleado/:id",
+                element: <DetallesUsuario/>,
             }
         ]
     },
