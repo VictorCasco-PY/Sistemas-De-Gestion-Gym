@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const Sidebar = ({ children }) => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -34,6 +35,9 @@ const Sidebar = ({ children }) => {
                                     </li>
                                     <li>
                                         <Link to="/listaClientes"><FormatListBulletedIcon fontSize="string" />  Lista de Clientes</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/reporte"><AssessmentIcon fontSize="string" />  Reporte</Link>
                                     </li>
                                 </ul>
 

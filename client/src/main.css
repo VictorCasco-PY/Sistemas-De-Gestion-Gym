@@ -135,4 +135,8 @@
 .editable-title:focus {
   border: 1px solid lightblue;
   outline: none;
+}
+
+.hr2 {
+  background-color: gray;
 }/*# sourceMappingURL=main.css.map */

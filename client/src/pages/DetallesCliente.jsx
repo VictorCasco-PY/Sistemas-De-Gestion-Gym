@@ -6,6 +6,8 @@ import EditableInputTwoValues from '../components/EditableInputTwoValues';
 import moment from 'moment';
 import Swal from 'sweetalert2'
 
+import CircularProgress from '@mui/material/CircularProgress';
+
 export function DetallesCliente() {
     const id = useParams().name;
 
@@ -28,18 +30,24 @@ export function DetallesCliente() {
 
     const [sortDirection, setSortDirection] = useState("asc"); //en que dirección
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        axios.get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
-            .then(response => setClienteMed(response.data))
-            .catch(error => console.log(error));
+        axios
+            .get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
+            .then((response) => setClienteMed(response.data))
+            .catch((error) => console.log(error));
 
-        axios.get(`http://localhost:8000/cliente/${id}/plan-de-pago`)
-            .then(response => setCliente(response.data))
-            .catch(error => console.log(error));
+        axios
+            .get(`http://localhost:8000/cliente/${id}/plan-de-pago`)
+            .then((response) => setCliente(response.data))
+            .catch((error) => console.log(error));
 
-        axios.get(`http://localhost:8000/cliente/${id}`)
-            .then(response => setClientePers(response.data))
-            .catch(error => console.log(error));
+        axios
+            .get(`http://localhost:8000/cliente/${id}`)
+            .then((response) => setClientePers(response.data))
+            .catch((error) => console.log(error))
+            .finally(() => setIsLoading(false));
     }, []);
 
     if (!cliente || !clientePers) {
@@ -145,16 +153,19 @@ export function DetallesCliente() {
         <div className=' is-flex-direction-column is-align-content-center is-multiline is-centered'>
             <div className=" columns headerTitle clienteHeader m-2">
                 <div className='title is-flex is-justify-content-center is-align-items-center column headerTitle has-text-centered'>
-                    <EditableInputTwoValues
-                        valorInicial={clientePers.str_nombre}
-                        id={id}
-                        apiUrl="http://localhost:8000/cliente"
-                        campoCambiar="str_nombre"
-
-                        id2={cliente.id}
-                        apiUrl2="http://localhost:8000/planes-de-pagos"
-                        campoCambiar2="str_nombre_cliente"
-                    />
+                    {isLoading ? (
+                        <CircularProgress />
+                    ) : (
+                        <EditableInputTwoValues
+                            valorInicial={clientePers.str_nombre}
+                            id={id}
+                            apiUrl="http://localhost:8000/cliente"
+                            campoCambiar="str_nombre"
+                            id2={cliente.id}
+                            apiUrl2="http://localhost:8000/planes-de-pagos"
+                            campoCambiar2="str_nombre_cliente"
+                        />
+                    )}
                 </div>
                 <div className="column">
                     <div className="infoBubble">
@@ -162,7 +173,11 @@ export function DetallesCliente() {
                             <p className='is-size-6'>Estado de Pago</p>
                         </div>
                         <div className="bubbleInfo">
-                            <p className='is-size-5'>{cliente.estado_de_pago}</p>
+                            {isLoading ? (
+                                <CircularProgress />
+                            ) : (
+                                <p className='is-size-5'>{cliente.estado_de_pago}</p>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -184,12 +199,16 @@ export function DetallesCliente() {
                                 <p className='is-size-6'>Dirección</p>
                             </div>
                             <div className="bubbleInfo">
-                                <EditableInput
-                                    valorInicial={clientePers.str_direccion}
-                                    id={id}
-                                    apiUrl="http://localhost:8000/cliente"
-                                    campoCambiar="str_direccion"
-                                />
+                                {isLoading ? (
+                                    <CircularProgress />
+                                ) : (
+                                    <EditableInput
+                                        valorInicial={clientePers.str_direccion}
+                                        id={id}
+                                        apiUrl="http://localhost:8000/cliente"
+                                        campoCambiar="str_direccion"
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
@@ -207,12 +226,16 @@ export function DetallesCliente() {
                                 <p className='is-size-6'>RUC</p>
                             </div>
                             <div className="bubbleInfo has-background-link-light">
-                                <EditableInput
-                                    valorInicial={clientePers.str_ruc}
-                                    id={id}
-                                    apiUrl="http://localhost:8000/cliente"
-                                    campoCambiar="str_ruc"
-                                />
+                                {isLoading ? (
+                                    <CircularProgress />
+                                ) : (
+                                    <EditableInput
+                                        valorInicial={clientePers.str_ruc}
+                                        id={id}
+                                        apiUrl="http://localhost:8000/cliente"
+                                        campoCambiar="str_ruc"
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
@@ -220,11 +243,15 @@ export function DetallesCliente() {
 
                 <div className="is-flex is-justify-content-center is-flex-direction-column">
                     <div>
-                        <button className="button is-success is-outlined"
-                            onClick={handleAdd}
-                            disabled={isAdding}>
-                            <span className="material-symbols-outlined"> add </span> Añadir
-                        </button>
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <button className="button is-success is-outlined"
+                                onClick={handleAdd}
+                                disabled={isAdding}>
+                                <span className="material-symbols-outlined"> add </span> Añadir
+                            </button>
+                        )}
                     </div>
 
                     <table className="table table-text-2 is-bordered tableNew has-background-light is-bordered">
@@ -337,7 +364,11 @@ export function DetallesCliente() {
                             )}
 
                             {/* Mapeo de los datos, mapea Mediciones de clientes */}
-                            {sortedData.length > 0 ? (
+                            {isLoading ? (
+                                <tr>
+                                    <td colSpan="8" className="has-background-grey-light has-text-centered">Cargando...</td>
+                                </tr>
+                            ) : sortedData.length > 0 ? (
                                 sortedData.map((med, index) => (
                                     <tr key={index}>
                                         <td>{med.date_fecha_medicion}</td>
@@ -347,21 +378,19 @@ export function DetallesCliente() {
                                         <td>{med.cintura}</td>
                                         <td>{med.altura}</td>
                                         <td>{med.porcentaje_grasa_corporal}</td>
-                                        <td><button className="button icon-button is-danger is-outlined is-small" onClick={() => handleDelete(med.id)}><span className="material-symbols-outlined">
-                                            delete
-                                        </span></button></td>
+                                        <td>
+                                            <button
+                                                className="button icon-button is-danger is-outlined is-small"
+                                                onClick={() => handleDelete(med.id)}
+                                            >
+                                                <span className="material-symbols-outlined">delete</span>
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td></td>
+                                    <td className="has-background-grey-light has-text-centered" colSpan="8">Sin mediciones.</td>
                                 </tr>
                             )}
                         </tbody>

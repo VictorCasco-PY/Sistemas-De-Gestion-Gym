@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Layout from "../Layout/Layout";
 import RegistroProveedores from "../pages/RegistroProveedores";
 import TablaUsuarios from "../pages/TablaUsuarios";
+import Reporte from "../pages/Reporte";
 
 
 export const routes = createBrowserRouter([
@@ -40,6 +41,11 @@ export const routes = createBrowserRouter([
             {
                 path: "/detalleCliente/:id",
                 element: <></>,
+            },
+
+            {
+                path: "/reporte/",
+                element: <Reporte />,
             },
 
             {
