@@ -12,6 +12,7 @@ import authRoutes from "./routers/auth.routes.js";
 import stocksRoutes from "./routers/stocks.routes.js";
 import facturasRoutes from "./routers/facturas.routes.js";
 import facturasDetallesRoutes from "./routers/facturas_detalles.routes.js";
+import timbradosRoutes from "./routers/timbrados.routes.js";
 
 
 const app = express();
@@ -40,6 +41,7 @@ app.use(authRoutes)
 app.use(stocksRoutes)
 app.use(facturasRoutes)
 app.use(facturasDetallesRoutes)
+app.use(timbradosRoutes)
 
 
 app.get("/", async (req, res) => {
