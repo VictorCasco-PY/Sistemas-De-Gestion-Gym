@@ -136,7 +136,7 @@ const RegistroCliente = () => {
     return (
         <div className="columns is-centered mt-6">
             <div className="container is-max-desktop is-centered">
-                <div className="box is-centered has-background-white-ter">
+                <div className="box is-centered">
                     <h1 className="title is-1 mb-6">Registro De Cliente</h1>
                     <hr />
                     <form>
