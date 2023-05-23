@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios"
+import Swal from "sweetalert2";
 
 
 const RegistroEmpleado = () => {
   //estado para manejar los valores de los inputs
-  const [empleados, setEmpleados] = useState({
+  const empleadosData = {
     user: "",
     password: "",
     str_nombre: "",
@@ -14,10 +15,9 @@ const RegistroEmpleado = () => {
     time_inicio_trabajo: "",
     time_fin_trabajo: "",
     rol: "",
-  });
+  }
+  const [empleados, setEmpleados] = useState(empleadosData);
 
-  //estado para manejar el despliegue de un input
-  const [mostrarInputTexto, setMostrarInputTexto] = useState(false);
   //estado para manejar los valores de los inputs tipo radio
   const [radioSeleccionado, setRadioSeleccionado] = useState("");
 
@@ -35,22 +35,32 @@ const RegistroEmpleado = () => {
       ...empleados,
       rol: event.target.value,
     });
-    setMostrarInputTexto(event.target.value === "entrenador");
   };
 
   // función para manejar el envío del formulario
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newUser = `${empleados.str_cedula}@gforce.com`;
-    const newPassword = `${empleados.rol}${empleados.str_cedula}`;
-    const empleadoData = { ...empleados, user: newUser, password: newPassword };
-    console.log(empleadoData);
-    axios.post('http://localhost:8000/empleados', empleadoData)
-    .then(response => {
-      console.log(response.data);
+    console.log(empleados);
+    axios
+      .post("http://localhost:8000/empleados", empleados)
+      .then((response) => {
+        console.log(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Usuario registrado con éxito",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+        });
+        setEmpleados(empleadosData); // Restablecer el estado a su valor inicial
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error al registrar el usuario",
+          text: "Por favor, verifica los datos e intenta nuevamente",
+        });
       });
   };
   
@@ -60,12 +70,36 @@ const RegistroEmpleado = () => {
     <div className="columns is-centered">
       <div className="column is-three-fifths-desktop">
         <div className="box">
-          <form onSubmit={handleSubmit}>
+          <form >
             <center>
               <h1 className="mb-2 title is-3 has-text-primary">
                 Registrar Empleado
               </h1>
             </center>
+            <div className="columns">
+              <div className="column">
+                <input
+                  className="input is-primary has-text-centered"
+                  type="text"
+                  name="user"
+                  value={empleados.user}
+                  onChange={handleChange}
+                  placeholder="Usuario"
+                  required
+                />
+              </div>
+              <div className="column">
+                <input
+                  className="input is-primary has-text-centered"
+                  type="password"
+                  name="password"
+                  value={empleados.password}
+                  onChange={handleChange}
+                  placeholder="Contraseña"
+                  required
+                />
+              </div>
+            </div>
             <div className="columns">
               <div className="column">
                 <input
@@ -151,6 +185,16 @@ const RegistroEmpleado = () => {
                   <input
                     type="radio"
                     name="str_rol"
+                    value="admin"
+                    checked={radioSeleccionado === "admin"}
+                    onChange={handleRadioChange}
+                  />
+                  Administrador
+                </label>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="str_rol"
                     value="caja"
                     checked={radioSeleccionado === "caja"}
                     onChange={handleRadioChange}
@@ -169,22 +213,10 @@ const RegistroEmpleado = () => {
                 </label>
               </div>
             </div>
-            {mostrarInputTexto && (
-              <div className="columns">
-                <div className="column">
-                  <input
-                    className="input is-primary has-text-centered"
-                    type="text"
-                    placeholder="Especialidad"
-                    required
-                  />
-                </div>
-              </div>
-            )}
             <div className="buttons">
               <button
+                onClick={handleSubmit}
                 className="ml-auto mt-2 button is-primary is-outlined"
-                type="submit"
               >
                 Registrar
               </button>

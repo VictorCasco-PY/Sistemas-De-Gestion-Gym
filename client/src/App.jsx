@@ -15,6 +15,9 @@ import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Caja from './pages/Caja';
 import ListaProveedores from './pages/ListaProveedores';
+import DetallesUsuario from './pages/DetallesUsuario';
+import RegistroProductos from './pages/Productos';
+import TablaProductos from './pages/ListaProductos';
 
 
 function App() {
@@ -53,6 +56,9 @@ function App() {
             <Route path='/lista_proveedores' element={<Layout><ListaProveedores /></Layout>} />
             <Route path='/registroEmpleado' element={<Layout><RegistroEmpleado /></Layout>} />
             <Route path='/listaEmpleados' element={<Layout><TablaUsuarios /></Layout>} />
+            <Route path='/detallesEmpleado/:id' element={<Layout><DetallesUsuario /></Layout>} />
+            <Route path='/productos' element={<Layout><RegistroProductos /></Layout>} />
+            <Route path='/listaProductos' element={<Layout><TablaProductos /></Layout>} />
           </Route>
         </Routes>
       </BrowserRouter>

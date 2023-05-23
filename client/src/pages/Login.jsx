@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [usuario, setUsuario] = useState({
@@ -30,8 +31,16 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Usuario no encontrado",
+          text: "Revise su nombre de usuario o contraseña",
+          timer: 2000,
+          timerProgressBar: true,
+        });
       });
   };
+
 
   const toggleMostrarPassword = () => {
     setMostrarPassword(!mostrarPassword);
@@ -52,7 +61,7 @@ const Login = () => {
                   value={usuario.user}
                   className="input is-primary has-text-centered"
                   type="text"
-                  placeholder="Correo Electrónico"
+                  placeholder="Nombre de Usuario"
                   onChange={handleChange}
                 />
               </p>
