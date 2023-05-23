@@ -1,152 +1,122 @@
-import {validationResult} from "express-validator";
-import {models} from "../models/models.js";
-import {getDateNow, toDate} from "../tools/date.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
-import {Productos} from "./productos.controller.js";
+import { models } from "../models/models.js";
+import { bodyValidator } from "../tools/bodyValidator.js";
 
-import {Stock} from "./stock.js";
-import {Op} from "sequelize";
-
-
-const {planes_de_pagos} = models;
-
-const tiposModalidadesDePagos = new TipoModalidadDePago();
-const clientes = new Cliente();
-
+const { productos, stocks } = models;
 export class StockProductos {
-    /*
-    Creamos un nuevo plan
-    */
     crear = async (req, res) => {
         try {
-            // Verificamos si todos los campos estan
             const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator)
+            if (validator) return res.status(400).json(validator);
 
-            const {body} = req;
-            const {id_tipo_modalidad_de_pago} = body;
-            const {id_cliente} = body;
-            const str_modalidad = await tiposModalidadesDePagos.getNombreModalidad(id_tipo_modalidad_de_pago);
+            const { body } = req;
+            const { id_producto, id_stock, cantidad } = body;
 
+            // Verificar si el producto ya está registrado
+            const productoExistente = await this.getProductoById(id_producto);
+            if (!productoExistente) {
+                return res.status(404).json({ error: "No existe un producto con ese ID" });
+            }
 
-            if (!(await clientes.getById(id_cliente))) return res.status(404).json({error: "No existe un usuario con ese ID"});
-            if (await this.getPlanPagoCliente(id_cliente)) {return res.status(409).json({error: "El cliente ya posee un plan de pago"});}
+            // Verificar si el stock ya está registrado
+            const stockExistente = await this.getStockById(id_stock);
+            if (!stockExistente) {
+                return res.status(404).json({ error: "No existe un stock con ese ID" });
+            }
 
-            const str_nombre_cliente = (await clientes.getById(id_cliente)).str_nombre;
-
-
-            const result = await planes_de_pagos.create({
-                ...body,
-                str_modalidad,
-                str_nombre_cliente,
-                estado_de_pago: "pendiente",
-                date_fecha_de_vencimiento: toDate(body.date_fecha_de_vencimiento),
-                date_fecha_de_pago: null,
-                date_fecha_de_de_registro: getDateNow(),
-                date_fecha_de_actualizacion: getDateNow()
-            });
-                  
-
-            
-            res.json(result)
+            // Crear la relación entre el producto y el stock
+            const result = await this.createStockProducto(id_producto, id_stock, cantidad);
+            res.json(result);
         } catch (error) {
-            res.status(500).send(error.message);
+            return res.status(500).json(error);
+        }
+    };
+
+    // Obtener un producto por ID
+    getProductoById = async (id) => {
+        try {
+            const producto = await productos.findOne({ where: { id } });
+            return producto;
+        } catch (error) {
+            throw new Error("Error al obtener el producto");
         }
     }
 
+    // Obtener un stock por ID
+    getStockById = async (id) => {
+        try {
+            const stock = await stocks.findOne({ where: { id } });
+            return stock;
+        } catch (error) {
+            throw new Error("Error al obtener el stock");
+        }
+    }
+
+    // Crear una relación entre un producto y un stock
+    createStockProducto = async (id_producto, id_stock, cantidad) => {
+        try {
+            const result = await stockProductos.create({ id_producto, id_stock, cantidad });
+            return result;
+        } catch (error) {
+            throw new Error("Error al crear la relación entre el producto y el stock");
+        }
+    }
+    //Actualizar el stockProducto
     update = async (req, res) => {
         try {
-            const {id} = req.params;
-            const {body} = req;
-            const [rowsAffected] = await planes_de_pagos.update({...body}, {where: {id}});
-            if (rowsAffected === 0) return res.status(404).json("No se actualizo ningun plan de pago");
-            res.status(200).send("Plan actualizado")
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
-    }
-
-    delete = async (req, res) => {
-        try {
-            const {id} = req.params;
-            if (!(await this.getById(id))) return res.status(404).json({error: "No existe ese plan de pago"});
-            await planes_de_pagos.destroy({where: {id}});
-            res.status(200).send("Plan de pago eliminado");
+            const { id } = req.params;
+            const { body } = req;
+            const [rowsAffected] = await stockProductos.update({ ...body }, { where: { id } });
+            if (rowsAffected === 0) {
+                return res.status(404).json("No se actualizó ninguna relación producto-stock");
+            }
+            res.status(200).send("Relación producto-stock actualizada");
         } catch (error) {
             console.log(error);
-            res.status(500).json({error});
+            return res.status(500).json({ error });
         }
-    }
-
-    // Devuelve todos los planes de pago registrados
+    };
+    //Eliminar el stockProducto
+    delete = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const rowsAffected = await stockProductos.destroy({ where: { id } });
+            if (rowsAffected === 0) {
+                return res.status(404).json("No existe una relación producto-stock con ese ID");
+            }
+            res.status(200).send("Relación producto-stock eliminada");
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    };
     getAll = async (req, res) => {
         try {
-
-            const {nombre, estado, ...querys} = req.query;
-
-            const where = {
-                ...(nombre && {
-                    str_nombre_cliente: {
-                        [Op.like]: `%${nombre}%`,
-                    },
-                }),
-                ...(estado && {
-                    estado_de_pago:estado,
-                }),
-                ...querys,
-            };
-
-            const result = await planes_de_pagos.findAll({where});
+            const result = await stockProductos.findAll();
             res.json(result);
         } catch (error) {
             res.status(500).json(error);
         }
-    }
+    };
+    getById = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const result = await stockProductos.findOne({ where: { id } });
 
-    // Obtiene un plan de pago consultando por su ID
+            if (!result) {
+                return res.status(404).json("No se encontró una relación producto-stock con ese ID");
+            }
+
+            res.json(result);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    };
     getByParams = async (req, res) => {
         try {
-            const {id} = req.params;
-            const result = await planes_de_pagos.findOne({where: {id}});
-            if (!result) return res.status(404).json('No existe un plan de pago con ese ID')
-            res.json(result)
+            const { id } = req.params;
+            const result = await this.getById(id);
+            return res.json(result);
         } catch (error) {
             res.json(error).status(500);
         }
     }
-
-        // Devuelve un objeto si es que el usuario ya posee un plan de pago
-    getPlanDePagoDeClienteByParams = async (req, res) => {
-            try {
-                const {id_cliente} = req.params;
-                const result = await planes_de_pagos.findOne({where:{id_cliente}});
-                if (!result) return res.status(404).json({error: "No se encuentra un plan de pago con ese id de cliente"})
-                res.json(result)
-            }catch (error){
-                res.json(error).status(500);
-            }
-        }
-
-
-    getPlanPagoCliente = async(id_cliente) => {
-        try{
-            const result = await planes_de_pagos.findOne({where:{id_cliente}});
-            return result
-        }catch(error){
-            return {error: "Algo salio mal"};
-        }
-    }
-
-
-
-    getById = async (id) => {
-        try {
-            
-            const result = await planes_de_pagos.findOne({where: {id}});
-            return result
-        } catch (error) {
-            res.status(500).json(error);
-        }
-    }
-
 }
