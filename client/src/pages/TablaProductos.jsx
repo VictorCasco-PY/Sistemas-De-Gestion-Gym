@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
 
-const TablaUsuarios = () => {
-  const [usuarios, setUsuarios] = useState([]);
+
+const TablaProductos = () => {
+  const [productos, setProductos] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/empleados")
+      .get("http://localhost:8000/productos")
       .then((response) => {
-        setUsuarios(response.data);
+        setProductos(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -21,7 +21,7 @@ const TablaUsuarios = () => {
   const handleEliminarClick = (id) => {
     Swal.fire({
       title: "Confirmar Eliminación",
-      text: "¿Estás seguro de que deseas eliminar este usuario?",
+      text: "¿Estás seguro de que deseas eliminar este producto?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Confirmar",
@@ -29,11 +29,10 @@ const TablaUsuarios = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:8000/empleado/${id}`)
+          .delete(`http://localhost:8000/producto/${id}`)
           .then((response) => {
             console.log(response.data);
-            // Remove the user from the table locally
-            setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+            setProductos(productos.filter((producto) => producto.id !== id));
           })
           .catch((error) => {
             console.log(error);
@@ -47,24 +46,25 @@ const TablaUsuarios = () => {
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Cédula</th>
-          <th>Rol</th>
-          <th>Acciones</th>
+          <th>Descripción</th>
+          <th>IVA</th>
+          <th>Precio</th>
+          <th>Código</th>
+          <th>-</th>
         </tr>
       </thead>
       <tbody>
-        {usuarios.map((usuario) => (
-          <tr key={usuario.id}>
-            <td>{usuario.str_nombre}</td>
-            <td>{usuario.str_cedula}</td>
-            <td>{usuario.rol}</td>
+        {productos.map((producto) => (
+          <tr key={producto.id}>
+            <td>{producto.str_nombre}</td>
+            <td>{producto.str_descripcion}</td>
+            <td>{producto.iva}</td>
+            <td>{producto.precio}</td>
+            <td>{producto.str_codigo}</td>
             <td>
-              <button className="button is-danger is-outlined" onClick={() => handleEliminarClick(usuario.id)}>
+              <button onClick={() => handleEliminarClick(producto.id)}>
                 Eliminar
               </button>
-                <Link to={`/detallesEmpleado/${usuario.id}`}>
-                  <button className="button is-info is-outlined">Detalles</button>
-                </Link>
             </td>
           </tr>
         ))}
@@ -73,4 +73,4 @@ const TablaUsuarios = () => {
   );
 };
 
-export default TablaUsuarios;
+export default TablaProductos;

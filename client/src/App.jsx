@@ -17,6 +17,10 @@ import Caja from './pages/Caja';
 import ListaProveedores from './pages/ListaProveedores';
 import DetalleProveedor from './pages/DetalleProveedor';
 import Ventas from './pages/Ventas';
+import DetallesUsuario from './pages/DetallesUsuario';
+import RegistroProductos from './pages/RegistroProductos';
+import TablaProductos from './pages/TablaProductos';
+
 
 
 function App() {
@@ -57,6 +61,9 @@ function App() {
             <Route path='/proveedor/detalle/:id' element={<Layout><DetalleProveedor /></Layout>} />
             <Route path='/registroEmpleado' element={<Layout><RegistroEmpleado /></Layout>} />
             <Route path='/listaEmpleados' element={<Layout><TablaUsuarios /></Layout>} />
+            <Route path='/detallesEmpleado/:id' element={<Layout><DetallesUsuario /></Layout>} />
+            <Route path='/productos' element={<Layout><RegistroProductos /></Layout>} />
+            <Route path='/listaProductos' element={<Layout><TablaProductos /></Layout>} />
           </Route>
         </Routes>
       </BrowserRouter>
