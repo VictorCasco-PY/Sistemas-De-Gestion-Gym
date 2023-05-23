@@ -1,11 +1,14 @@
-import {check} from "express-validator";
 import {Router} from "express";
+
 import {Empleado} from "../controllers/empleados.controller.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
 const empleado = new Empleado();
 const empleadosRoutes = Router();
 
-empleadosRoutes.post('/empleados', [
+empleadosRoutes.post('/empleados', 
+    checkMiddleWare(['user', 'password', 'str_nombre', 'str_telefono', 'str_direccion', 'str_cedula'])
+[
         check('user', 'El campo user es requerido').notEmpty(),
         check('password', 'El campo password es requerido').notEmpty(),
         check('str_nombre', 'El campo str_nombre es requerido').notEmpty(),
