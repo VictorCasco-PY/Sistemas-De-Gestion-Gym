@@ -1,6 +1,6 @@
 import { check } from "express-validator";
 
-export const checkMiddleWare = (list, token) => {
-    const checks = list.map(value => check(value, `${value} es requeido`).notEmpty());
+export const checkMiddleWare = (list) => {
+    const checks = list.map(value => check(value, `${value} es requerido`).notEmpty());
     return checks;
 }
