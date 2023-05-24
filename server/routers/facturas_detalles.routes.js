@@ -1,20 +1,13 @@
 import {check} from "express-validator";
 import {Router} from "express";
 import { FacturaDetalle } from "../controllers/facturas_detalles.controller.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
 const facturaDetalle = new FacturaDetalle();
 const facturasDetallesRoutes = Router();
 
-facturasDetallesRoutes.post('/facturas', [
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-        check('id_factura', 'El campo id_factura es requerido').notEmpty(),
-    ],
+facturasDetallesRoutes.post('/facturas',
+    checkMiddleWare(['id_factura','id_producto', 'id_plan_de_pago', 'subtotal', 'cantidad', 'precio', 'iva']),
     facturaDetalle.crear
 );
 
