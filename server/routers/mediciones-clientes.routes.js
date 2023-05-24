@@ -1,6 +1,7 @@
 import {Router} from "express";
 import {check} from "express-validator";
 import {MedicionCliente} from "../controllers/mediciones_clientes.controller.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
 const medicionesClientes = new MedicionCliente();
 
@@ -12,17 +13,7 @@ medicionesClientesRoutes.get("/mediciones-clientes/:id", medicionesClientes.getB
 // Crear 
 medicionesClientesRoutes.post(
     "/mediciones-clientes",
-    [
-        check("id_cliente", "id_cliente es un campo requerido").notEmpty(),
-        check("peso", "peso es un campo requerido").notEmpty(),
-        check("altura", "altura es un campo requerido").notEmpty(),
-        check("cintura", "cintura es un campo requerido").notEmpty(),
-        check("piernas", "piernas es un campo requerido").notEmpty(),
-        check(
-            "porcentaje_grasa_corporal",
-            "porcentaje_grasa_corporal  es un campo requerido"
-        ).notEmpty(),
-    ],
+    checkMiddleWare(['id_cliente', 'peso', 'altura', 'cintura', 'piernas', 'porcentaje_grasa_corporal']),
     medicionesClientes.crear
 );
 
