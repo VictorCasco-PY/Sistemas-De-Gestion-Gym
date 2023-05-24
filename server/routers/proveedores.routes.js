@@ -2,6 +2,7 @@ import { Router } from "express";
 import { check } from "express-validator";
 
 import { Proveedores } from "../controllers/proveedores.controller.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
 const proveedores = new Proveedores();
 
@@ -16,13 +17,7 @@ proveedoresRoutes.get("/proveedor/:id", proveedores.getByParams);
 // Crear un nuevo proveedor, los checks sirven para comprobar que los campos esten completos
 proveedoresRoutes.post(
     "/proveedores",
-    [
-        check("str_nombre", "str_nombre es un campo requerido").notEmpty(),
-        check("str_direccion", "str_direccion es un campo requerido").notEmpty(),
-        check("str_telefono", "str_telefono es un campo requerido").notEmpty(),
-        check("str_ruc", "str_ruc es un campo requerido").notEmpty(),
-        check("str_correo", "str_correo es un campo requerido").notEmpty(),
-    ],
+    checkMiddleWare(['str_nombre', 'str_direccion', 'str_telefono', 'str_ruc', 'str_correo']),
     proveedores.crear
 );
 
