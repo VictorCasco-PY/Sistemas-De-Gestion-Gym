@@ -1,10 +1,9 @@
 import { Router } from "express";
-import { check } from "express-validator";
 
 import {Cliente} from "../controllers/clientes.controller.js";
 import { PlanesDePagos } from "../controllers/planes_de_pagos.controller.js";
 import {MedicionCliente} from "../controllers/mediciones_clientes.controller.js";
-
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
 const clientes = new Cliente();
 const medicionesClientes = new MedicionCliente();
@@ -20,12 +19,7 @@ clientesRoutes.get("/cliente/:id", clientes.getByParams);
 // Crear un nuevo cliente, los checks sirven para comprobar que los campos esten completos
 clientesRoutes.post(
   "/clientes",
-  [
-    check("str_nombre", "str_nombre es un campo requerido").notEmpty(),
-    check("edad", "edad es un campo requerido").notEmpty(),
-    check("str_direccion", "str_direccion es un campo requerido").notEmpty(),
-    check("str_ruc", "str_ruc es un campo requerido").notEmpty(),
-  ],
+  checkMiddleWare(["str_nombre", "edad", "str_direccion", "str_ruc"]),
   clientes.crear
 );
 
