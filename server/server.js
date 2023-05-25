@@ -14,6 +14,7 @@ import facturasRoutes from "./routers/facturas.routes.js";
 import facturasDetallesRoutes from "./routers/facturas_detalles.routes.js";
 import timbradosRoutes from "./routers/timbrados.routes.js";
 import stockProductosRoutes from "./routers/stock-productos.routes.js";
+import cajasRoutes from "./routers/cajas.routes.js";
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use(facturasRoutes)
 app.use(facturasDetallesRoutes)
 app.use(timbradosRoutes)
 app.use(stockProductosRoutes)
+app.use(cajasRoutes)
 
 app.get("/", async (req, res) => {
     res.json({
