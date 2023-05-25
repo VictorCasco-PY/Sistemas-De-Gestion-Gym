@@ -1,15 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import PaymentIcon from '@mui/icons-material/Payment';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Ventas = () => {
-    const [nombreCliente, setNombreCliente] = useState('');
-    const handleRucChange = async (event) => {
-        const ruc = event.target.value;
-        ruc == 4883081 ? setNombreCliente('Victor Casco') : '';
+    const [cliente, setCliente] = useState({ str_nombre: '' });
+    const [documentoCliente, setDocumentoCliente] = useState('');
+
+    const getCliente = async (ruc) => {
+        try {
+            const response = await axios.get(`http://localhost:8000/clientes?str_ruc=${ruc}`);
+            setCliente(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.message);
+        }
     }
+
+    const handleRucChange = (event) => {
+        setDocumentoCliente(event.target.value);
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            getCliente(documentoCliente);
+        }
+    };
+
     const navigate = useNavigate();
     return (
         <div className='container box columns m-4'>
@@ -18,9 +37,9 @@ const Ventas = () => {
                 <div className='column is-one-third'>
                     <h3>Datos del cliente</h3>
                     <label htmlFor="str_ruc">Nro Documento</label>
-                    <input className='input is-primary' type="text" name="str_ruc" onChange={handleRucChange} />
+                    <input className='input is-primary' type="text" name="str_ruc" onChange={handleRucChange} onKeyDown={handleKeyDown} />
                     <label htmlFor="str_nombre">Nombre</label>
-                    <input className='input is-primary' type="text" name="str_nombre" readOnly value={nombreCliente} />
+                    <input className='input is-primary' type="text" name="str_nombre" readOnly value={cliente[0]?.str_nombre || ' '} />
                 </div>
                 <div className='mt-5'>
                     <h3>Productos/Servicios</h3>
