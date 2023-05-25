@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Layout from "../Layout/Layout";
 import RegistroProveedores from "../pages/RegistroProveedores";
 import TablaUsuarios from "../pages/TablaUsuarios";
+import DetallesUsuario from "../pages/DetallesUsuario";
 
 
 export const routes = createBrowserRouter([
@@ -38,11 +39,6 @@ export const routes = createBrowserRouter([
                 element: <RegistroProveedores />,
             },
             {
-                path: "/detalleCliente/:id",
-                element: <></>,
-            },
-
-            {
                 path: "/registroEmpleado",
                 element: <RegistroEmpleado />,
             },
@@ -53,6 +49,10 @@ export const routes = createBrowserRouter([
             {
                 path: "/listaEmpleados",
                 element: <TablaUsuarios />,
+            },
+            {
+                path: "/empleado/:id",
+                element: <DetallesUsuario/>,
             }
         ]
     },
