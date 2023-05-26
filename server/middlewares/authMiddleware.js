@@ -9,7 +9,7 @@ export const authMiddleware = (roles) => {
 
     return (req, res, next) => {
       const { token } = req.headers;
-      if (!token) return res.status(400).json({ error: "Debes autenticarte" });
+      if (!token) return res.status(401).json({ error: "Debes autenticarte" });
       const verify = _token.verify(token);
       if (!verify) return res.json({ error: "Token expirado" });
 
