@@ -19,7 +19,7 @@ export class Token {
 
             const payload = {id: userEmpleado.id, nombre: userEmpleado.str_nombre, rol: userEmpleado.rol}
 
-            const token = jwt.sign(payload, SECRET_KEY);
+            const token = jwt.sign(payload, SECRET_KEY, {expiresIn:"100000ms"});
 
             return {
                 token,
@@ -37,6 +37,7 @@ export class Token {
     verify = (token) => {
         try{
             const result = jwt.verify(token, SECRET_KEY);
+            console.log(result);
             return true;
         }catch (error){
             return false

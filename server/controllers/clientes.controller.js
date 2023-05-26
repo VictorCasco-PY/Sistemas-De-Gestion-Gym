@@ -7,9 +7,6 @@ export class Cliente {
 
     crear = async (req, res) => {
         try {
-            const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator);
-
             const {body} = req;
             const {str_ruc} = body;
 
@@ -49,7 +46,6 @@ export class Cliente {
             return res.status(500).json({error:message});
         }
     }
-
 
     getAll = async (req, res) => {
         try {
