@@ -6,16 +6,31 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Ventas = () => {
-    const [cliente, setCliente] = useState({ str_nombre: '' });
+    const [cliente, setCliente] = useState({});
     const [documentoCliente, setDocumentoCliente] = useState('');
+    const [planDePago, setPlanDePago] = useState({});
+    const [productos, setProductos] = useState([]);
+    const [idProducto, setIdProducto] = useState('');
+    let id = null;
 
     const getCliente = async (ruc) => {
         try {
             const response = await axios.get(`http://localhost:8000/clientes?str_ruc=${ruc}`);
-            setCliente(response.data);
-            console.log(response.data);
+            setCliente(response.data[0]);
+            console.log(response.data[0]);
+            id = response.data[0].id;
         } catch (error) {
             console.log(error.message);
+        }
+    }
+
+    const getPlanDePago = async (id) => {
+        try {
+            const response = await axios.get(`http://localhost:8000/planes-de-pagos/${id}`);
+            console.log(response.data);
+            setPlanDePago(response.data);
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -23,11 +38,76 @@ const Ventas = () => {
         setDocumentoCliente(event.target.value);
     }
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = async (event) => {
         if (event.key === 'Enter') {
-            getCliente(documentoCliente);
+            try {
+                await getCliente(documentoCliente);
+                await getPlanDePago(id);
+            } catch (error) {
+                console.log(error);
+                return;
+            }
         }
     };
+
+    const handleDeletePlanDePago = () => {
+        setPlanDePago({});
+    };
+
+    const handleDeleteProducto = (index) => {
+        const updatedProductos = [...productos];
+        updatedProductos.splice(index, 1);
+        setProductos(updatedProductos);
+    };
+
+    const handleAddProducto = async () => {
+        try {
+            const productoId = idProducto;
+            const response = await axios.get(`http://localhost:8000/producto/${productoId}`);
+            const nuevoProducto = {
+                id: productoId,
+                str_descripcion: response.data.str_descripcion, // Reemplaza "nombre" por la propiedad real del nombre del producto
+                cantidad: 1,
+                precio: response.data.precio, // Reemplaza "precio" por la propiedad real del precio del producto
+            };
+            setProductos([...productos, nuevoProducto]);
+            console.log(response.data);
+        } catch (error) {
+            alert("El producto no existe");
+        }
+    };
+
+    const getProducto = async (id_producto) => {
+        try {
+            const response = await axios.get(`http://localhost:8000/producto/${id_producto}`);
+            setProductos([response.data]);
+            console.log(response.data);
+        } catch (error) {
+            alert("El producto no existe");
+        }
+    }
+
+    const handleBuscadorChange = (event) => {
+        setIdProducto(event.target.value);
+    }
+
+    const handleKeyDownBuscador = (event) => {
+        if (event.key === 'Enter') {
+            try {
+                handleAddProducto();
+            } catch (error) {
+                console.log(error);
+                return;
+            }
+        }
+    };
+
+    const handleCantidadChange = (event, index) => {
+        const updatedProductos = [...productos];
+        updatedProductos[index].cantidad = parseInt(event.target.value);
+        setProductos(updatedProductos);
+    };
+
 
     const navigate = useNavigate();
     return (
@@ -39,11 +119,13 @@ const Ventas = () => {
                     <label htmlFor="str_ruc">Nro Documento</label>
                     <input className='input is-primary' type="text" name="str_ruc" onChange={handleRucChange} onKeyDown={handleKeyDown} />
                     <label htmlFor="str_nombre">Nombre</label>
-                    <input className='input is-primary' type="text" name="str_nombre" readOnly value={cliente[0]?.str_nombre || ' '} />
+                    <input className='input is-primary' type="text" name="str_nombre" readOnly value={cliente?.str_nombre || ' '} />
                 </div>
                 <div className='mt-5'>
                     <h3>Productos/Servicios</h3>
-                    <input type="text" name="buscador" placeholder='Buscar producto/servicio' />
+                    <input className='input is-primary' type="text" name="buscador" placeholder='Buscar producto/servicio' value={idProducto} onChange={handleBuscadorChange} onKeyDown={handleKeyDownBuscador} />
+                    <button className='button is-primary mt-2 mr-2' onClick={handleAddProducto}>Agregar</button>
+                    <button className='button is-danger mt-2' onClick={() => setIdProducto('')}>Limpiar</button>
                     <table>
                         <thead>
                             <tr>
@@ -55,13 +137,35 @@ const Ventas = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><button className='button is-danger'><DeleteIcon fontSize='string' /></button></td>
-                                <td>Creatina</td>
-                                <td>1</td>
-                                <td>50.000</td>
-                                <td>50.000</td>
-                            </tr>
+                            {planDePago.estado_de_pago === 'pendiente' && (
+                                <tr>
+                                    <td><button className='button is-danger' onClick={handleDeletePlanDePago}><DeleteIcon fontSize='string' /></button></td>
+                                    <td>Pago Cuota {planDePago.str_modalidad}</td>
+                                    <td>1</td>
+                                    <td>{planDePago.id_tipo_modalidad_de_pago === 1 ? '10.000' : planDePago.id_tipo_modalidad_de_pago === 2 ? '70.000' : planDePago.id_tipo_modalidad_de_pago === 3 ? '100.000' : ''}</td>
+                                    <td>{planDePago.id_tipo_modalidad_de_pago === 1 ? '10.000' : planDePago.id_tipo_modalidad_de_pago === 2 ? '70.000' : planDePago.id_tipo_modalidad_de_pago === 3 ? '100.000' : ''}</td>
+                                </tr>
+                            )}
+                            {productos.map((producto, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <button className='button is-danger' onClick={() => handleDeleteProducto(index)}>
+                                            <DeleteIcon fontSize='string' />
+                                        </button>
+                                    </td>
+                                    <td>{producto.str_descripcion}</td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value={producto.cantidad}
+                                            onChange={(event) => handleCantidadChange(event, index)}
+                                        />
+                                    </td>
+                                    <td>{producto.precio}</td>
+                                    <td>{producto.cantidad * producto.precio}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -72,8 +176,8 @@ const Ventas = () => {
                     <div className='select is-primary'>
                         <select name="tipo" id="tipo">
                             <option>Tipo</option>
-                            <option value="factura">Factura</option>
-                            <option value="ticket">Ticket</option>
+                            <option value="factura">Credito</option>
+                            <option value="ticket">Efectivo</option>
                         </select>
                     </div>
                     <div>
