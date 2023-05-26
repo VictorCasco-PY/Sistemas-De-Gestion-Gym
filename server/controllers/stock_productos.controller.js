@@ -1,6 +1,6 @@
 import { models } from "../models/models.js";
 
-const { productos, stocks } = models;
+const { productos, stocks, stocks_productos } = models;
 export class StockProductos {
     crear = async (req, res) => {
         try {
@@ -23,7 +23,8 @@ export class StockProductos {
             const result = await this.createStockProducto(id_producto, id_stock, cantidad);
             res.json(result);
         } catch (error) {
-            return res.status(500).json(error);
+            const {message} = error;
+            return res.status(500).json({error:message});
         }
     };
 
@@ -50,7 +51,7 @@ export class StockProductos {
     // Crear una relación entre un producto y un stock
     createStockProducto = async (id_producto, id_stock, cantidad) => {
         try {
-            const result = await stockProductos.create({ id_producto, id_stock, cantidad });
+            const result = await stocks_productos.create({ id_producto, id_stock, cantidad });
             return result;
         } catch (error) {
             throw new Error("Error al crear la relación entre el producto y el stock");
@@ -61,7 +62,7 @@ export class StockProductos {
         try {
             const { id } = req.params;
             const { body } = req;
-            const [rowsAffected] = await stockProductos.update({ ...body }, { where: { id } });
+            const [rowsAffected] = await stocks_productos.update({ ...body }, { where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No se actualizó ninguna relación producto-stock");
             }
@@ -75,7 +76,7 @@ export class StockProductos {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await stockProductos.destroy({ where: { id } });
+            const rowsAffected = await stocks_productos.destroy({ where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe una relación producto-stock con ese ID");
             }
@@ -86,7 +87,7 @@ export class StockProductos {
     };
     getAll = async (req, res) => {
         try {
-            const result = await stockProductos.findAll();
+            const result = await stocks_productos.findAll();
             res.json(result);
         } catch (error) {
             res.status(500).json(error);
@@ -95,7 +96,7 @@ export class StockProductos {
     getById = async (req, res) => {
         try {
             const { id } = req.params;
-            const result = await stockProductos.findOne({ where: { id } });
+            const result = await stocks_productos.findOne({ where: { id } });
 
             if (!result) {
                 return res.status(404).json("No se encontró una relación producto-stock con ese ID");
