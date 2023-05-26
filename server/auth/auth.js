@@ -29,6 +29,7 @@ export class Auth {
             const {token} = req.headers;
             console.log(token)
             const verifResult = _token.verify(token);
+            console.log(verifResult);
             if (verifResult) return res.json({result: true});
             res.json({result: false})
         } catch (error) {
