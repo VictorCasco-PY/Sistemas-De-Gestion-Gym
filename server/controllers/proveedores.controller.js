@@ -6,8 +6,6 @@ const { proveedores } = models;
 export class Proveedores {
   crear = async (req, res) => {
     try {
-      const validator = bodyValidator(req);
-      if (validator) return res.status(400).json(validator);
       const { body } = req;
       const { str_nombre } = body;
       if (await this.getByNombre({ str_nombre })) return res.status(409).json({ error: "El proveedor ya esta registrado" });

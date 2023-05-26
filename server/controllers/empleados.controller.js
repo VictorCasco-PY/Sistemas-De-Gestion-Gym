@@ -7,10 +7,6 @@ const { empleados } = models;
 export class Empleado {
   crear = async (req, res) => {
     try {
-      const validator = bodyValidator(req);
-      console.log(validator);
-      if (validator) return res.status(400).json(validator);
-
       const { body } = req;
       const { str_cedula } = body;
       body.password = bcrypt.hashSync(body.password, 10);

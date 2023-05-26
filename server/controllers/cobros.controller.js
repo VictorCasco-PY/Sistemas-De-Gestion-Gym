@@ -6,8 +6,6 @@ const {cobros} = models;
 export class Clase {
     crear = async (req, res) => {
         try {
-            const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator);
             const {body} = req;
             const result = await cobros.create({...body});
             res.json(result);

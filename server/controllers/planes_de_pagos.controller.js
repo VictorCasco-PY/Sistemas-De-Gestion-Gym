@@ -19,10 +19,6 @@ export class PlanesDePagos {
     */
     crear = async (req, res) => {
         try {
-            // Verificamos si todos los campos estan
-            const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator)
-
             const {body} = req;
             const {id_tipo_modalidad_de_pago} = body;
             const {id_cliente} = body;
