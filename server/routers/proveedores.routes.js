@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { check } from "express-validator";
 
 import { Proveedores } from "../controllers/proveedores.controller.js";
 import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const proveedores = new Proveedores();
 

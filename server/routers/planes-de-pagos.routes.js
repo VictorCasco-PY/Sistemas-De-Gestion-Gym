@@ -1,5 +1,4 @@
 import {Router} from "express"
-import {check} from "express-validator";
 import {PlanesDePagos} from "../controllers/planes_de_pagos.controller.js";
 import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
