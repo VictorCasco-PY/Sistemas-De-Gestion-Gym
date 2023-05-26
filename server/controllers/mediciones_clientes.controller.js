@@ -1,5 +1,4 @@
 import {models} from "../models/models.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
 import {Cliente} from "./clientes.controller.js";
 import {getDateNow} from "../tools/date.js";
 

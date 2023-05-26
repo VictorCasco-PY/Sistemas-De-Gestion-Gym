@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import { models } from "../models/models.js";
-import { bodyValidator } from "../tools/bodyValidator.js";
 
 const { empleados } = models;
 

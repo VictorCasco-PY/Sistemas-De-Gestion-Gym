@@ -1,7 +1,6 @@
 import {validationResult} from "express-validator";
 import {models} from "../models/models.js";
 import {getDateNow, toDate} from "../tools/date.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
 import {Cliente} from "./clientes.controller.js";
 
 import {TipoModalidadDePago} from "./tipos_modalidades_de_pagos.js";

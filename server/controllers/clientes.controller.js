@@ -1,5 +1,4 @@
 import {models} from "../models/models.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
 import {Op} from "sequelize";
 const {clientes} = models;
 
