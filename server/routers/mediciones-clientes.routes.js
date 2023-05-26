@@ -1,7 +1,7 @@
 import {Router} from "express";
-import {check} from "express-validator";
 import {MedicionCliente} from "../controllers/mediciones_clientes.controller.js";
 import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const medicionesClientes = new MedicionCliente();
 

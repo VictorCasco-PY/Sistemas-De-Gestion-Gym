@@ -1,7 +1,7 @@
-import {check} from "express-validator";
 import {Router} from "express";
 import { Factura } from "../controllers/facturas.controller.js";
 import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const factura = new Factura();
 const facturasRoutes = Router();
