@@ -8,22 +8,29 @@ const DetallesUsuario = () => {
   const id = useParams().id;
   const [usuario, setUsuario] = useState(null);
 
-    // Función para formatear la cadena de tiempo (hh:mm)
-// Función para formatear la cadena de tiempo (hh:mm)
-const formatTime = (time) => {
-  return moment(time, 'HH:mm').format('HH:mm');
-};
-
+  // Función para formatear la cadena de tiempo (hh:mm)
+  // Función para formatear la cadena de tiempo (hh:mm)
+  const formatTime = (time) => {
+    return moment(time, 'HH:mm').format('HH:mm');
+  };
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/empleado/${id}`)
-      .then((response) => {
+    const getUsuario = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
+        const headers = {
+          token: user.token // Agregar el token en el encabezado 'token'
+        };
+
+        const response = await axios.get(`http://localhost:8000/empleado/${id}`, { headers });
         setUsuario(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
-      });
+      }
+    };
+
+    getUsuario();
   }, []);
+
 
   if (!usuario) {
     return <div>Cargando detalles del usuario...</div>;
