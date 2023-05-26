@@ -97,6 +97,7 @@ export default function ClientesTable() {
           console.error(error);
         });
     } else {
+      console.log("Filtrado sin get")
       handleFilter("str_nombre_cliente", nombre);
     }
   };

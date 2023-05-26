@@ -8,6 +8,9 @@ function PagadoTable({ onClose }) {
 
     return (
         <div className="popup-table">
+            <div>
+                <button className='button' onClick={handleCancel}>Cancelar</button>
+            </div>
             <div className="is-serif">
                 <div className='m-2'>
                     <h1>Pagados de (Mes Sleccionado)</h1>
@@ -30,9 +33,6 @@ function PagadoTable({ onClose }) {
                         </tr>
                     </tbody>
                 </table>
-                <div>
-                    <button className='button' onClick={handleCancel}>Cancelar</button>
-                </div>
             </div>
         </div>
     );
