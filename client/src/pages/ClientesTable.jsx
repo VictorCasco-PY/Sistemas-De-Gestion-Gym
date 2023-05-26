@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Select from 'react-select';
+
+const options = [
+  { value: '', label: 'Seleccione un estado' },
+  { value: 'en_regla', label: 'En regla' },
+  { value: 'pendiente', label: 'Pendiente' },
+  { value: 'atrasado', label: 'Atrasado' },
+];
 
 export default function ClientesTable() {
   const [clientes, setClientes] = useState([]); //Guarda la tabla que se renderiza constantemente
@@ -9,6 +17,15 @@ export default function ClientesTable() {
   const [sortDirection, setSortDirection] = useState("asc"); //en que dirección
   const [searchString, setSearchString] = useState(""); //Que va incluir la busqueda? ej si incluye "an"
   //renderiza la tabla con clientes que contenga "an"
+  const [selectedEstado, setSelectedEstado] = useState("");
+
+  const handleEstadoChange = (selectedOption) => {
+    setSelectedEstado(selectedOption.value);
+  };
+  useEffect(() => { //effect hace funcionar este codigo
+    handleSearch();
+  }, [selectedEstado]);
+
 
   useEffect(() => {
     axios.get("http://localhost:8000/planes-de-pagos").then((response) => {
@@ -49,19 +66,38 @@ export default function ClientesTable() {
   const handleFilter = (field, searchString) => {
     //filtrar para que incluya
     const filtered = originalData.filter(
-        (item) =>
-          item[field].toLowerCase().includes(searchString.toLowerCase())
-      );
+      (item) =>
+        item[field].toLowerCase().includes(searchString.toLowerCase())
+    );
     setClientes(filtered);
   };
 
-  const handleSearch = (event) => {
-    //se llama cada vez que se escribe en buscar
-    setSearchString(event.target.value);
-    if (event.target.value !== "") {
-      handleFilter("str_nombre_cliente", event.target.value);
+  //buscar clientes, pueden ser por varios campos, nombre, estado, etc se agregaran mas
+  const handleSearch = () => {
+    const nombre = searchString;
+    const estado = selectedEstado;
+
+    if (nombre.length > 2 || estado) { //si el nombre es mayor a dos, se hace get, o si se sleeciona estado
+      let url = "http://localhost:8000/planes-de-pagos?";
+
+      if (nombre.length > 2) {
+        url += `nombre=${nombre}`;
+      }
+
+      if (estado) {
+        url += `${nombre.length > 2 ? "&" : ""}estado=${estado}`;
+      }
+      console.log(url)
+      axios
+        .get(url)
+        .then((response) => {
+          setClientes(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } else {
-      setClientes(originalData);
+      handleFilter("str_nombre_cliente", nombre);
     }
   };
 
@@ -72,28 +108,39 @@ export default function ClientesTable() {
   return (
     <div>
       <div className="column is-half">
-        <input className="input" type="text" placeholder="Buscar..."
-          onChange={handleSearch} />
+      <input
+          className="input"
+          type="text"
+          placeholder="Buscar..."
+          value={searchString}
+          onChange={(e) => setSearchString(e.target.value)}
+          onKeyUp={() => handleSearch()}
+        />
+        <Select
+          options={options}
+          value={selectedEstado ? { value: selectedEstado, label: selectedEstado } : null}
+          onChange={handleEstadoChange}
+        />
       </div>
       <table className="table table is-bordered tableNew has-background-light is-bordered">
         <thead className='has-text-centered'>
           <tr className='is-size-6'>
             <th style={{ cursor: "pointer" }} className='is-size-5' onClick={() => handleSort("str_nombre_cliente")}>
               <span className={`sortIcon ${sortField === "str_nombre_cliente"
-                  ? `active ${sortDirection}`
-                  : ""
+                ? `active ${sortDirection}`
+                : ""
                 }`}></span> Nombre
             </th>
             <th style={{ cursor: "pointer" }} className='' onClick={() => handleSort("str_modalidad")}>
-            <span className={`sortIcon ${sortField === "str_modalidad"
-                  ? `active ${sortDirection}`
-                  : ""
+              <span className={`sortIcon ${sortField === "str_modalidad"
+                ? `active ${sortDirection}`
+                : ""
                 }`}></span> Plan
             </th>
             <th style={{ cursor: "pointer" }} className='' onClick={() => handleSort("estado_de_pago")}>
-            <span className={`sortIcon ${sortField === "estado_de_pago"
-                  ? `active ${sortDirection}`
-                  : ""
+              <span className={`sortIcon ${sortField === "estado_de_pago"
+                ? `active ${sortDirection}`
+                : ""
                 }`}></span> Estado de Pago
             </th>
             <th style={{ cursor: "pointer" }} className=''></th>
