@@ -30,9 +30,9 @@ export class Facturas_proveedores {
     }
 
 
-    createFacturaProveedor = async (id_proveedor, id_proveedor, date_fecha, total) => {
+    createFacturaProveedor = async (id_proveedor,  date_fecha, total) => {
         try {
-            const result = await facturas_proveedores.create({ id_proveedor, id_proveedor, date_fecha, total });
+            const result = await facturas_proveedores.create({ id_proveedor, date_fecha, total });
             return result;
         } catch (error) {
             throw new Error("Error al crear la factura-proveedor");

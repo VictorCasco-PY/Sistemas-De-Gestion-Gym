@@ -20,7 +20,7 @@ export class Arqueos {
             }
 
             // Crear la relación entre el empleado y la caja
-            const result = await this.createSesionCaja(id_empleado, id_sesion_caja, date_fecha, total);
+            const result = await this.createArqueo(id_empleado, id_sesion_caja, date_fecha, total);
             res.json(result);
         } catch (error) {
             const {message} = error;
@@ -38,7 +38,7 @@ export class Arqueos {
         }
     }
 
-    // Obtener una caja por ID
+    // Obtener una sesion-caja por ID
     getSesionById = async (id) => {
         try {
             const caja = await sesiones_cajas.findOne({ where: { id } });
@@ -48,8 +48,8 @@ export class Arqueos {
         }
     }
 
-    // Crear una relación entre un empleado y una caja
-    createSesionCaja = async (id_empleado, id_sesion_caja, date_fecha, total) => {
+    // Crear un Arqueo
+    createArqueo = async (id_empleado, id_sesion_caja, date_fecha, total) => {
         try {
             const result = await arqueos.create({ id_empleado, id_sesion_caja, date_fecha, total });
             return result;
@@ -57,7 +57,6 @@ export class Arqueos {
             throw new Error("Error al crear el arqueo");
         }
     }
-    //Actualizar la sesion caja
     update = async (req, res) => {
         try {
             const { id } = req.params;
@@ -72,7 +71,7 @@ export class Arqueos {
             return res.status(500).json({ error });
         }
     };
-    //Eliminar la sesion caja
+    
     delete = async (req, res) => {
         try {
             const { id } = req.params;
