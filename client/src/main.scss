@@ -19,6 +19,7 @@ $infocolor: #d4d4d4;
 
 .pageMain {
     border-radius: 8px;
+    font-family: sans-serif;
 }
 
 .clienteHeader h1 {
@@ -55,7 +56,6 @@ $infocolor: #d4d4d4;
 }
 
 .tableNew {
-    font-family: sans-serif;
     border-collapse: separate;
     border-spacing: 0 15px;
     border: none;
@@ -166,3 +166,47 @@ button {
 
     }
 }
+
+.hr2 {
+    background-color: gray;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 1;
+  }
+
+  .popup-table {
+    background-color: white;
+    padding: 3rem;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation-name: fadeIn;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    z-index: 2;
+  }
+
+  .is-serif {
+    font-family: sans-serif;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }

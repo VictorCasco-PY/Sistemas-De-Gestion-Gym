@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Layout from "../Layout/Layout";
 import RegistroProveedores from "../pages/RegistroProveedores";
 import TablaUsuarios from "../pages/TablaUsuarios";
+import Reporte from "../pages/Reporte";
 import DetallesUsuario from "../pages/DetallesUsuario";
 
 
@@ -38,6 +39,16 @@ export const routes = createBrowserRouter([
                 path: "/registroProveedores",
                 element: <RegistroProveedores />,
             },
+            {
+                path: "/detalleCliente/:id",
+                element: <></>,
+            },
+
+            {
+                path: "/reporte/",
+                element: <Reporte />,
+            },
+
             {
                 path: "/registroEmpleado",
                 element: <RegistroEmpleado />,

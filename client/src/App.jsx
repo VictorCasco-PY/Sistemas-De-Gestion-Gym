@@ -15,6 +15,7 @@ import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Caja from './pages/Caja';
 import ListaProveedores from './pages/ListaProveedores';
+import Reporte from './pages/Reporte';
 import DetalleProveedor from './pages/DetalleProveedor';
 import Ventas from './pages/Ventas';
 import DetallesUsuario from './pages/DetallesUsuario';
@@ -56,6 +57,7 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>
+            <Route path='/reporte' element={<Layout><Reporte /></Layout>} />
             <Route path='/registroProveedores' element={<Layout><RegistroProveedores /></Layout>} />
             <Route path='/lista_proveedores' element={<Layout><ListaProveedores /></Layout>} />
             <Route path='/proveedor/detalle/:id' element={<Layout><DetalleProveedor /></Layout>} />
