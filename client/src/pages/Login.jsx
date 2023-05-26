@@ -47,9 +47,9 @@ const Login = () => {
   };
 
   return (
-    <div className="columns is-centered">
-      <div className="column is-three-fifths-desktop">
-        <div className="box mt-5 has-shadow">
+    <div className="columns is-flex is-justify-content-center is-align-items-center mt-6">
+      <div className="column is-one-third mt-6">
+        <div className="box has-shadow mt-6">
           <h3 className="has-text-centered mb-2 title is-3 has-text-primary">
             Iniciar Sesión
           </h3>
