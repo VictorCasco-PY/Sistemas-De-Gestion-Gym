@@ -11,34 +11,44 @@ const medicionesClientes = new MedicionCliente();
 const planesDePagos = new PlanesDePagos();
 const clientesRoutes = Router();
 
-// Obtenemos todos los clientes
-clientesRoutes.get("/clientes", authMiddleware(['caja', 'entrenadores']), clientes.getAll);
+/**
+ * Obtiene todos los clientes
+ */
+clientesRoutes.get("/clientes", authMiddleware(['caja', 'entrenador']), clientes.getAll);
 
-// Obtenemos cliente por parametro id
-clientesRoutes.get("/cliente/:id",  authMiddleware(['caja', 'entrenadores']), clientes.getByParams);
+/**
+ * Obtenemos cliente por parametro id
+ */ 
+clientesRoutes.get("/cliente/:id",  authMiddleware(['caja', 'entrenador']), clientes.getByParams);
 
-// Crear un nuevo cliente, los checks sirven para comprobar que los campos esten completos
+/**
+ * Crear un nuevo cliente, los checks sirven para comprobar que los campos esten completos
+ */
 clientesRoutes.post(
   "/clientes",
-  authMiddleware(['caja', 'entrenadores']),
+  authMiddleware(['caja', 'entrenador']),
   checkMiddleWare(["str_nombre", "edad", "str_direccion", "str_ruc"]),
   clientes.crear
 );
 
-clientesRoutes.put("/cliente/:id",  authMiddleware(['caja', 'entrenadores']), clientes.update);
-clientesRoutes.delete("/cliente/:id",  authMiddleware(['caja', 'entrenadores']), clientes.delete);
+clientesRoutes.put("/cliente/:id",  authMiddleware(['caja', 'entrenador']), clientes.update);
+clientesRoutes.delete("/cliente/:id",  authMiddleware(['caja', 'entrenador']), clientes.delete);
 
-// Obtener el plan de pago del cliente
+/**
+ * Obtener el plan de pago del cliente
+ */
 clientesRoutes.get(
   "/cliente/:id_cliente/plan-de-pago",
   authMiddleware(['caja']),
   planesDePagos.getPlanDePagoDeClienteByParams
 );
 
-// Obtener la medicion del cliente
+/**
+ * Obtener la medicion del cliente
+ */
 clientesRoutes.get(
   "/cliente/:id_cliente/medicion-cliente",
-  authMiddleware(['entrenadores']),
+  authMiddleware(['entrenador']),
   medicionesClientes.getMedicionesDeCliente
 );
 

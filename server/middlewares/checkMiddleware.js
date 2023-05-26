@@ -1,6 +1,11 @@
 import { check } from "express-validator";
 import { bodyValidator } from "../tools/bodyValidator.js";
 
+/**
+ * Checkea si los campos necesarios han sido enviados
+ * @param {array} list 
+ * @returns 
+ */
 export const checkMiddleWare = (list) => {
   
     const checks = list.map((value) =>
