@@ -1,5 +1,4 @@
 import {models} from "../models/models.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
 import {Op} from "sequelize";
 const {clientes} = models;
 
@@ -7,9 +6,6 @@ export class Cliente {
 
     crear = async (req, res) => {
         try {
-            const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator);
-
             const {body} = req;
             const {str_ruc} = body;
 
@@ -49,7 +45,6 @@ export class Cliente {
             return res.status(500).json({error:message});
         }
     }
-
 
     getAll = async (req, res) => {
         try {

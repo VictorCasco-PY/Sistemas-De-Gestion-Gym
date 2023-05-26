@@ -1,13 +1,9 @@
 import { models } from "../models/models.js";
-import { bodyValidator } from "../tools/bodyValidator.js";
 
 const { empleados, cajas, sesiones_cajas } = models;
 export class SesionesCajas {
     crear = async (req, res) => {
         try {
-            const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator);
-
             const { body } = req;
             const { id_caja, id_empleado, monto_inicial, monto_final, date_fecha, time_inicio, time_cierre } = body;
 
