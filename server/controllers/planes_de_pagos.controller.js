@@ -1,7 +1,5 @@
-import {validationResult} from "express-validator";
 import {models} from "../models/models.js";
 import {getDateNow, toDate} from "../tools/date.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
 import {Cliente} from "./clientes.controller.js";
 
 import {TipoModalidadDePago} from "./tipos_modalidades_de_pagos.js";
@@ -19,10 +17,6 @@ export class PlanesDePagos {
     */
     crear = async (req, res) => {
         try {
-            // Verificamos si todos los campos estan
-            const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator)
-
             const {body} = req;
             const {id_tipo_modalidad_de_pago} = body;
             const {id_cliente} = body;

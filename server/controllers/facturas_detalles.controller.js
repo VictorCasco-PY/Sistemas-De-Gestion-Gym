@@ -1,14 +1,10 @@
 import { models } from "../models/models.js";
-import { bodyValidator } from "../tools/bodyValidator.js";
 
 const { facturas_detalles } = models;
 
 export class FacturaDetalle {
   crear = async (req, res) => {
     try {
-      const validator = bodyValidator(req);
-      if (validator) return res.status(400).json(validator);
-
       const { body } = req;
       const result = await facturas_detalles.create({ ...body });
       return res.json(result);
