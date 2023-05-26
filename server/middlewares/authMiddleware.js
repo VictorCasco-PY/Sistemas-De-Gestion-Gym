@@ -12,7 +12,7 @@ export const authMiddleware = (roles = []) => {
   try {
     return (req, res, next) => {
       const { token } = req.headers;
-      console.log(token);
+
       if (!token) return res.status(401).json({ error: "Debes autenticarte" });
 
       // comprueba si el token es valido o ha expirado
