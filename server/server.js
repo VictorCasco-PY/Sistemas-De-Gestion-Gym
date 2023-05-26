@@ -16,6 +16,7 @@ import timbradosRoutes from "./routers/timbrados.routes.js";
 import stockProductosRoutes from "./routers/stock-productos.routes.js";
 import cajasRoutes from "./routers/cajas.routes.js";
 import sesionesCajasRoutes from "./routers/sesiones-cajas.routes.js";
+import arqueosRoutes from "./routers/arqueos.routes.js";
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(timbradosRoutes)
 app.use(stockProductosRoutes)
 app.use(cajasRoutes)
 app.use(sesionesCajasRoutes)
+app.use(arqueosRoutes)
 
 app.get("/", async (req, res) => {
     res.json({
