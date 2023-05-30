@@ -31,7 +31,7 @@ const RegistroCliente = () => {
     const handleSubmitCliente = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8000/clientes", cliente);
+            const response = await api.post("/clientes", cliente);
             getIdCliente = response.data.id;
             console.log(response.data);
             console.log("id del cliente:", getIdCliente);
@@ -96,7 +96,7 @@ const RegistroCliente = () => {
     const handleSubmitPlanDePago = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8000/planes-de-pagos", planDePago);
+            const response = await api.post("/planes-de-pagos", planDePago);
             console.log(response.data);
             setPasoActual(3);
         } catch (error) {
@@ -125,7 +125,7 @@ const RegistroCliente = () => {
     const handleSubmitMediciones = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8000/mediciones-clientes", mediciones);
+            const response = await api.post("/mediciones-clientes", mediciones);
             console.log(response.data);
             navigate("/listaClientes");
         } catch (error) {
