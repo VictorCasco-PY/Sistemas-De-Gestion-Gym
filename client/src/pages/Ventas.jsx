@@ -4,6 +4,7 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../services/api';
 
 const Ventas = () => {
     const [cliente, setCliente] = useState({});
@@ -15,12 +16,7 @@ const Ventas = () => {
 
     const getCliente = async (ruc) => {
         try {
-            const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
-            const headers = {
-                token: user.token // Agregar el token en el encabezado 'token'
-            };
-
-            const response = await axios.get(`http://localhost:8000/clientes?str_ruc=${ruc}`, { headers });
+            const response = await api.get(`/clientes?str_ruc=${ruc}`);
             setCliente(response.data[0]);
             console.log(response.data[0]);
             id = response.data[0].id;
