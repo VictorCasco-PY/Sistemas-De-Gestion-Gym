@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function PagadoTable({ onClose }) {
     const handleCancel = () => {
@@ -8,9 +9,12 @@ function PagadoTable({ onClose }) {
 
     return (
         <div className="popup-table">
+            <div>
+                <button className='button is-link' onClick={handleCancel}><ArrowBackIcon /></button>
+            </div>
             <div className="is-serif">
                 <div className='m-2'>
-                    <h1>Pagados de (Mes Sleccionado)</h1>
+                    <h2>Pagados de (Mes Sleccionado)</h2>
                 </div>
                 <table className='table is-bordered is-striped is-hoverable'>
                     <thead className=''>
@@ -30,9 +34,6 @@ function PagadoTable({ onClose }) {
                         </tr>
                     </tbody>
                 </table>
-                <div>
-                    <button className='button' onClick={handleCancel}>Cancelar</button>
-                </div>
             </div>
         </div>
     );
