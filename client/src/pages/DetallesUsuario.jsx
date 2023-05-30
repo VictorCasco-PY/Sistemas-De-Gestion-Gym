@@ -9,27 +9,24 @@ const DetallesUsuario = () => {
   const [usuario, setUsuario] = useState(null);
 
   // Función para formatear la cadena de tiempo (hh:mm)
-  // Función para formatear la cadena de tiempo (hh:mm)
   const formatTime = (time) => {
     return moment(time, 'HH:mm').format('HH:mm');
   };
-  useEffect(() => {
-    const getUsuario = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
-        const headers = {
-          token: user.token // Agregar el token en el encabezado 'token'
-        };
 
-        const response = await axios.get(`http://localhost:8000/empleado/${id}`, { headers });
-        setUsuario(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    getUsuario();
-  }, []);
+useEffect(() => {
+  const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
+  const headers = { token: user.token }; // Agregar el token en el encabezado 'token'
+
+  axios.get(`http://localhost:8000/empleado/${id}`, { headers })
+    .then((response) => {
+      setUsuario(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}, []);
+
 
 
   if (!usuario) {
@@ -66,7 +63,12 @@ const DetallesUsuario = () => {
         </div>
         <div className="column">
           <h4>Número de Cédula</h4>
-          <p>{usuario.str_cedula}</p>
+          <EditableInput
+            valorInicial={usuario.str_cedula}
+            id={id}
+            apiUrl="http://localhost:8000/empleado"
+            campoCambiar="str_cedula"
+          />
         </div>
       </div>
       <div className="columns">

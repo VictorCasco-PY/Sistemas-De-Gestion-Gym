@@ -2,30 +2,25 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 const TablaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    const getUsuarios = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
-        console.log(user.token);
-        const headers = {
-          token: `${user.token}` // Agregar el token en el encabezado 'Authorization'
-        };
-
-        const response = await axios.get("http://localhost:8000/empleados", { headers });
+    const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
+    const headers = { token: `${user.token}` }; // Agregar el token en el encabezado 'Authorization'
+  
+    axios.get("http://localhost:8000/empleados", { headers })
+      .then((response) => {
         setUsuarios(response.data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.log(error.message);
-      }
-    };
-
-    getUsuarios();
+      });
   }, []);
-
-
+  
 
   const handleEliminarClick = (id) => {
     Swal.fire({
@@ -33,8 +28,10 @@ const TablaUsuarios = () => {
       text: "¿Estás seguro de que deseas eliminar este usuario?",
       icon: "warning",
       showCancelButton: true,
+      confirmButtonColor: '#ff3860',
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
+      reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
         const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
@@ -46,7 +43,6 @@ const TablaUsuarios = () => {
           .delete(`http://localhost:8000/empleado/${id}`, { headers })
           .then((response) => {
             console.log(response.data);
-            // Remove the user from the table locally
             setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
           })
           .catch((error) => {
@@ -74,12 +70,12 @@ const TablaUsuarios = () => {
             <td>{usuario.str_cedula}</td>
             <td>{usuario.rol}</td>
             <td>
-              <button className="button is-danger is-outlined" onClick={() => handleEliminarClick(usuario.id)}>
-                Eliminar
-              </button>
-              <Link to={`/detallesEmpleado/${usuario.id}`}>
-                <button className="button is-info is-outlined">Detalles</button>
+            <Link to={`/detallesEmpleado/${usuario.id}`}>
+                <button className="button is-info is-outlined mr-2"> <RemoveRedEyeIcon fontSize="string"/> </button>
               </Link>
+              <button className="button is-danger is-outlined" onClick={() => handleEliminarClick(usuario.id)}>
+                <DeleteIcon fontSize="string"/>
+              </button>
             </td>
           </tr>
         ))}

@@ -21,29 +21,38 @@ const RegistroProductos = () => {
   };
 
   // función para manejar el envío del formulario
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    axios.post('http://localhost:8000/productos', productos)
-      .then(response => {
-        console.log(response.data);
-        Swal.fire({
-          icon: "success",
-          title: "Producto registrado con éxito",
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-        });
-        setProductos(productosData); //restablecer a su valor inicial
-      })
-      .catch(error => {
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Error al registrar el usuario",
-          text: "Por favor, verifica los datos e intenta nuevamente",
-        });
-      });
+// función para manejar el envío del formulario
+const handleSubmit = (event) => {
+  event.preventDefault();
+
+  const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
+  const headers = {
+    token: user.token // Agregar el token en el encabezado 'token'
   };
+
+  axios
+    .post('http://localhost:8000/productos', productos, { headers })
+    .then(response => {
+      console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: "Producto registrado con éxito",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
+      setProductos(productosData); //restablecer a su valor inicial
+    })
+    .catch(error => {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al registrar el usuario",
+        text: "Por favor, verifica los datos e intenta nuevamente",
+      });
+    });
+};
+
 
   return (
     <div className="columns is-centered">
