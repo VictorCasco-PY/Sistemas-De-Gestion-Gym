@@ -85,19 +85,24 @@ export class PlanesDePagos {
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      const { nombre, estado, ...querys } = req.query;
+      const { nombre, estado, ordenNombre,plan, ...querys } = req.query;
 
       const where = {
-        ...querys,
+        ...querys
       };
-
+      
+      let options = {}; 
+      if(ordenNombre=='asc') options.order = [['str_nombre_cliente', 'ASC']];
+      if(ordenNombre=='desc') options.order = [['str_nombre_cliente', 'DESC']];
       if (nombre) where.str_nombre_cliente = { [Op.like]: `%${nombre}%` };
       if (estado) where.estado_de_pago = estado;
+      if (plan) where.str_modalidad = plan;
 
-      const result = await planes_de_pagos.findAll({ where });
+      const result = await planes_de_pagos.findAll({ where, ...options }) || planes_de_pagos.findAll({ where });
+
       res.json(result);
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json({error: error.message});
     }
   };
 
