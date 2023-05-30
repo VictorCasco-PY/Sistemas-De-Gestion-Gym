@@ -16,13 +16,7 @@ cajasRoutes.get("/cajas", cajas.getAll);
 cajasRoutes.get("/caja/:id", cajas.getByParams);
 
 // Crear un nuevo producto, los checks sirven para comprobar que los campos esten completos
-cajasRoutes.post(
-    "/cajas",
-    [
-        check("str_nombre", "str_nombre es un campo requerido").notEmpty(),
-    ],
-    cajas.crear
-);
+cajasRoutes.post('/cajas',checkMiddleWare(['str_nombre']), cajas.crear);
 
 cajasRoutes.put("/caja/:id", cajas.update)
 cajasRoutes.delete("/caja/:id", cajas.delete)
