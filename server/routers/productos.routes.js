@@ -2,6 +2,8 @@ import { Router } from "express";
 import { check } from "express-validator";
 
 import { Productos } from "../controllers/productos.controller.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
 
 
@@ -18,13 +20,8 @@ productosRoutes.get("/producto/:id", productos.getByParams);
 // Crear un nuevo producto, los checks sirven para comprobar que los campos esten completos
 productosRoutes.post(
     "/productos",
-    [
-        check("str_nombre", "str_nombre es un campo requerido").notEmpty(),
-        check("str_descripcion", "str_descripcion es un campo requerido").notEmpty(),
-        check("precio", "precio es un campo requerido").notEmpty(),
-        check("iva", "iva es un campo requerido").notEmpty(),
-        check("str_codigo", "str_codigo es un campo requerido").notEmpty(),
-    ],
+    authMiddleware(['caja','entrenador']),
+    checkMiddleWare(['str_nombre','str_descripcion','precio','iva','str_codigo']),
     productos.crear
 );
 
