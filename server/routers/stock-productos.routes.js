@@ -1,6 +1,8 @@
 import {Router} from "express"
 import {check} from "express-validator";
 import {StockProductos} from "../controllers/stock_productos.controller.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const stock_productos = new StockProductos();
 
@@ -10,11 +12,12 @@ stockProductosRoutes.get('/stock-productos', stock_productos.getAll);
 
 stockProductosRoutes.get('/stock-producto/:id', stock_productos.getByParams);
 
-stockProductosRoutes.post('/stock-productos', [
-    check("id_producto", "id_producto  es un campo requerido").notEmpty(),
-    check("id_stock", "id_stock  es un campo requerido").notEmpty(),
-    check("cantidad", "cantidad  es un campo requerido").notEmpty(),
-    ], stock_productos.crear);
+stockProductosRoutes.post(
+    "/stock-productos",
+    authMiddleware(['caja', 'entrenador']),
+    checkMiddleWare(["id_producto", "id_stock", "cantidad",]),
+    stock_productos.crear
+  );
 
 stockProductosRoutes.put('/stock-producto/:id', stock_productos.update)
 
