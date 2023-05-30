@@ -38,14 +38,31 @@ export class Productos {
       return res.status(500).json(error)
     }
   }
+  // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      const result = await productos.findAll();
+      const { nombre, precio, ordenNombre,ordenPrecio, ...querys } = req.query;
+
+      const where = {
+        ...querys
+      };
+      
+      let options = {}; 
+      if(ordenNombre=='asc') options.order = [['str_nombre', 'ASC']];
+      if(ordenNombre=='desc') options.order = [['str_nombre', 'DESC']];
+      if(ordenPrecio=='asc') options.order = [['precio', 'ASC']];
+      if(ordenPrecio=='desc') options.order = [['precio', 'DESC']];
+      if (nombre) where.str_nombre = { [Op.like]: `%${nombre}%` };
+      if (precio) where.precio = precio;
+
+      const result = await productos.findAll({ where, ...options }) || productos.findAll({ where });
+
       res.json(result);
     } catch (error) {
-      res.json(error.message).status(500);
+      res.status(500).json({error: error.message});
     }
-  }
+  };
+
   getByParams = async (req, res) => {
     try {
       const { id } = req.params;
