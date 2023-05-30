@@ -1,5 +1,5 @@
+import { Op } from "sequelize";
 import { models } from "../models/models.js";
-
 const { productos } = models;
 
 export class Productos {
@@ -9,7 +9,6 @@ export class Productos {
       const { str_nombre } = body;
       if (await this.getByNombre({ str_nombre })) return res.status(409).json({ error: "El producto ya esta registrado" });
       const result = await productos.create({ ...body });
-      console.log('asdfafsdasdfa');
       res.json(result);
     } catch (error) {
       return res.json(error);
