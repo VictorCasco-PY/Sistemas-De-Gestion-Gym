@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
-
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 import { Stocks } from "../controllers/stocks.controller.js";
 
 
@@ -16,12 +17,10 @@ stocksRoutes.get("/stocks", stocks.getAll);
 stocksRoutes.get("/stocks/:id", stocks.getByParams);
 
 // Crear un nuevo stocks los checks sirven para comprobar que los campos esten completos
-stocksRoutes.post(
+stocksRoutes.post (
     "/stocks",
-    [
-        check("str_nombre", "str_nombre es un campo requerido").notEmpty(),
-        check("str_direccion", "str_direccion es un campo requerido").notEmpty(),
-    ],
+    authMiddleware(['caja', 'entrenador']),
+    checkMiddleWare(["str_nombre", "str_direccion",]),
     stocks.crear
 );
 
