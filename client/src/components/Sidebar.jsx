@@ -11,7 +11,7 @@ const Sidebar = ({ children }) => {
     const user = JSON.parse(localStorage.getItem("user"));
     return (
         <>
-            <nav className='navbar is-light has-shadow'>
+            <nav className='navbar is-link has-shadow'>
                 <div className='navbar-brand mt-3 ml-3'>
                     <Link to="/home">
                         <img src={logo} width={270} height={90} />
@@ -23,7 +23,7 @@ const Sidebar = ({ children }) => {
                 </div>
             </nav>
 
-            <div className="columns pt-3 p-1">
+            <div className="columns">
                 <aside className="ml-2 menu column is-one-fifth is-2 has-background-link">
                     {
                         !user.rol === "admin" || !user.rol === "caja" || !user.rol === "entrenador" ? null :
@@ -31,13 +31,13 @@ const Sidebar = ({ children }) => {
                                 <p className="menu-label has-text-white title is-4">Entrenadores</p>
                                 <ul className="menu-list title is-5">
                                     <li>
-                                        <Link to="/registro_cliente" className='has-text-white'><AddIcon fontSize="string" />  Registrar cliente</Link>
+                                        <Link to="/registro_cliente"><AddIcon fontSize="string" />  Registrar cliente</Link>
                                     </li>
                                     <li>
-                                        <Link to="/listaClientes" className='has-text-white'><FormatListBulletedIcon fontSize="string" />  Lista de Clientes</Link>
+                                        <Link to="/listaClientes"><FormatListBulletedIcon fontSize="string" />  Lista de Clientes</Link>
                                     </li>
                                     <li>
-                                        <Link to="/reporte" className='has-text-white'><AssessmentIcon fontSize="string" />  Reporte</Link>
+                                        <Link to="/reporte"><AssessmentIcon fontSize="string" />  Reporte</Link>
                                     </li>
                                 </ul>
 
@@ -47,13 +47,13 @@ const Sidebar = ({ children }) => {
                                 </p>
                                 <ul className="menu-list title is-5">
                                     <li>
-                                        <Link to="/caja" className='has-text-white'><PointOfSaleIcon />  Caja</Link>
+                                        <Link to="/caja"><PointOfSaleIcon />  Caja</Link>
                                     </li>
                                     <li>
-                                        <Link to="#" className='has-text-white'><PointOfSaleIcon />  Stock</Link>
+                                        <Link to="#"><PointOfSaleIcon />  Stock</Link>
                                     </li>
                                     <li>
-                                        <Link to="/ventas" className='has-text-white'><PointOfSaleIcon />  Ventas</Link>
+                                        <Link to="/ventas"><PointOfSaleIcon />  Ventas</Link>
                                     </li>
                                 </ul>
                             </>
@@ -63,10 +63,10 @@ const Sidebar = ({ children }) => {
                             <p className="menu-label has-text-white title is-4">Proveedores</p>
                             <ul className="menu-list title is-5 has-text-white-bis">
                                 <li>
-                                    <Link to="/registroProveedores" className='has-text-white'><AddIcon fontSize="string" />  Agregar Proveedor</Link>
+                                    <Link to="/registroProveedores"><AddIcon fontSize="string" />  Agregar Proveedor</Link>
                                 </li>
                                 <li>
-                                    <Link to="/lista_proveedores" className='has-text-white'><FormatListBulletedIcon fontSize="string" />  Lista de Proveedores</Link>
+                                    <Link to="/lista_proveedores"><FormatListBulletedIcon fontSize="string" />  Lista de Proveedores</Link>
                                 </li>
                             </ul>
                             <p className="menu-label has-text-white title is-4">
@@ -74,10 +74,10 @@ const Sidebar = ({ children }) => {
                             </p>
                             <ul className='menu-list title is-5'>
                                 <li>
-                                    <Link to="/registroEmpleado" className='has-text-white'><AddIcon fontSize="string" />  Registrar Empleado</Link>
+                                    <Link to="/registroEmpleado"><AddIcon fontSize="string" />  Registrar Empleado</Link>
                                 </li>
                                 <li>
-                                    <Link to="/listaEmpleados" className='has-text-white'><FormatListBulletedIcon fontSize="string" />  Lista de Empleados</Link>
+                                    <Link to="/listaEmpleados"><FormatListBulletedIcon fontSize="string" />  Lista de Empleados</Link>
                                 </li>
                             </ul>
                         </> : null
@@ -87,10 +87,10 @@ const Sidebar = ({ children }) => {
                             <p className='menu-label has-text-white title is-4'>Productos</p>
                             <ul className='menu-list title is-5'>
                                 <li>
-                                    <Link to="#" className='has-text-white'><AddIcon fontSize="string" />  Agregar Producto</Link>
+                                    <Link to="/productos"><AddIcon fontSize="string" />  Agregar Producto</Link>
                                 </li>
                                 <li>
-                                    <Link to="#" className='has-text-white'><FormatListBulletedIcon fontSize="string" />  Lista de Productos</Link>
+                                    <Link to="/listaProductos"><FormatListBulletedIcon fontSize="string" />  Lista de Productos</Link>
                                 </li>
                             </ul>
                         </> : null

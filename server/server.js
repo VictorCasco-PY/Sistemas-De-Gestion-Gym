@@ -9,13 +9,13 @@ import proveedoresRoutes from  "./routers/proveedores.routes.js";
 import cors from "cors";
 import empleadosRoutes from "./routers/empleados.routes.js";
 import authRoutes from "./routers/auth.routes.js";
-import stocksRoutes from "./routers/stocks.routes.js";
 import facturasRoutes from "./routers/facturas.routes.js";
 import facturasDetallesRoutes from "./routers/facturas_detalles.routes.js";
 import timbradosRoutes from "./routers/timbrados.routes.js";
-import stockProductosRoutes from "./routers/stock-productos.routes.js";
 import cajasRoutes from "./routers/cajas.routes.js";
 import sesionesCajasRoutes from "./routers/sesiones-cajas.routes.js";
+import arqueosRoutes from "./routers/arqueos.routes.js";
+import facturasProveedoresRoutes from "./routers/facturas_proveedores.routes.js";
 
 const app = express();
 
@@ -40,13 +40,13 @@ app.use(productosRoutes);
 app.use(proveedoresRoutes);
 app.use(empleadosRoutes)
 app.use(authRoutes)
-app.use(stocksRoutes)
 app.use(facturasRoutes)
 app.use(facturasDetallesRoutes)
 app.use(timbradosRoutes)
-app.use(stockProductosRoutes)
 app.use(cajasRoutes)
 app.use(sesionesCajasRoutes)
+app.use(arqueosRoutes)
+app.use(facturasProveedoresRoutes)
 
 app.get("/", async (req, res) => {
     res.json({

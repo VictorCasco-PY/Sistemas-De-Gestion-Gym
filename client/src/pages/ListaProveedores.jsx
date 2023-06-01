@@ -53,8 +53,8 @@ const ListaProveedores = () => {
             text: "No puedes revertir esto!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#ff3860',
+            cancelButtonColor: '#ffdd57',
             confirmButtonText: 'Si, eliminalo!'
         }).then((result) => {
             if (result.isConfirmed) {

@@ -51,13 +51,10 @@ export class Cliente {
             const {nombre, ...querys} = req.query;
 
             const where = {
-                ...(nombre && {
-                    str_nombre: {
-                        [Op.like]: `%${nombre}%`,
-                    },
-                }),
-                ...querys,
-            };
+                ...querys
+              };
+
+            if(nombre) where.str_nombre = {[Op.like]: `%${nombre}%`};
 
             const result = await clientes.findAll({where});
             return res.json(result);
