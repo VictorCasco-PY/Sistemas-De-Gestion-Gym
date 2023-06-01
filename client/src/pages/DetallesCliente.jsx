@@ -5,7 +5,7 @@ import EditableInput from '../components/EditableInput';
 import EditableInputTwoValues from '../components/EditableInputTwoValues';
 import moment from 'moment';
 import Swal from 'sweetalert2'
-
+import api from '../services/api';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export function DetallesCliente() {
@@ -31,27 +31,33 @@ export function DetallesCliente() {
     const [sortDirection, setSortDirection] = useState("asc"); //en que dirección
 
     const [isLoading, setIsLoading] = useState(true);
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
-            .then((response) => setClienteMed(response.data))
-            .catch((error) => console.log(error));
+        const fetchData = async () => {
+            try {
+                const response1 = await api.get(`/cliente/${id}/medicion-cliente`);
+                setClienteMed(response1.data);
+                const response2 = await api.get(`/cliente/${id}/plan-de-pago`);
+                setCliente(response2.data);
+                const response3 = await api.get(`/cliente/${id}`);
+                setClientePers(response3.data);
+                setIsLoading(false);
+            } catch (error) {
+                console.log(error);
+                setNotFound(true);
+                setIsLoading(false);
+            }
+        };
+        fetchData();
+    }, [id]);
 
-        axios
-            .get(`http://localhost:8000/cliente/${id}/plan-de-pago`)
-            .then((response) => setCliente(response.data))
-            .catch((error) => console.log(error));
+    if (isLoading) {
+        return <CircularProgress/>;
+    }
 
-        axios
-            .get(`http://localhost:8000/cliente/${id}`)
-            .then((response) => setClientePers(response.data))
-            .catch((error) => console.log(error))
-            .finally(() => setIsLoading(false));
-    }, []);
-
-    if (!cliente || !clientePers) {
-        return <div className='title'>Cliente no encontrado.</div>;
+    if (notFound) {
+        return 
     }
 
     //recargar mediciones
@@ -114,7 +120,7 @@ export function DetallesCliente() {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            
+
             confirmButtonText: 'Borrar',
             cancelButtonText: 'Cancelar',
             reverseButtons: true,

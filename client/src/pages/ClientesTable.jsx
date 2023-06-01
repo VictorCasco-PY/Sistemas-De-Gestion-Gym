@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
+import api from '../services/api';
 
 const options = [
   { value: '', label: 'Seleccione un estado' },
@@ -28,10 +29,17 @@ export default function ClientesTable() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:8000/planes-de-pagos").then((response) => {
-      setClientes(response.data);
-      setOriginalData(response.data);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/planes-de-pagos");
+        setClientes(response.data);
+        setOriginalData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
   }, []);
 
   const colorMap = {
