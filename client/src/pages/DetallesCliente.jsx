@@ -53,11 +53,23 @@ export function DetallesCliente() {
     }, [id]);
 
     if (isLoading) {
-        return <CircularProgress/>;
+        return <div
+            className='column'
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '60vh',
+            }}
+        >
+            <div className='p-5'>
+                <CircularProgress />
+            </div>
+        </div>
     }
 
     if (notFound) {
-        return 
+        return (<div className='column'><h1>Cliente No Encontrado...</h1></div>)
     }
 
     //recargar mediciones
