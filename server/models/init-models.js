@@ -18,8 +18,6 @@ import _planes_de_pagos from  "./planes_de_pagos.js";
 import _productos from  "./productos.js";
 import _proveedores from  "./proveedores.js";
 import _sesiones_cajas from  "./sesiones_cajas.js";
-import _stocks from  "./stocks.js";
-import _stocks_productos from  "./stocks_productos.js";
 import _timbrados from  "./timbrados.js";
 import _tipos_modalidades_de_pagos from  "./tipos_modalidades_de_pagos.js";
 import _transacciones from  "./transacciones.js";
@@ -44,8 +42,6 @@ export default function initModels(sequelize) {
   const productos = _productos.init(sequelize, DataTypes);
   const proveedores = _proveedores.init(sequelize, DataTypes);
   const sesiones_cajas = _sesiones_cajas.init(sequelize, DataTypes);
-  const stocks = _stocks.init(sequelize, DataTypes);
-  const stocks_productos = _stocks_productos.init(sequelize, DataTypes);
   const timbrados = _timbrados.init(sequelize, DataTypes);
   const tipos_modalidades_de_pagos = _tipos_modalidades_de_pagos.init(sequelize, DataTypes);
   const transacciones = _transacciones.init(sequelize, DataTypes);
@@ -93,16 +89,10 @@ export default function initModels(sequelize) {
   productos.hasMany(facturas_detalles, { as: "facturas_detalles", foreignKey: "id_producto"});
   facturas_proveedores_detalles.belongsTo(productos, { as: "id_producto_producto", foreignKey: "id_producto"});
   productos.hasMany(facturas_proveedores_detalles, { as: "facturas_proveedores_detalles", foreignKey: "id_producto"});
-  stocks_productos.belongsTo(productos, { as: "id_producto_producto", foreignKey: "id_producto"});
-  productos.hasMany(stocks_productos, { as: "stocks_productos", foreignKey: "id_producto"});
   arqueos.belongsTo(sesiones_cajas, { as: "id_sesion_caja_sesiones_caja", foreignKey: "id_sesion_caja"});
   sesiones_cajas.hasMany(arqueos, { as: "arqueos", foreignKey: "id_sesion_caja"});
   transacciones.belongsTo(sesiones_cajas, { as: "id_sesion_caja_sesiones_caja", foreignKey: "id_sesion_caja"});
   sesiones_cajas.hasMany(transacciones, { as: "transacciones", foreignKey: "id_sesion_caja"});
-  facturas_proveedores_detalles.belongsTo(stocks, { as: "id_stock_stock", foreignKey: "id_stock"});
-  stocks.hasMany(facturas_proveedores_detalles, { as: "facturas_proveedores_detalles", foreignKey: "id_stock"});
-  stocks_productos.belongsTo(stocks, { as: "id_stock_stock", foreignKey: "id_stock"});
-  stocks.hasMany(stocks_productos, { as: "stocks_productos", foreignKey: "id_stock"});
   facturas.belongsTo(timbrados, { as: "id_timbrado_timbrado", foreignKey: "id_timbrado"});
   timbrados.hasMany(facturas, { as: "facturas", foreignKey: "id_timbrado"});
   planes_de_pagos.belongsTo(tipos_modalidades_de_pagos, { as: "id_tipo_modalidad_de_pago_tipos_modalidades_de_pago", foreignKey: "id_tipo_modalidad_de_pago"});
@@ -131,8 +121,6 @@ export default function initModels(sequelize) {
     productos,
     proveedores,
     sesiones_cajas,
-    stocks,
-    stocks_productos,
     timbrados,
     tipos_modalidades_de_pagos,
     transacciones,
