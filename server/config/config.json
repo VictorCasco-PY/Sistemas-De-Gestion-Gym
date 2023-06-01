@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "12345678",
-    "database": "gymdb",
-    "host": "127.0.0.1",
+    "username": "sql10622813",
+    "password": "LTJSTFhT5h",
+    "database": "sql10622813",
+    "host": "sql10.freemysqlhosting.net",
     "dialect": "mysql"
   },
   "test": {
