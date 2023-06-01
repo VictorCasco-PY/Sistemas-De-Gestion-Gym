@@ -87,10 +87,10 @@ const Sidebar = ({ children }) => {
                             <p className='menu-label has-text-white title is-4'>Productos</p>
                             <ul className='menu-list title is-5'>
                                 <li>
-                                    <Link to="#"><AddIcon fontSize="string" />  Agregar Producto</Link>
+                                    <Link to="/productos"><AddIcon fontSize="string" />  Agregar Producto</Link>
                                 </li>
                                 <li>
-                                    <Link to="#"><FormatListBulletedIcon fontSize="string" />  Lista de Productos</Link>
+                                    <Link to="/listaProductos"><FormatListBulletedIcon fontSize="string" />  Lista de Productos</Link>
                                 </li>
                             </ul>
                         </> : null

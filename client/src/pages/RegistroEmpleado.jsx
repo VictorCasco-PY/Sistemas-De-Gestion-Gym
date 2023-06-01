@@ -63,12 +63,12 @@ const RegistroEmpleado = () => {
         });
       });
   };
-  
 
-  
+
+
   return (
-    <div className="columns is-centered">
-      <div className="column is-three-fifths-desktop">
+    <div className="is-flex mt-6 columns is-centered">
+      <div className="column is-half">
         <div className="box">
           <form >
             <center>

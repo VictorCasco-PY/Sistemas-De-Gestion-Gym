@@ -1,17 +1,17 @@
 import { models } from "../models/models.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
+import {Cliente} from "./clientes.controller.js";
 
+const cliente = new Cliente();
 const {facturas} = models;
 
 export class Factura {
     crear = async (req,res)=>{
-        try{
-            const validator = bodyValidator(req);
-            if (validator) return res.status(400).json(validator);
-            
+        try{         
             const {body} = req;
+            const {id_cliente} = body;
+            if(!(await cliente.getById(id_cliente))) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
             const result = await facturas.create({...body});
-            return res.json(result)
+            return res.json({...result, condicion:1});
         }catch(error){
             const {message} = error;
             return res.status(500).json({error:message});

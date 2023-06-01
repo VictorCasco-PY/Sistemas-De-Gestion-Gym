@@ -1,5 +1,4 @@
 import {models} from "../models/models.js";
-import {bodyValidator} from "../tools/bodyValidator.js";
 import {Cliente} from "./clientes.controller.js";
 import {getDateNow} from "../tools/date.js";
 
@@ -12,10 +11,6 @@ export class MedicionCliente {
      */
     crear = async (req, res) => {
         try {
-
-            const validator = await bodyValidator(req);
-            if (validator) return res.status(400).json(validator);
-
             // destructura el objeto recibido, si recibe del body (req.body) o de una peticion de la api misma (req)
             const {body} = req;
 

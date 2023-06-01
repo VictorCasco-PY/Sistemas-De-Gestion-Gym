@@ -1,18 +1,14 @@
+import { Op } from "sequelize";
 import { models } from "../models/models.js";
-import { bodyValidator } from "../tools/bodyValidator.js";
-
 const { productos } = models;
 
 export class Productos {
   crear = async (req, res) => {
     try {
-      const validator = bodyValidator(req);
-      if (validator) return res.status(400).json(validator);
       const { body } = req;
       const { str_nombre } = body;
       if (await this.getByNombre({ str_nombre })) return res.status(409).json({ error: "El producto ya esta registrado" });
       const result = await productos.create({ ...body });
-      console.log('asdfafsdasdfa');
       res.json(result);
     } catch (error) {
       return res.json(error);
@@ -41,14 +37,31 @@ export class Productos {
       return res.status(500).json(error)
     }
   }
+  // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      const result = await productos.findAll();
+      const { nombre, precio, ordenNombre,ordenPrecio, ...querys } = req.query;
+
+      const where = {
+        ...querys
+      };
+      
+      let options = {}; 
+      if(ordenNombre=='asc') options.order = [['str_nombre', 'ASC']];
+      if(ordenNombre=='desc') options.order = [['str_nombre', 'DESC']];
+      if(ordenPrecio=='asc') options.order = [['precio', 'ASC']];
+      if(ordenPrecio=='desc') options.order = [['precio', 'DESC']];
+      if (nombre) where.str_nombre = { [Op.like]: `%${nombre}%` };
+      if (precio) where.precio = precio;
+
+      const result = await productos.findAll({ where, ...options }) || productos.findAll({ where });
+
       res.json(result);
     } catch (error) {
-      res.json(error.message).status(500);
+      res.status(500).json({error: error.message});
     }
-  }
+  };
+
   getByParams = async (req, res) => {
     try {
       const { id } = req.params;

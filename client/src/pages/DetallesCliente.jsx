@@ -114,8 +114,10 @@ export function DetallesCliente() {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
+            
+            confirmButtonText: 'Borrar',
             cancelButtonText: 'Cancelar',
-            confirmButtonText: 'Borrar'
+            reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire(
