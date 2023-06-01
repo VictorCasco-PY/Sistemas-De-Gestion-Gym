@@ -5,7 +5,6 @@ import 'bulma/css/bulma.min.css';
 import React, { useContext } from 'react';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import RegistroCliente from './pages/RegistroCliente';
 import ListaClientes from './pages/ListaClientes';
 import { DetallesCliente } from './pages/DetallesCliente';
 import RegistroProveedores from './pages/RegistroProveedores';
@@ -21,6 +20,7 @@ import Ventas from './pages/Ventas';
 import DetallesUsuario from './pages/DetallesUsuario';
 import RegistroProductos from './pages/RegistroProductos';
 import TablaProductos from './pages/TablaProductos';
+import WizardFormCliente from './pages/clientes/WizardFormCliente';
 
 
 
@@ -44,7 +44,7 @@ function App() {
 
           // Rutas de Entrenador
           <Route element={<ProtectedRoute isAllowed={!!user && (isEntrenador || isAdmin || isCajero)} redirectTo='/home' />}>
-            <Route path='/registro_cliente' element={<Layout><RegistroCliente /></Layout>} />
+            <Route path='/registro_cliente' element={<Layout><WizardFormCliente /></Layout>} />
             <Route path='/listaClientes' element={<Layout><ListaClientes /></Layout>} />
             <Route path='/detallesCliente' element={<Layout><DetallesCliente /></Layout>} />
             <Route path='/detallesCliente/:name' element={<Layout><DetallesCliente /></Layout>} />
