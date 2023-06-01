@@ -3,6 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import DeudaTable from '../components/DeudaTable';
 import PagadoTable from '../components/PagadoTable';
+import '../main.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -115,7 +116,7 @@ export default function Reporte() {
 
     return (
         <div className='m-2'>
-            <div className='has-background-light p-6'>
+            <div className='has-background-light p-6 bordeado'>
 
                 {isTableVisible && <DeudaTable onClose={handleClose} />}
                 {isTableVisible && <div className="overlay" onClick={handleClose} />}

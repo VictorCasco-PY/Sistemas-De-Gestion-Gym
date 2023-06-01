@@ -11,7 +11,7 @@ const Sidebar = ({ children }) => {
     const user = JSON.parse(localStorage.getItem("user"));
     return (
         <>
-            <nav className='navbar is-light'>
+            <nav className='navbar is-light has-shadow'>
                 <div className='navbar-brand mt-3 ml-3'>
                     <Link to="/home">
                         <img src={logo} width={270} height={90} />
