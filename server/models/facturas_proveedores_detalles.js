@@ -26,14 +26,6 @@ export default class facturas_proveedores_detalles extends Model {
         key: 'id'
       }
     },
-    id_stock: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'stocks',
-        key: 'id'
-      }
-    },
     cantidad: {
       type: DataTypes.INTEGER,
       allowNull: true
@@ -71,13 +63,6 @@ export default class facturas_proveedores_detalles extends Model {
         using: "BTREE",
         fields: [
           { name: "id_producto" },
-        ]
-      },
-      {
-        name: "id_stock",
-        using: "BTREE",
-        fields: [
-          { name: "id_stock" },
         ]
       },
     ]
