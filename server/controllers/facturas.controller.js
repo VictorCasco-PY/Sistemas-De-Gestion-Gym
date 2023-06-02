@@ -26,7 +26,7 @@ export class Factura {
         try{
             const {id} = req.params;
             const {body} = req;
-            const [rowsAffected] = await facturas.update({...body}, {where:id});
+            const [rowsAffected] = await facturas.update({...body}, {where:{id}});
             if(rowsAffected===0) return res.status(404).send("No se actualizo nignuna facutra");
             res.send("Factura actualizada")
         }catch(error){
