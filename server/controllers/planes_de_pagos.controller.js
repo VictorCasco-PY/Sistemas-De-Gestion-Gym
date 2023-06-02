@@ -1,5 +1,5 @@
 import { models } from "../models/models.js";
-import { getDateNow, toDate } from "../tools/date.js";
+import { getDateNow, nuevaFechaVencimiento, toDate } from "../tools/date.js";
 import { Cliente } from "./clientes.controller.js";
 import { Op } from "sequelize";
 import { TipoModalidadDePago } from "./tipos_modalidades_de_pagos.js";
@@ -156,6 +156,21 @@ export class PlanesDePagos {
     }
   };
 
+  pagarPlan = async (id) => {
+    try {
+      const plan = this.getById(id);
+      const {date_fecha_de_vencimiento} = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento);
+      const {date_fecha_de_pago} = getDateNow();
+      await planes_de_pagos.update({
+        estado_de_pago: "pagado",
+        date_fecha_de_vencimiento,
+        date_fecha_de_pago
+      }, {where:{id}});
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
   actualizarEstados = async () => {
     const today = new Date().toISOString().split("T")[0]; //fecha de hoy es 2023-06-02
 
@@ -168,10 +183,12 @@ export class PlanesDePagos {
         },
       });
 
-      planesVencidos.forEach(async plan => {
-        await planes_de_pagos.update({estado_de_pago:"atrasado"}, {where:{id:plan.id}});
-      })
-      
+      planesVencidos.forEach(async (plan) => {
+        await planes_de_pagos.update(
+          { estado_de_pago: "atrasado" },
+          { where: { id: plan.id } }
+        );
+      });
     } catch (error) {
       console.log(error.message);
     }
