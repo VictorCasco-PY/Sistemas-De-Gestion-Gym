@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
-
+import { authMiddleware } from "../middlewares/authMiddleware.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 import { Timbrados } from "../controllers/timbrados.controller.js";
 
 
@@ -18,11 +19,8 @@ timbradosRoutes.get("/timbrado/:id", timbrados.getByParams);
 // Crear un nuevo timbrado, los checks sirven para comprobar que los campos esten completos
 timbradosRoutes.post(
     "/timbrados",
-    [
-        check("str_timbrado", "str_timbrado es un campo requerido").notEmpty(),
-        check("date_inicio_timbrado", "date_inicio_timbrado es un campo requerido").notEmpty(),
-        check("date_fin_timbrado", "date_fin_timbrado es un campo requerido").notEmpty(),
-    ],
+    authMiddleware(['caja']),
+    checkMiddleWare(['str_timbrado','date_inicio_timbrado','date_fin_timbrado']),
     timbrados.crear
 );
 

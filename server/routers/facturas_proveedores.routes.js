@@ -1,5 +1,7 @@
-import {Router} from "express"
-import {check} from "express-validator";
+import { Router } from "express"
+import { check } from "express-validator";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
+import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 
 import { Facturas_proveedores } from "../controllers/facturas_proveedores.controller.js";
 
@@ -11,11 +13,11 @@ facturasProveedoresRoutes.get('/facturas-proveedores', facturas_proveedores.getA
 
 facturasProveedoresRoutes.get('/factura-proveedor/:id', facturas_proveedores.getById);
 
-facturasProveedoresRoutes.post('/facturas-proveedores', [
-    check("id_proveedor", "id_proveedor  es un campo requerido").notEmpty(),
-    check("date_fecha", "date_fecha  es un campo requerido").notEmpty(),
-    check("total", "total  es un campo requerido").notEmpty(),
-    ], facturas_proveedores.crear);
+facturasProveedoresRoutes.post('/facturas-proveedores',
+    authMiddleware(['caja']),
+    checkMiddleWare(['id_proveedor', 'date_fecha', 'total']),
+    facturas_proveedores.crear
+);
 
 facturasProveedoresRoutes.put('/factura-proveedor/:id', facturas_proveedores.update)
 

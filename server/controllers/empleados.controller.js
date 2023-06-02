@@ -55,15 +55,24 @@ export class Empleado {
   };
   getAll = async (req, res) => {
     try {
-      const result = await empleados.findAll();
-      const resultLimpio = result.map((empleado) => {
-        const { password, ...limpio } = empleado.get({ plain: true });
-        return limpio;
-      });
-      res.json(resultLimpio);
+      const { nombre, user, ordenNombre,cedula, ...querys } = req.query;
+
+      const where = {
+        ...querys
+      };
+      
+      let options = {}; 
+      if(ordenNombre=='asc') options.order = [['str_nombre', 'ASC']];
+      if(ordenNombre=='desc') options.order = [['str_nombre', 'DESC']];
+      if (nombre) where.str_nombre = { [Op.like]: `%${nombre}%` };
+      if (user) where.user = user;
+      if(cedula) where.str_cedula;
+
+      const result = await empleados.findAll({ where, ...options }) || empleados.findAll({ where });
+
+      res.json(result);
     } catch (error) {
-      const { message } = error;
-      return res.status(500).json({ error: message });
+      res.status(500).json({error: error.message});
     }
   };
 
