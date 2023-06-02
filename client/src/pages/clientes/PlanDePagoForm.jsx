@@ -1,6 +1,7 @@
 import React from 'react'
 
 const PlanDePagoForm = ({ planDePago, handleTipoModalidadDePago, handlePlanDePagoChange, handleSubmitPlanDePago, valoresMontoAPagar }) => {
+
     return (
         <>
             <h2 className="title is-2 has-text-centered mt-6">Elige el Plan de Pago</h2>
