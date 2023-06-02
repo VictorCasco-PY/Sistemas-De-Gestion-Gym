@@ -30,7 +30,7 @@ export default function Layout({ children }) {
                     <Typography variant='h5'>
                         Bienvenido, {user.nombre}
                     </Typography>
-                    <Typography variant='h6' color={'gray'}>({user.rol})</Typography>
+                    <Typography variant='h6' color={'white'}>({user.rol})</Typography>
                     <CerrarSesion />
                 </Toolbar>
             </AppBar>

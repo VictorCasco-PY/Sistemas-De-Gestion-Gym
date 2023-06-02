@@ -22,6 +22,7 @@ import RegistroProductos from './pages/RegistroProductos';
 import ListaProductos from './pages/ListaProductos';
 import WizardFormCliente from './pages/clientes/WizardFormCliente';
 import NewLayout from './Layout/NewLayout';
+import DetallesProducto from './pages/DetallesProducto';
 
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
             <Route path='/detallesEmpleado/:id' element={<NewLayout><DetallesUsuario /></NewLayout>} />
             <Route path='/productos' element={<NewLayout><RegistroProductos /></NewLayout>} />
             <Route path='/listaProductos' element={<NewLayout>< ListaProductos /></NewLayout>} />
+            <Route path='/detallesProducto/:id' element={<NewLayout><DetallesProducto /></NewLayout>} />
           </Route>
         </Routes>
       </BrowserRouter>

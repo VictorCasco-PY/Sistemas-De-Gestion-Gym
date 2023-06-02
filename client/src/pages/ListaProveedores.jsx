@@ -88,7 +88,7 @@ const ListaProveedores = () => {
     return (
         <>
             <Link to='/registroProveedores'>
-                <button className='button is-primary mb-3'><AddIcon fontSize='string' />Agregar Proveedor</button>
+                <button className='button is-success mb-3'><AddIcon fontSize='string' />Agregar Proveedor</button>
             </Link>
 
             <table className='table is-fullwidth is-bordered'>
