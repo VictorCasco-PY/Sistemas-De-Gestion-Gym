@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
 import { useParams } from "react-router-dom";
 import EditableInput from "../components/EditableInput";
+import api from "../services/api";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Link } from "react-router-dom";
 
 const DetallesUsuario = () => {
   const id = useParams().id;
   const [usuario, setUsuario] = useState(null);
 
   // Función para formatear la cadena de tiempo (hh:mm)
-  // Función para formatear la cadena de tiempo (hh:mm)
   const formatTime = (time) => {
-    return moment(time, 'HH:mm').format('HH:mm');
+    return moment(time, "HH:mm").format("HH:mm");
   };
+
   useEffect(() => {
-    const getUsuario = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
-        const headers = {
-          token: user.token // Agregar el token en el encabezado 'token'
-        };
-
-        const response = await axios.get(`http://localhost:8000/empleado/${id}`, { headers });
+    api
+      .get(`empleado/${id}`)
+      .then((response) => {
         setUsuario(response.data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.log(error);
-      }
-    };
-
-    getUsuario();
+      });
   }, []);
-
 
   if (!usuario) {
     return <div>Cargando detalles del usuario...</div>;
@@ -38,7 +32,14 @@ const DetallesUsuario = () => {
 
   return (
     <div className="box">
-      <h1>Detalles del Usuario</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Link to={`/listaEmpleados`}>
+          <button className="button is-link is-outlined mr-6">
+            <ArrowBackIcon fontSize="string" />
+          </button>
+        </Link>
+        <h1 className="title is-3 has-text-primary">Detalles del Usuario</h1>
+      </div>
       <div className="columns">
         <div className="column">
           <h4>Nombre</h4>
@@ -66,7 +67,12 @@ const DetallesUsuario = () => {
         </div>
         <div className="column">
           <h4>Número de Cédula</h4>
-          <p>{usuario.str_cedula}</p>
+          <EditableInput
+            valorInicial={usuario.str_cedula}
+            id={id}
+            apiUrl="http://localhost:8000/empleado"
+            campoCambiar="str_cedula"
+          />
         </div>
       </div>
       <div className="columns">

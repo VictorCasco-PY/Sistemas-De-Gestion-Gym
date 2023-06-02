@@ -39,6 +39,8 @@ $infocolor: #d4d4d4;
     display: flex;
 
     .bubbleTitle {
+        display:flex;
+        align-items: center;
         background-color: #1C96DA;
         border-radius: 10px 0px 0px 10px;
         padding: 0.6rem 0.6rem;
@@ -64,7 +66,9 @@ $infocolor: #d4d4d4;
 
     &.table-text-2 {
         text-align: left;
-
+        th {
+            text-align: left !important;
+        }
         td {
             padding-left: 15px;
         }
@@ -87,6 +91,7 @@ $infocolor: #d4d4d4;
 
         th:not(:first-child):not(:last-child) {
             border-inline: none;
+            text-align: center;
         }
 
         th:last-child {
@@ -212,4 +217,9 @@ button {
 
   .bordeado {
     border-radius: 10px;
+  }
+
+  .custom-link {
+    text-decoration: none;
+    color: inherit;
   }

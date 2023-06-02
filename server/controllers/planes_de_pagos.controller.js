@@ -1,9 +1,8 @@
 import { models } from "../models/models.js";
-import { getDateNow, toDate } from "../tools/date.js";
+import { getDateNow, nuevaFechaVencimiento, toDate } from "../tools/date.js";
 import { Cliente } from "./clientes.controller.js";
-
-import { TipoModalidadDePago } from "./tipos_modalidades_de_pagos.js";
 import { Op } from "sequelize";
+import { TipoModalidadDePago } from "./tipos_modalidades_de_pagos.js";
 
 const { planes_de_pagos } = models;
 
@@ -85,30 +84,35 @@ export class PlanesDePagos {
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      const { nombre, estado, ordenNombre,plan, ...querys } = req.query;
+      await this.actualizarEstados();
+      const { nombre, estado, ordenNombre, plan, ...querys } = req.query;
 
       const where = {
-        ...querys
+        ...querys,
       };
-      
-      let options = {}; 
-      if(ordenNombre=='asc') options.order = [['str_nombre_cliente', 'ASC']];
-      if(ordenNombre=='desc') options.order = [['str_nombre_cliente', 'DESC']];
+
+      let options = {};
+      if (ordenNombre == "asc") options.order = [["str_nombre_cliente", "ASC"]];
+      if (ordenNombre == "desc")
+        options.order = [["str_nombre_cliente", "DESC"]];
       if (nombre) where.str_nombre_cliente = { [Op.like]: `%${nombre}%` };
       if (estado) where.estado_de_pago = estado;
       if (plan) where.str_modalidad = plan;
 
-      const result = await planes_de_pagos.findAll({ where, ...options }) || planes_de_pagos.findAll({ where });
+      const result =
+        (await planes_de_pagos.findAll({ where, ...options })) ||
+        planes_de_pagos.findAll({ where });
 
       res.json(result);
     } catch (error) {
-      res.status(500).json({error: error.message});
+      res.status(500).json({ error: error.message });
     }
   };
 
   // Obtiene un plan de pago consultando por su ID
   getByParams = async (req, res) => {
     try {
+      await this.actualizarEstados();
       const { id } = req.params;
       const result = await planes_de_pagos.findOne({ where: { id } });
       if (!result)
@@ -125,11 +129,9 @@ export class PlanesDePagos {
       const { id_cliente } = req.params;
       const result = await planes_de_pagos.findOne({ where: { id_cliente } });
       if (!result)
-        return res
-          .status(404)
-          .json({
-            error: "No se encuentra un plan de pago con ese id de cliente",
-          });
+        return res.status(404).json({
+          error: "No se encuentra un plan de pago con ese id de cliente",
+        });
       res.json(result);
     } catch (error) {
       res.json(error).status(500);
@@ -147,10 +149,52 @@ export class PlanesDePagos {
 
   getById = async (id) => {
     try {
+      console.log(id);
+
       const result = await planes_de_pagos.findOne({ where: { id } });
       return result;
     } catch (error) {
-      res.status(500).json(error);
+      throw new Error(error.message);
+    }
+  };
+
+  pagarPlan = async (id) => {
+    try {
+      const plan = await this.getById(id);
+      const date_fecha_de_vencimiento = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento);
+      console.log(date_fecha_de_vencimiento);
+      const {date_fecha_de_pago} = getDateNow();
+
+      await planes_de_pagos.update({
+        estado_de_pago: "pagado",
+        date_fecha_de_vencimiento,
+        date_fecha_de_pago
+      }, {where:{id}});
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  actualizarEstados = async () => {
+    const today = new Date().toISOString().split("T")[0]; //fecha de hoy es 2023-06-02
+
+    try {
+      const planesVencidos = await planes_de_pagos.findAll({
+        where: {
+          date_fecha_de_vencimiento: {
+            [Op.lt]: today, //fecha de pago es menor a la fecha actual
+          },
+        },
+      });
+
+      planesVencidos.forEach(async (plan) => {
+        await planes_de_pagos.update(
+          { estado_de_pago: "atrasado" },
+          { where: { id: plan.id } }
+        );
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 }

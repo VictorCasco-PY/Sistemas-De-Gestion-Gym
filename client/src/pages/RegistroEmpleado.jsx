@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios"
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import api from "../services/api";
 
 
 const RegistroEmpleado = () => {
@@ -37,40 +39,58 @@ const RegistroEmpleado = () => {
     });
   };
 
-  // función para manejar el envío del formulario
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(empleados);
-    axios
-      .post("http://localhost:8000/empleados", empleados)
-      .then((response) => {
-        console.log(response.data);
-        Swal.fire({
-          icon: "success",
-          title: "Usuario registrado con éxito",
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-        });
-        setEmpleados(empleadosData); // Restablecer el estado a su valor inicial
-      })
-      .catch((error) => {
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Error al registrar el usuario",
-          text: "Por favor, verifica los datos e intenta nuevamente",
-        });
+// función para manejar el envío del formulario
+const handleSubmit = (event) => {
+  event.preventDefault();
+  console.log(empleados);
+
+    // Validación de que time_inicio_trabajo no sea posterior a time_fin_trabajo
+    if (empleados.time_inicio_trabajo >= empleados.time_fin_trabajo) {
+      Swal.fire({
+        icon: "error",
+        title: "Error en la validación",
+        text: "La hora de inicio de trabajo debe ser anterior a la hora de fin de trabajo",
       });
-  };
+      return; // Detener el envío del formulario si la validación no pasa
+    }
+  api
+    .post("empleados", empleados)
+    .then((response) => {
+      console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: "Usuario registrado con éxito",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
+      setEmpleados(empleadosData); // Restablecer el estado a su valor inicial
+    })
+    .catch((error) => {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al registrar el usuario",
+        text: "Por favor, verifica los datos e intenta nuevamente",
+      });
+    });
+};
+
 
 
 
   return (
-    <div className="is-flex mt-6 columns is-centered">
+    <div className="is-flex columns is-centered">
       <div className="column is-half">
         <div className="box">
           <form >
+          <div className="column">
+            <Link to = {`/listaEmpleados`}>
+              <button className="button is-link is-outlined">
+                <ArrowBackIcon fontSize="string"/>
+              </button>
+            </Link>
+          </div>
             <center>
               <h1 className="mb-2 title is-3 has-text-primary">
                 Registrar Empleado
