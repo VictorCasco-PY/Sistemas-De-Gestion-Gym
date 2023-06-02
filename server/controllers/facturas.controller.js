@@ -1,6 +1,6 @@
 import { models } from "../models/models.js";
 import {Cliente} from "./clientes.controller.js";
-
+import {getDateNow} from "../tools/date.js"
 const cliente = new Cliente();
 const {facturas} = models;
 
@@ -9,9 +9,13 @@ export class Factura {
         try{         
             const {body} = req;
             const {id_cliente} = body;
-            if(!(await cliente.getById(id_cliente))) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
-            const result = await facturas.create({...body});
-            return res.json({...result, condicion:1});
+            const date_fecha = getDateNow();
+            const _cliente = await cliente.getById(id_cliente);
+            if(!_cliente) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
+            const {str_nombre_cliente} = _cliente.str_nombre
+            const {str_ruc_cliente} = _cliente.str_ruc;
+            const result = await facturas.create({...body, date_fecha, str_nombre_cliente, str_ruc_cliente});
+            return res.json({result});
         }catch(error){
             const {message} = error;
             return res.status(500).json({error:message});

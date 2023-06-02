@@ -49,7 +49,7 @@ export class FacturaDetalle {
   getAll = async (req, res) => {
     try {
       const result = await facturas_detalles.findAll();
-      return result;
+      res.json(result);
     } catch (error) {
       const { message } = error;
       return res.status(500).json({ error: message });
