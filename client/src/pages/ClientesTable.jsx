@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
+import api from '../services/api';
 
 const options = [
   { value: '', label: 'Seleccione un estado' },
@@ -28,10 +29,17 @@ export default function ClientesTable() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:8000/planes-de-pagos").then((response) => {
-      setClientes(response.data);
-      setOriginalData(response.data);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/planes-de-pagos");
+        setClientes(response.data);
+        setOriginalData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const colorMap = {
@@ -108,20 +116,25 @@ export default function ClientesTable() {
 
   return (
     <div>
-      <div className="column is-half">
-      <input
-          className="input"
-          type="text"
-          placeholder="Buscar..."
-          value={searchString}
-          onChange={(e) => setSearchString(e.target.value)}
-          onKeyUp={() => handleSearch()}
-        />
-        <Select
-          options={options}
-          value={selectedEstado ? { value: selectedEstado, label: selectedEstado } : null}
-          onChange={handleEstadoChange}
-        />
+      <div className="column is-half is-flex"
+          style={{ gap: '10px' }}>
+        <div>
+          <input
+            className="input"
+            type="text"
+            placeholder="Buscar..."
+            value={searchString}
+            onChange={(e) => setSearchString(e.target.value)}
+            onKeyUp={() => handleSearch()}
+          />
+        </div>
+        <div>
+          <Select
+            options={options}
+            value={selectedEstado ? { value: selectedEstado, label: selectedEstado } : null}
+            onChange={handleEstadoChange}
+          />
+        </div>
       </div>
       <table className="table table is-bordered tableNew has-background-light is-bordered">
         <thead className='has-text-centered'>

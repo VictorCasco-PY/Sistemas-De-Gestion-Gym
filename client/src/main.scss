@@ -205,3 +205,16 @@ button {
       transform: translate(-50%, -50%) scale(1);
     }
   }
+
+  .has-shadow123 {
+    background-color: red !important;
+  }
+
+  .bordeado {
+    border-radius: 10px;
+  }
+
+  .custom-link {
+    text-decoration: none;
+    color: inherit;
+  }
