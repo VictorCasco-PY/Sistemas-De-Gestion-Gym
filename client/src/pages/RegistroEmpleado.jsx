@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios"
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import api from "../services/api";
 
 
 const RegistroEmpleado = () => {
@@ -23,9 +25,19 @@ const RegistroEmpleado = () => {
 
   //setea los valores del estado empleados con los datos ingresados por el usuario
   const handleChange = (event) => {
+    // Validación de que str_cedula solo contenga caracteres numéricos
+    const { name, value } = event.target;
+    if (name === "str_cedula" && !/^\d+$/.test(value)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error en la validación",
+      });
+      return; // Ignorar la actualización del estado si no es un número
+    }
+
     setEmpleados({
       ...empleados,
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
   };
   //setea los valores de los inputs tipo radio con el seleccionado por el usuario
@@ -42,13 +54,17 @@ const handleSubmit = (event) => {
   event.preventDefault();
   console.log(empleados);
 
-  const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
-  const headers = {
-    token: user.token // Agregar el token en el encabezado 'token'
-  };
-
-  axios
-    .post("http://localhost:8000/empleados", empleados, { headers })
+    // Validación de que time_inicio_trabajo no sea posterior a time_fin_trabajo
+    if (empleados.time_inicio_trabajo >= empleados.time_fin_trabajo) {
+      Swal.fire({
+        icon: "error",
+        title: "Error en la validación",
+        text: "La hora de inicio de trabajo debe ser anterior a la hora de fin de trabajo",
+      });
+      return; // Detener el envío del formulario si la validación no pasa
+    }
+  api
+    .post("empleados", empleados)
     .then((response) => {
       console.log(response.data);
       Swal.fire({
@@ -78,6 +94,13 @@ const handleSubmit = (event) => {
       <div className="column is-half">
         <div className="box">
           <form >
+          <div className="column">
+            <Link to = {`/listaEmpleados`}>
+              <button className="button is-link is-outlined">
+                <ArrowBackIcon fontSize="string"/>
+              </button>
+            </Link>
+          </div>
             <center>
               <h1 className="mb-2 title is-3 has-text-primary">
                 Registrar Empleado
