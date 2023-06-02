@@ -14,6 +14,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CustomListItem from '../components/Sidenav/CustomListItem';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import CerrarSesion from '../components/CerrarSesion';
 
 const drawerWidth = 240;
 
@@ -30,9 +31,7 @@ export default function Layout({ children }) {
                         Bienvenido, {user.nombre}
                     </Typography>
                     <Typography variant='h6' color={'gray'}>({user.rol})</Typography>
-                    <IconButton color='inherit'>
-                        <LogoutIcon fontSize='large' />
-                    </IconButton>
+                    <CerrarSesion />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -52,15 +51,17 @@ export default function Layout({ children }) {
                 </Toolbar>
                 <Divider />
                 <List>
-                    <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
-                    <Divider />
-                    <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
-                    <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
-                    <CustomListItem icon={<PersonIcon />} text='Empleados' to='/listaEmpleados' />
-                    <CustomListItem icon={<InventoryIcon />} text='Productos' to='/listaProductos' />
-                    <CustomListItem icon={<PersonIcon />} text='Proveedores' to='/lista_proveedores' />
+                    {user.rol === 'admin' ? <>
+                        <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
+                        <Divider />
+                        <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
+                        <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
+                        <CustomListItem icon={<PersonIcon />} text='Empleados' to='/listaEmpleados' />
+                        <CustomListItem icon={<InventoryIcon />} text='Productos' to='/listaProductos' />
+                        <CustomListItem icon={<PersonIcon />} text='Proveedores' to='/lista_proveedores' />
+                    </> : null
+                    }
                 </List>
-
             </Drawer>
             <Box
                 component="main"
