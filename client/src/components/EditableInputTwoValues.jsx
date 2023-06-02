@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import api from '../services/api';
 
 function EditableInputTwoValues({ valorInicial, id, apiUrl, campoCambiar,
-                                                id2, apiUrl2, campoCambiar2 }) { //UTILIZAR EL CUARTO PARAMETRO
+  id2, apiUrl2, campoCambiar2 }) { //UTILIZAR EL CUARTO PARAMETRO
   const [title, setTitle] = useState(valorInicial);
 
   const handleTitleChange = (event) => {
@@ -15,24 +16,29 @@ function EditableInputTwoValues({ valorInicial, id, apiUrl, campoCambiar,
       .catch(error => console.error(error));
   }, [id, apiUrl]);
 
-  const handleTitleBlur = (event) => {
+  const handleTitleBlur = async (event) => {
     const input = event.target;
     const currentValue = input.value.trim();
 
     const newItem = { [campoCambiar]: currentValue };
     //ERROR 404 no se por que
-    axios.put(`${apiUrl}/${id}`, newItem)  //PUT PARA MODIFICAR
-      .then(() => console.log('Actualizado valor 1'))
-      .catch((error) => console.error(error));
+    try {
+      const response = await api.put(`${apiUrl}/${id}`, newItem);
+      console.log('Actualizado valor 1');
+    } catch (error) {
+      console.log(error);
+    }
 
-      input.blur();
+    input.blur();
 
     const newItem2 = { [campoCambiar2]: currentValue };
-    axios.put(`${apiUrl2}/${id2}`, newItem2)  //PUT PARA MODIFICAR
-      .then(() => console.log('Actualizado valor 2'))
-      .catch((error) => console.error(error));
-
-      input.blur();
+    try {
+      const response = await api.put(`${apiUrl2}/${id2}`, newItem2);
+      console.log('Actualizado valor 2');
+    } catch (error) {
+      console.log(error);
+    }
+    input.blur();
   };
 
   const handleTitleKeyDown = (event) => {

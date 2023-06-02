@@ -37,10 +37,11 @@ export class Productos {
       return res.status(500).json(error)
     }
   }
+
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      const { nombre, precio, ordenNombre,ordenPrecio, ...querys } = req.query;
+      const { nombre, precio, ordenNombre,ordenPrecio,codigo, ...querys } = req.query;
 
       const where = {
         ...querys
@@ -53,6 +54,7 @@ export class Productos {
       if(ordenPrecio=='desc') options.order = [['precio', 'DESC']];
       if (nombre) where.str_nombre = { [Op.like]: `%${nombre}%` };
       if (precio) where.precio = precio;
+      if(codigo) where.str_codigo=codigo;
 
       const result = await productos.findAll({ where, ...options }) || productos.findAll({ where });
 

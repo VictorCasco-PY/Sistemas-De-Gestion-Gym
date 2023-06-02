@@ -71,7 +71,7 @@ const WizardFormCliente = () => {
     const [planDePago, setPlanDePago] = useState({
         id_cliente: "",
         id_tipo_modalidad_de_pago: "",
-        date_fecha_de_vencimiento: "",
+        date_fecha_de_vencimiento: null,
     });
     // valores correspondientes a cada tipo de modalidad de pago
     const valoresMontoAPagar = {
