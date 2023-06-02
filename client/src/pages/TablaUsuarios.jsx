@@ -124,7 +124,6 @@ const TablaUsuarios = () => {
               <td>
                 <Link to={`/detallesEmpleado/${usuario.id}`}>
                   <button className="button is-info is-outlined mr-2">
-                    {" "}
                     <RemoveRedEyeIcon fontSize="string" />{" "}
                   </button>
                 </Link>
