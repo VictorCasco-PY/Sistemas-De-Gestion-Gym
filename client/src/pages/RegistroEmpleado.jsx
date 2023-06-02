@@ -37,32 +37,39 @@ const RegistroEmpleado = () => {
     });
   };
 
-  // función para manejar el envío del formulario
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(empleados);
-    axios
-      .post("http://localhost:8000/empleados", empleados)
-      .then((response) => {
-        console.log(response.data);
-        Swal.fire({
-          icon: "success",
-          title: "Usuario registrado con éxito",
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-        });
-        setEmpleados(empleadosData); // Restablecer el estado a su valor inicial
-      })
-      .catch((error) => {
-        console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Error al registrar el usuario",
-          text: "Por favor, verifica los datos e intenta nuevamente",
-        });
-      });
+// función para manejar el envío del formulario
+const handleSubmit = (event) => {
+  event.preventDefault();
+  console.log(empleados);
+
+  const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
+  const headers = {
+    token: user.token // Agregar el token en el encabezado 'token'
   };
+
+  axios
+    .post("http://localhost:8000/empleados", empleados, { headers })
+    .then((response) => {
+      console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: "Usuario registrado con éxito",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
+      setEmpleados(empleadosData); // Restablecer el estado a su valor inicial
+    })
+    .catch((error) => {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al registrar el usuario",
+        text: "Por favor, verifica los datos e intenta nuevamente",
+      });
+    });
+};
+
 
 
 
