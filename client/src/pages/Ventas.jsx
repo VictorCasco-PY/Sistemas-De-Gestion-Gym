@@ -28,7 +28,7 @@ const Ventas = () => {
 
     const getPlanDePago = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8000/planes-de-pagos/${id}`);
+            const response = await api.get(`/planes-de-pagos/${id}`);
             console.log(response.data);
             setPlanDePago(response.data);
         } catch (error) {
@@ -65,7 +65,7 @@ const Ventas = () => {
     const handleAddProducto = async () => {
         try {
             const productoId = idProducto;
-            const response = await axios.get(`http://localhost:8000/producto/${productoId}`);
+            const response = await api.get(`/producto/${productoId}`);
             const nuevoProducto = {
                 id: productoId,
                 str_descripcion: response.data.str_descripcion, // Reemplaza "nombre" por la propiedad real del nombre del producto
@@ -137,7 +137,6 @@ const Ventas = () => {
                                         <td><button className='button' onClick={handleDeletePlanDePago}><DeleteIcon fontSize='string' /></button></td>
                                         <td>Pago Cuota {planDePago.str_modalidad}</td>
                                         <td>1</td>
-                                        <td>{planDePago.id_tipo_modalidad_de_pago === 1 ? '10.000' : planDePago.id_tipo_modalidad_de_pago === 2 ? '70.000' : planDePago.id_tipo_modalidad_de_pago === 3 ? '100.000' : ''}</td>
                                         <td>{planDePago.id_tipo_modalidad_de_pago === 1 ? '10.000' : planDePago.id_tipo_modalidad_de_pago === 2 ? '70.000' : planDePago.id_tipo_modalidad_de_pago === 3 ? '100.000' : ''}</td>
                                     </tr>
                                 )}
