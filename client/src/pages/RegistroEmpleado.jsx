@@ -25,19 +25,9 @@ const RegistroEmpleado = () => {
 
   //setea los valores del estado empleados con los datos ingresados por el usuario
   const handleChange = (event) => {
-    // Validación de que str_cedula solo contenga caracteres numéricos
-    const { name, value } = event.target;
-    if (name === "str_cedula" && !/^\d+$/.test(value)) {
-      Swal.fire({
-        icon: "error",
-        title: "Error en la validación",
-      });
-      return; // Ignorar la actualización del estado si no es un número
-    }
-
     setEmpleados({
       ...empleados,
-      [name]: value,
+      [event.target.name]: event.target.value,
     });
   };
   //setea los valores de los inputs tipo radio con el seleccionado por el usuario
@@ -90,7 +80,7 @@ const handleSubmit = (event) => {
 
 
   return (
-    <div className="is-flex mt-6 columns is-centered">
+    <div className="is-flex columns is-centered">
       <div className="column is-half">
         <div className="box">
           <form >

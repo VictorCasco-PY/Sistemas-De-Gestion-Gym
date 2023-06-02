@@ -5,20 +5,23 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import api from "../services/api";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import SortIcon from '@mui/icons-material/Sort';
 
 
 const TablaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [ordenNombre, setOrdenNombre] = useState("");
+
 
   useEffect(() => {  
-    api.get("/empleados")
-      .then((response) => {
-        setUsuarios(response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    api.get("/empleados", { params: { ordenNombre } })
+    .then((response) => {
+      setUsuarios(response.data);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
   }, []);
   
 
@@ -55,6 +58,22 @@ const TablaUsuarios = () => {
     usuario.str_cedula.includes(busqueda)
   );
 
+  const handleSortClick = () => {
+    const newOrdenNombre = ordenNombre === "asc" ? "desc" : "asc";
+    setOrdenNombre(newOrdenNombre);
+  
+    api.get("/empleados", {
+      params: { ordenNombre: newOrdenNombre },
+    })
+      .then((response) => {
+        setUsuarios(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  
+
   return (
     <div>
       <div className="columns">
@@ -77,7 +96,12 @@ const TablaUsuarios = () => {
     <table className="table is-fullwidth">
       <thead>
         <tr>
-          <th>Nombre</th>
+          <th>
+            <button className="button is-white is-small" onClick={handleSortClick}>
+              <SortIcon fontSize="string"/>
+            </button>
+            Nombre
+            </th>
           <th>Cédula</th>
           <th>Rol</th>
           <th>-</th>
