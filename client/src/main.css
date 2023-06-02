@@ -61,6 +61,9 @@
 .tableNew.table-text-2 {
   text-align: left;
 }
+.tableNew.table-text-2 th {
+  text-align: left !important;
+}
 .tableNew.table-text-2 td {
   padding-left: 15px;
 }
@@ -77,6 +80,7 @@
 }
 .tableNew thead th:not(:first-child):not(:last-child) {
   border-inline: none;
+  text-align: center;
 }
 .tableNew thead th:last-child {
   border-radius: 0px 10px 10px 0px;
