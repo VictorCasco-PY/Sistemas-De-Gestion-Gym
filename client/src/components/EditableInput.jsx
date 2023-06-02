@@ -6,7 +6,7 @@ function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR 
   const [title, setTitle] = useState(valorInicial);
 
   const handleTitleChange = (event) => {
-    setTitle(event.target.value.trim());
+    setTitle(event.target.value);
   };
 
   useEffect(() => {

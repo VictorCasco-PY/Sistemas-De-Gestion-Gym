@@ -7,7 +7,7 @@ function EditableInputTwoValues({ valorInicial, id, apiUrl, campoCambiar,
   const [title, setTitle] = useState(valorInicial);
 
   const handleTitleChange = (event) => {
-    setTitle(event.target.value.trim());
+    setTitle(event.target.value);
   };
 
   useEffect(() => {
