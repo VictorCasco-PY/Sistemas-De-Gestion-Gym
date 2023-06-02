@@ -14,7 +14,10 @@ export class FacturaDetalle {
       const { plan_de_pago } = body;
       const { productos } = body;
 
-      let result;
+      if (!plan_de_pago && !productos)
+        return res.json({ error: "Debes enviar productos o un plan de pago" });
+
+      let result = {};
 
       // si hay productos, se intentan pagar
       if (productos && productos.length > 0) {
@@ -28,23 +31,22 @@ export class FacturaDetalle {
       }
 
       // si hay un plan de pago, se intenta pagar
-      if (plan_de_pago) {
-        const plan = await planDePago.getById(plan_de_pago.id);
-        if (!plan) {
-          result.plan = res.json({ error: "No existe ese plan de pago" });
-        } else {
-          result.plan = await facturas_detalles.create({
-            ...plan_de_pago,
-            ...body,
-          });
-
-          await planDePago.pagarPlan(planDePago.id);
-
-        }
+      const { id_plan_de_pago } = plan_de_pago;
+      delete planDePago.id_plan_de_pago;
+      const plan = await planDePago.getById(id_plan_de_pago);
+      if (!plan) {
+        result.plan = res.json({ error: "No existe ese plan de pago" });
+      } else {
+        await planDePago.pagarPlan(id_plan_de_pago);
+        result.plan = await facturas_detalles.create({
+          id_plan_de_pago,
+          ...plan_de_pago,
+          ...body,
+        });
       }
 
       // const result = await facturas_detalles.create({ ...body });
-      return res.json(result);
+      return res.json({ ...result });
     } catch (error) {
       const { message } = error;
       return res.status(500).json({ error: message });

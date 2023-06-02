@@ -149,18 +149,22 @@ export class PlanesDePagos {
 
   getById = async (id) => {
     try {
+      console.log(id);
+
       const result = await planes_de_pagos.findOne({ where: { id } });
       return result;
     } catch (error) {
-      res.status(500).json(error);
+      throw new Error(error.message);
     }
   };
 
   pagarPlan = async (id) => {
     try {
-      const plan = this.getById(id);
-      const {date_fecha_de_vencimiento} = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento);
+      const plan = await this.getById(id);
+      const date_fecha_de_vencimiento = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento);
+      console.log(date_fecha_de_vencimiento);
       const {date_fecha_de_pago} = getDateNow();
+
       await planes_de_pagos.update({
         estado_de_pago: "pagado",
         date_fecha_de_vencimiento,
