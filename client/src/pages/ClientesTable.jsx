@@ -231,10 +231,12 @@ export default function ClientesTable() {
                       }
                     </button>
                   </td>
-                  <td className='is-size-5'>
+                  <td className='is-size-5 is-flex is-justify-content-center'
+                  style={ {width: '100%', gap:'8px'}}>
                     <Link to={`/detallesCliente/${cliente.id_cliente}`}>
                       <button className="button is-link is-rounded">Ver Mas</button>
                     </Link>
+                    <button className="button is-danger is-rounded">Borrar</button>
                   </td>
                 </tr>
               ))
