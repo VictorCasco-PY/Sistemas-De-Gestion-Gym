@@ -183,10 +183,10 @@ export function DetallesCliente() {
                             <EditableInputTwoValues
                                 valorInicial={clientePers.str_nombre}
                                 id={id}
-                                apiUrl="http://localhost:8000/cliente"
+                                apiUrl="/cliente"
                                 campoCambiar="str_nombre"
                                 id2={cliente.id}
-                                apiUrl2="http://localhost:8000/planes-de-pagos"
+                                apiUrl2="/planes-de-pagos"
                                 campoCambiar2="str_nombre_cliente"
                             />
                         </div>
@@ -222,7 +222,16 @@ export function DetallesCliente() {
                                 <p className='is-size-6'>Telefono</p>
                             </div>
                             <div className="bubbleInfo">
-                                <p>-</p>
+                            {isLoading ? (
+                                    <CircularProgress />
+                                ) : (
+                                    <EditableInput
+                                        valorInicial={clientePers.str_telefono}
+                                        id={id}
+                                        apiUrl="/cliente"
+                                        campoCambiar="str_telefono"
+                                    />
+                                )}
                             </div>
                         </div>
                         <div className="infoBubble">
@@ -236,7 +245,7 @@ export function DetallesCliente() {
                                     <EditableInput
                                         valorInicial={clientePers.str_direccion}
                                         id={id}
-                                        apiUrl="http://localhost:8000/cliente"
+                                        apiUrl="/cliente"
                                         campoCambiar="str_direccion"
                                     />
                                 )}
@@ -269,7 +278,7 @@ export function DetallesCliente() {
                                     <EditableInput
                                         valorInicial={clientePers.str_ruc}
                                         id={id}
-                                        apiUrl="http://localhost:8000/cliente"
+                                        apiUrl="/cliente"
                                         campoCambiar="str_ruc"
                                     />
                                 )}
