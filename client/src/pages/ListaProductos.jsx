@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import api from "../services/api";
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const TablaProductos = () => {
+const ListaProductos = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
@@ -64,8 +64,8 @@ const TablaProductos = () => {
             <td>{producto.str_codigo}</td>
             <td>{producto.cantidad}</td>
             <td>
-              <button className="button is-danger is-outlined" onClick={() => handleEliminarClick(producto.id)}>
-                Eliminar
+            <button className="button is-danger is-outlined" onClick={() => handleEliminarClick(producto.id)}>
+                <DeleteIcon fontSize="string"/>
               </button>
             </td>
           </tr>
@@ -75,4 +75,4 @@ const TablaProductos = () => {
   );
 };
 
-export default TablaProductos;
+export default ListaProductos;
