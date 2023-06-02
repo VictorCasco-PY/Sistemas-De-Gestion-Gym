@@ -26,6 +26,13 @@ export default function ClientesTable() {
   const [selectedEstado, setSelectedEstado] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
 
+  //PAGINACION
+  const [currentPage, setCurrentPage] = useState(1);
+  const [clientsPerPage] = useState(10); // Number of clients per page
+
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
   const handleEstadoChange = (selectedOption) => {
     setSelectedEstado(selectedOption.value);
   };
@@ -80,6 +87,19 @@ export default function ClientesTable() {
     return 0;
   });
 
+  // Calculate pagination indexes
+  const indexOfLastClient = currentPage * clientsPerPage;
+  const indexOfFirstClient = indexOfLastClient - clientsPerPage;
+  const currentClients = sortedData.slice(indexOfFirstClient, indexOfLastClient);
+
+  //CALCULAR NUMERO DE PAGINAS
+  const totalClients = sortedData.length;
+  const pageNumber = [];
+
+  for (let i = 1; i <= Math.ceil(totalClients / clientsPerPage); i++) {
+    pageNumber.push(i);
+  }
+
   const handleFilter = (field, searchString) => {
     //filtrar para que incluya
     const filtered = originalData.filter(
@@ -118,7 +138,7 @@ export default function ClientesTable() {
       } catch (error) {
         console.log(error);
       }
-      
+
     } else {
       console.log("Filtrado sin get");
       handleFilter("str_nombre_cliente", nombre);
@@ -130,7 +150,7 @@ export default function ClientesTable() {
   }
 
   return (
-    <div className='is-flex is-flex-direction-column'>
+    <div className='column is-flex is-flex-direction-column'>
       <div className="column is-flex mb-0 pb-0"
         style={{ gap: '10px' }}>
         <div
@@ -164,7 +184,7 @@ export default function ClientesTable() {
         </div>
       </div>
 
-      <div className='column is-flex is-justify-content-center m-0 p-0'>
+      <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
         <table className="table table is-bordered tableNew has-background-light is-bordered"
           style={{ width: "100%" }}>
           <thead className='has-text-centered'>
@@ -191,16 +211,16 @@ export default function ClientesTable() {
             </tr>
           </thead>
           <tbody>
-            {sortedData.length > 0 ? ( //Solo si hay datos en la tabla se mapea
-              sortedData.map(cliente => (
+            {currentClients.length > 0 ? (
+              currentClients.map((cliente) => ( //Solo si hay datos en la tabla se mapea
                 <tr key={cliente.id_cliente}>
                   <td className='is-size-5'>{cliente.str_nombre_cliente}</td>
                   <td className='is-size-5'>
                     {cliente.str_modalidad //para poner en mayuscula
-                        .split(' ')
-                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                        .join(' ')
-                      }
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
+                    }
                   </td>
                   <td className='is-size-5'>
                     <button className={` ${colorMap[cliente.estado_de_pago]} button is-static has-text-white`}>
@@ -228,6 +248,22 @@ export default function ClientesTable() {
             )}
           </tbody>
         </table>
+        {/* Pagination */}
+        <nav className="pagination is-centered" role="navigation">
+          <ul className="pagination-list">
+            {pageNumber.map((number) => (
+              <li key={number}>
+                <button
+                  className={`pagination-link ${currentPage === number ? 'is-current' : ''
+                    }`}
+                  onClick={() => paginate(number)}
+                >
+                  {number}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </div>
   )
