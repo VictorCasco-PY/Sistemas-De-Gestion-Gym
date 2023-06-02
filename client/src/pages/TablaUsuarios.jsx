@@ -4,15 +4,12 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-
+import api from "../services/api";
 const TablaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
-    const headers = { token: `${user.token}` }; // Agregar el token en el encabezado 'Authorization'
-  
-    axios.get("http://localhost:8000/empleados", { headers })
+  useEffect(() => {  
+    api.get("/empleados")
       .then((response) => {
         setUsuarios(response.data);
       })
