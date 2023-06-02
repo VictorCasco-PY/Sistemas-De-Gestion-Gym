@@ -37,6 +37,8 @@
   display: flex;
 }
 .infoBubble .bubbleTitle {
+  display: flex;
+  align-items: center;
   background-color: #1C96DA;
   border-radius: 10px 0px 0px 10px;
   padding: 0.6rem 0.6rem;

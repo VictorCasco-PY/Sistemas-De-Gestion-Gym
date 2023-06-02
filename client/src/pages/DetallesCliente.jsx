@@ -73,10 +73,13 @@ export function DetallesCliente() {
     }
 
     //recargar mediciones
-    const fetchClienteMed = () => {
-        axios.get(`http://localhost:8000/cliente/${id}/medicion-cliente`)
-            .then(response => setClienteMed(response.data))
-            .catch(error => console.log(error));
+    const fetchClienteMed = async () => {
+        try {
+            const response = await api.get(`/cliente/${id}/medicion-cliente`);
+            setClienteMed(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
     //////////// enviar una medicion
     //al hacer click se dispara handleAdd, hace que se renderize los inputs
@@ -89,7 +92,7 @@ export function DetallesCliente() {
         setNuevaMedicion((prevMedicion) => ({ ...prevMedicion, [name]: value }));
     };
     //al hacer click aceptar y enviar la medicion
-    const handleAccept = () => {
+    const handleAccept = async () => {
         console.log(nuevaMedicion);
 
         //checkear si hay valores vacios
@@ -98,13 +101,12 @@ export function DetallesCliente() {
             return;
         }
 
-        axios
-            .post('http://localhost:8000/mediciones-clientes', nuevaMedicion)
-            .then(response => {
-                console.log('Añadido satisfactoriamente');
-                fetchClienteMed();
-            })
-            .catch(error => console.error(error));
+        try {
+            const response = await api.post(`/mediciones-clientes`, nuevaMedicion);
+            fetchClienteMed();
+        } catch (error) {
+            console.log(error);
+        }
 
         stopAdding();
     };
@@ -170,33 +172,42 @@ export function DetallesCliente() {
     });
 
     return (
-        <div className=' is-flex-direction-column is-align-content-center is-multiline is-centered'>
+        <div className='is-serif is-flex-direction-column is-align-content-center is-multiline is-centered'>
+            <h1 className='title'>Detalles del Cliente</h1>
             <div className=" columns headerTitle clienteHeader m-2">
-                <div className='title is-flex is-justify-content-center is-align-items-center column headerTitle has-text-centered'>
+                <div className='is-half title is-flex is-justify-content-center is-align-items-center column headerTitle has-text-centered'>
                     {isLoading ? (
                         <CircularProgress />
                     ) : (
-                        <EditableInputTwoValues
-                            valorInicial={clientePers.str_nombre}
-                            id={id}
-                            apiUrl="http://localhost:8000/cliente"
-                            campoCambiar="str_nombre"
-                            id2={cliente.id}
-                            apiUrl2="http://localhost:8000/planes-de-pagos"
-                            campoCambiar2="str_nombre_cliente"
-                        />
+                        <div>
+                            <EditableInputTwoValues
+                                valorInicial={clientePers.str_nombre}
+                                id={id}
+                                apiUrl="http://localhost:8000/cliente"
+                                campoCambiar="str_nombre"
+                                id2={cliente.id}
+                                apiUrl2="http://localhost:8000/planes-de-pagos"
+                                campoCambiar2="str_nombre_cliente"
+                            />
+                        </div>
                     )}
                 </div>
-                <div className="column">
+                <div className="column is-one-fifth">
                     <div className="infoBubble">
                         <div className="bubbleTitle has-text-white">
-                            <p className='is-size-6'>Estado de Pago</p>
+                            <p className='is-size-6'>Estado</p>
                         </div>
                         <div className="bubbleInfo">
                             {isLoading ? (
                                 <CircularProgress />
                             ) : (
-                                <p className='is-size-5'>{cliente.estado_de_pago}</p>
+                                <p className='is-size-5'>
+                                    {cliente.estado_de_pago
+                                        .split(' ')
+                                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                        .join(' ')
+                                    }
+                                </p>
                             )}
                         </div>
                     </div>
@@ -238,7 +249,13 @@ export function DetallesCliente() {
                                 <p className='is-size-6'>Plan</p>
                             </div>
                             <div className="bubbleInfo has-background-primary-light">
-                                <p>{cliente.str_modalidad}</p>
+                                <p>
+                                    {cliente.str_modalidad
+                                        .split(' ')
+                                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                        .join(' ')
+                                    }
+                                </p>
                             </div>
                         </div>
                         <div className="infoBubble">
@@ -266,7 +283,7 @@ export function DetallesCliente() {
                         {isLoading ? (
                             <CircularProgress />
                         ) : (
-                            <button className="button is-success is-outlined"
+                            <button className="button is-success"
                                 onClick={handleAdd}
                                 disabled={isAdding}>
                                 <span className="material-symbols-outlined"> add </span> Añadir
@@ -365,13 +382,13 @@ export function DetallesCliente() {
                                     <td>
                                         <div className='is-flex is-flex-direction-row'>
                                             <button
-                                                className="button is-success is-outlined is-small"
+                                                className="button is-success is-small"
                                                 onClick={handleAccept}
                                             >
                                                 Aceptar
                                             </button>
                                             <button
-                                                className="button is-info is-outlined is-small"
+                                                className="button is-info is-small"
                                                 onClick={stopAdding}
                                             >
                                                 <span className="material-symbols-outlined">
@@ -400,7 +417,7 @@ export function DetallesCliente() {
                                         <td>{med.porcentaje_grasa_corporal}</td>
                                         <td>
                                             <button
-                                                className="button icon-button is-danger is-outlined is-small"
+                                                className="button icon-button is-danger is-small"
                                                 onClick={() => handleDelete(med.id)}
                                             >
                                                 <span className="material-symbols-outlined">delete</span>
