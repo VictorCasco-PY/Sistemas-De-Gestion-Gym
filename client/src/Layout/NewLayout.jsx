@@ -51,16 +51,26 @@ export default function Layout({ children }) {
                 </Toolbar>
                 <Divider />
                 <List>
-                    {user.rol === 'admin' ? <>
-                        <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
-                        <Divider />
-                        <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
-                        <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
-                        <CustomListItem icon={<PersonIcon />} text='Empleados' to='/listaEmpleados' />
-                        <CustomListItem icon={<InventoryIcon />} text='Productos' to='/listaProductos' />
-                        <CustomListItem icon={<PersonIcon />} text='Proveedores' to='/lista_proveedores' />
-                    </> : null
-                    }
+                    {user.rol === 'admin' ? (
+                        <>
+                            <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
+                            <Divider />
+                            <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
+                            <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
+                            <CustomListItem icon={<PersonIcon />} text='Empleados' to='/listaEmpleados' />
+                            <CustomListItem icon={<InventoryIcon />} text='Productos' to='/listaProductos' />
+                            <CustomListItem icon={<PersonIcon />} text='Proveedores' to='/lista_proveedores' />
+                        </>
+                    ) : user.rol === 'caja' ? (
+                        <>
+                            <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
+                            <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
+                        </>
+                    ) : user.rol === 'entrenador' ? (
+                        <>
+                            <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
+                        </>
+                    ) : null}
                 </List>
             </Drawer>
             <Box
