@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const getDateNow = () => {
   const date = new Date();
   return date;
@@ -18,8 +20,8 @@ export const esFechaVencida = (fecha1) => {
 };
 
 export const nuevaFechaVencimiento = (fecha) => {
-  const date = moment(fechaString, "YYYY/MM/DD");
+  const date = moment(fecha, "YYYY-MM-DD");
   const nuevaFecha = date.add(1, "months");
-  const fechaResultado = nuevaFecha.format('YYYY/MM/DD');
-return fechaResultado;
+  const fechaResultado = nuevaFecha.format("YYYY-MM-DD");
+  return fechaResultado;
 };
