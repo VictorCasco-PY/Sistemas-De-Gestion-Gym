@@ -52,7 +52,7 @@ export default function ClientesTable() {
   }, []);
 
   const colorMap = {
-    "en regla": "has-background-success",
+    "pagado": "has-background-success",
     "pendiente": "has-background-warning has-text-black",
     "atrasado": "has-background-danger"
   };
