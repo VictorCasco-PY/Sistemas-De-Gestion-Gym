@@ -60,7 +60,7 @@ export class Factura {
     getByParams = async(req,res)=>{
         try{
             const {id} = req.params;
-            const result = this.getById(id);
+            const result = await this.getById(id);
             if(!result) return res.status(404).json({error:"No existe una factura con ese id"});
             res.json(result);
         }catch(error){
