@@ -21,7 +21,7 @@ import DetallesUsuario from './pages/DetallesUsuario';
 import RegistroProductos from './pages/RegistroProductos';
 import ListaProductos from './pages/ListaProductos';
 import WizardFormCliente from './pages/clientes/WizardFormCliente';
-
+import NewLayout from './Layout/NewLayout';
 
 
 function App() {
@@ -39,33 +39,33 @@ function App() {
 
           // Rutas semi-publicas
           <Route element={<ProtectedRoute isAllowed={!!user} />}>
-            <Route path='/home' element={<Layout><Home /></Layout>} />
+            <Route path='/home' element={<NewLayout><Home /></NewLayout>} />
           </Route>
 
           // Rutas de Entrenador
           <Route element={<ProtectedRoute isAllowed={!!user && (isEntrenador || isAdmin || isCajero)} redirectTo='/home' />}>
-            <Route path='/registro_cliente' element={<Layout><WizardFormCliente /></Layout>} />
-            <Route path='/listaClientes' element={<Layout><ListaClientes /></Layout>} />
-            <Route path='/detallesCliente' element={<Layout><DetallesCliente /></Layout>} />
-            <Route path='/detallesCliente/:name' element={<Layout><DetallesCliente /></Layout>} />
+            <Route path='/registro_cliente' element={<NewLayout><WizardFormCliente /></NewLayout>} />
+            <Route path='/listaClientes' element={<NewLayout><ListaClientes /></NewLayout>} />
+            <Route path='/detallesCliente' element={<NewLayout><DetallesCliente /></NewLayout>} />
+            <Route path='/detallesCliente/:name' element={<NewLayout><DetallesCliente /></NewLayout>} />
           </Route>
 
           // Rutas de Cajero
           <Route element={<ProtectedRoute isAllowed={!!user && (isCajero || isAdmin)} redirectTo='/home' />}>
-            <Route path='/caja' element={<Layout><Caja /></Layout>} />
-            <Route path='/ventas' element={<Layout><Ventas /></Layout>} />
+            <Route path='/caja' element={<NewLayout><Caja /></NewLayout>} />
+            <Route path='/ventas' element={<NewLayout><Ventas /></NewLayout>} />
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>
-            <Route path='/reporte' element={<Layout><Reporte /></Layout>} />
-            <Route path='/registroProveedores' element={<Layout><RegistroProveedores /></Layout>} />
-            <Route path='/lista_proveedores' element={<Layout><ListaProveedores /></Layout>} />
-            <Route path='/proveedor/detalle/:id' element={<Layout><DetalleProveedor /></Layout>} />
-            <Route path='/registroEmpleado' element={<Layout><RegistroEmpleado /></Layout>} />
-            <Route path='/listaEmpleados' element={<Layout><TablaUsuarios /></Layout>} />
-            <Route path='/detallesEmpleado/:id' element={<Layout><DetallesUsuario /></Layout>} />
-            <Route path='/productos' element={<Layout><RegistroProductos /></Layout>} />
-            <Route path='/listaProductos' element={<Layout>< ListaProductos/></Layout>} />
+            <Route path='/reporte' element={<NewLayout><Reporte /></NewLayout>} />
+            <Route path='/registroProveedores' element={<NewLayout><RegistroProveedores /></NewLayout>} />
+            <Route path='/lista_proveedores' element={<NewLayout><ListaProveedores /></NewLayout>} />
+            <Route path='/proveedor/detalle/:id' element={<NewLayout><DetalleProveedor /></NewLayout>} />
+            <Route path='/registroEmpleado' element={<NewLayout><RegistroEmpleado /></NewLayout>} />
+            <Route path='/listaEmpleados' element={<NewLayout><TablaUsuarios /></NewLayout>} />
+            <Route path='/detallesEmpleado/:id' element={<NewLayout><DetallesUsuario /></NewLayout>} />
+            <Route path='/productos' element={<NewLayout><RegistroProductos /></NewLayout>} />
+            <Route path='/listaProductos' element={<NewLayout>< ListaProductos /></NewLayout>} />
           </Route>
         </Routes>
       </BrowserRouter>
