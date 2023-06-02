@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios"
 import Swal from "sweetalert2";
+import api from "../services/api";
 
 const RegistroProductos = () => {
   const productosData = {
@@ -9,7 +9,7 @@ const RegistroProductos = () => {
     iva: "",
     str_nombre: "",
     str_codigo: "",
-
+    cantidad: "",
   };
   const [productos, setProductos] = useState(productosData);
 
@@ -23,7 +23,7 @@ const RegistroProductos = () => {
   // función para manejar el envío del formulario
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:8000/productos', productos)
+    api.post('/productos', productos)
       .then(response => {
         console.log(response.data);
         Swal.fire({
@@ -64,6 +64,7 @@ const RegistroProductos = () => {
                   value={productos.str_nombre}
                   onChange={handleChange}
                   placeholder="Nombre del producto"
+                  required
                 />
               </div>
               <div className="column">
@@ -74,6 +75,7 @@ const RegistroProductos = () => {
                   value={productos.str_descripcion}
                   onChange={handleChange}
                   placeholder="Descripción"
+                  required
                 />
               </div>
             </div>
@@ -87,6 +89,7 @@ const RegistroProductos = () => {
                   value={productos.str_codigo}
                   onChange={handleChange}
                   placeholder="Código"
+                  required
                 />
               </div>
               <div className="column">
@@ -97,19 +100,34 @@ const RegistroProductos = () => {
                   value={productos.iva}
                   onChange={handleChange}
                   placeholder="IVA"
+                  required
                 />
               </div>
             </div>
-            <div>
+            <div className="columns">
+              <div className="column">
                 <input
-                  className="input is-primary has-text-centered"
+                  className="input is-primary is-primary has-text-centered"
                   type="text"
                   name="precio"
                   value={productos.precio}
                   onChange={handleChange}
                   placeholder="Precio"
+                  required
                 />
               </div>
+              <div className="column">
+                <input
+                  className="input is-primary has-text-centered"
+                  type="number"
+                  name="cantidad"
+                  value={productos.cantidad}
+                  onChange={handleChange}
+                  placeholder="Cantidad"
+                  required
+                />
+              </div>
+            </div>
               <div className="buttons">
               <button
                 className="ml-auto mt-2 button is-primary is-outlined"
