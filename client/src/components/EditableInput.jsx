@@ -21,14 +21,14 @@ function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR 
 
     const newItem = { [campoCambiar]: currentValue };
     //ERROR 404 NO SE POR QUE
-
+    input.blur();
     try {
       const response = await api.put(`${apiUrl}/${id}`, newItem);
       console.log('Actualizado.');
     } catch (error) {
       console.log(error);
     }
-    input.blur();
+    
   };
 
   const handleTitleKeyDown = (event) => {

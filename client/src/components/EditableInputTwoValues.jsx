@@ -22,15 +22,15 @@ function EditableInputTwoValues({ valorInicial, id, apiUrl, campoCambiar,
 
     const newItem = { [campoCambiar]: currentValue };
     //ERROR 404 no se por que
+    input.blur();
+
     try {
       const response = await api.put(`${apiUrl}/${id}`, newItem);
       console.log('Actualizado valor 1');
     } catch (error) {
       console.log(error);
     }
-
-    input.blur();
-
+    
     const newItem2 = { [campoCambiar2]: currentValue };
     try {
       const response = await api.put(`${apiUrl2}/${id2}`, newItem2);
@@ -38,7 +38,7 @@ function EditableInputTwoValues({ valorInicial, id, apiUrl, campoCambiar,
     } catch (error) {
       console.log(error);
     }
-    input.blur();
+   
   };
 
   const handleTitleKeyDown = (event) => {
