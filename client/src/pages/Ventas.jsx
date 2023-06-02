@@ -143,7 +143,7 @@ const Ventas = () => {
             } else if (producto.iva === '10') {
                 iva10Venta += (producto.cantidad * producto.precio * 10) / 100;
             }
-            subtotalVenta += (producto.cantidad * producto.precio) - iva10Venta - iva5Venta;
+            subtotalVenta += (producto.cantidad * producto.precio);
         });
         console.log('precio' + precioPlanPago);
         totalVenta = subtotalVenta + iva5Venta + iva10Venta + precioPlanPago;
@@ -157,6 +157,7 @@ const Ventas = () => {
     const handleSubmitVenta = () => {
         console.log(
             {
+                id_factura: 1,
                 plan_de_pago: {
                     id: 1,
                     precio: 10000,
@@ -179,7 +180,7 @@ const Ventas = () => {
                 </button>
                 <div className="column">
                     <div className="column is-one-third">
-                        <h3>Datos del cliente</h3>
+                        <p className='title is-5'>Datos del cliente</p>
                         <label htmlFor="str_ruc">Nro Documento</label>
                         <input
                             className="input is-primary"
@@ -198,7 +199,7 @@ const Ventas = () => {
                         />
                     </div>
                     <div className="mt-5">
-                        <h3>Productos/Servicios</h3>
+                        <p className='title is-5'>Productos/Servicios</p>
                         <input
                             className="input is-primary"
                             type="text"
@@ -208,12 +209,7 @@ const Ventas = () => {
                             onChange={handleBuscadorChange}
                             onKeyDown={handleKeyDownBuscador}
                         />
-                        <button
-                            className="button is-info mt-2 mr-2"
-                            onClick={handleAddProducto}
-                        >
-                            Agregar
-                        </button>
+
                         <table className="table">
                             <thead>
                                 <tr>
