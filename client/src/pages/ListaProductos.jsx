@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import api from "../services/api";
 
 const TablaProductos = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/productos")
+    api
+      .get("/productos")
       .then((response) => {
         setProductos(response.data);
       })
@@ -28,8 +28,8 @@ const TablaProductos = () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`http://localhost:8000/producto/${id}`)
+        api
+          .delete(`/producto/${id}`)
           .then((response) => {
             console.log(response.data);
             setProductos(productos.filter((producto) => producto.id !== id));
@@ -50,6 +50,7 @@ const TablaProductos = () => {
           <th>IVA</th>
           <th>Precio</th>
           <th>Código</th>
+          <th>Cantidad</th>
           <th>-</th>
         </tr>
       </thead>
@@ -61,8 +62,9 @@ const TablaProductos = () => {
             <td>{producto.iva}</td>
             <td>{producto.precio}</td>
             <td>{producto.str_codigo}</td>
+            <td>{producto.cantidad}</td>
             <td>
-              <button onClick={() => handleEliminarClick(producto.id)}>
+              <button className="button is-danger is-outlined" onClick={() => handleEliminarClick(producto.id)}>
                 Eliminar
               </button>
             </td>

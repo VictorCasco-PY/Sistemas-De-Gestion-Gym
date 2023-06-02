@@ -7,8 +7,10 @@ const TablaProductos = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user")); // Obtener el token del localStorage
+    const headers = { token: `${user.token}` }; // Agregar el token en el encabezado 'Authorization'
     axios
-      .get("http://localhost:8000/productos")
+      .get("http://localhost:8000/productos", { headers })
       .then((response) => {
         setProductos(response.data);
       })
@@ -16,6 +18,9 @@ const TablaProductos = () => {
         console.log(error);
       });
   }, []);
+  
+
+
 
 
   const handleEliminarClick = (id) => {
