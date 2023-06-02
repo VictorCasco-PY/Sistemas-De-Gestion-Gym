@@ -38,7 +38,7 @@ export default function ClientesTable() {
         console.log(error);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -116,20 +116,25 @@ export default function ClientesTable() {
 
   return (
     <div>
-      <div className="column is-half">
-      <input
-          className="input"
-          type="text"
-          placeholder="Buscar..."
-          value={searchString}
-          onChange={(e) => setSearchString(e.target.value)}
-          onKeyUp={() => handleSearch()}
-        />
-        <Select
-          options={options}
-          value={selectedEstado ? { value: selectedEstado, label: selectedEstado } : null}
-          onChange={handleEstadoChange}
-        />
+      <div className="column is-half is-flex"
+          style={{ gap: '10px' }}>
+        <div>
+          <input
+            className="input"
+            type="text"
+            placeholder="Buscar..."
+            value={searchString}
+            onChange={(e) => setSearchString(e.target.value)}
+            onKeyUp={() => handleSearch()}
+          />
+        </div>
+        <div>
+          <Select
+            options={options}
+            value={selectedEstado ? { value: selectedEstado, label: selectedEstado } : null}
+            onChange={handleEstadoChange}
+          />
+        </div>
       </div>
       <table className="table table is-bordered tableNew has-background-light is-bordered">
         <thead className='has-text-centered'>
