@@ -7,7 +7,7 @@ const facturaDetalle = new FacturaDetalle();
 const facturasDetallesRoutes = Router();
 
 facturasDetallesRoutes.post('/facturas-detalles',
-    checkMiddleWare(['id_factura', 'subtotal', 'cantidad', 'precio', 'iva']),
+    checkMiddleWare(['id_factura']),
     facturaDetalle.crear
 );
 
