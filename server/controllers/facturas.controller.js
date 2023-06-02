@@ -26,7 +26,7 @@ export class Factura {
         try{
             const {id} = req.params;
             const {body} = req;
-            const [rowsAffected] = await facturas.update({...body}, {where:id});
+            const [rowsAffected] = await facturas.update({...body}, {where:{id}});
             if(rowsAffected===0) return res.status(404).send("No se actualizo nignuna facutra");
             res.send("Factura actualizada")
         }catch(error){
@@ -60,7 +60,7 @@ export class Factura {
     getByParams = async(req,res)=>{
         try{
             const {id} = req.params;
-            const result = this.getById(id);
+            const result = await this.getById(id);
             if(!result) return res.status(404).json({error:"No existe una factura con ese id"});
             res.json(result);
         }catch(error){
