@@ -21,7 +21,7 @@ productosRoutes.get("/producto/:id", productos.getByParams);
 productosRoutes.post(
     "/productos",
     authMiddleware(['caja','entrenador']),
-    checkMiddleWare(['str_nombre','str_descripcion','precio','iva','str_codigo']),
+    checkMiddleWare(['str_nombre','str_descripcion','precio','iva','str_codigo','cantidad']),
     productos.crear
 );
 
