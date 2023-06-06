@@ -77,7 +77,6 @@ export class Facturas_proveedores {
             if (ordenTotal == 'desc') options.order = [['total', 'DESC']];
             if (ordenFecha == 'asc') options.order = [['date_fecha', 'ASC']];
             if (ordenFecha == 'desc') options.order = [['date_fecha', 'DESC']];
-            if (total) where.total = { [Op.like]: `%${total}%` };
             // Add date range filtering
             if (startDate && endDate) { where.date_fecha = { [Op.between]: [new Date(startDate), new Date(endDate)] }; }
 
