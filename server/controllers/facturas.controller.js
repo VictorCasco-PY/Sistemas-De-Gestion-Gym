@@ -52,16 +52,16 @@ export class Factura {
         try{         
             const {id_cliente} = query;
             const date_fecha = getDateNow();
+            console.log(id_cliente);
             const _cliente = await cliente.getById(id_cliente);
             if(!_cliente) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
             const {str_nombre_cliente} = _cliente.str_nombre
             const {str_ruc_cliente} = _cliente.str_ruc;
-            
             const result = await facturas.create({...query, date_fecha, str_nombre_cliente, str_ruc_cliente});
 
             return result;
         }catch(error){
-            throw new Error("Ocurrio un error");
+            throw new Error("Error facturas: " + error.message);
         }
     }
 

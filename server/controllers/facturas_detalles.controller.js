@@ -36,6 +36,7 @@ export class FacturaDetalle {
         result.productos = await Promise.all(
           productos.map(async (p) => {
             if (await producto.getById(p.id)) {
+              
               return await facturas_detalles.create({ ...p, ...body });
             }
             return false;
@@ -62,8 +63,7 @@ export class FacturaDetalle {
   
       return result;
     } catch (error) {
-      const { message } = error;
-      return { error: message };
+      throw new Error("Error facturas_detalles : " + error.message)
     }
   };
   
