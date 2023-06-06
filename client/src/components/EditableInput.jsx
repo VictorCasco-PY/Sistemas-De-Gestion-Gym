@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import api from '../services/api';
 
-function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR EL CUARTO PARAMETRO
+function EditableInput({ valorInicial, id, apiUrl, campoCambiar, onValueChange }) { //UTILIZAR EL CUARTO PARAMETRO
   const [title, setTitle] = useState(valorInicial);
 
   const handleTitleChange = (event) => {
@@ -25,6 +25,7 @@ function EditableInput({ valorInicial, id, apiUrl, campoCambiar }) { //UTILIZAR 
     try {
       const response = await api.put(`${apiUrl}/${id}`, newItem);
       console.log('Actualizado.');
+      onValueChange(currentValue); // Llamar a la función onValueChange con el nuevo valor
     } catch (error) {
       console.log(error);
     }
