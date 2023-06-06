@@ -8,13 +8,14 @@ export class Factura {
     crear = async (req,res)=>{
         try{         
             const {body} = req;
-            const {id_cliente} = body;
+            const result = await this.crearInterno(...body);
+            /* const {id_cliente} = body;
             const date_fecha = getDateNow();
             const _cliente = await cliente.getById(id_cliente);
             if(!_cliente) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
             const {str_nombre_cliente} = _cliente.str_nombre
             const {str_ruc_cliente} = _cliente.str_ruc;
-            const result = await facturas.create({...body, date_fecha, str_nombre_cliente, str_ruc_cliente});
+            const result = await facturas.create({...body, date_fecha, str_nombre_cliente, str_ruc_cliente}); */
             return res.json({result});
         }catch(error){
             const {message} = error;
@@ -47,6 +48,23 @@ export class Factura {
         }
     }
     
+    crearInterno = async (query)=>{
+        try{         
+            const {id_cliente} = query;
+            const date_fecha = getDateNow();
+            const _cliente = await cliente.getById(id_cliente);
+            if(!_cliente) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
+            const {str_nombre_cliente} = _cliente.str_nombre
+            const {str_ruc_cliente} = _cliente.str_ruc;
+            
+            const result = await facturas.create({...query, date_fecha, str_nombre_cliente, str_ruc_cliente});
+
+            return result;
+        }catch(error){
+            throw new Error("Ocurrio un error");
+        }
+    }
+
     getAll = async(req,res)=>{
         try{
             const result = await facturas.findAll();
