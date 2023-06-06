@@ -17,7 +17,10 @@ const Ventas = () => {
     const [iva10, setIVA10] = useState(0);
     const [precioPlanPago, setPrecioPlanPago] = useState(0);
     const navigate = useNavigate();
-    let id = null;
+    let id_cliente = null;
+
+
+
 
     useEffect(() => {
         // Calcula el total cada vez que se actualizan los productos
@@ -28,8 +31,8 @@ const Ventas = () => {
         try {
             const response = await api.get(`/clientes?str_ruc=${ruc}`);
             setCliente(response.data[0]);
-            console.log(response.data[0]);
-            id = response.data[0].id;
+            console.log("cliente", response.data[0]);
+            id_cliente = response.data[0].id;
         } catch (error) {
             console.log(error.message);
         }
@@ -56,7 +59,7 @@ const Ventas = () => {
         if (event.key === 'Enter') {
             try {
                 await getCliente(documentoCliente);
-                await getPlanDePago(id);
+                await getPlanDePago(id_cliente);
             } catch (error) {
                 console.log(error);
                 return;
@@ -136,7 +139,7 @@ const Ventas = () => {
         let subtotalVenta = 0;
         let iva5Venta = 0;
         let iva10Venta = 0;
-        console.log(productos)
+        console.log(productos);
         productos.forEach((producto) => {
             if (producto.iva === '5') {
                 iva5Venta += (producto.cantidad * producto.precio * 5) / 100;
@@ -145,7 +148,7 @@ const Ventas = () => {
             }
             subtotalVenta += (producto.cantidad * producto.precio);
         });
-        console.log('precio' + precioPlanPago);
+
         totalVenta = subtotalVenta + iva5Venta + iva10Venta + precioPlanPago;
 
         setSubtotal(subtotalVenta);
@@ -154,21 +157,12 @@ const Ventas = () => {
         setTotal(totalVenta);
     };
 
-    const handleSubmitVenta = () => {
-        console.log(
-            {
-                id_factura: 1,
-                plan_de_pago: {
-                    id: 1,
-                    precio: 10000,
-                    subtotal: 0
-                },
-                productos: [
-                    { id: 1, cantidad: 2, precio: 5000, iva: 5, subtotal: 10000 },
-                    { id: 3, cantidad: 1, precio: 10000, iva: 10, subtotal: 10000 }
-                ]
-            },
-        )
+    const handleSubmitVenta = async () => {
+        try {
+            const response = await api.post();
+        } catch (error) {
+
+        }
     }
 
     return (
@@ -180,7 +174,7 @@ const Ventas = () => {
                 </button>
                 <div className="column">
                     <div className="column is-one-third">
-                        <p className='title is-5'>Datos del cliente</p>
+                        <p className='title is-3'>Datos del cliente</p>
                         <label htmlFor="str_ruc">Nro Documento</label>
                         <input
                             className="input is-primary"
@@ -199,7 +193,7 @@ const Ventas = () => {
                         />
                     </div>
                     <div className="mt-5">
-                        <p className='title is-5'>Productos/Servicios</p>
+                        <p className='title is-3'>Productos/Servicios</p>
                         <input
                             className="input is-primary"
                             type="text"
@@ -284,7 +278,7 @@ const Ventas = () => {
                 </div>
                 <div className="column is-one-third">
                     <div>
-                        <h3>Detalle de venta</h3>
+                        <p className='title is-3'>Detalle de venta</p>
                         <div>
                             <label htmlFor="tipo">Sub Total</label>
                             <input
