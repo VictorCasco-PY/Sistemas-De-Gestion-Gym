@@ -26,6 +26,9 @@ const DatosClienteForm = ({ cliente, handleChangeCliente, datosCompletos, handle
                 <div className="column is-half">
                     <input className="input is-primary mb-2" type="text" name="str_cedula" placeholder="Cédula de Identidad" value={cliente.str_cedula} onChange={handleChangeCliente} />
                 </div>
+                <div className="column is-half">
+                    <input className="input is-primary mb-2" type="text" name="str_telefono" placeholder="Teléfono" value={cliente.str_telefono} onChange={handleChangeCliente} />
+                </div>
             </div>
 
             <div className="buttons">
