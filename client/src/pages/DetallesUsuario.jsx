@@ -10,6 +10,14 @@ const DetallesUsuario = () => {
   const id = useParams().id;
   const [usuario, setUsuario] = useState(null);
 
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
+
+  const handleNombreChange = (nuevoNombre) => {
+    setUser({ ...user, nombre: nuevoNombre });
+  };
+  
+
   // Función para formatear la cadena de tiempo (hh:mm)
   const formatTime = (time) => {
     return moment(time, "HH:mm").format("HH:mm");
@@ -25,6 +33,10 @@ const DetallesUsuario = () => {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
 
   if (!usuario) {
     return <div>Cargando detalles del usuario...</div>;
@@ -48,6 +60,7 @@ const DetallesUsuario = () => {
             id={id}
             apiUrl="http://localhost:8000/empleado"
             campoCambiar="str_nombre"
+            onValueChange={handleNombreChange}
           />
         </div>
         <div className="column">

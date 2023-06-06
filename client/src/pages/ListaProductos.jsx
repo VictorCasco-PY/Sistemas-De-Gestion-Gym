@@ -13,6 +13,15 @@ const ListaProductos = () => {
   const [sortType, setSortType] = useState(""); // Tipo de orden: "nombre" o "precio"
   const [sortDirection, setSortDirection] = useState(""); // Dirección del orden: "asc" o "desc"
 
+  const [busqueda, setBusqueda] = useState("");
+
+  const handleBusquedaChange = (event) => {
+    setBusqueda(event.target.value);
+  };
+
+  const productosFiltrados = productos.filter((producto) =>
+  producto.str_nombre.includes(busqueda)
+);
 
   const handleSortClick = (type) => {
     if (sortType === type) {
@@ -76,6 +85,8 @@ const ListaProductos = () => {
               className="input is-primary is-primary has-text-centered"
               type="search"
               placeholder="Buscar"
+              value={busqueda}
+              onChange={handleBusquedaChange}
             />
           </div>
           <div className="column">
@@ -117,7 +128,7 @@ const ListaProductos = () => {
           </tr>
         </thead>
         <tbody>
-          {productos.map((producto) => (
+          {productosFiltrados.map((producto) => (
             <tr key={producto.id}>
               <td>{producto.str_nombre}</td>
               <td>{producto.str_descripcion}</td>
@@ -128,7 +139,6 @@ const ListaProductos = () => {
               <td>
                 <Link to={`/detallesProducto/${producto.id}`}>
                   <button className="button is-info is-outlined mr-2">
-                    {" "}
                     <RemoveRedEyeIcon fontSize="string" />{" "}
                   </button>
                 </Link>
@@ -142,6 +152,7 @@ const ListaProductos = () => {
             </tr>
           ))}
         </tbody>
+        
       </table>
     </div>
   );

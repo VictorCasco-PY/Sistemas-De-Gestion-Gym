@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { check } from "express-validator";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import { checkMiddleWare } from "../middlewares/checkMiddleware.js";
 import { Timbrados } from "../controllers/timbrados.controller.js";

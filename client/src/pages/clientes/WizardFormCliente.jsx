@@ -18,7 +18,8 @@ const WizardFormCliente = () => {
             edad: "",
             str_direccion: "",
             str_ruc: "",
-            str_cedula: ""
+            str_cedula: "",
+            str_telefono: ""
         }
     );
     // función para manejar cambios en los inputs
@@ -63,7 +64,8 @@ const WizardFormCliente = () => {
             cliente.edad !== "" &&
             cliente.str_direccion !== "" &&
             cliente.str_ruc !== "" &&
-            cliente.str_cedula !== "";
+            cliente.str_cedula !== "" &&
+            cliente.str_telefono !== "";
         setDatosCompletos(camposCompletos);
     }, [cliente]);
 

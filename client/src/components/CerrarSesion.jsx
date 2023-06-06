@@ -9,9 +9,7 @@ const CerrarSesion = () => {
         navigate("/");
     }
     return (
-        <>
-            <button className='button is-info m-5' onClick={handleLogout}><LogoutIcon /></button>
-        </>
+        <button className='button is-info ml-5' onClick={handleLogout}><LogoutIcon /></button>
     )
 }
 
