@@ -16,6 +16,7 @@ import cajasRoutes from "./routers/cajas.routes.js";
 import sesionesCajasRoutes from "./routers/sesiones-cajas.routes.js";
 import arqueosRoutes from "./routers/arqueos.routes.js";
 import facturasProveedoresRoutes from "./routers/facturas_proveedores.routes.js";
+import facturasProveedoresDetallesRoutes from "./routers/facturas_proveedores_detalles.routes.js";
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(cajasRoutes)
 app.use(sesionesCajasRoutes)
 app.use(arqueosRoutes)
 app.use(facturasProveedoresRoutes)
+app.use(facturasProveedoresDetallesRoutes)
 
 app.get("/", async (req, res) => {
     res.json({
