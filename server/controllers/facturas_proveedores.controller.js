@@ -15,8 +15,8 @@ export class Facturas_proveedores {
             const result = await this.createFacturaProveedor(id_proveedor, date_fecha, total);
             res.json(result);
         } catch (error) {
-            const {message} = error;
-            return res.status(500).json({error:message});
+            const { message } = error;
+            return res.status(500).json({ error: message });
         }
     };
 
@@ -30,7 +30,7 @@ export class Facturas_proveedores {
     }
 
 
-    createFacturaProveedor = async (id_proveedor,  date_fecha, total) => {
+    createFacturaProveedor = async (id_proveedor, date_fecha, total) => {
         try {
             const result = await facturas_proveedores.create({ id_proveedor, date_fecha, total });
             return result;
@@ -66,10 +66,26 @@ export class Facturas_proveedores {
     };
     getAll = async (req, res) => {
         try {
-            const result = await facturas_proveedores.findAll();
+            const { ordenTotal, ordenFecha,startDate,endDate, ...querys } = req.query;
+
+            const where = {
+                ...querys
+            };
+
+            let options = {};
+            if (ordenTotal == 'asc') options.order = [['total', 'ASC']];
+            if (ordenTotal == 'desc') options.order = [['total', 'DESC']];
+            if (ordenFecha == 'asc') options.order = [['date_fecha', 'ASC']];
+            if (ordenFecha == 'desc') options.order = [['date_fecha', 'DESC']];
+            if (total) where.total = { [Op.like]: `%${total}%` };
+            // Add date range filtering
+            if (startDate && endDate) { where.date_fecha = { [Op.between]: [new Date(startDate), new Date(endDate)] }; }
+
+            const result = await facturas_proveedores.findAll({ where, ...options }) || facturas_proveedores.findAll({ where });
+
             res.json(result);
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json({ error: error.message });
         }
     };
     getById = async (req, res) => {
