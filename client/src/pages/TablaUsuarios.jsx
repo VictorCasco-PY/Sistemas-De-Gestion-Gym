@@ -74,16 +74,13 @@ const TablaUsuarios = () => {
 
   return (
     <div>
-      <div className="columns">
-        <div className="column">
           <h1 className="title is-3 has-text-primary">Lista de Empleados</h1>
-        </div>
         <div className="columns">
-          <div className="column">
+          <div className="column is-four-fifths">
             <input
               className="input is-primary is-primary has-text-centered"
               type="search"
-              placeholder="Buscar"
+              placeholder="Buscar por Número de Cédula"
               value={busqueda}
               onChange={handleBusquedaChange}
             />
@@ -97,7 +94,6 @@ const TablaUsuarios = () => {
             </Link>
           </div>
         </div>
-      </div>
       <table className="table is-fullwidth">
         <thead>
           <tr>
