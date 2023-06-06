@@ -36,7 +36,7 @@ export class FacturaDetalle {
         result.productos = await Promise.all(
           productos.map(async (p) => {
             if (await producto.getById(p.id)) {
-              
+              await producto.vender(p.id, p.cantidad);
               return await facturas_detalles.create({ ...p, ...body });
             }
             return false;

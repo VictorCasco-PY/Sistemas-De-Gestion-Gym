@@ -38,6 +38,16 @@ export class Productos {
     }
   }
 
+  vender = async (id, cantidad) => {
+    try{
+      const producto = await this.getById(id);
+      const newCantidad = producto.cantidad - cantidad;
+      await productos.update({newCantidad}, {where:{id}});
+    }catch(error){
+      throw new Error("Error a descontar producto en el stock");
+    }
+  }
+
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
