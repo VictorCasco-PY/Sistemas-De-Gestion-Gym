@@ -1,7 +1,6 @@
-import { models } from "../models/models.js";
 import { Factura } from "../controllers/facturas.controller.js";
 import { FacturaDetalle } from "../controllers/facturas_detalles.controller.js";
-import { Cliente } from "../controllers/clientes.controller.js";
+
 
 const facturaController = new Factura();
 const facturaDetalleController = new FacturaDetalle();
