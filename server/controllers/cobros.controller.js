@@ -2,7 +2,7 @@ import {models} from "../models/models.js";
 
 const {cobros} = models;
 
-export class Clase {
+export class Cobros {
     crear = async (req, res) => {
         try {
             const {body} = req;

@@ -8,51 +8,65 @@ const producto = new Productos();
 const planDePago = new PlanesDePagos();
 
 export class FacturaDetalle {
+
   crear = async (req, res) => {
     try {
       const { body } = req;
-      const { plan_de_pago } = body;
-      const { productos } = body;
-
-      if (!plan_de_pago && !productos)
-        return res.json({ error: "Debes enviar productos o un plan de pago" });
-
-      let result = {};
-
-      // si hay productos, se intentan pagar
-      if (productos && productos.length > 0) {
-        // se crea una factura_detalle para cada producto
-        result.productos = productos.map(async (p) => {
-          if (await producto.getById(p.id)) {
-            return await facturas_detalles.create({ ...p, ...body });
-          }
-          return false;
-        });
-      }
-      console.log({plan_de_pago});
-      console.log({productos});
-      // si hay un plan de pago, se intenta pagar
-      const { id_plan_de_pago } = plan_de_pago;
-      delete planDePago.id_plan_de_pago;
-      const plan = await planDePago.getById(id_plan_de_pago);
-      if (!plan) {
-        result.plan = res.json({ error: "No existe ese plan de pago" });
-      } else {
-        await planDePago.pagarPlan(id_plan_de_pago);
-        result.plan = await facturas_detalles.create({
-          id_plan_de_pago,
-          ...plan_de_pago,
-          ...body,
-        });
-      }
-
-      // const result = await facturas_detalles.create({ ...body });
+      const result = await crearInterno({ body });
       return res.json({ ...result });
     } catch (error) {
       const { message } = error;
       return res.status(500).json({ error: message });
     }
   };
+
+  crearInterno = async (query) => {
+    try {
+      const { plan_de_pago } = query;
+      const { productos } = query;
+  
+      if (!plan_de_pago && !productos)
+        return { error: "Debes enviar productos o un plan de pago" };
+  
+      let result = {};
+  
+      // si hay productos, se intentan pagar
+      if (productos && productos.length > 0) {
+        // se crea una factura_detalle para cada producto
+        result.productos = await Promise.all(
+          productos.map(async (p) => {
+            if (await producto.getById(p.id)) {
+              return await facturas_detalles.create({ ...p, ...body });
+            }
+            return false;
+          })
+        );
+      }
+  
+      // si hay un plan de pago, se intenta pagar
+      if (plan_de_pago) {
+        const { id_plan_de_pago } = plan_de_pago;
+        delete plan_de_pago.id_plan_de_pago;
+        const plan = await planDePago.getById(id_plan_de_pago);
+        if (!plan) {
+          result.plan = { error: "No existe ese plan de pago" };
+        } else {
+          await planDePago.pagarPlan(id_plan_de_pago);
+          result.plan = await facturas_detalles.create({
+            id_plan_de_pago,
+            ...plan_de_pago,
+            ...body,
+          });
+        }
+      }
+  
+      return result;
+    } catch (error) {
+      const { message } = error;
+      return { error: message };
+    }
+  };
+  
 
   update = async (req, res) => {
     try {
@@ -78,7 +92,7 @@ export class FacturaDetalle {
       const { id } = req.params;
       if (!(await this.getById(id)))
         return res.status(404).send("No existe una factura_detalle con ese id");
-      await facturas_detalles.destroy({ where: { id } });
+      await facturas_detalles.update({ where: { id } });
       return res.send("Factura eliminada correctamente");
     } catch (error) {
       const { message } = error;
