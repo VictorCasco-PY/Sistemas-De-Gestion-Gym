@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 const ListaClientes = () => {
 
     return (
-        <div className='m-2'>
-            <div className=" headerTitle">
+        <div className='column'>
+            <div className="headerTitle">
                 <h1 className='is-size-2'>Lista de Clientes</h1>
             </div>
             <div className='is-flex is-flex-direction-column p-5 pageMain has-background-light'>
