@@ -33,6 +33,7 @@ const Ventas = () => {
             setCliente(response.data[0]);
             console.log("cliente", response.data[0]);
             id_cliente = response.data[0].id;
+            console.log(id_cliente);
         } catch (error) {
             console.log(error.message);
         }
@@ -159,9 +160,30 @@ const Ventas = () => {
 
     const handleSubmitVenta = async () => {
         try {
-            const response = await api.post();
+            console.log(id_cliente)
+            const dataVentas = {
+                id_cliente: 3,
+                id_timbrado: 1,
+                total: total,
+                saldo: 0,
+                iva_5: iva5,
+                iva_10: iva10,
+                iva_exenta: 0,
+                detalles: {
+                    plan_de_pago: {
+                        id_plan_de_pago: planDePago[0].id,
+                        subtotal: precioPlanPago,
+                        cantidad: 1,
+                        precio: precioPlanPago,
+                        iva: 0
+                    }
+                }
+            };
+            console.log(dataVentas);
+            const response = await api.post("/ventas", dataVentas);
+            console.log(response.data);
         } catch (error) {
-
+            alert(error.message);
         }
     }
 
