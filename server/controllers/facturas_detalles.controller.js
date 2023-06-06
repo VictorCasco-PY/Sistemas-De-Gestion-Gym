@@ -29,7 +29,8 @@ export class FacturaDetalle {
           return false;
         });
       }
-
+      console.log({plan_de_pago});
+      console.log({productos});
       // si hay un plan de pago, se intenta pagar
       const { id_plan_de_pago } = plan_de_pago;
       delete planDePago.id_plan_de_pago;
