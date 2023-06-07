@@ -120,9 +120,9 @@ const Ventas = () => {
             case 1:
                 return 10000; // Precio para id_tipo_modalidad_de_pago 1: 10.000
             case 2:
-                return 70000; // Precio para id_tipo_modalidad_de_pago 2: 70.000
+                return 50000; // Precio para id_tipo_modalidad_de_pago 2: 70.000
             case 3:
-                return 100000; // Precio para id_tipo_modalidad_de_pago 3: 100.000
+                return 150000; // Precio para id_tipo_modalidad_de_pago 3: 100.000
             default:
                 return 0; // Si el id_tipo_modalidad_de_pago no coincide con ninguno de los casos anteriores, el precio es 0
         }
@@ -264,18 +264,18 @@ const Ventas = () => {
                                             {planDePago[0].id_tipo_modalidad_de_pago === 1
                                                 ? '10.000'
                                                 : planDePago[0].id_tipo_modalidad_de_pago === 2
-                                                    ? '70.000'
+                                                    ? '50.000'
                                                     : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                        ? '100.000'
+                                                        ? '150.000'
                                                         : ''}
                                         </td>
                                         <td>
                                             {planDePago[0].id_tipo_modalidad_de_pago === 1
                                                 ? '10.000'
                                                 : planDePago[0].id_tipo_modalidad_de_pago === 2
-                                                    ? '70.000'
+                                                    ? '50.000'
                                                     : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                        ? '100.000'
+                                                        ? '150.000'
                                                         : ''}
                                         </td>
                                     </tr>
