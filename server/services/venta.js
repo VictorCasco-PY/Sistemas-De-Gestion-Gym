@@ -12,12 +12,11 @@ export class Venta {
 
         //     checkMiddleWare(['id_cliente','id_timbrado','total','saldo','iva_5','iva_10','iva_exenta']),
         const {id_cliente, id_timbrado, total, saldo, iva_5, iva_10, iva_exenta, detalles} = req.body;
-        console.log(id_cliente);
 
-        factura = await facturaController.crearInterno({id_cliente, id_timbrado, total, saldo, iva_5, iva_10, iva_exenta});
+        factura = await facturaController.nuevaFactura({id_cliente, id_timbrado, total, saldo, iva_5, iva_10, iva_exenta});
 
         detalles.id_factura = factura.id; 			//guardar el id de la factura
-        factura_detalle = await facturaDetalleController.crearInterno(detalles);
+        factura_detalle = await facturaDetalleController.nuevaFacturaDetalle(detalles);
 
         res.status(200).json({ok:"Venta realizada correctamente"})
 
