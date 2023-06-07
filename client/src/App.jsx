@@ -64,7 +64,7 @@ function App() {
             <Route path='/registroEmpleado' element={<NewLayout><RegistroEmpleado /></NewLayout>} />
             <Route path='/listaEmpleados' element={<NewLayout><TablaUsuarios /></NewLayout>} />
             <Route path='/detallesEmpleado/:id' element={<NewLayout><DetallesUsuario /></NewLayout>} />
-            <Route path='/productos' element={<NewLayout><RegistroProductos /></NewLayout>} />
+            <Route path='/registroProducto' element={<NewLayout><RegistroProductos /></NewLayout>} />
             <Route path='/listaProductos' element={<NewLayout>< ListaProductos /></NewLayout>} />
             <Route path='/detallesProducto/:id' element={<NewLayout><DetallesProducto /></NewLayout>} />
             <Route path='/arqueo' element={<NewLayout>< ArqueoCaja /></NewLayout>} />
