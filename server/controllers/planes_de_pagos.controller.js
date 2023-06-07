@@ -158,7 +158,7 @@ export class PlanesDePagos {
     }
   };
 
-  pagarPlan = async (id) => {
+  cobrarPlan = async (id) => {
     try {
       const plan = await this.getById(id);
       const date_fecha_de_vencimiento = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento);
