@@ -1,38 +1,33 @@
 import { models } from "../models/models.js";
+import { getDateNow } from "../tools/date.js"
+import { Proveedores } from "./proveedores.controller.js";
+const { facturas_proveedores } = models;
+const proveedor = Proveedores();
 
-const { proveedores, facturas_proveedores } = models;
+
 export class Facturas_proveedores {
     crear = async (req, res) => {
         try {
             const { body } = req;
-            const { id_proveedor, date_fecha, total } = body;
-
-            const proveedorExistente = await this.getProveedorById(id_proveedor);
-            if (!proveedorExistente) {
-                return res.status(404).json({ error: "No existe un proveedor con ese ID" });
-            }
-
-            const result = await this.createFacturaProveedor(id_proveedor, date_fecha, total);
-            res.json(result);
+            const result = await this.createFacturaProveedor(...body);
+            return res.json({result});
         } catch (error) {
             const { message } = error;
             return res.status(500).json({ error: message });
         }
     };
 
-    getProveedorById = async (id) => {
-        try {
-            const proveedor = await proveedores.findOne({ where: { id } });
-            return proveedor;
-        } catch (error) {
-            throw new Error("Error al obtener la factura-proveedor");
-        }
-    }
 
 
-    createFacturaProveedor = async (id_proveedor, date_fecha, total) => {
+    createFacturaProveedor = async (query) => {
         try {
-            const result = await facturas_proveedores.create({ id_proveedor, date_fecha, total });
+            const{id_proveedor}=query;
+            const date_fecha = getDateNow();
+            const proveedorTemp=await proveedor.getById(id_proveedor);
+            if(!proveedorTemp) return res.status(404).json({erorr:"No existe proveedor con ese id"}); 
+            const {str_nombre}=proveedorTemp.str_nombre;
+            const {str_ruc}= proveedorTemp.str_ruc;
+            const result = await facturas_proveedores.create({ ...query, str_nombre, str_ruc, date_fecha });
             return result;
         } catch (error) {
             throw new Error("Error al crear la factura-proveedor");
@@ -66,7 +61,7 @@ export class Facturas_proveedores {
     };
     getAll = async (req, res) => {
         try {
-            const { ordenTotal, ordenFecha,startDate,endDate, ...querys } = req.query;
+            const { ordenTotal, ordenFecha, startDate, endDate, ...querys } = req.query;
 
             const where = {
                 ...querys
