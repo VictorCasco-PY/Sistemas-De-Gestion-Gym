@@ -149,7 +149,12 @@ const Ventas = () => {
             subtotalVenta += (producto.cantidad * producto.precio);
         });
 
-        totalVenta = subtotalVenta + iva5Venta + iva10Venta + precioPlanPago;
+        totalVenta = subtotalVenta + iva5Venta + iva10Venta;
+
+        // Agrega el precio del plan de pago solo si el estado de pago es "pendiente" o "atrasado"
+        if (planDePago.length > 0 && (planDePago[0].estado_de_pago === 'pendiente' || planDePago[0].estado_de_pago === 'atrasado')) {
+            totalVenta += precioPlanPago;
+        }
 
         setSubtotal(subtotalVenta);
         setIVA5(iva5Venta);
