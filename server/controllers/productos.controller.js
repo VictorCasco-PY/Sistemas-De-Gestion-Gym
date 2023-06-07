@@ -47,6 +47,15 @@ export class Productos {
       throw new Error("Error a descontar producto en el stock");
     }
   }
+  comprar = async (id, cantidad) => {
+    try{
+      const producto = await this.getById(id);
+      const newCantidad = producto.cantidad + cantidad;
+      await productos.update({cantidad:newCantidad}, {where:{id}});
+    }catch(error){
+      throw new Error("Error al aumentar producto en el stock");
+    }
+  }
 
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {

@@ -9,11 +9,11 @@ const facturasProveedoresRoutes = Router();
 
 facturasProveedoresRoutes.get('/facturas-proveedores', facturas_proveedores.getAll);
 
-facturasProveedoresRoutes.get('/factura-proveedor/:id', facturas_proveedores.getById);
+facturasProveedoresRoutes.get('/factura-proveedor/:id', facturas_proveedores.getByParams);
 
 facturasProveedoresRoutes.post('/facturas-proveedores',
     authMiddleware(['caja']),
-    checkMiddleWare(['id_proveedor', 'date_fecha', 'total']),
+    checkMiddleWare(['id_proveedor','total']),
     facturas_proveedores.crear
 );
 
