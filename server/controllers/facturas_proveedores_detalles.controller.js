@@ -2,7 +2,7 @@ import { models } from "../models/models.js";
 import { Productos } from "./productos.controller.js";
 
 const { facturas_proveedores_detalles } = models;
-const producto = Productos()
+const producto = new Productos()
 
 export class Facturas_proveedores_detalles {
     crear = async (req, res) => {

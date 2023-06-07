@@ -2,7 +2,7 @@ import { models } from "../models/models.js";
 import { getDateNow } from "../tools/date.js"
 import { Proveedores } from "./proveedores.controller.js";
 const { facturas_proveedores } = models;
-const proveedor = Proveedores();
+const proveedor = new Proveedores();
 
 
 export class Facturas_proveedores {

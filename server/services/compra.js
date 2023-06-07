@@ -8,11 +8,11 @@ export class Compra {
     crear = async (req, res) => {
         let factura_proveedor, factura_proveedor_detalle;
         try {
-            const{id_proveedor,str_nombre,_str_ruc, total}=req.body;
-            factura_proveedor=await facturaProveedorController.createFacturaProveedor({id_proveedor,str_nombre,_str_ruc, total});
-            detalles.id_factura_proveedor= factura_proveedor.id;
+            const { id_proveedor, str_nombre, _str_ruc, total, detalles } = req.body;
+            factura_proveedor = await facturaProveedorController.createFacturaProveedor({ id_proveedor, str_nombre, _str_ruc, total });
+            detalles.id_factura_proveedor = factura_proveedor.id;
             factura_proveedor_detalle = await facturaProveedorDetalleController.createFacturaProveedorDetalle(detalles);
-            res.status(200).json({ok:"Compra realizada correctamente"})
+            res.status(200).json({ ok: "Compra realizada correctamente" })
 
         } catch (error) {
             res.status(500).json({ error: error.message });
