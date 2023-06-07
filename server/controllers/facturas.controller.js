@@ -8,14 +8,7 @@ export class Factura {
     crear = async (req,res)=>{
         try{         
             const {body} = req;
-            const result = await this.crearInterno(...body);
-            /* const {id_cliente} = body;
-            const date_fecha = getDateNow();
-            const _cliente = await cliente.getById(id_cliente);
-            if(!_cliente) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
-            const {str_nombre_cliente} = _cliente.str_nombre
-            const {str_ruc_cliente} = _cliente.str_ruc;
-            const result = await facturas.create({...body, date_fecha, str_nombre_cliente, str_ruc_cliente}); */
+            const result = await this.nuevaFactura(...body);
             return res.json({result});
         }catch(error){
             const {message} = error;
@@ -48,11 +41,10 @@ export class Factura {
         }
     }
     
-    crearInterno = async (query)=>{
+    nuevaFactura = async (query)=>{
         try{         
             const {id_cliente} = query;
             const date_fecha = getDateNow();
-            console.log(id_cliente);
             const _cliente = await cliente.getById(id_cliente);
             if(!_cliente) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
             const {str_nombre_cliente} = _cliente.str_nombre

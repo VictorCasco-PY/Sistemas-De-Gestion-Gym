@@ -20,7 +20,7 @@ export class FacturaDetalle {
     }
   };
 
-  crearInterno = async (query) => {
+  nuevaFacturaDetalle = async (query) => {
     try {
       const { plan_de_pago } = query;
       const { productos } = query;
@@ -37,7 +37,9 @@ export class FacturaDetalle {
           productos.map(async (p) => {
             if (await producto.getById(p.id)) {
               await producto.vender(p.id, p.cantidad);
-              return await facturas_detalles.create({ ...p, ...body });
+              p.id_producto = p.id;
+              delete p.id;
+              return await facturas_detalles.create({...query, ...p });
             }
             return false;
           })
@@ -52,11 +54,11 @@ export class FacturaDetalle {
         if (!plan) {
           result.plan = { error: "No existe ese plan de pago" };
         } else {
-          await planDePago.pagarPlan(id_plan_de_pago);
+          await planDePago.cobrarPlan(id_plan_de_pago);
           result.plan = await facturas_detalles.create({
             id_plan_de_pago,
             ...plan_de_pago,
-            ...body,
+            ...query,
           });
         }
       }
