@@ -42,7 +42,7 @@ export class Productos {
     try{
       const producto = await this.getById(id);
       const newCantidad = producto.cantidad - cantidad;
-      await productos.update({newCantidad}, {where:{id}});
+      await productos.update({cantidad:newCantidad}, {where:{id}});
     }catch(error){
       throw new Error("Error a descontar producto en el stock");
     }
