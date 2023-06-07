@@ -5,7 +5,7 @@ import { Compra } from "../services/compra.js";
 const comprasRoutes = Router();
 const compraController = new Compra();
 comprasRoutes.post(
-    "/ventas",
+    "/compras",
     authMiddleware(['caja']),
     checkMiddleWare(['id_proveedor','total','detalles']),
     compraController.crear
