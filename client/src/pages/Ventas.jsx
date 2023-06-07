@@ -140,7 +140,6 @@ const Ventas = () => {
         let subtotalVenta = 0;
         let iva5Venta = 0;
         let iva10Venta = 0;
-        console.log(productos);
         productos.forEach((producto) => {
             if (producto.iva === '5') {
                 iva5Venta += (producto.cantidad * producto.precio * 5) / 100;
@@ -150,7 +149,12 @@ const Ventas = () => {
             subtotalVenta += (producto.cantidad * producto.precio);
         });
 
-        totalVenta = subtotalVenta + iva5Venta + iva10Venta + precioPlanPago;
+        totalVenta = subtotalVenta + iva5Venta + iva10Venta;
+
+        // Agrega el precio del plan de pago solo si el estado de pago es "pendiente" o "atrasado"
+        if (planDePago.length > 0 && (planDePago[0].estado_de_pago === 'pendiente' || planDePago[0].estado_de_pago === 'atrasado')) {
+            totalVenta += precioPlanPago;
+        }
 
         setSubtotal(subtotalVenta);
         setIVA5(iva5Venta);
@@ -160,30 +164,38 @@ const Ventas = () => {
 
     const handleSubmitVenta = async () => {
         try {
-            console.log(id_cliente)
+            const detallesVenta = {
+                plan_de_pago: {
+                    id_plan_de_pago: planDePago[0].id,
+                    subtotal: precioPlanPago,
+                    cantidad: 1,
+                    precio: precioPlanPago,
+                    iva: 0
+                },
+                productos: productos.map((producto) => ({
+                    id: producto.id,
+                    cantidad: producto.cantidad,
+                    precio: parseInt(producto.precio),
+                    iva: parseInt(producto.iva),
+                    subtotal: producto.cantidad * producto.precio
+                }))
+            };
+
             const dataVentas = {
-                id_cliente: 3,
+                id_cliente: cliente.id,
                 id_timbrado: 1,
                 total: total,
                 saldo: 0,
                 iva_5: iva5,
                 iva_10: iva10,
                 iva_exenta: 0,
-                detalles: {
-                    plan_de_pago: {
-                        id_plan_de_pago: planDePago[0].id,
-                        subtotal: precioPlanPago,
-                        cantidad: 1,
-                        precio: precioPlanPago,
-                        iva: 0
-                    }
-                }
+                detalles: detallesVenta
             };
             console.log(dataVentas);
             const response = await api.post("/ventas", dataVentas);
-            console.log(response.data);
+            console.log(response);
         } catch (error) {
-            alert(error.message);
+            console.log(error);
         }
     }
 
