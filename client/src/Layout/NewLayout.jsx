@@ -4,33 +4,38 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 import Logo from '../assets/logo.png'
-import { IconButton } from '@mui/material';
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CustomListItem from '../components/Sidenav/CustomListItem';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import StoreIcon from '@mui/icons-material/Store';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
+
 
 const drawerWidth = 240;
 
 export default function Layout({ children }) {
     const user = JSON.parse(localStorage.getItem("user"));
+
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        navigate("/");
+    }
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" color='primary'>
                 <Toolbar>
-                    <Typography variant='h6' sx={{ flexGrow: 1 }} />
 
-                    <Typography variant='h5'>
-                        Bienvenido, {user.nombre}
-                    </Typography>
-                    <Typography variant='h6' color={'white'}>({user.rol})</Typography>
-                    <CerrarSesion />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -49,7 +54,7 @@ export default function Layout({ children }) {
                     <img src={Logo} width={240} height={60} />
                 </Toolbar>
                 <Divider />
-                <List>
+                <List sx={{ flexGrow: 1 }}>
                     {user.rol === 'admin' ? (
                         <>
                             <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
@@ -71,6 +76,33 @@ export default function Layout({ children }) {
                             <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
                         </>
                     ) : null}
+                </List>
+                <List >
+
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <Stack >
+                                    <Avatar>{user.nombre.charAt(0)}</Avatar>
+                                </Stack>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-5">{user.nombre}</p>
+                                <p class="subtitle is-6">
+                                    {user.rol === 'admin' ? 'Administrador' : user.rol === 'caja' ? 'Cajero' : user.rol === 'entrenador' ? 'Entrenador' : ''}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <Divider />
+                    <ListItem>
+                        <ListItemButton component="button" onClick={handleLogout}>
+                            <ListItemIcon>
+                                <LogoutIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Cerrar Sesión" />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
             <Box
