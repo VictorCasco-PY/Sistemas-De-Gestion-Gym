@@ -48,12 +48,12 @@ export default function Compras() {
             <h2 className='subtitle mb-3'>Pago Total</h2>
             <div>
               {/* Calculate and display product total */}
-              <div className='is-flex'>
+              <div className='is-flex is-justify-content-space-between'>
                 <p className='subtitle mb-1'>Productos:</p>
                 <p className='subtitle'>$100</p>
               </div>
               {/* Calculate and display total */}
-              <div className='is-flex'>
+              <div className='is-flex is-justify-content-space-between'>
                 <h1 className='title'>Total:</h1>
                 <p className='title'>$100</p>
               </div>
