@@ -13,6 +13,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CustomListItem from '../components/Sidenav/CustomListItem';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
+
+import StoreIcon from '@mui/icons-material/Store';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
@@ -59,6 +61,7 @@ export default function Layout({ children }) {
                             <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
                             <Divider />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
+                            <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
                             <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
                             <CustomListItem icon={<PersonIcon />} text='Empleados' to='/listaEmpleados' />
                             <CustomListItem icon={<InventoryIcon />} text='Productos' to='/listaProductos' />

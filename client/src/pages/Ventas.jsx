@@ -201,142 +201,155 @@ const Ventas = () => {
     return (
         <>
             <h1 className="title is-1">Nueva Venta</h1>
-            <div className="container box columns m-4">
-                <button className="button is-info m-3" onClick={() => navigate(-1)}>
-                    <ArrowBackIcon fontSize="string" />
-                </button>
-                <div className="column box">
-                    <div className="column is-one-third">
-                        <p className='title is-3'>Datos del cliente</p>
-                        <label htmlFor="str_ruc">Nro Documento</label>
-                        <input
-                            className="input is-primary"
-                            type="text"
-                            name="str_ruc"
-                            onChange={handleRucChange}
-                            onKeyDown={handleKeyDown}
-                        />
-                        <label htmlFor="str_nombre">Nombre</label>
-                        <input
-                            className="input is-primary"
-                            type="text"
-                            name="str_nombre"
-                            readOnly
-                            value={cliente?.str_nombre || ' '}
-                        />
-                    </div>
-                    <div className="mt-5">
-                        <p className='title is-3'>Productos/Servicios</p>
-                        <input
-                            className="column input is-primary is-half mb-2"
-                            type="text"
-                            name="buscador"
-                            placeholder="Buscar producto/servicio"
-                            value={idProducto}
-                            onChange={handleBuscadorChange}
-                            onKeyDown={handleKeyDownBuscador}
-                        />
+            <div className="container column ml-auto">
+                <div className="card box columns">
+                    <div className='mt-3'>
+                        <header className='card-header has-background-info'>
+                            <p className='title is-3 has-text-light p-3'>Datos del cliente</p>
+                        </header>
+                        <div className="columns card-content">
+                            <div className='column is-one-third'>
+                                <label htmlFor="str_ruc">Nro Documento</label>
+                                <input
+                                    className="input is-primary"
+                                    type="text"
+                                    name="str_ruc"
+                                    onChange={handleRucChange}
+                                    onKeyDown={handleKeyDown}
+                                />
+                            </div>
+                            <div className='column is-one-third'>
+                                <label htmlFor="str_nombre">Nombre</label>
+                                <input
+                                    className="input is-primary"
+                                    type="text"
+                                    name="str_nombre"
+                                    readOnly
+                                    value={cliente?.str_nombre || ' '}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <header className='card-header has-background-info'>
+                                <p className='title is-3 has-text-light p-3'>Productos/Servicios</p>
+                            </header>
+                            <div className='card-content'>
+                                <input
+                                    className="column input is-primary is-half mb-2"
+                                    type="text"
+                                    name="buscador"
+                                    placeholder="Buscar producto/servicio"
+                                    value={idProducto}
+                                    onChange={handleBuscadorChange}
+                                    onKeyDown={handleKeyDownBuscador}
+                                />
 
-                        <table className="table is-fullwidth">
-                            <thead>
-                                <tr>
-                                    <td></td>
-                                    <th>Producto/Servicio</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio(Gs.)</th>
-                                    <th>Total(Gs.)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {planDePago.length > 0 && (planDePago[0].estado_de_pago === 'pendiente' || planDePago[0].estado_de_pago === 'atrasado') && (
-                                    <tr>
-                                        <td>
-                                            <button
-                                                className="button"
-                                                onClick={handleDeletePlanDePago}
-                                            >
-                                                <DeleteIcon fontSize="string" />
-                                            </button>
-                                        </td>
-                                        <td>Pago Cuota {planDePago[0].str_modalidad}</td>
-                                        <td>1</td>
-                                        <td>
-                                            {planDePago[0].id_tipo_modalidad_de_pago === 1
-                                                ? '10.000'
-                                                : planDePago[0].id_tipo_modalidad_de_pago === 2
-                                                    ? '50.000'
-                                                    : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                        ? '150.000'
-                                                        : ''}
-                                        </td>
-                                        <td>
-                                            {planDePago[0].id_tipo_modalidad_de_pago === 1
-                                                ? '10.000'
-                                                : planDePago[0].id_tipo_modalidad_de_pago === 2
-                                                    ? '50.000'
-                                                    : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                        ? '150.000'
-                                                        : ''}
-                                        </td>
-                                    </tr>
-                                )}
-                                {productos.map((producto, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            <button
-                                                className="button"
-                                                onClick={() => handleDeleteProducto(index)}
-                                            >
-                                                <DeleteIcon fontSize="string" />
-                                            </button>
-                                        </td>
-                                        <td>{producto.str_descripcion}</td>
-                                        <td>
-                                            <input
-                                                type="number"
-                                                min="1"
-                                                value={producto.cantidad}
-                                                onChange={(event) =>
-                                                    handleCantidadChange(event, index)
-                                                }
-                                            />
-                                        </td>
-                                        <td>{producto.precio}</td>
-                                        <td>{producto.cantidad * producto.precio}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                <table className="table is-fullwidth">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <th>Producto/Servicio</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio(Gs.)</th>
+                                            <th>Total(Gs.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {planDePago.length > 0 && (planDePago[0].estado_de_pago === 'pendiente' || planDePago[0].estado_de_pago === 'atrasado') && (
+                                            <tr>
+                                                <td>
+                                                    <button
+                                                        className="button"
+                                                        onClick={handleDeletePlanDePago}
+                                                    >
+                                                        <DeleteIcon fontSize="string" />
+                                                    </button>
+                                                </td>
+                                                <td>Pago Cuota {planDePago[0].str_modalidad}</td>
+                                                <td>1</td>
+                                                <td>
+                                                    {planDePago[0].id_tipo_modalidad_de_pago === 1
+                                                        ? '10.000'
+                                                        : planDePago[0].id_tipo_modalidad_de_pago === 2
+                                                            ? '50.000'
+                                                            : planDePago[0].id_tipo_modalidad_de_pago === 3
+                                                                ? '150.000'
+                                                                : ''}
+                                                </td>
+                                                <td>
+                                                    {planDePago[0].id_tipo_modalidad_de_pago === 1
+                                                        ? '10.000'
+                                                        : planDePago[0].id_tipo_modalidad_de_pago === 2
+                                                            ? '50.000'
+                                                            : planDePago[0].id_tipo_modalidad_de_pago === 3
+                                                                ? '150.000'
+                                                                : ''}
+                                                </td>
+                                            </tr>
+                                        )}
+                                        {productos.map((producto, index) => (
+                                            <tr key={index}>
+                                                <td>
+                                                    <button
+                                                        className="button"
+                                                        onClick={() => handleDeleteProducto(index)}
+                                                    >
+                                                        <DeleteIcon fontSize="string" />
+                                                    </button>
+                                                </td>
+                                                <td>{producto.str_descripcion}</td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        value={producto.cantidad}
+                                                        onChange={(event) =>
+                                                            handleCantidadChange(event, index)
+                                                        }
+                                                    />
+                                                </td>
+                                                <td>{producto.precio}</td>
+                                                <td>{producto.cantidad * producto.precio}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div className="column is-one-third">
-                    <div className='box'>
-                        <p className='title is-3'>Detalle de venta</p>
 
-                        <div className="control">
-                            <div className="tags has-addons mb-2">
-                                <span className="tag is-primary is-large">Sub Total</span>
-                                <span className="tag is-large">{subtotal}</span>
-                            </div>
+                    <div className="column">
+                        <header className='card-header has-background-info'>
+                            <p className='title is-3 has-text-light p-3'>Detalle de venta</p>
+                        </header>
+
+                        <div className='card-content'>
                             <div className="control">
                                 <div className="tags has-addons mb-2">
-                                    <span className="tag is-primary is-large">IVA(5%)</span>
-                                    <span className="tag is-large">{iva5}</span>
+                                    <span className="tag is-info is-large">Sub Total</span>
+                                    <span className="tag is-large">{subtotal}</span>
                                 </div>
-                            </div>
-                            <div className="control">
-                                <div className="tags has-addons mb-2">
-                                    <span className="tag is-primary is-large">IVA(10%)</span>
-                                    <span className="tag is-large">{iva10}</span>
+                                <div className="control">
+                                    <div className="tags has-addons mb-2">
+                                        <span className="tag is-info is-large">IVA(5%)</span>
+                                        <span className="tag is-large">{iva5}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="control">
-                                <div className="tags has-addons mb-2">
-                                    <span className="tag is-primary is-large">Total(Gs)</span>
-                                    <span className="tag is-large">{total}</span>
+                                <div className="control">
+                                    <div className="tags has-addons mb-2">
+                                        <span className="tag is-info is-large">IVA(10%)</span>
+                                        <span className="tag is-large">{iva10}</span>
+                                    </div>
+                                </div>
+                                <div className="control">
+                                    <div className="tags has-addons mb-2">
+                                        <span className="tag is-info is-large">Total(Gs)</span>
+                                        <span className="tag is-large">{total}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <div className="buttons is-right">
                             <button className="button is-primary mt-6" onClick={handleSubmitVenta}>
                                 <PaymentIcon fontSize="medium" />
@@ -344,7 +357,9 @@ const Ventas = () => {
                             </button>
                         </div>
                     </div>
+
                 </div>
+
             </div >
         </>
     );

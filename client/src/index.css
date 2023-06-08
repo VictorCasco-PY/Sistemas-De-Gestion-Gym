@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&display=swap');
 
 body {
-  font-family: 'Big Shoulders Display', cursive ;
+  font-family: 'roboto' !important;
   height: 100% !important;
 }
