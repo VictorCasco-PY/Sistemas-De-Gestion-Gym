@@ -4,6 +4,7 @@ import axios from 'axios';
 import EditableInput from '../components/EditableInput';
 import EditableInputTwoValues from '../components/EditableInputTwoValues';
 import moment from 'moment';
+import { format } from 'date-fns';
 import Swal from 'sweetalert2'
 import api from '../services/api';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -183,10 +184,10 @@ export function DetallesCliente() {
                             <EditableInputTwoValues
                                 valorInicial={clientePers.str_nombre}
                                 id={id}
-                                apiUrl="http://localhost:8000/cliente"
+                                apiUrl="/cliente"
                                 campoCambiar="str_nombre"
                                 id2={cliente.id}
-                                apiUrl2="http://localhost:8000/planes-de-pagos"
+                                apiUrl2="/planes-de-pagos"
                                 campoCambiar2="str_nombre_cliente"
                             />
                         </div>
@@ -222,7 +223,16 @@ export function DetallesCliente() {
                                 <p className='is-size-6'>Telefono</p>
                             </div>
                             <div className="bubbleInfo">
-                                <p>-</p>
+                                {isLoading ? (
+                                    <CircularProgress />
+                                ) : (
+                                    <EditableInput
+                                        valorInicial={clientePers.str_telefono}
+                                        id={id}
+                                        apiUrl="/cliente"
+                                        campoCambiar="str_telefono"
+                                    />
+                                )}
                             </div>
                         </div>
                         <div className="infoBubble">
@@ -236,45 +246,55 @@ export function DetallesCliente() {
                                     <EditableInput
                                         valorInicial={clientePers.str_direccion}
                                         id={id}
-                                        apiUrl="http://localhost:8000/cliente"
+                                        apiUrl="/cliente"
                                         campoCambiar="str_direccion"
                                     />
                                 )}
                             </div>
                         </div>
-                    </div>
-                    <div className=" bubble column is-half is-flex is-flex-direction-column is-align-content-center is-flex-wrap-wrap">
                         <div className="infoBubble">
-                            <div className="bubbleTitle has-background-primary-dark has-text-white">
-                                <p className='is-size-6'>Plan</p>
-                            </div>
-                            <div className="bubbleInfo has-background-primary-light">
-                                <p>
-                                    {cliente.str_modalidad
-                                        .split(' ')
-                                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                                        .join(' ')
-                                    }
-                                </p>
-                            </div>
-                        </div>
-                        <div className="infoBubble">
-                            <div className="bubbleTitle has-background-link-dark has-text-white">
+                            <div className="bubbleTitle has-text-white">
                                 <p className='is-size-6'>RUC</p>
                             </div>
-                            <div className="bubbleInfo has-background-link-light">
+                            <div className="bubbleInfo">
                                 {isLoading ? (
                                     <CircularProgress />
                                 ) : (
                                     <EditableInput
                                         valorInicial={clientePers.str_ruc}
                                         id={id}
-                                        apiUrl="http://localhost:8000/cliente"
+                                        apiUrl="/cliente"
                                         campoCambiar="str_ruc"
                                     />
                                 )}
                             </div>
                         </div>
+                    </div>
+                    <div className=" bubble column is-half is-flex is-flex-direction-column is-align-content-center is-flex-wrap-wrap">
+                        <div className='box'>
+                            <h1 className='title mb-2'>Informe de Plan</h1>
+                            <div className='has-background-primary p-1'>
+                                <div className='is-flex is-justify-content-space-between'>
+                                    <p className='is-size-6'>Plan</p>
+                                    <p>
+                                        {cliente.str_modalidad
+                                            .split(' ')
+                                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                            .join(' ')
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                            <div className='has-background-warning p-1'>
+                                <div className='is-flex is-justify-content-space-between'>
+                                    <p className='is-size-6'>Fecha a Pagar</p>
+                                    <p>
+                                        {format(new Date(cliente.date_fecha_de_vencimiento), 'dd-MM-yyyy')}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

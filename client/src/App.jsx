@@ -22,6 +22,7 @@ import WizardFormCliente from './pages/clientes/WizardFormCliente';
 import NewLayout from './Layout/NewLayout';
 import DetallesProducto from './pages/DetallesProducto';
 import ArqueoCaja from './pages/ArqueoCaja';
+import Compras from './pages/Compras';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
           <Route element={<ProtectedRoute isAllowed={!!user && (isCajero || isAdmin)} redirectTo='/home' />}>
             <Route path='/caja' element={<NewLayout><Caja /></NewLayout>} />
             <Route path='/ventas' element={<NewLayout><Ventas /></NewLayout>} />
+            <Route path='/compras' element={<NewLayout><Compras /></NewLayout>} />
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>

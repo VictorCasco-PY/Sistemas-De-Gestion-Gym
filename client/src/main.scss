@@ -39,7 +39,7 @@ $infocolor: #d4d4d4;
     display: flex;
 
     .bubbleTitle {
-        display:flex;
+        display: flex;
         align-items: center;
         background-color: #1C96DA;
         border-radius: 10px 0px 0px 10px;
@@ -66,9 +66,11 @@ $infocolor: #d4d4d4;
 
     &.table-text-2 {
         text-align: left;
+
         th {
             text-align: left !important;
         }
+
         td {
             padding-left: 15px;
         }
@@ -116,7 +118,7 @@ $infocolor: #d4d4d4;
             background-color: white;
             white-space: nowrap;
         }
-        
+
         td:not(:first-child):not(:last-child) {
             border-inline: none;
         }
@@ -166,10 +168,8 @@ $infocolor: #d4d4d4;
 }
 
 button {
-    
-    &.button.icon {
 
-    }
+    &.button.icon {}
 }
 
 .hr2 {
@@ -182,44 +182,76 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
     z-index: 1;
-  }
+}
 
-  .popup-table {
+.popup-table {
     border-radius: 10px;
     //transform: translate(-50%, -50%);
     //opacity: 0;
     //animation-name: fadeIn;
     //animation-duration: 0.4s;
-  //  animation-fill-mode: forwards;
+    //  animation-fill-mode: forwards;
     z-index: 2;
-  }
+}
 
-  .is-serif {
+.is-serif {
     font-family: sans-serif;
-  }
+}
 
-  @keyframes fadeIn {
+@keyframes fadeIn {
     0% {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
     }
+
     100% {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
     }
-  }
+}
 
-  .has-shadow123 {
+.has-shadow123 {
     background-color: red !important;
-  }
+}
 
-  .bordeado {
+.bordeado {
     border-radius: 10px;
-  }
+}
 
-  .custom-link {
+.custom-link {
     text-decoration: none;
     color: inherit;
+}
+
+.compraItem {
+    padding: 0.5rem;
+}
+
+.modal-custom {
+    position: relative;
+    width: 100%;
+    bottom:12px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-top: 0;
+    z-index: 999; /* Ensure the modal is above other elements if necessary */
+  }
+
+.itemResult {
+    cursor: pointer;
+    padding: 8px;
+}
+
+.itemResult:hover {
+    background-color: #f2f2f2;
+}
+.itemSeparator {
+    border: 1px solid #ccc;
   }
