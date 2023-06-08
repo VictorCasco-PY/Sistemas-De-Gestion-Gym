@@ -12,7 +12,7 @@ export class FacturaDetalle {
   crear = async (req, res) => {
     try {
       const { body } = req;
-      const result = await crearInterno({ body });
+      const result = await nuevaFacturaDetalle({ body });
       return res.json({ ...result });
     } catch (error) {
       const { message } = error;

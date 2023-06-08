@@ -90,7 +90,7 @@ const ListaProductos = () => {
             />
           </div>
           <div className="column">
-            <Link to={`/registroEmpleado`}>
+            <Link to={`/registroProducto`}>
               <button className="button is-link is-outlined">
                 <PersonAddAltIcon fontSize="string" />
                 Agregar

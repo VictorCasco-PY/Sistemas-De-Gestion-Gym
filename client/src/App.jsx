@@ -1,7 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './main.css'
 import 'bulma/css/bulma.min.css';
-//import { RegistroCliente, Login, ListaClientes, DetallesCliente, Home, RegistroEmpleado, RegistroProveedores, TablaUsuarios } from './pages';
 import React, { useContext } from 'react';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -10,7 +9,6 @@ import { DetallesCliente } from './pages/DetallesCliente';
 import RegistroProveedores from './pages/RegistroProveedores';
 import RegistroEmpleado from './pages/RegistroEmpleado';
 import TablaUsuarios from './pages/TablaUsuarios';
-import Layout from './Layout/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Caja from './pages/Caja';
 import ListaProveedores from './pages/ListaProveedores';
@@ -68,7 +66,7 @@ function App() {
             <Route path='/registroEmpleado' element={<NewLayout><RegistroEmpleado /></NewLayout>} />
             <Route path='/listaEmpleados' element={<NewLayout><TablaUsuarios /></NewLayout>} />
             <Route path='/detallesEmpleado/:id' element={<NewLayout><DetallesUsuario /></NewLayout>} />
-            <Route path='/productos' element={<NewLayout><RegistroProductos /></NewLayout>} />
+            <Route path='/registroProducto' element={<NewLayout><RegistroProductos /></NewLayout>} />
             <Route path='/listaProductos' element={<NewLayout>< ListaProductos /></NewLayout>} />
             <Route path='/detallesProducto/:id' element={<NewLayout><DetallesProducto /></NewLayout>} />
             <Route path='/arqueo' element={<NewLayout>< ArqueoCaja /></NewLayout>} />

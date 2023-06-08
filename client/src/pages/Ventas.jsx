@@ -4,6 +4,8 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import Autosuggest from 'react-autosuggest';
+import Swal from 'sweetalert2';
 
 const Ventas = () => {
     const [cliente, setCliente] = useState({});
@@ -19,9 +21,6 @@ const Ventas = () => {
     const navigate = useNavigate();
     let id_cliente = null;
 
-
-
-
     useEffect(() => {
         // Calcula el total cada vez que se actualizan los productos
         calcularTotal();
@@ -31,9 +30,7 @@ const Ventas = () => {
         try {
             const response = await api.get(`/clientes?str_ruc=${ruc}`);
             setCliente(response.data[0]);
-            console.log("cliente", response.data[0]);
             id_cliente = response.data[0].id;
-            console.log(id_cliente);
         } catch (error) {
             console.log(error.message);
         }
@@ -42,10 +39,8 @@ const Ventas = () => {
     const getPlanDePago = async (id) => {
         try {
             const response = await api.get(`/planes-de-pagos?id_cliente=${id}`);
-            console.log(response.data);
             setPlanDePago(response.data);
             const precio = obtenerPrecioPlanDePago(response.data); // Obtener el precio del plan de pago
-            console.log(precio);
             setPrecioPlanPago(precio); // Almacenar el precio del plan de pago
         } catch (error) {
             console.log(error);
@@ -90,7 +85,6 @@ const Ventas = () => {
                 precio: response.data.precio,
             };
             setProductos([...productos, nuevoProducto]);
-            console.log(response.data);
         } catch (error) {
             alert('El producto no existe');
         }
@@ -126,9 +120,9 @@ const Ventas = () => {
             case 1:
                 return 10000; // Precio para id_tipo_modalidad_de_pago 1: 10.000
             case 2:
-                return 70000; // Precio para id_tipo_modalidad_de_pago 2: 70.000
+                return 50000; // Precio para id_tipo_modalidad_de_pago 2: 70.000
             case 3:
-                return 100000; // Precio para id_tipo_modalidad_de_pago 3: 100.000
+                return 150000; // Precio para id_tipo_modalidad_de_pago 3: 100.000
             default:
                 return 0; // Si el id_tipo_modalidad_de_pago no coincide con ninguno de los casos anteriores, el precio es 0
         }
@@ -193,7 +187,12 @@ const Ventas = () => {
             };
             console.log(dataVentas);
             const response = await api.post("/ventas", dataVentas);
-            console.log(response);
+            console.log(response.data.ok);
+            Swal.fire(
+                `${response.data.ok}`,
+                'Se ha generado una factura nueva!',
+                'success'
+            )
         } catch (error) {
             console.log(error);
         }
@@ -203,10 +202,10 @@ const Ventas = () => {
         <>
             <h1 className="title is-1">Nueva Venta</h1>
             <div className="container box columns m-4">
-                <button className="button is-info" onClick={() => navigate(-1)}>
+                <button className="button is-info m-3" onClick={() => navigate(-1)}>
                     <ArrowBackIcon fontSize="string" />
                 </button>
-                <div className="column">
+                <div className="column box">
                     <div className="column is-one-third">
                         <p className='title is-3'>Datos del cliente</p>
                         <label htmlFor="str_ruc">Nro Documento</label>
@@ -229,7 +228,7 @@ const Ventas = () => {
                     <div className="mt-5">
                         <p className='title is-3'>Productos/Servicios</p>
                         <input
-                            className="input is-primary"
+                            className="column input is-primary is-half mb-2"
                             type="text"
                             name="buscador"
                             placeholder="Buscar producto/servicio"
@@ -238,7 +237,7 @@ const Ventas = () => {
                             onKeyDown={handleKeyDownBuscador}
                         />
 
-                        <table className="table">
+                        <table className="table is-fullwidth">
                             <thead>
                                 <tr>
                                     <td></td>
@@ -265,18 +264,18 @@ const Ventas = () => {
                                             {planDePago[0].id_tipo_modalidad_de_pago === 1
                                                 ? '10.000'
                                                 : planDePago[0].id_tipo_modalidad_de_pago === 2
-                                                    ? '70.000'
+                                                    ? '50.000'
                                                     : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                        ? '100.000'
+                                                        ? '150.000'
                                                         : ''}
                                         </td>
                                         <td>
                                             {planDePago[0].id_tipo_modalidad_de_pago === 1
                                                 ? '10.000'
                                                 : planDePago[0].id_tipo_modalidad_de_pago === 2
-                                                    ? '70.000'
+                                                    ? '50.000'
                                                     : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                        ? '100.000'
+                                                        ? '150.000'
                                                         : ''}
                                         </td>
                                     </tr>
@@ -311,45 +310,31 @@ const Ventas = () => {
                     </div>
                 </div>
                 <div className="column is-one-third">
-                    <div>
+                    <div className='box'>
                         <p className='title is-3'>Detalle de venta</p>
-                        <div>
-                            <label htmlFor="tipo">Sub Total</label>
-                            <input
-                                type="text"
-                                className="input is-primary"
-                                disabled
-                                value={subtotal}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="tipo">IVA (5%)</label>
-                            <input
-                                type="text"
-                                className="input is-primary"
-                                disabled
-                                value={iva5}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="tipo">IVA (10%)</label>
-                            <input
-                                type="text"
-                                className="input is-primary"
-                                disabled
-                                value={iva10}
-                            />
-                        </div>
-                        <div>
-                            <div>
-                                <label htmlFor="tipo">Total(Gs.)</label>
-                                <input
-                                    type="text"
-                                    name="total"
-                                    className="input is-primary"
-                                    disabled
-                                    value={total}
-                                />
+
+                        <div className="control">
+                            <div className="tags has-addons mb-2">
+                                <span className="tag is-primary is-large">Sub Total</span>
+                                <span className="tag is-large">{subtotal}</span>
+                            </div>
+                            <div className="control">
+                                <div className="tags has-addons mb-2">
+                                    <span className="tag is-primary is-large">IVA(5%)</span>
+                                    <span className="tag is-large">{iva5}</span>
+                                </div>
+                            </div>
+                            <div className="control">
+                                <div className="tags has-addons mb-2">
+                                    <span className="tag is-primary is-large">IVA(10%)</span>
+                                    <span className="tag is-large">{iva10}</span>
+                                </div>
+                            </div>
+                            <div className="control">
+                                <div className="tags has-addons mb-2">
+                                    <span className="tag is-primary is-large">Total(Gs)</span>
+                                    <span className="tag is-large">{total}</span>
+                                </div>
                             </div>
                         </div>
                         <div className="buttons is-right">
@@ -360,7 +345,7 @@ const Ventas = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     );
 };
