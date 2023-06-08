@@ -14,8 +14,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CustomListItem from '../components/Sidenav/CustomListItem';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import CerrarSesion from '../components/CerrarSesion';
-import StoreIcon from '@mui/icons-material/Store';
 
 const drawerWidth = 240;
 
@@ -55,7 +53,7 @@ export default function Layout({ children }) {
                     {user.rol === 'admin' ? (
                         <>
                             <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
-                            <Divider /> 
+                            <Divider />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
                             <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
                             <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
