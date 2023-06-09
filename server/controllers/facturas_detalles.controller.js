@@ -2,7 +2,7 @@ import { models } from "../models/models.js";
 import { PlanesDePagos } from "./planes_de_pagos.controller.js";
 import { Productos } from "./productos.controller.js";
 
-const { facturas_detalles, facturas } = models;
+const { facturas_detalles } = models;
 
 const producto = new Productos();
 const planDePago = new PlanesDePagos();
@@ -104,7 +104,7 @@ export class FacturaDetalle {
 
   getAll = async (req, res) => {
     try {
-      const result = await facturas_detalles.findAll({include:{model:facturas}});
+      const result = await facturas_detalles.findAll();
       res.json(result);
     } catch (error) {
       const { message } = error;
@@ -115,7 +115,7 @@ export class FacturaDetalle {
   getByParams = async (req, res) => {
     try {
       const { id } = req.params;
-      const result = this.getById(id);
+      const result = await this.getById(id);
       if (!result)
         return res
           .status(404)
