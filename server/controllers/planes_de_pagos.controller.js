@@ -3,7 +3,6 @@ import { getDateNow, nuevaFechaVencimiento, toDate } from "../tools/date.js";
 import { Cliente } from "./clientes.controller.js";
 import { Op } from "sequelize";
 import { TipoModalidadDePago } from "./tipos_modalidades_de_pagos.js";
-
 const { planes_de_pagos } = models;
 
 const tiposModalidadesDePagos = new TipoModalidadDePago();
@@ -114,7 +113,7 @@ export class PlanesDePagos {
     try {
       await this.actualizarEstados();
       const { id } = req.params;
-      const result = await planes_de_pagos.findOne({ where: { id } });
+      const result = await planes_de_pagos.findOne({ where: { id }});
       if (!result)
         return res.status(404).json("No existe un plan de pago con ese ID");
       res.json(result);

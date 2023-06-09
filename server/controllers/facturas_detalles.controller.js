@@ -115,7 +115,7 @@ export class FacturaDetalle {
   getByParams = async (req, res) => {
     try {
       const { id } = req.params;
-      const result = this.getById(id);
+      const result = await this.getById(id);
       if (!result)
         return res
           .status(404)
