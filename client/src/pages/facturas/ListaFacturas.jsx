@@ -22,7 +22,7 @@ const ListaFacturas = () => {
 
     useEffect(() => {
         fetchData();
-      }, [selectedOption]);
+    }, [selectedOption]);
 
     const fetchData = async () => {
         try {
@@ -37,7 +37,7 @@ const ListaFacturas = () => {
 
     const fetchCompras = async () => {
         try {
-            const response = await api.get('/compras'); // Reemplaza 'API_URL' con la URL de tu API
+            const response = await api.get('/facturas-proveedores'); // Reemplaza 'API_URL' con la URL de tu API
             setFacturas(response.data);
         } catch (error) {
             console.log(error);
@@ -138,7 +138,7 @@ const ListaFacturas = () => {
                         name="option"
                         value="compras"
                         checked={selectedOption === 'compras'}
-                        onChange={() => setSelectedOption('compras')}
+                        onChange={() => setSelectedOption('facturas-proveedores')}
                     />
                     Compras
                 </label>
@@ -176,6 +176,7 @@ const ListaFacturas = () => {
                         <tr key={index}>
                             <td>{format(new Date(factura.date_fecha), 'dd-MM-yyyy')}</td>
                             <td>{factura.str_nombre_cliente}</td>
+                            {selectedOption === 'compras' && <td>{factura.id_proveedor}</td>}
                             <td>{Number(factura.total).toLocaleString('es-ES')}</td>
                             <td>
                                 <button className="button is-info is-outlined mr-2">
