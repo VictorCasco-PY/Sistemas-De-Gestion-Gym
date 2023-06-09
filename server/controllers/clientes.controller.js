@@ -58,7 +58,7 @@ export class Cliente {
 
             if(nombre) where.str_nombre = {[Op.like]: `%${nombre}%`};
 
-            const result = await clientes.findAll({where});
+            const result = await clientes.findAll({where, include:{model:planes_de_pagos});
             return res.json(result);
         } catch (error) {
             const {message} = error;
@@ -90,7 +90,7 @@ export class Cliente {
     getByRuc = async (req) => {
         try {
             const {str_ruc} = req;
-            const result = await clientes.findOne({where: {str_ruc}, include:{model:planes_de_pagos}});
+            const result = await clientes.findOne({where: {str_ruc}});
             return result;
         } catch (error) {
             throw new Error(error.message);
