@@ -1,77 +1,74 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { isSameDay, parseISO } from 'date-fns';
 
-const ArqueoCaja = () => {
-  const [efectivoInicial, setEfectivoInicial] = useState('');
-  const [ventas, setVentas] = useState('');
-  const [gastos, setGastos] = useState('');
-  const [efectivoFinal, setEfectivoFinal] = useState('');
+const ArqueoDeCaja = () => {
+  const [ventas, setVentas] = useState([]);
+  const [totalVentasDelDia, setTotalVentasDelDia] = useState(0);
+  const [compras, setCompras] = useState([]);
+  const [totalComprasDelDia, setTotalCmprasDelDia] = useState(0);
 
-  const handleEfectivoInicialChange = (event) => {
-    setEfectivoInicial(event.target.value);
-  };
+  useEffect(() => {
+    const fetchVentas = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/facturas');
+        setVentas(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const fetchCompras = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/facturas-proveedores');
+        setCompras(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const handleVentasChange = (event) => {
-    setVentas(event.target.value);
-  };
 
-  const handleGastosChange = (event) => {
-    setGastos(event.target.value);
-  };
+    fetchVentas();
+    fetchCompras();
+  }, []);
 
-  const handleCalcularClick = () => {
-    const efectivoInicialValue = parseFloat(efectivoInicial);
-    const ventasValue = parseFloat(ventas);
-    const gastosValue = parseFloat(gastos);
+  useEffect(() => {
+    const fechaActual = new Date();
 
-    const efectivoFinalValue = efectivoInicialValue + ventasValue - gastosValue;
+    const ventasDelDia = ventas.filter(venta =>
+      isSameDay(parseISO(venta.date_fecha), fechaActual)
+    );
 
-    setEfectivoFinal(efectivoFinalValue.toFixed(2));
-  };
+    const totalVentas = ventasDelDia.reduce(
+      (accum, venta) => accum + parseInt(venta.total, 10),
+      0
+    );
+    setTotalVentasDelDia(totalVentas);
+  }, [ventas]);
+
+
+  useEffect(() => {
+    const fechaActual = new Date();
+
+    const comprasDelDia = compras.filter(compra =>
+      isSameDay(parseISO(compra.date_fecha), fechaActual)
+    );
+
+    const totalCompras = comprasDelDia.reduce(
+    (accum, compra) => accum + parseInt(compra.total, 10),
+    0
+    );
+    setTotalCmprasDelDia(totalCompras);
+  }, [compras]);
+
 
   return (
     <div className="container">
-      <h1 className="title">Arqueo de Caja</h1>
-
-      <div className="field">
-        <label className="label">Efectivo Inicial:</label>
-        <div className="control">
-          <input
-            className="input"
-            type="number"
-            value={efectivoInicial}
-            onChange={handleEfectivoInicialChange}
-          />
-        </div>
-      </div>
-
-      <div className="field">
-        <label className="label">Ventas:</label>
-        <div className="control">
-          <input className="input" type="number" value={ventas} onChange={handleVentasChange} />
-        </div>
-      </div>
-
-      <div className="field">
-        <label className="label">Gastos:</label>
-        <div className="control">
-          <input className="input" type="number" value={gastos} onChange={handleGastosChange} />
-        </div>
-      </div>
-
-      <div className="field">
-        <div className="control">
-          <button className="button is-primary" onClick={handleCalcularClick}>Calcular</button>
-        </div>
-      </div>
-
-      {efectivoFinal !== '' && (
-        <div className="field">
-          <h3 className="title is-3">Efectivo Final:</h3>
-          <p>{efectivoFinal}</p>
-        </div>
-      )}
+      <h2 className="title">Arqueo de Caja</h2>
+      <p className="subtitle">Total de ventas del día: {totalVentasDelDia}</p>
+      <p className="subtitle">Total de ventas del día: {totalComprasDelDia}</p>
+      {/* Resto de tu código para mostrar la pantalla de arqueo de caja */}
     </div>
   );
 };
 
-export default ArqueoCaja;
+export default ArqueoDeCaja;
