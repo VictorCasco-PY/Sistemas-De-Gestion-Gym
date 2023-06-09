@@ -119,12 +119,12 @@ const TablaUsuarios = () => {
               <td>{usuario.rol}</td>
               <td>
                 <Link to={`/detallesEmpleado/${usuario.id}`}>
-                  <button className="button is-info is-outlined mr-2">
+                  <button className="button is-info is-outlined mr-2 is-rounded">
                     <RemoveRedEyeIcon fontSize="string" />{" "}
                   </button>
                 </Link>
                 <button
-                  className="button is-danger is-outlined"
+                  className="button is-danger is-outlined is-rounded"
                   onClick={() => handleEliminarClick(usuario.id)}
                 >
                   <DeleteIcon fontSize="string" />
