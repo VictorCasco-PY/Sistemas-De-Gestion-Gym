@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import api from "../services/api";
+import AddIcon from '@mui/icons-material/Add';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Compras() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -7,6 +10,8 @@ export default function Compras() {
   const [selectedItems, setSelectedItems] = useState([]);
   const inputRef = useRef(null);
   const [productos, setProductos] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,8 +67,8 @@ export default function Compras() {
     );
   };
 
-  const handleSubmit = () => {
-    const payload = {
+  const handleSubmit = async () => {
+    const cargaDeCompras = {
       id_proveedor: 1,
       total: calculateTotal(),
       detalles: {
@@ -72,12 +77,18 @@ export default function Compras() {
           subtotal: item.precio * item.quantity,
           cantidad: item.quantity,
           precio: item.precio,
-          iva: 5,
+          iva: item.iva,
         })),
       },
     };
-    // Call the API with the payload
-    // ...
+    try {
+      setIsLoading(true);
+      const response = await api.post("/compras", cargaDeCompras);
+      console.log(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -86,6 +97,10 @@ export default function Compras() {
       <div className='has-background-light p-3 columns container'>
         <div className='listaItems column'>
           <div className='mb-3'>
+            <header className='card-header has-background-info mb-3'>
+              <p className='title is-3 has-text-light p-3'>Productos</p>
+            </header>
+            <Link className="custom-link is-flex" to="/registroProducto"><button className='button is-success mb-3'><AddIcon />Nuevo Producto</button></Link>
             <input
               type='text'
               className='input'
@@ -98,7 +113,7 @@ export default function Compras() {
           </div>
           {modalVisible && (
             <div className='modal-custom'>
-              {/* Render items matching search query */}
+              {/* renderizar el modal con los productos buscados */}
               {productos
                 .filter((item) =>
                   item.str_nombre.toLowerCase().includes(searchQuery.toLowerCase())
@@ -128,32 +143,38 @@ export default function Compras() {
             </div>
           )}
           <div className='itemsFlexOrGrid is-flex is-flex-direction-column'>
+            {(selectedItems.length === 0) && (
+              <div>No hay productos seleccionados.</div>
+            )}
             {selectedItems.map((item, index) => (
               <div
                 key={index}
-                className='compraItem box is-flex is-flex-direction-column mb-1'
+                className='compraItem is-flex is-flex-direction-column mb-0'
               >
-                <div className='is-flex is-justify-content-space-between'>
-                  <div>
-                    <h2>
+
+                <div className='compra-custom is-flex is-justify-content-space-between box p-0'>
+                  <div className='has-background-light p-3'>
+                    <h2 className='is-size-4'>
                       <b>{item.str_nombre}</b>
                     </h2>
                     <p>
                       <b>Descripcion:</b> {item.str_descripcion}
                     </p>
-                    <p>
-                      <b>Cantidad:</b>
+                    <div className='is-flex is-align-items-center'>
+                      <p><b>Cantidad:</b></p>
                       <input
                         type='number'
                         name='cantidad'
                         id='cantidad'
+                        className='input custom-number-input'
                         value={item.quantity}
                         onChange={(event) => handleQuantityChange(event, index)}
                       />
-                    </p>
+                    </div>
+
                   </div>
-                  <div className='is-align-self-center'>
-                    <p>
+                  <div className='is-align-self-center p-3'>
+                    <p className='title'>
                       {parseFloat(item.precio).toLocaleString('en-US', {
                         useGrouping: true,
                         minimumFractionDigits: 0,
@@ -162,10 +183,14 @@ export default function Compras() {
                   </div>
                 </div>
               </div>
+
             ))}
           </div>
         </div>
-        <div className='precioYOpciones column'>
+        <div className='precioYOpciones column is-flex is-flex-direction-column'>
+          <header className='card-header has-background-info mb-3 column is-half p-0'>
+            <p className='title is-3 has-text-light p-3'>Detalles</p>
+          </header>
           <div className='box column is-half p-4 is-flex is-flex-direction-column'>
             <h2 className='subtitle mb-3'>Pago Total</h2>
             <div>
@@ -178,12 +203,14 @@ export default function Compras() {
                 <p className='title'>{calculateTotal()}Gs</p>
               </div>
             </div>
-            <div className='is-align-self-flex-end'>
+            <div className='is-flex is-justify-content-space-between'>
+            <div className=''>{isLoading && <CircularProgress />}</div>
               <button className='button is-success' onClick={handleSubmit}>
                 Comprar
               </button>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

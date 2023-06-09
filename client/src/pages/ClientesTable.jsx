@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
 import api from '../services/api';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const estadosOptions = [
   { value: '', label: 'Seleccione un estado' },
-  { value: 'en_regla', label: 'En regla' },
+  { value: 'pagado', label: 'Pagado' },
   { value: 'pendiente', label: 'Pendiente' },
   { value: 'atrasado', label: 'Atrasado' },
 ];
@@ -25,6 +26,7 @@ export default function ClientesTable() {
   const [searchString, setSearchString] = useState(""); //Que va incluir la busqueda? ej si incluye "an" //renderiza la tabla con clientes que contenga "an"
   const [selectedEstado, setSelectedEstado] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   //PAGINACION
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,8 +52,10 @@ export default function ClientesTable() {
         const response = await api.get("/planes-de-pagos");
         setClientes(response.data);
         setOriginalData(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     };
 
@@ -116,7 +120,7 @@ export default function ClientesTable() {
     const plan = selectedPlan;
 
     if (nombre.length > 2 || estado || plan) {
-      let url = "http://localhost:8000/planes-de-pagos?";
+      let url = "/planes-de-pagos?";
 
       if (nombre.length > 2) {
         url += `nombre=${nombre}`;
@@ -133,10 +137,13 @@ export default function ClientesTable() {
       console.log(url);
 
       try {
+        setIsLoading(true);
         const response = await api.get(url);
         setClientes(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
 
     } else {
@@ -211,42 +218,48 @@ export default function ClientesTable() {
             </tr>
           </thead>
           <tbody>
-            {currentClients.length > 0 ? (
-              currentClients.map((cliente) => ( //Solo si hay datos en la tabla se mapea
-                <tr key={cliente.id_cliente}>
-                  <td className='is-size-5'>{cliente.str_nombre_cliente}</td>
-                  <td className='is-size-5'>
-                    {cliente.str_modalidad //para poner en mayuscula
-                      .split(' ')
-                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                      .join(' ')
-                    }
-                  </td>
-                  <td className='is-size-5'>
-                    <button className={` ${colorMap[cliente.estado_de_pago]} button is-static has-text-white`}>
-                      {cliente.estado_de_pago
-                        .split(' ')
-                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                        .join(' ')
-                      }
-                    </button>
-                  </td>
-                  <td className='is-size-5 is-flex is-justify-content-center'
-                  style={ {width: '100%', gap:'8px'}}>
-                    <Link to={`/detallesCliente/${cliente.id_cliente}`}>
-                      <button className="button is-link is-rounded">Ver Mas</button>
-                    </Link>
-                    <button className="button is-danger is-rounded">Borrar</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+            {isLoading ? (
               <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+                <td><CircularProgress /></td>
+                <td><CircularProgress /></td>
+                <td><CircularProgress /></td>
+                <td><CircularProgress /></td>
               </tr>
+            ) : (
+              currentClients.length > 0 ? (
+                currentClients.map((cliente) => (
+                  <tr key={cliente.id_cliente}>
+                    <td className='is-size-5'>{cliente.str_nombre_cliente}</td>
+                    <td className='is-size-5'>
+                      {cliente.str_modalidad
+                        .split(' ')
+                        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ')}
+                    </td>
+                    <td className='is-size-5'>
+                      <button className={` ${colorMap[cliente.estado_de_pago]} button is-static has-text-white`}>
+                        {cliente.estado_de_pago
+                          .split(' ')
+                          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                          .join(' ')}
+                      </button>
+                    </td>
+                    <td className='is-size-5 is-flex is-justify-content-center' style={{ width: '100%', gap: '8px' }}>
+                      <Link to={`/detallesCliente/${cliente.id_cliente}`}>
+                        <button className="button is-link is-rounded is-outlined">Ver Mas</button>
+                      </Link>
+                      <button className="button is-danger is-rounded is-outlined">Borrar</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              )
             )}
           </tbody>
         </table>

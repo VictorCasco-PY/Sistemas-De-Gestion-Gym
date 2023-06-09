@@ -166,12 +166,10 @@ $infocolor: #d4d4d4;
         outline: none;
     }
 }
-
-button {
-
-    &.button.icon {}
+.custom-number-input {
+    height: 30px !important;
+    width: 150px !important;
 }
-
 .hr2 {
     background-color: gray;
 }
@@ -228,6 +226,12 @@ button {
 
 .compraItem {
     padding: 0.5rem;
+    box-shadow: none !important;
+}
+
+.compra-custom {
+    box-shadow: none !important;
+    border: 1px solid lightgray;
 }
 
 .modal-custom {
@@ -254,4 +258,12 @@ button {
 }
 .itemSeparator {
     border: 1px solid #ccc;
+  }
+
+  .itemsFlexOrGrid {
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background-color: #ffff;
+    padding: 8px;
+    max-height: 500px;
   }
