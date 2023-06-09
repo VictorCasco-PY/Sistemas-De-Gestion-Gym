@@ -1,8 +1,6 @@
 import { models } from "../models/models.js";
-import { Cliente } from "./clientes.controller.js";
 import { getDateNow } from "../tools/date.js";
 import {Cliente} from "./clientes.controller.js";
-import {getDateNow} from "../tools/date.js"
 import facturas_detalles from "../models/facturas_detalles.js";
 import clientes from "../models/clientes.js";
 const cliente = new Cliente();
@@ -117,4 +115,5 @@ export class Factura {
       throw new Error(error.message);
     }
   };
+}
 }
