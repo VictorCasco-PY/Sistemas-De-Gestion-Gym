@@ -48,7 +48,8 @@ $infocolor: #d4d4d4;
     }
 
     .bubbleInfo {
-        background-color: $infocolor;
+        border: 1px solid lightgray;
+        background-color: #FFFF;
         border-radius: 0px 10px 10px 0px;
         padding: 0.6rem 0.6rem;
         display: flex;
@@ -153,7 +154,7 @@ $infocolor: #d4d4d4;
     border: none;
     box-shadow: none;
     height: auto;
-    max-width: 200px;
+    max-width: 100%;
     padding: 0.2rem;
     font-size: inherit;
 
@@ -234,19 +235,23 @@ $infocolor: #d4d4d4;
     border: 1px solid lightgray;
 }
 
-.modal-custom {
+.input-container {
     position: relative;
+  }
+  
+  .modal-custom {
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%;
-    bottom:12px;
-    max-height: 200px;
-    overflow-y: auto;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 8px;
     margin-top: 0;
-    z-index: 999; /* Ensure the modal is above other elements if necessary */
+    z-index: 999;
   }
+  
 
 .itemResult {
     cursor: pointer;
@@ -265,5 +270,9 @@ $infocolor: #d4d4d4;
     border: 1px solid #ccc;
     background-color: #ffff;
     padding: 8px;
-    max-height: 500px;
+    max-height: 450px;
+  }
+
+  ol {
+    list-style-type: lower-alpha;
   }
