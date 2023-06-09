@@ -1,4 +1,3 @@
-import cron from "node-cron";
 import { models } from "../models/models.js";
 
 const {planes_de_pagos} = models;

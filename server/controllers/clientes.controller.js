@@ -1,5 +1,7 @@
 import {models} from "../models/models.js";
 import {Op} from "sequelize";
+import planes_de_pagos from "../models/planes_de_pagos.js";
+import mediciones_clientes from "../models/mediciones_clientes.js";
 const {clientes} = models;
 
 export class Cliente {
@@ -78,7 +80,7 @@ export class Cliente {
 
     getById = async (id) => {
         try {
-            const result = await clientes.findOne({where: {id}});
+            const result = await clientes.findOne({where: {id}, include:[{model:planes_de_pagos},{model:mediciones_clientes}]});
             return result;
         } catch (error) {
             throw new Error(error.message);
