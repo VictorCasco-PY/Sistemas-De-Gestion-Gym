@@ -13,7 +13,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CustomListItem from '../components/Sidenav/CustomListItem';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
-
 import StoreIcon from '@mui/icons-material/Store';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -62,6 +61,7 @@ export default function Layout({ children }) {
                             <Divider />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
                             <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
+                            <CustomListItem icon={<StoreIcon />} text='Facturas' to='/facturas' />
                             <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
                             <CustomListItem icon={<PersonIcon />} text='Empleados' to='/listaEmpleados' />
                             <CustomListItem icon={<InventoryIcon />} text='Productos' to='/listaProductos' />
@@ -80,16 +80,16 @@ export default function Layout({ children }) {
                 </List>
                 <List >
 
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-left">
+                    <div className="card-content">
+                        <div className="media">
+                            <div className="media-left">
                                 <Stack >
                                     <Avatar>{user.nombre.charAt(0)}</Avatar>
                                 </Stack>
                             </div>
-                            <div class="media-content">
-                                <p class="title is-5">{user.nombre}</p>
-                                <p class="subtitle is-6">
+                            <div className="media-content">
+                                <p className="title is-5">{user.nombre}</p>
+                                <p className="subtitle is-6">
                                     {user.rol === 'admin' ? 'Administrador' : user.rol === 'caja' ? 'Cajero' : user.rol === 'entrenador' ? 'Entrenador' : ''}
                                 </p>
                             </div>

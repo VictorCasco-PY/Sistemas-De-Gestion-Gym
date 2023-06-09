@@ -23,7 +23,7 @@ import NewLayout from './Layout/NewLayout';
 import DetallesProducto from './pages/DetallesProducto';
 import ArqueoCaja from './pages/ArqueoCaja';
 import Compras from './pages/Compras';
-
+import ListaFacturas from './pages/facturas/ListaFacturas'
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -70,6 +70,7 @@ function App() {
             <Route path='/listaProductos' element={<NewLayout>< ListaProductos /></NewLayout>} />
             <Route path='/detallesProducto/:id' element={<NewLayout><DetallesProducto /></NewLayout>} />
             <Route path='/arqueo' element={<NewLayout>< ArqueoCaja /></NewLayout>} />
+            <Route path='/facturas' element={<NewLayout><ListaFacturas /></NewLayout>} />
           </Route>
         </Routes>
       </BrowserRouter>
