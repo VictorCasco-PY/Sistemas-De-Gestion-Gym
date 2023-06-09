@@ -83,7 +83,6 @@ export class PlanesDePagos {
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      await this.actualizarEstados();
       const { nombre, estado, ordenNombre, plan, ...querys } = req.query;
 
       const where = {
@@ -111,7 +110,7 @@ export class PlanesDePagos {
   // Obtiene un plan de pago consultando por su ID
   getByParams = async (req, res) => {
     try {
-      await this.actualizarEstados();
+
       const { id } = req.params;
       const result = await planes_de_pagos.findOne({ where: { id }});
       if (!result)
@@ -171,29 +170,6 @@ export class PlanesDePagos {
       }, {where:{id}});
     } catch (error) {
       throw new Error(error.message);
-    }
-  };
-
-  actualizarEstados = async () => {
-    const today = new Date().toISOString().split("T")[0]; //fecha de hoy es 2023-06-02
-
-    try {
-      const planesVencidos = await planes_de_pagos.findAll({
-        where: {
-          date_fecha_de_vencimiento: {
-            [Op.lt]: today, //fecha de pago es menor a la fecha actual
-          },
-        },
-      });
-
-      planesVencidos.forEach(async (plan) => {
-        await planes_de_pagos.update(
-          { estado_de_pago: "atrasado" },
-          { where: { id: plan.id } }
-        );
-      });
-    } catch (error) {
-      console.log(error.message);
     }
   };
 }

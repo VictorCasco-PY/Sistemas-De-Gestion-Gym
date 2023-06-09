@@ -1,4 +1,5 @@
 import express from "express";
+import cron from "node-cron";
 import clientesRouter from "./routers/clientes.routes.js";
 import bodyParser from "body-parser";
 import planesPagosRouter from "./routers/planes-de-pagos.routes.js";
@@ -19,7 +20,7 @@ import facturasProveedoresRoutes from "./routers/facturas_proveedores.routes.js"
 import facturasProveedoresDetallesRoutes from "./routers/facturas_proveedores_detalles.routes.js";
 import ventasRoutes from "./routers/ventas.routes.js";
 import comprasRoutes from "./routers/compras.routes.js";
-
+import {actualizarEstados} from "./services/actualizarPlanesDePago.js"
 const app = express();
 
 app.use(
@@ -53,6 +54,11 @@ app.use(facturasProveedoresRoutes)
 app.use(facturasProveedoresDetallesRoutes)
 app.use(ventasRoutes);
 app.use(comprasRoutes);
+
+
+cron.schedule('0 0 * * *', actualizarEstados, {
+    timezone: 'America/Asuncion'
+})
 
 app.get("/", async (req, res) => {
     res.json({
