@@ -4,13 +4,17 @@ import { format, getMonth } from 'date-fns';
 import Swal from 'sweetalert2';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { TablePagination } from '@mui/material';
+import { CircularProgress, TablePagination } from '@mui/material';
+import Box from '@mui/material/Box';
 
 const ListaFacturas = () => {
     const [facturas, setFacturas] = useState([]);
     const [mesSeleccionado, setMesSeleccionado] = useState('');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [isLoading, setIsLoading] = useState(true);
+
+
 
     useEffect(() => {
         fetchData();
@@ -22,8 +26,21 @@ const ListaFacturas = () => {
             setFacturas(response.data);
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    if (isLoading) {
+        return <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+        }}>
+            <CircularProgress />
+        </Box>;
+    }
 
     const deleteFactura = async (id_factura) => {
         try {

@@ -76,7 +76,7 @@ const Ventas = () => {
             const nuevoProducto = {
                 id: productoId,
                 str_descripcion: response.data.str_descripcion,
-                cantidad: 1,
+                cantidad: response.data.cantidad,
                 iva: response.data.iva,
                 precio: response.data.precio,
             };
@@ -103,10 +103,20 @@ const Ventas = () => {
     };
 
     const handleCantidadChange = (event, index) => {
+        const newCantidad = parseInt(event.target.value);
         const updatedProductos = [...productos];
-        updatedProductos[index].cantidad = parseInt(event.target.value);
+
+        if (newCantidad > updatedProductos[index].cantidad) {
+            updatedProductos[index].cantidad = updatedProductos[index].cantidad;
+        } else if (newCantidad < 1) {
+            updatedProductos[index].cantidad = 1;
+        } else {
+            updatedProductos[index].cantidad = newCantidad;
+        }
+
         setProductos(updatedProductos);
     };
+
 
     const obtenerPrecioPlanDePago = (planDePago) => {
 
@@ -196,8 +206,8 @@ const Ventas = () => {
 
     return (
         <>
-            <h1 className="title is-1">Nueva Venta</h1>
             <div className="container column ml-auto">
+                <h1 className="title is-1 has-text-primary">Nueva Venta</h1>
                 <div className="card box columns has-background-light">
                     <div className='mt-3'>
                         <header className='card-header has-background-info'>
@@ -299,10 +309,9 @@ const Ventas = () => {
                                                     <input
                                                         type="number"
                                                         min="1"
+                                                        max={producto.cantidad}
                                                         value={producto.cantidad}
-                                                        onChange={(event) =>
-                                                            handleCantidadChange(event, index)
-                                                        }
+                                                        onChange={(event) => handleCantidadChange(event, index)}
                                                     />
                                                 </td>
                                                 <td>{Number(producto.precio).toLocaleString('es-ES')}</td>
