@@ -1,8 +1,6 @@
 import { models } from "../models/models.js";
 import { Cliente } from "./clientes.controller.js";
 import { getDateNow } from "../tools/date.js";
-import {Cliente} from "./clientes.controller.js";
-import {getDateNow} from "../tools/date.js"
 import facturas_detalles from "../models/facturas_detalles.js";
 import clientes from "../models/clientes.js";
 const cliente = new Cliente();
@@ -96,25 +94,29 @@ export class Factura {
     } catch (error) {
       const { message } = error;
       return res.status(500).json({ error: message });
-      
-    getAll = async(req,res)=>{
-        try{
-            const result = await facturas.findAll({include:{model:facturas_detalles}, include:{model:clientes}});
-            res.json(result);
-        }catch(error){
-            const {message} = error;
-            return res.status(500).json({error:message});
-        }
-    }
-  };
 
-  // obtiene por id
-  getById = async (id) => {
-    try {
-      const result = await facturas.findOne({ where: { id } });
-      return result;
-    } catch (error) {
-      throw new Error(error.message);
+      getAll = async (req, res) => {
+        try {
+          const result = await facturas.findAll({
+            include: { model: facturas_detalles },
+            include: { model: clientes },
+          });
+          res.json(result);
+        } catch (error) {
+          const { message } = error;
+          return res.status(500).json({ error: message });
+        }
+      };
     }
+
+    // obtiene por id
+    getById = async (id) => {
+      try {
+        const result = await facturas.findOne({ where: { id } });
+        return result;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    };
   };
 }
