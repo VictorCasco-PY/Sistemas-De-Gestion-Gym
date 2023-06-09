@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PaymentIcon from '@mui/icons-material/Payment';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import Autosuggest from 'react-autosuggest';
 import Swal from 'sweetalert2';
 
 const Ventas = () => {
@@ -18,7 +15,6 @@ const Ventas = () => {
     const [iva5, setIVA5] = useState(0);
     const [iva10, setIVA10] = useState(0);
     const [precioPlanPago, setPrecioPlanPago] = useState(0);
-    const navigate = useNavigate();
     let id_cliente = null;
 
     useEffect(() => {
@@ -122,7 +118,7 @@ const Ventas = () => {
             case 2:
                 return 50000; // Precio para id_tipo_modalidad_de_pago 2: 70.000
             case 3:
-                return 150000; // Precio para id_tipo_modalidad_de_pago 3: 100.000
+                return 100000; // Precio para id_tipo_modalidad_de_pago 3: 100.000
             default:
                 return 0; // Si el id_tipo_modalidad_de_pago no coincide con ninguno de los casos anteriores, el precio es 0
         }
@@ -202,7 +198,7 @@ const Ventas = () => {
         <>
             <h1 className="title is-1">Nueva Venta</h1>
             <div className="container column ml-auto">
-                <div className="card box columns">
+                <div className="card box columns has-background-light">
                     <div className='mt-3'>
                         <header className='card-header has-background-info'>
                             <p className='title is-3 has-text-light p-3'>Datos del cliente</p>
@@ -234,8 +230,9 @@ const Ventas = () => {
                                 <p className='title is-3 has-text-light p-3'>Productos/Servicios</p>
                             </header>
                             <div className='card-content'>
+
                                 <input
-                                    className="column input is-primary is-half mb-2"
+                                    className="column input is-primary is-half mb-4"
                                     type="text"
                                     name="buscador"
                                     placeholder="Buscar producto/servicio"
@@ -273,7 +270,7 @@ const Ventas = () => {
                                                         : planDePago[0].id_tipo_modalidad_de_pago === 2
                                                             ? '50.000'
                                                             : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                                ? '150.000'
+                                                                ? '100.000'
                                                                 : ''}
                                                 </td>
                                                 <td>
@@ -282,7 +279,7 @@ const Ventas = () => {
                                                         : planDePago[0].id_tipo_modalidad_de_pago === 2
                                                             ? '50.000'
                                                             : planDePago[0].id_tipo_modalidad_de_pago === 3
-                                                                ? '150.000'
+                                                                ? '100.000'
                                                                 : ''}
                                                 </td>
                                             </tr>

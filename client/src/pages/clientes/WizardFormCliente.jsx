@@ -79,7 +79,7 @@ const WizardFormCliente = () => {
     const valoresMontoAPagar = {
         1: "10.000 Gs.",
         2: "50.000 Gs.",
-        3: "150.000 Gs."
+        3: "100.000 Gs."
     };
     // Función para manejar la selección del tipo de modalidad de pago
     const handleTipoModalidadDePago = (tipoModalidadDePagoId) => {
