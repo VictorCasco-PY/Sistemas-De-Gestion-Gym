@@ -58,7 +58,7 @@ export class Cliente {
 
             if(nombre) where.str_nombre = {[Op.like]: `%${nombre}%`};
 
-            const result = await clientes.findAll({where, include:{model:planes_de_pagos});
+            const result = await clientes.findAll({where, include:{model:planes_de_pagos}});
             return res.json(result);
         } catch (error) {
             const {message} = error;
