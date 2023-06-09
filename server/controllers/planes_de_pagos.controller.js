@@ -83,7 +83,6 @@ export class PlanesDePagos {
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      await this.actualizarEstados();
       const { nombre, estado, ordenNombre, plan, ...querys } = req.query;
 
       const where = {
@@ -111,7 +110,7 @@ export class PlanesDePagos {
   // Obtiene un plan de pago consultando por su ID
   getByParams = async (req, res) => {
     try {
-      await this.actualizarEstados();
+
       const { id } = req.params;
       const result = await planes_de_pagos.findOne({ where: { id }});
       if (!result)
