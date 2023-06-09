@@ -46,7 +46,6 @@ export class Factura {
             const {id_cliente} = query;
             const date_fecha = getDateNow();
             const {str_nombre, str_ruc} = (await cliente.getById(id_cliente)).dataValues;
-            console.log(str_nombre, str_ruc);
             if(!str_nombre) return res.status(404).json({error:"No se ha encontrado un cliente con ese id"});
             
             const result = await facturas.create({...query, date_fecha, str_nombre_cliente:str_nombre, str_ruc_cliente:str_ruc});
