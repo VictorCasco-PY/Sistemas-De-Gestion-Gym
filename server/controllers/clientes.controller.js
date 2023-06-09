@@ -90,7 +90,7 @@ export class Cliente {
     getByRuc = async (req) => {
         try {
             const {str_ruc} = req;
-            const result = await clientes.findOne({where: {str_ruc}});
+            const result = await clientes.findOne({where: {str_ruc}, include:{model:planes_de_pagos}});
             return result;
         } catch (error) {
             throw new Error(error.message);

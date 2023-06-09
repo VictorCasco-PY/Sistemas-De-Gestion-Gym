@@ -94,29 +94,15 @@ export class Factura {
     } catch (error) {
       const { message } = error;
       return res.status(500).json({ error: message });
-
-      getAll = async (req, res) => {
-        try {
-          const result = await facturas.findAll({
-            include: { model: facturas_detalles },
-            include: { model: clientes },
-          });
-          res.json(result);
-        } catch (error) {
-          const { message } = error;
-          return res.status(500).json({ error: message });
-        }
-      };
     }
-
-    // obtiene por id
-    getById = async (id) => {
-      try {
-        const result = await facturas.findOne({ where: { id } });
-        return result;
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    };
+  };
+  // obtiene por id
+  getById = async (id) => {
+    try {
+      const result = await facturas.findOne({ where: { id } });
+      return result;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   };
 }
