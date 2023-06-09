@@ -94,7 +94,7 @@ const ListaProductos = () => {
           />
         </div>
         <div className="column">
-          <Link to="/nuevoProducto" className="button is-link is-outlined">
+          <Link to="/registroProducto" className="button is-link is-outlined">
             <AddIcon fontSize="small" /> Nuevo Producto
           </Link>
         </div>
@@ -138,12 +138,12 @@ const ListaProductos = () => {
               <td>{producto.cantidad}</td>
               <td>
                 <Link to={`/detallesProducto/${producto.id}`}>
-                  <button className="button is-info is-outlined mr-2">
+                  <button className="button is-info is-outlined mr-2 is-rounded ">
                     <RemoveRedEyeIcon fontSize="string" />{" "}
                   </button>
                 </Link>
                 <button
-                  className="button is-danger is-outlined"
+                  className="button is-danger is-outlined is-rounded"
                   onClick={() => handleEliminarClick(producto.id)}
                 >
                   <DeleteIcon fontSize="string" />
