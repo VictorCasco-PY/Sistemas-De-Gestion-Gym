@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 
 const ListaFacturas = () => {
     const [facturas, setFacturas] = useState([]);
-    const [compras, setCompras] = useState([]);
     const [mesSeleccionado, setMesSeleccionado] = useState('');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -27,17 +26,6 @@ const ListaFacturas = () => {
     const fetchData = async () => {
         try {
             const response = await api.get(`/${selectedOption}`); // Reemplaza 'API_URL' con la URL de tu API
-            setFacturas(response.data);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const fetchCompras = async () => {
-        try {
-            const response = await api.get('/facturas-proveedores'); // Reemplaza 'API_URL' con la URL de tu API
             setFacturas(response.data);
         } catch (error) {
             console.log(error);

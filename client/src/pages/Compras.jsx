@@ -177,6 +177,7 @@ export default function Compras() {
                 onBlur={handleBlur}
                 ref={inputRef}
               />
+              {/* ESTE ES EL MODAL QUE SE MUESTRA AL BUSCAR EN EL INPUT */}
               {modalVisible && (
                 <div className='modal-custom'>
                   {/* renderizar el modal con los productos buscados */}
@@ -206,6 +207,8 @@ export default function Compras() {
                         <hr className='itemSeparator m-0 mb-1' />
                       </div>
                     ))}
+             {/*  //////// */}
+
                 </div>
               )}
             </div>
