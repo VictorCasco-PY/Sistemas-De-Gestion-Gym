@@ -27,11 +27,7 @@ const ListaProveedores = () => {
     }
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            getProveedores();
-        }, 250);
-
-        return () => clearTimeout(timer); // Limpiar el temporizador si el componente se desmonta antes de que se cumpla el tiempo de espera
+        getProveedores();
     }, []);
 
     // Eliminar proveedores
