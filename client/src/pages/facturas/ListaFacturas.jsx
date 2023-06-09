@@ -134,7 +134,6 @@ const ListaFacturas = () => {
                             <td>{Number(factura.total).toLocaleString('es-ES')}</td>
                             <td>
                                 <button className='button is-info is-outlined mr-2'><RemoveRedEyeIcon fontSize='string' /></button>
-                                <button className='button is-danger is-outlined' onClick={() => handleDeleteFactura(factura.id)}><DeleteIcon fontSize='string' /></button>
                             </td>
                         </tr>
                     ))}

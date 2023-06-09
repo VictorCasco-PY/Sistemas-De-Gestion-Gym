@@ -356,7 +356,7 @@ const Ventas = () => {
                             </div>
                         </div>
 
-                        <div className="buttons is-right">
+                        <div className="buttons is-centered">
                             <button className="button is-primary mt-6" onClick={handleSubmitVenta}>
                                 <PaymentIcon fontSize="medium" />
                                 Guardar Venta
