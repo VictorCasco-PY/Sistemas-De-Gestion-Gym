@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -88,11 +87,11 @@ const ListaProveedores = () => {
     return (
         <>
             <Link to='/registroProveedores'>
-                <button className='button is-success mb-3'><AddIcon fontSize='string' />Agregar Proveedor</button>
+                <button className='button is-success mb-3'><AddIcon fontSize='medium' />Agregar Proveedor</button>
             </Link>
 
-            <table className='table is-fullwidth is-bordered'>
-                <thead className='title is-3'>
+            <table className='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'>
+                <thead>
                     <tr>
                         <th>RUC</th>
                         <th>Nombre</th>
@@ -102,7 +101,7 @@ const ListaProveedores = () => {
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody className='title is-4'>
+                <tbody >
                     {proveedores.map((proveedor) => (
                         <tr key={proveedor.id}>
                             <td>{proveedor.str_ruc}</td>
@@ -111,8 +110,8 @@ const ListaProveedores = () => {
                             <td>{proveedor.str_direccion}</td>
                             <td>{proveedor.str_correo}</td>
                             <td>
-                                <button className='button is-info' onClick={() => navigate(`/proveedor/detalle/${proveedor.id}`)}><EditIcon fontSize='string' /></button>
-                                <button className='button is-danger ml-2' onClick={() => handleDeleteProveedor(proveedor.id)}><DeleteIcon fontSize='string' /></button>
+                                <button className='button is-info is-outlined' onClick={() => navigate(`/proveedor/detalle/${proveedor.id}`)}><EditIcon fontSize='string' /></button>
+                                <button className='button is-danger is-outlined ml-2' onClick={() => handleDeleteProveedor(proveedor.id)}><DeleteIcon fontSize='string' /></button>
                             </td>
                         </tr>
                     ))}

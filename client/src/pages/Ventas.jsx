@@ -305,8 +305,8 @@ const Ventas = () => {
                                                         }
                                                     />
                                                 </td>
-                                                <td>{producto.precio}</td>
-                                                <td>{producto.cantidad * producto.precio}</td>
+                                                <td>{Number(producto.precio).toLocaleString('es-ES')}</td>
+                                                <td>{(producto.cantidad * producto.precio).toLocaleString('es-ES')}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -324,24 +324,24 @@ const Ventas = () => {
                             <div className="control">
                                 <div className="tags has-addons mb-2">
                                     <span className="tag is-info is-large">Sub Total</span>
-                                    <span className="tag is-large">{subtotal}</span>
+                                    <span className="tag is-large">{subtotal.toLocaleString('es-ES')}</span>
                                 </div>
                                 <div className="control">
                                     <div className="tags has-addons mb-2">
                                         <span className="tag is-info is-large">IVA(5%)</span>
-                                        <span className="tag is-large">{iva5}</span>
+                                        <span className="tag is-large">{iva5.toLocaleString('es-ES')}</span>
                                     </div>
                                 </div>
                                 <div className="control">
                                     <div className="tags has-addons mb-2">
                                         <span className="tag is-info is-large">IVA(10%)</span>
-                                        <span className="tag is-large">{iva10}</span>
+                                        <span className="tag is-large">{iva10.toLocaleString('es-ES')}</span>
                                     </div>
                                 </div>
                                 <div className="control">
                                     <div className="tags has-addons mb-2">
                                         <span className="tag is-info is-large">Total(Gs)</span>
-                                        <span className="tag is-large">{total}</span>
+                                        <span className="tag is-large">{total.toLocaleString('es-ES')}</span>
                                     </div>
                                 </div>
                             </div>
