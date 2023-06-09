@@ -4,24 +4,25 @@ import api from "../services/api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Link } from "react-router-dom";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import AddIcon from '@mui/icons-material/Add';
 import SortIcon from "@mui/icons-material/Sort";
 
 const ListaProductos = () => {
   const [productos, setProductos] = useState([]);
-
+  const [busqueda, setBusqueda] = useState("");
   const [sortType, setSortType] = useState(""); // Tipo de orden: "nombre" o "precio"
   const [sortDirection, setSortDirection] = useState(""); // Dirección del orden: "asc" o "desc"
 
-  const [busqueda, setBusqueda] = useState("");
-
   const handleBusquedaChange = (event) => {
-    setBusqueda(event.target.value);
-  };
+    const value = event.target.value;
+    setBusqueda(value);
 
-  const productosFiltrados = productos.filter((producto) =>
-  producto.str_nombre.includes(busqueda)
-);
+    if (value.length >= 3) {
+      fetchProductos(value);
+    } else {
+      setProductos([]); // Restablecer la lista completa de productos
+    }
+  };
 
   const handleSortClick = (type) => {
     if (sortType === type) {
@@ -34,21 +35,20 @@ const ListaProductos = () => {
     }
   };
 
-  useEffect(() => {
-    api
-      .get("/productos", {
+  const fetchProductos = async (nombre) => {
+    try {
+      const response = await api.get("/productos", {
         params: {
+          nombre,
           ordenNombre: sortType === "nombre" ? sortDirection : undefined,
           ordenPrecio: sortType === "precio" ? sortDirection : undefined,
         },
-      })
-      .then((response) => {
-        setProductos(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
       });
-  }, [sortType, sortDirection]);
+      setProductos(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleEliminarClick = (id) => {
     Swal.fire({
@@ -56,50 +56,50 @@ const ListaProductos = () => {
       text: "¿Estás seguro de que deseas eliminar este producto?",
       icon: "warning",
       showCancelButton: true,
+      confirmButtonColor: "#ff3860",
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
-    }).then((result) => {
+      reverseButtons: true,
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        api
-          .delete(`/producto/${id}`)
-          .then((response) => {
-            console.log(response.data);
-            setProductos(productos.filter((producto) => producto.id !== id));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        try {
+          await api.delete(`/producto/${id}`);
+          setProductos(productos.filter((producto) => producto.id !== id));
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
   };
 
+  useEffect(() => {
+    if (busqueda.length >= 3) {
+      fetchProductos(busqueda);
+    } else {
+      fetchProductos(""); // Obtener la lista completa de productos
+    }
+  }, [busqueda, sortType, sortDirection]);
+
   return (
     <div>
+      <h1 className="title is-3 has-text-primary">Lista de Productos</h1>
       <div className="columns">
-        <div className="column">
-          <h1 className="title is-3 has-text-primary">Lista de Productos</h1>
+        <div className="column is-four-fifths">
+          <input
+            className="input is-primary is-primary has-text-centered"
+            type="search"
+            placeholder="Buscar por Nombre"
+            value={busqueda}
+            onChange={handleBusquedaChange}
+          />
         </div>
-        <div className="columns">
-          <div className="column">
-            <input
-              className="input is-primary is-primary has-text-centered"
-              type="search"
-              placeholder="Buscar"
-              value={busqueda}
-              onChange={handleBusquedaChange}
-            />
-          </div>
-          <div className="column">
-            <Link to={`/registroProducto`}>
-              <button className="button is-link is-outlined">
-                <PersonAddAltIcon fontSize="string" />
-                Agregar
-              </button>
-            </Link>
-          </div>
+        <div className="column">
+          <Link to="/nuevoProducto" className="button is-link is-outlined">
+            <AddIcon fontSize="small" /> Nuevo Producto
+          </Link>
         </div>
       </div>
-      <table className="table is-fullwidth">
+      <table className="table is-striped is-hoverable is-fullwidth">
         <thead>
           <tr>
             <th>
@@ -128,7 +128,7 @@ const ListaProductos = () => {
           </tr>
         </thead>
         <tbody>
-          {productosFiltrados.map((producto) => (
+          {productos.map((producto) => (
             <tr key={producto.id}>
               <td>{producto.str_nombre}</td>
               <td>{producto.str_descripcion}</td>
@@ -152,7 +152,6 @@ const ListaProductos = () => {
             </tr>
           ))}
         </tbody>
-        
       </table>
     </div>
   );

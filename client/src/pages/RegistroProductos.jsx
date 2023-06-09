@@ -11,7 +11,7 @@ const RegistroProductos = () => {
     iva: null, // Valor inicial null
     str_nombre: "",
     str_codigo: "",
-    cantidad: "",
+    cantidad: 0,
   };
 
   const [productos, setProductos] = useState(productosData);
@@ -125,19 +125,6 @@ const RegistroProductos = () => {
               </div>
               <div className="column">
                 <input
-                  className="input is-primary has-text-centered"
-                  type="number"
-                  name="cantidad"
-                  value={productos.cantidad}
-                  onChange={handleChange}
-                  placeholder="Cantidad"
-                  required
-                />
-              </div>
-            </div>
-            <div className="columns">
-              <div className="column">
-                <input
                   className="input is-primary is-primary has-text-centered"
                   type="text"
                   name="precio"
@@ -147,6 +134,8 @@ const RegistroProductos = () => {
                   required
                 />
               </div>
+            </div>
+            <div className="columns">
               <div className="column select is-primary">
                 <select
                   className="has-text-centered"
