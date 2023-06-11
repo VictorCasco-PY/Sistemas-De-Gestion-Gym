@@ -136,8 +136,8 @@ export default function Compras() {
   };
 
   return (
-    <div>
-      <h1 className='title is-size-2'>Compras</h1>
+    <div className='is-serif'>
+      <h1 className='title is-size-2'>Nueva Compra</h1>
       <div className='has-background-light p-3 columns container'>
         <div className='listaItems column'>
           <div className='mb-3'>
@@ -155,6 +155,7 @@ export default function Compras() {
                   onChange={handleProveedorChange}
                   placeholder={"Selecciona un proveedor"}
                 />
+                <span className='ml-2'>RUC: 111111</span>
               </div>
             </div>
             <header className='card-header has-background-info mb-3'>
@@ -176,6 +177,7 @@ export default function Compras() {
                 onBlur={handleBlur}
                 ref={inputRef}
               />
+              {/* ESTE ES EL MODAL QUE SE MUESTRA AL BUSCAR EN EL INPUT */}
               {modalVisible && (
                 <div className='modal-custom'>
                   {/* renderizar el modal con los productos buscados */}
@@ -205,6 +207,8 @@ export default function Compras() {
                         <hr className='itemSeparator m-0 mb-1' />
                       </div>
                     ))}
+             {/*  //////// */}
+
                 </div>
               )}
             </div>
@@ -258,8 +262,8 @@ export default function Compras() {
           </div>
         </div>
         <div className='precioYOpciones column is-flex is-flex-direction-column'>
-          <header className='card-header has-background-info mb-3 column is-half p-0'>
-            <p className='title is-3 has-text-light p-3'>Detalles</p>
+          <header className='card-header has-background-white has-text-black mb-3 column is-half p-0'>
+            <p className='title is-3 has-text-black p-3'>Detalles</p>
           </header>
           <div className='box column is-half p-4 is-flex is-flex-direction-column'>
             <h2 className='subtitle mb-3'>Pago Total</h2>
@@ -285,7 +289,7 @@ export default function Compras() {
             <div className='is-flex is-justify-content-space-between'>
               <div className=''>{isLoading && <CircularProgress />}</div>
               <button className='button is-success' onClick={handleSubmit}>
-                Comprar
+                Guardar
               </button>
             </div>
           </div>
