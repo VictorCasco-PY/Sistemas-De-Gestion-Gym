@@ -37,12 +37,11 @@ export function DetallesCliente() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response1 = await api.get(`/cliente/${id}/medicion-cliente`);
-                setClienteMed(response1.data);
-                const response2 = await api.get(`/cliente/${id}/plan-de-pago`);
-                setCliente(response2.data);
-                const response3 = await api.get(`/cliente/${id}`);
-                setClientePers(response3.data);
+                const response = await api.get(`/cliente/${id}`);
+                console.log(response.data)
+                setClientePers(response.data);
+                setClienteMed(response.data.mediciones_clientes);
+                setCliente(response.data.planes_de_pagos[0]);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
