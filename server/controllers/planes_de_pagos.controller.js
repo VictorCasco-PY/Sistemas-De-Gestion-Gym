@@ -1,5 +1,5 @@
 import { models } from "../models/models.js";
-import { getDateNow, nuevaFechaVencimiento, toDate } from "../tools/date.js";
+import { esPlanVencido, getDateNow, nuevaFechaVencimiento, toDate } from "../tools/date.js";
 import { Cliente } from "./clientes.controller.js";
 import { Op } from "sequelize";
 import { TipoModalidadDePago } from "./tipos_modalidades_de_pagos.js";
@@ -159,12 +159,19 @@ export class PlanesDePagos {
   cobrarPlan = async (id) => {
     try {
       const plan = await this.getById(id);
-      const date_fecha_de_vencimiento = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento);
-      console.log(date_fecha_de_vencimiento);
-      const {date_fecha_de_pago} = getDateNow();
 
+      // calcula una nueva fecha para pago
+      const date_fecha_de_vencimiento = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento, plan.id_tipo_modalidad_de_pago);
+      
+      // actualiza la fecha del ultimo pago
+      const date_fecha_de_pago = getDateNow();
+
+      // actualizamos el estado del plan de pago
+      let estado_de_pago = plan.estado_de_pago;      
+      if (!esPlanVencido(date_fecha_de_vencimiento)) estado_de_pago = "pagado";
+      
       await planes_de_pagos.update({
-        estado_de_pago: "pagado",
+        estado_de_pago,
         date_fecha_de_vencimiento,
         date_fecha_de_pago
       }, {where:{id}});
@@ -173,3 +180,4 @@ export class PlanesDePagos {
     }
   };
 }
+//2023-06-06
