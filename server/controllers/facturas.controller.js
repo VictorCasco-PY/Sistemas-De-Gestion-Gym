@@ -1,8 +1,7 @@
 import { models } from "../models/models.js";
 import { Cliente } from "./clientes.controller.js";
 import { getDateNow } from "../tools/date.js";
-import facturas_detalles from "../models/facturas_detalles.js";
-import clientes from "../models/clientes.js";
+import { Op } from "sequelize";
 const cliente = new Cliente();
 const { facturas } = models;
 
@@ -74,14 +73,20 @@ export class Factura {
 
   getAll = async (req, res) => {
     try {
-      const result = await facturas.findAll();
+      const { fechaIn, fechaFin, ruc } = req.query;
+  
+      const where = {};
+      if (fechaIn && fechaFin) where.date_fecha = { [Op.between]: [fechaIn, fechaFin] };
+      if(ruc) where.str_ruc_cliente = ruc;
+  
+      const result = await facturas.findAll({ where });
       res.json(result);
     } catch (error) {
       const { message } = error;
       return res.status(500).json({ error: message });
     }
   };
-
+  
   getByParams = async (req, res) => {
     try {
       const { id } = req.params;
