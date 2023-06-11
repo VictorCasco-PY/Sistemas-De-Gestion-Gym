@@ -73,11 +73,11 @@ export class Factura {
 
   getAll = async (req, res) => {
     try {
-      const { fechaIn, fechaFin } = req.query;
+      const { fechaIn, fechaFin, ruc } = req.query;
   
-      let where = {};
-  
+      const where = {};
       if (fechaIn && fechaFin) where.date_fecha = { [Op.between]: [fechaIn, fechaFin] };
+      if(ruc) where.str_ruc_cliente = ruc;
   
       const result = await facturas.findAll({ where });
       res.json(result);
