@@ -138,17 +138,18 @@ export function DetallesCliente() {
             confirmButtonText: 'Borrar',
             cancelButtonText: 'Cancelar',
             reverseButtons: true,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 Swal.fire(
                     'Borrado',
                 )
-                axios.delete(`http://localhost:8000/mediciones-clientes/${medicionId}`)
-                    .then(() => {
-                        console.log('deleted');
-                        fetchClienteMed();
-                    })
-                    .catch((error) => console.error(error));
+                try {
+                    const response = await api.delete(`/mediciones-clientes/${medicionId}`);
+                    console.log('deleted');
+                    fetchClienteMed();
+                } catch (error) {
+                    console.log(error);
+                }
             }
         })
 

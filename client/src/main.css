@@ -238,8 +238,6 @@
 
 .itemsFlexOrGrid {
   overflow-y: auto;
-  border: 1px solid #ccc;
-  background-color: white;
   padding: 8px;
   max-height: 450px;
 }

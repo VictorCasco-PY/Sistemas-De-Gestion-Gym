@@ -138,14 +138,12 @@ export default function Compras() {
   return (
     <div className='is-serif'>
       <h1 className='title is-size-2'>Nueva Compra</h1>
-      <div className='has-background-light p-3 columns container'>
+      <div className='column has-background-light p-3 is-three-quarters-desktop'>
         <div className='listaItems column'>
           <div className='mb-3'>
 
-            <div className="proveedorTab mb-5">
-              <header className='card-header has-background-info mb-3'>
-                <p className='title is-3 has-text-light p-3'>Proveedor</p>
-              </header>
+            <div className="proveedorTab mb-5 is-flex is-align-content-center">
+              <p className='is-3 subtitle m-0'>Proveedor</p>
               <div className='is-flex is-align-items-center'>
                 <span className='mr-2'>*</span>
                 <Select
@@ -155,19 +153,15 @@ export default function Compras() {
                   onChange={handleProveedorChange}
                   placeholder={"Selecciona un proveedor"}
                 />
-                <span className='ml-2'>RUC: 111111</span>
               </div>
             </div>
-            <header className='card-header has-background-info mb-3'>
-              <p className='title is-3 has-text-light p-3'>Productos</p>
-            </header>
+          </div>
 
-            <Link className="custom-link" to="/registroProducto">
-              <button className='button is-success is-outlined mb-3'>
-                <AddIcon />Nuevo Producto
-              </button>
-            </Link>
-            <div className="input-container">
+        </div>
+
+        <div className='precioYOpciones columns column is-flex is-flex-direction-column'>
+          <div className="input-container is-flex is-flex-grow-5">
+            <div>
               <input
                 type='text'
                 className={`input ${compraAceptado ? 'is-danger' : ''}`}
@@ -207,92 +201,98 @@ export default function Compras() {
                         <hr className='itemSeparator m-0 mb-1' />
                       </div>
                     ))}
-             {/*  //////// */}
-
+                  {/*  //////// */}
                 </div>
               )}
             </div>
+            <Link className="custom-link" to="/registroProducto">
+              <button className='button is-success is-outlined mb-3'>
+                <AddIcon />Nuevo Producto
+              </button>
+            </Link>
           </div>
-          <div className='itemsFlexOrGrid is-flex is-flex-direction-column'>
-            {(selectedItems.length === 0) && (
-              <div>No hay productos seleccionados.</div>
-            )}
-            <ol>
-              {selectedItems.map((item, index) => (
-                <li key={index}>
-                  <div
-                    key={index}
-                    className='compraItem is-flex is-flex-direction-column mb-0'
-                  >
-                    <div className='compra-custom is-flex is-justify-content-space-between box p-0'>
-                      <div className='has-background-light p-3'>
-                        <h2 className='is-size-4'>
-                          <b>{item.str_nombre}</b>
-                        </h2>
-                        <p>
-                          <b>Descripcion:</b> {item.str_descripcion}
-                        </p>
-                        <div className='is-flex is-align-items-center'>
-                          <p><b>Cantidad:</b></p>
-                          <input
-                            type='number'
-                            name='cantidad'
-                            id='cantidad'
-                            className='input custom-number-input'
-                            value={item.quantity}
-                            onChange={(event) => handleQuantityChange(event, index)}
-                          />
-                        </div>
-                      </div>
-                      <div className='is-align-self-center p-3'>
-                        <p className='title'>
-                          {parseFloat(item.precio).toLocaleString('en-US', {
-                            useGrouping: true,
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 2,
-                          })}Gs
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
 
-              ))}
-            </ol>
-          </div>
-        </div>
-        <div className='precioYOpciones column is-flex is-flex-direction-column'>
-          <header className='card-header has-background-white has-text-black mb-3 column is-half p-0'>
-            <p className='title is-3 has-text-black p-3'>Detalles</p>
-          </header>
-          <div className='box column is-half p-4 is-flex is-flex-direction-column'>
-            <h2 className='subtitle mb-3'>Pago Total</h2>
-            <div>
-              <div className='is-flex is-justify-content-space-between'>
-                <p className='subtitle mb-1'>Productos:</p>
-                <p className='subtitle'>
-                  {parseFloat(calculateTotal()).toLocaleString('en-US', {
+          <div className='itemsFlexOrGrid columns is-flex'>
+
+            <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
+              {(selectedItems.length === 0) && (
+                <div>No hay productos seleccionados.</div>
+              )}
+              <table className="table table is-bordered tableNew has-background-light is-bordered">
+                <thead className='has-text-centered'>
+                  <tr className='is-size-6'>
+                    <th >
+                      Producto
+                    </th>
+                    <th >
+                      Descripcion
+                    </th>
+                    <th >
+                      Precio
+                    </th>
+                    <th >
+                      Cantidad
+                    </th>
+                    <th ></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedItems.map((item, index) => (
+                    <tr key={index}>
+                      <td className='is-size-5'>{item.str_nombre}</td>
+                      <td className='is-size-5'>{item.str_descripcion}</td>
+                      <td className='is-size-5'>{parseFloat(item.precio).toLocaleString('en-US', {
+                        useGrouping: true,
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2,
+                      })}Gs</td>
+                      <td className='is-size-5'>
+                        <input
+                          type='number'
+                          name='cantidad'
+                          id='cantidad'
+                          className='input custom-number-input'
+                          value={item.quantity}
+                          onChange={(event) => handleQuantityChange(event, index)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+
+            <div className='box column p-4 is-flex is-flex-direction-column is-align-self-flex-start'>
+              <h2 className='subtitle mb-3'>Pago Total</h2>
+              <div>
+                <div className='is-flex is-justify-content-space-between'>
+                  <p className='subtitle mb-1'>Productos:</p>
+                  <p className='subtitle'>
+                    {parseFloat(calculateTotal()).toLocaleString('en-US', {
+                      useGrouping: true,
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })}Gs</p>
+                </div>
+                <div className='is-flex is-justify-content-space-between'>
+                  <h1 className='title'>Total:</h1>
+                  <p className='title'>{parseFloat(calculateTotal()).toLocaleString('en-US', {
                     useGrouping: true,
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 2,
                   })}Gs</p>
+                </div>
               </div>
               <div className='is-flex is-justify-content-space-between'>
-                <h1 className='title'>Total:</h1>
-                <p className='title'>{parseFloat(calculateTotal()).toLocaleString('en-US', {
-                  useGrouping: true,
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 2,
-                })}Gs</p>
+                <div className=''>{isLoading && <CircularProgress />}</div>
+                <button className='button is-success' onClick={handleSubmit}>
+                  Guardar
+                </button>
               </div>
             </div>
-            <div className='is-flex is-justify-content-space-between'>
-              <div className=''>{isLoading && <CircularProgress />}</div>
-              <button className='button is-success' onClick={handleSubmit}>
-                Guardar
-              </button>
-            </div>
           </div>
+
 
         </div>
 
