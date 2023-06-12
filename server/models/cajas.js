@@ -3,31 +3,36 @@ const { Model, Sequelize } = _sequelize;
 
 export default class cajas extends Model {
   static init(sequelize, DataTypes) {
-  return super.init({
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    str_nombre: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    }
-  }, {
-    sequelize,
-    tableName: 'cajas',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
+    return super.init({
+      id: {
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
       },
-    ]
-  });
+      str_nombre: {
+        type: DataTypes.STRING(200),
+        allowNull: true
+      },
+      activo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      }
+    }, {
+      sequelize,
+      tableName: 'cajas',
+      timestamps: false,
+      indexes: [
+        {
+          name: "PRIMARY",
+          unique: true,
+          using: "BTREE",
+          fields: [
+            { name: "id" },
+          ]
+        },
+      ]
+    });
   }
 }

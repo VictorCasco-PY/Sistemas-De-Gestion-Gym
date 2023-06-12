@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class cobros extends Model {
+export default class pagos_proveedores_detalles extends Model {
   static init(sequelize, DataTypes) {
     return super.init({
       id: {
@@ -10,28 +10,24 @@ export default class cobros extends Model {
         allowNull: false,
         primaryKey: true
       },
-      id_factura: {
+      id_pago_proveedor: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: 'facturas',
+          model: 'pagos_proveedores',
           key: 'id'
         }
       },
-      id_sesion_caja: {
+      id_forma_de_pago: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: 'sesiones_cajas',
+          model: 'formas_de_pagos',
           key: 'id'
         }
       },
-      date_fecha: {
-        type: DataTypes.DATEONLY,
-        allowNull: true
-      },
-      time_hora: {
-        type: DataTypes.TIME,
+      monto: {
+        type: DataTypes.DECIMAL(10, 0),
         allowNull: true
       },
       activo: {
@@ -41,7 +37,7 @@ export default class cobros extends Model {
       }
     }, {
       sequelize,
-      tableName: 'cobros',
+      tableName: 'pagos_proveedores_detalles',
       timestamps: false,
       indexes: [
         {
@@ -53,17 +49,17 @@ export default class cobros extends Model {
           ]
         },
         {
-          name: "id_factura",
+          name: "id_pago_proveedor",
           using: "BTREE",
           fields: [
-            { name: "id_factura" },
+            { name: "id_pago_proveedor" },
           ]
         },
         {
-          name: "id_sesion_caja",
+          name: "id_forma_de_pago",
           using: "BTREE",
           fields: [
-            { name: "id_sesion_caja" },
+            { name: "id_forma_de_pago" },
           ]
         },
       ]

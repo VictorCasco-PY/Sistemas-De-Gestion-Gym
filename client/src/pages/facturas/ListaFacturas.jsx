@@ -16,10 +16,14 @@ const ListaFacturas = () => {
     const [fechaFin, setFechaFin] = useState('');
     const [isActive, setisActive] = useState("");
     const [activeId, setActiveId] = useState(null);
+    const [showFacturas, setShowFacturas] = useState(false);
+    const [showVentas, setShowVentas] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('facturas');
+
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [selectedOption]);
 
     const fetchData = async () => {
         try {
@@ -30,6 +34,7 @@ const ListaFacturas = () => {
             }
 
             const response = await api.get(url);
+            const response = await api.get(`/${selectedOption}`); // Reemplaza 'API_URL' con la URL de tu API
             setFacturas(response.data);
         } catch (error) {
             console.log(error);
@@ -64,6 +69,7 @@ const ListaFacturas = () => {
     };
 
     // Filtrar facturas por mes seleccionado
+
     const facturasFiltradas = (mesSeleccionado
         ? facturas.filter(
             (factura) => getMonth(new Date(factura.date_fecha)) === mesSeleccionado
@@ -76,12 +82,17 @@ const ListaFacturas = () => {
                 fechaFactura >= new Date(fechaInicio) &&
                 fechaFactura <= new Date(fechaFin)
             );
+
+    const facturasFiltradas = facturas.filter((factura) => {
+        const facturaMonth = getMonth(new Date(factura.date_fecha));
+        if (showFacturas && !showVentas) {
+            return facturaMonth === mesSeleccionado;
+        } else if (!showFacturas && showVentas) {
+            return facturaMonth !== mesSeleccionado;
         } else {
             return true;
         }
     });
-
-
     const paginatedFacturas = facturasFiltradas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     const showModal = (id) => {
@@ -147,6 +158,68 @@ const ListaFacturas = () => {
                             <th>Nombre</th>
                             <th>Total</th>
                             <th></th>
+            <div>
+                <label className="radio">
+                    <input
+                        type="radio"
+                        name="option"
+                        value="facturas"
+                        checked={selectedOption === 'facturas'}
+                        onChange={() => setSelectedOption('facturas')}
+                    />
+                    Facturas
+                </label>
+                <label className="radio">
+                    <input
+                        type="radio"
+                        name="option"
+                        value="compras"
+                        checked={selectedOption === 'compras'}
+                        onChange={() => setSelectedOption('facturas-proveedores')}
+                    />
+                    Compras
+                </label>
+            </div>
+
+            <label className='label' htmlFor="mes">Filtrar por mes:</label>
+            <div className='select mb-3'>
+                <select id="mes" onChange={(e) => handleFiltrarPorMes(parseInt(e.target.value))}>
+                    <option value="">Todos</option>
+                    <option value="0">Enero</option>
+                    <option value="1">Febrero</option>
+                    <option value="2">Marzo</option>
+                    <option value="3">Abril</option>
+                    <option value="4">Mayo</option>
+                    <option value="5">Junio</option>
+                    <option value="6">Julio</option>
+                    <option value="7">Agosto</option>
+                    <option value="8">Septiembre</option>
+                    <option value="9">Octubre</option>
+                    <option value="10">Noviembre</option>
+                    <option value="11">Diciembre</option>
+                </select>
+            </div>
+            <table className='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {paginatedFacturas.map((factura, index) => (
+                        <tr key={index}>
+                            <td>{format(new Date(factura.date_fecha), 'dd-MM-yyyy')}</td>
+                            <td>{factura.str_nombre_cliente}</td>
+                            {selectedOption === 'compras' && <td>{factura.id_proveedor}</td>}
+                            <td>{Number(factura.total).toLocaleString('es-ES')}</td>
+                            <td>
+                                <button className="button is-info is-outlined mr-2">
+                                    <RemoveRedEyeIcon fontSize="string" />
+                                </button>
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
