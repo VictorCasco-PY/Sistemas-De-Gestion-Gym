@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment-timezone";
 import { useParams } from "react-router-dom";
-import EditableInput from "../components/EditableInput";
-import api from "../services/api";
+import EditableInput from "../../components/EditableInput";
+import api from "../../services/api";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const DetallesUsuario = () => {
   const handleNombreChange = (nuevoNombre) => {
     setUser({ ...user, nombre: nuevoNombre });
   };
-  
+
 
   // Función para formatear la cadena de tiempo (hh:mm)
   const formatTime = (time) => {

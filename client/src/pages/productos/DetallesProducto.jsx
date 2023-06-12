@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import EditableInput from "../components/EditableInput";
-import api from "../services/api";
+import EditableInput from "../../components/EditableInput";
+import api from "../../services/api";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 

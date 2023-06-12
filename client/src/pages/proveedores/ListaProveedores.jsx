@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
-import api from '../services/api';
+import api from '../../services/api';
 
 const ListaProveedores = () => {
     const navigate = useNavigate();
@@ -81,40 +81,48 @@ const ListaProveedores = () => {
         return <p>Error al cargar los proveedores: {error}</p>;
     }
     return (
-        <>
-            <Link to='/registroProveedores'>
-                <button className='button is-success mb-3'><AddIcon fontSize='medium' />Agregar Proveedor</button>
-            </Link>
+        <div className='column is-flex is-flex-direction-column'>
+            <div className="column is-flex mb-0 pb-0">
+                <div style={{ width: "20rem" }}>
+                    <input
+                        className="input"
+                        type="search"
+                        placeholder="Buscar por RUC"
 
-            <table className='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'>
-                <thead>
-                    <tr>
-                        <th>RUC</th>
-                        <th>Nombre</th>
-                        <th>Teléfono</th>
-                        <th>Dirección</th>
-                        <th>Correo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    {proveedores.map((proveedor) => (
-                        <tr key={proveedor.id}>
-                            <td>{proveedor.str_ruc}</td>
-                            <td>{proveedor.str_nombre}</td>
-                            <td>{proveedor.str_telefono}</td>
-                            <td>{proveedor.str_direccion}</td>
-                            <td>{proveedor.str_correo}</td>
-                            <td>
-                                <button className='button is-info is-outlined' onClick={() => navigate(`/proveedor/detalle/${proveedor.id}`)}><EditIcon fontSize='string' /></button>
-                                <button className='button is-danger is-outlined ml-2' onClick={() => handleDeleteProveedor(proveedor.id)}><DeleteIcon fontSize='string' /></button>
-                            </td>
+                    />
+                </div>
+            </div>
+            <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
+                <table className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
+                    <thead >
+                        <tr>
+                            <th>RUC</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Correo</th>
+                            <th></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody >
+                        {proveedores.map((proveedor) => (
+                            <tr key={proveedor.id}>
+                                <td>{proveedor.str_ruc}</td>
+                                <td>{proveedor.str_nombre}</td>
+                                <td>{proveedor.str_telefono}</td>
+                                <td>{proveedor.str_direccion}</td>
+                                <td>{proveedor.str_correo}</td>
+                                <td>
+                                    <button className='button is-rounded is-info is-outlined' onClick={() => navigate(`/proveedor/detalle/${proveedor.id}`)}><EditIcon fontSize='string' /></button>
+                                    <button className='button is-rounded is-danger is-outlined ml-2' onClick={() => handleDeleteProveedor(proveedor.id)}><DeleteIcon fontSize='string' /></button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-        </>
+        </div>
 
     )
 }

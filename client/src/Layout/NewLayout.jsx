@@ -111,7 +111,6 @@ export default function Layout({ children }) {
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
             >
                 <Toolbar />
-                <Toolbar />
                 {children}
             </Box>
         </Box >

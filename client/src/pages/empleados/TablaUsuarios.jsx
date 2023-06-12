@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import api from "../services/api";
+import api from "../../services/api";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import SortIcon from "@mui/icons-material/Sort";
 
@@ -73,67 +73,62 @@ const TablaUsuarios = () => {
   };
 
   return (
-    <div>
-          <h1 className="title is-3 has-text-primary">Lista de Empleados</h1>
-        <div className="columns">
-          <div className="column is-four-fifths">
-            <input
-              className="input is-primary is-primary has-text-centered"
-              type="search"
-              placeholder="Buscar por Número de Cédula"
-              value={busqueda}
-              onChange={handleBusquedaChange}
-            />
-          </div>
-          <div className="column">
-            <Link to={`/registroEmpleado`}>
-              <button className="button is-link is-outlined">
-                <PersonAddAltIcon fontSize="string" />
-                Agregar
-              </button>
-            </Link>
-          </div>
+    <div className="column is-flex is-flex-direction-column">
+      <div className="column is-flex mb-0 pb-0">
+        <div style={{ width: "20rem" }}>
+          <input
+            className="input"
+            type="search"
+            placeholder="Buscar por Número de Cédula"
+            value={busqueda}
+            onChange={handleBusquedaChange}
+          />
         </div>
-      <table className="table is-fullwidth">
-        <thead>
-          <tr>
-            <th>
-              <button
-                className="button is-white is-small"
-                onClick={handleSortClick}
-              >
-                <SortIcon fontSize="string" />
-              </button>
-              Nombre
-            </th>
-            <th>Cédula</th>
-            <th>Rol</th>
-            <th>-</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usuariosFiltrados.map((usuario) => (
-            <tr key={usuario.id}>
-              <td>{usuario.str_nombre}</td>
-              <td>{usuario.str_cedula}</td>
-              <td>{usuario.rol}</td>
-              <td>
-                <Link to={`/detallesEmpleado/${usuario.id}`}>
-                  <button className="button is-info is-outlined mr-2 is-rounded">
-                    <RemoveRedEyeIcon fontSize="string" />{" "}
-                  </button>
-                </Link>
+
+      </div>
+      <div className="column is-flex is-justify-content-center is-flex-direction-column m-0 p-0">
+        <table className="table table is-bordered tableNew has-background-light is-bordered p-3" style={{ width: "100%" }}>
+          <thead className='has-text-centered'>
+            <tr className='is-size-6'>
+              <th >
                 <button
-                  className="button is-danger is-outlined is-rounded"
-                  onClick={() => handleEliminarClick(usuario.id)}
+                  className="button is-light is-small"
+                  onClick={handleSortClick}
                 >
-                  <DeleteIcon fontSize="string" />
+                  <SortIcon fontSize="string" />
                 </button>
-              </td>
+                Nombre
+              </th >
+              <th>Cédula</th>
+              <th>Rol</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {usuariosFiltrados.map((usuario) => (
+              <tr key={usuario.id}>
+                <td className='is-size-5'>{usuario.str_nombre}</td>
+                <td className='is-size-5'>{usuario.str_cedula}</td>
+                <td className='is-size-5'>{usuario.rol}</td>
+                <td className='is-size-5'>
+                  <Link to={`/detallesEmpleado/${usuario.id}`}>
+                    <button className="button is-info is-outlined mr-2 is-rounded">
+                      <RemoveRedEyeIcon fontSize="string" />
+                    </button>
+                  </Link>
+                  <button
+                    className="button is-danger is-outlined is-rounded"
+                    onClick={() => handleEliminarClick(usuario.id)}
+                  >
+                    <DeleteIcon fontSize="string" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
     </div>
   );
 };
