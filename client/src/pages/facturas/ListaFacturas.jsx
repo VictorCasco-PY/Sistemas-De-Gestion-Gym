@@ -20,7 +20,6 @@ const ListaFacturas = () => {
     const [showVentas, setShowVentas] = useState(false);
     const [selectedOption, setSelectedOption] = useState('facturas');
 
-
     useEffect(() => {
         fetchData();
     }, [selectedOption]);
@@ -34,7 +33,6 @@ const ListaFacturas = () => {
             }
 
             const response = await api.get(url);
-            const response = await api.get(`/${selectedOption}`); // Reemplaza 'API_URL' con la URL de tu API
             setFacturas(response.data);
         } catch (error) {
             console.log(error);
@@ -43,16 +41,19 @@ const ListaFacturas = () => {
         }
     };
 
-
     if (isLoading) {
-        return <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-        }}>
-            <CircularProgress />
-        </Box>;
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100vh',
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
     }
 
     const handleFiltrarPorMes = (mes) => {
@@ -68,32 +69,16 @@ const ListaFacturas = () => {
         setPage(0);
     };
 
-    // Filtrar facturas por mes seleccionado
-
-    const facturasFiltradas = (mesSeleccionado
+    const facturasFiltradas = mesSeleccionado
         ? facturas.filter(
             (factura) => getMonth(new Date(factura.date_fecha)) === mesSeleccionado
         )
-        : facturas
-    ).filter((factura) => {
-        if (fechaInicio && fechaFin) {
-            const fechaFactura = new Date(factura.date_fecha);
-            return (
-                fechaFactura >= new Date(fechaInicio) &&
-                fechaFactura <= new Date(fechaFin)
-            );
+        : facturas;
 
-    const facturasFiltradas = facturas.filter((factura) => {
-        const facturaMonth = getMonth(new Date(factura.date_fecha));
-        if (showFacturas && !showVentas) {
-            return facturaMonth === mesSeleccionado;
-        } else if (!showFacturas && showVentas) {
-            return facturaMonth !== mesSeleccionado;
-        } else {
-            return true;
-        }
-    });
-    const paginatedFacturas = facturasFiltradas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    const paginatedFacturas = facturasFiltradas.slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+    );
 
     const showModal = (id) => {
         setActiveId(id);
@@ -103,45 +88,49 @@ const ListaFacturas = () => {
         setActiveId(null);
     };
 
-
     return (
-        <div>
+        <div className="column is-flex is-flex-direction-column">
             {activeId !== null && (
                 <DetalleFactura id={activeId} onClose={closeModal} />
             )}
             <h1 className='title is-1'>Facturas</h1>
             <div className='columns'>
                 <div className='column'>
-                    <label className='label' htmlFor="mes">Filtrar por mes:</label>
+                    <label className='label' htmlFor='mes'>
+                        Filtrar por mes:
+                    </label>
                     <div className='select mb-3'>
-                        <select id="mes" onChange={(e) => handleFiltrarPorMes(parseInt(e.target.value))}>
-                            <option value="">Todos</option>
-                            <option value="0">Enero</option>
-                            <option value="1">Febrero</option>
-                            <option value="2">Marzo</option>
-                            <option value="3">Abril</option>
-                            <option value="4">Mayo</option>
-                            <option value="5">Junio</option>
-                            <option value="6">Julio</option>
-                            <option value="7">Agosto</option>
-                            <option value="8">Septiembre</option>
-                            <option value="9">Octubre</option>
-                            <option value="10">Noviembre</option>
-                            <option value="11">Diciembre</option>
+                        <select
+                            id='mes'
+                            onChange={(e) => handleFiltrarPorMes(parseInt(e.target.value))}
+                        >
+                            <option value=''>Todos</option>
+                            <option value='0'>Enero</option>
+                            <option value='1'>Febrero</option>
+                            <option value='2'>Marzo</option>
+                            <option value='3'>Abril</option>
+                            <option value='4'>Mayo</option>
+                            <option value='5'>Junio</option>
+                            <option value='6'>Julio</option>
+                            <option value='7'>Agosto</option>
+                            <option value='8'>Septiembre</option>
+                            <option value='9'>Octubre</option>
+                            <option value='10'>Noviembre</option>
+                            <option value='11'>Diciembre</option>
                         </select>
                     </div>
                     <div className='column is-one-third'>
-                        <label htmlFor="">Fecha Inicio:</label>
+                        <label htmlFor=''>Fecha Inicio:</label>
                         <input
                             className='input mb'
-                            type="date"
+                            type='date'
                             value={fechaInicio}
                             onChange={(e) => setFechaInicio(e.target.value)}
                         />
-                        <label htmlFor="">Fecha Fin:</label>
+                        <label htmlFor=''>Fecha Fin:</label>
                         <input
                             className='input'
-                            type="date"
+                            type='date'
                             value={fechaFin}
                             onChange={(e) => setFechaFin(e.target.value)}
                         />
@@ -149,77 +138,14 @@ const ListaFacturas = () => {
                 </div>
             </div>
 
-
-            <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
-                <table className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
+            <div className="column is-flex is-justify-content-center is-flex-direction-column m-0 p-0">
+                <div className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
                     <thead>
                         <tr>
                             <th>Fecha</th>
                             <th>Nombre</th>
                             <th>Total</th>
                             <th></th>
-            <div>
-                <label className="radio">
-                    <input
-                        type="radio"
-                        name="option"
-                        value="facturas"
-                        checked={selectedOption === 'facturas'}
-                        onChange={() => setSelectedOption('facturas')}
-                    />
-                    Facturas
-                </label>
-                <label className="radio">
-                    <input
-                        type="radio"
-                        name="option"
-                        value="compras"
-                        checked={selectedOption === 'compras'}
-                        onChange={() => setSelectedOption('facturas-proveedores')}
-                    />
-                    Compras
-                </label>
-            </div>
-
-            <label className='label' htmlFor="mes">Filtrar por mes:</label>
-            <div className='select mb-3'>
-                <select id="mes" onChange={(e) => handleFiltrarPorMes(parseInt(e.target.value))}>
-                    <option value="">Todos</option>
-                    <option value="0">Enero</option>
-                    <option value="1">Febrero</option>
-                    <option value="2">Marzo</option>
-                    <option value="3">Abril</option>
-                    <option value="4">Mayo</option>
-                    <option value="5">Junio</option>
-                    <option value="6">Julio</option>
-                    <option value="7">Agosto</option>
-                    <option value="8">Septiembre</option>
-                    <option value="9">Octubre</option>
-                    <option value="10">Noviembre</option>
-                    <option value="11">Diciembre</option>
-                </select>
-            </div>
-            <table className='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'>
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Nombre</th>
-                        <th>Total</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {paginatedFacturas.map((factura, index) => (
-                        <tr key={index}>
-                            <td>{format(new Date(factura.date_fecha), 'dd-MM-yyyy')}</td>
-                            <td>{factura.str_nombre_cliente}</td>
-                            {selectedOption === 'compras' && <td>{factura.id_proveedor}</td>}
-                            <td>{Number(factura.total).toLocaleString('es-ES')}</td>
-                            <td>
-                                <button className="button is-info is-outlined mr-2">
-                                    <RemoveRedEyeIcon fontSize="string" />
-                                </button>
-                            </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -234,18 +160,18 @@ const ListaFacturas = () => {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </div>
+                <TablePagination
+                    component='div'
+                    count={facturasFiltradas.length}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    labelRowsPerPage='Filas por página:'
+                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+                />
             </div>
-            <TablePagination
-                component="div"
-                count={facturasFiltradas.length}
-                page={page}
-                onPageChange={handleChangePage}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                labelRowsPerPage="Filas por página:"
-                labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-            />
         </div>
     );
 };
