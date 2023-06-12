@@ -25,6 +25,11 @@ export default class pagos_proveedores extends Model {
     total: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
+    },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   }, {
     sequelize,
