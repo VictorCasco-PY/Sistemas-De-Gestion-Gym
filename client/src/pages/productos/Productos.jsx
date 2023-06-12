@@ -101,16 +101,16 @@ const RegistroProductos = () => {
               </div>
             </div>
             <div>
-                <input
-                  className="input is-primary has-text-centered"
-                  type="text"
-                  name="precio"
-                  value={productos.precio}
-                  onChange={handleChange}
-                  placeholder="Precio"
-                />
-              </div>
-              <div className="buttons">
+              <input
+                className="input is-primary has-text-centered"
+                type="text"
+                name="precio"
+                value={productos.precio}
+                onChange={handleChange}
+                placeholder="Precio"
+              />
+            </div>
+            <div className="buttons">
               <button
                 className="ml-auto mt-2 button is-primary is-outlined"
                 type="submit"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import api from "../services/api";
+import api from "../../services/api";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -66,18 +66,18 @@ const RegistroProductos = () => {
   };
 
   return (
-<div className="columns is-centered">
+    <div className="columns is-centered">
       <div className="column is-three-fifths-desktop">
         <div className="box">
           <form onSubmit={handleSubmit}>
-          <Link to="/listaProductos">
-                <button
-                  className="button is-link is-outlined"
-                  style={{ display: "inline-block" }}
-                >
-                  <ArrowBackIcon fontSize="string" />
-                </button>
-              </Link>
+            <Link to="/listaProductos">
+              <button
+                className="button is-link is-outlined"
+                style={{ display: "inline-block" }}
+              >
+                <ArrowBackIcon fontSize="string" />
+              </button>
+            </Link>
             <center>
               <h1
                 className="mb-2 title is-3 has-text-primary"

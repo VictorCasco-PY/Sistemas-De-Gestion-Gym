@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import api from "../services/api";
+import api from "../../services/api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Link } from "react-router-dom";
@@ -81,78 +81,76 @@ const ListaProductos = () => {
   }, [busqueda, sortType, sortDirection]);
 
   return (
-    <div>
-      <h1 className="title is-3 has-text-primary">Lista de Productos</h1>
-      <div className="columns">
-        <div className="column is-four-fifths">
+    <div className="column is-flex is-flex-direction-column">
+
+      <div className="column is-flex mb-0 pb-0">
+        <div style={{ width: "20rem" }}>
           <input
-            className="input is-primary is-primary has-text-centered"
+            className="input"
             type="search"
             placeholder="Buscar por Nombre"
             value={busqueda}
             onChange={handleBusquedaChange}
           />
         </div>
-        <div className="column">
-          <Link to="/registroProducto" className="button is-link is-outlined">
-            <AddIcon fontSize="small" /> Nuevo Producto
-          </Link>
-        </div>
       </div>
-      <table className="table is-striped is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th>
-              <button
-                className="button is-white is-small"
-                onClick={() => handleSortClick("nombre")}
-              >
-                <SortIcon fontSize="string" />
-              </button>
-              Nombre
-            </th>
-            <th>Descripción</th>
-            <th>IVA</th>
-            <th>
-              <button
-                className="button is-white is-small"
-                onClick={() => handleSortClick("precio")}
-              >
-                <SortIcon fontSize="string" />
-              </button>
-              Precio
-            </th>
-            <th>Código</th>
-            <th>Cantidad</th>
-            <th>-</th>
-          </tr>
-        </thead>
-        <tbody>
-          {productos.map((producto) => (
-            <tr key={producto.id}>
-              <td>{producto.str_nombre}</td>
-              <td>{producto.str_descripcion}</td>
-              <td>{producto.iva}</td>
-              <td>{producto.precio}</td>
-              <td>{producto.str_codigo}</td>
-              <td>{producto.cantidad}</td>
-              <td>
-                <Link to={`/detallesProducto/${producto.id}`}>
-                  <button className="button is-info is-outlined mr-2 is-rounded ">
-                    <RemoveRedEyeIcon fontSize="string" />{" "}
-                  </button>
-                </Link>
+
+      <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
+        <table className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th>
                 <button
-                  className="button is-danger is-outlined is-rounded"
-                  onClick={() => handleEliminarClick(producto.id)}
+                  className="button is-light is-small"
+                  onClick={() => handleSortClick("nombre")}
                 >
-                  <DeleteIcon fontSize="string" />
+                  <SortIcon fontSize="string" />
                 </button>
-              </td>
+                Nombre
+              </th>
+              <th>Descripción</th>
+              <th>IVA</th>
+              <th>
+                <button
+                  className="button is-light is-small"
+                  onClick={() => handleSortClick("precio")}
+                >
+                  <SortIcon fontSize="string" />
+                </button>
+                Precio
+              </th>
+              <th>Código</th>
+              <th>Cantidad</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {productos.map((producto) => (
+              <tr key={producto.id}>
+                <td>{producto.str_nombre}</td>
+                <td>{producto.str_descripcion}</td>
+                <td>{producto.iva}</td>
+                <td>{producto.precio}</td>
+                <td>{producto.str_codigo}</td>
+                <td>{producto.cantidad}</td>
+                <td>
+                  <Link to={`/detallesProducto/${producto.id}`}>
+                    <button className="button is-info is-outlined mr-2 is-rounded ">
+                      <RemoveRedEyeIcon fontSize="string" />{" "}
+                    </button>
+                  </Link>
+                  <button
+                    className="button is-danger is-outlined is-rounded"
+                    onClick={() => handleEliminarClick(producto.id)}
+                  >
+                    <DeleteIcon fontSize="string" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
