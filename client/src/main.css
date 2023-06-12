@@ -212,9 +212,21 @@
 
 .modal-custom {
   position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
+  top: 77%;
+  width: 73.6%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 0;
+  z-index: 999;
+}
+
+.modal-custom-2 {
+  position: absolute;
+  width: auto;
+  top: 24.2%;
+  width: 24.6%;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -238,8 +250,6 @@
 
 .itemsFlexOrGrid {
   overflow-y: auto;
-  border: 1px solid #ccc;
-  background-color: white;
   padding: 8px;
   max-height: 450px;
 }
