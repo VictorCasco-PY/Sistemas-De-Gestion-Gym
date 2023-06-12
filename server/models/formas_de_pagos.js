@@ -13,6 +13,11 @@ export default class formas_de_pagos extends Model {
     str_forma: {
       type: DataTypes.STRING(200),
       allowNull: true
+    },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   }, {
     sequelize,
