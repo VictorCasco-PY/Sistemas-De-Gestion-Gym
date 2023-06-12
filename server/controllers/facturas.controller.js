@@ -1,6 +1,6 @@
 import { models } from "../models/models.js";
-import { Cliente } from "./clientes.controller.js";
 import { getDateNow } from "../tools/date.js";
+import {Cliente} from "./clientes.controller.js";
 import { Op } from "sequelize";
 import facturas_detalles from "../models/facturas_detalles.js";
 const cliente = new Cliente();
