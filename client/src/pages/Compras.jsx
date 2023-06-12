@@ -154,9 +154,9 @@ export default function Compras() {
   };
 
   return (
-    <div className='is-serif'>
+    <div className='is-serif is-flex is-flex-direction-column'>
       <h1 className='title is-size-2'>Nueva Compra</h1>
-      <div className='column has-background-light p-5 is-three-quarters-desktop is-flex'
+      <div className='column has-background-light p-5 is-two-thirds-desktop is-full-tablet is-flex'
         style={{ border: "1px solid #D4D4D4", borderRadius: "8px" }}>
         <div className='listaItems column '>
           <div className='is-flex mb-6'>
@@ -167,8 +167,8 @@ export default function Compras() {
                 <div className='is-flex is-flex-direction-column'>
                   <input
                     type='text'
-                    className={`input ${proveedorAceptado ? 'is-danger' : ''}`}
-                    style={{ backgroundColor: "#D4D4D4" }}
+                    className={`input input-radius placeholder-black ${proveedorAceptado ? 'is-danger' : ''}`}
+                    style={{ backgroundColor: "#D4D4D4", color: "black", textAlign: "center" }}
                     placeholder='Selecciona un proveedor'
                     value={proveedorSearchQuery}
                     onChange={handleProveedorInputChange}
@@ -201,27 +201,29 @@ export default function Compras() {
                   )}
                 </div>
                 {/*  //////// */}
-                <div className='is-flex'
-                  style={{ "gap": "10px" }}>
-                  <fieldset disabled>
+
+                <fieldset disabled>
+                  <div className='is-flex'
+                    style={{ "gap": "10px" }}>
                     <input
                       type="text"
-                      className="input"
+                      className="input input-radius"
                       placeholder="Telefono"
-                      style={{ backgroundColor: "#D4D4D4" }}
+                      style={{ backgroundColor: "#D4D4D4", color: "black" }}
                       value={telefonoProveedor || ''}
                       readOnly
                     />
                     <input
                       type="text"
-                      className="input"
+                      className="input input-radius"
                       placeholder="Email"
-                      style={{ backgroundColor: "#D4D4D4" }}
+                      style={{ backgroundColor: "#D4D4D4", color: "black" }}
                       value={emailProveedor || ''}
                       readOnly
                     />
-                  </fieldset>
-                </div>
+                  </div>
+                </fieldset>
+
               </div>
             </div>
           </div>
@@ -232,8 +234,8 @@ export default function Compras() {
               <div className='is-flex-grow-1 ml-5'>
                 <input
                   type='text'
-                  className={`input ${compraAceptado ? 'is-danger' : ''}`}
-                  style={{ backgroundColor: "#D4D4D4" }}
+                  className={`input input-radius ${compraAceptado ? 'is-danger' : ''}`}
+                  style={{ backgroundColor: "#D4D4D4", color: "black", textAlign: "center" }}
                   placeholder='Buscar item...'
                   value={searchQuery}
                   onChange={handleInputChange}
@@ -284,7 +286,7 @@ export default function Compras() {
 
             <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
 
-              <table className="table table is-bordered tableNew has-background-light is-bordered">
+              <table className="table is-bordered tableNew has-background-light is-bordered">
                 <thead className='has-text-centered'>
                   <tr className='is-size-6'>
                     <th >
@@ -354,17 +356,17 @@ export default function Compras() {
             <fieldset disabled>
               <input
                 type="text"
-                className="input"
+                className="input input-radius"
                 placeholder="RUC"
-                style={{ backgroundColor: "#D4D4D4" }}
+                style={{ backgroundColor: "#D4D4D4", color: "black" }}
                 value={RUCProveedor || ''}
                 readOnly
               />
               <input
                 type="text"
-                className="input"
+                className="input input-radius"
                 placeholder="Direccion"
-                style={{ backgroundColor: "#D4D4D4" }}
+                style={{ backgroundColor: "#D4D4D4", color: "black" }}
                 value={direccionProveedor || ''}
                 readOnly
               />
@@ -384,13 +386,13 @@ export default function Compras() {
                 </p>
               </button>
             </div>
-            
+
             <button className='button is-success' onClick={handleSubmit}>
               Guardar
             </button>
             <div className='is-flex is-align-items-center is-justify-content-center'>{isLoading && <CircularProgress />}</div>
           </div>
-          
+
         </div>
       </div>
     </div>
