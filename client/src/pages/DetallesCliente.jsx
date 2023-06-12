@@ -215,7 +215,8 @@ export function DetallesCliente() {
                 </div>
             </div>
 
-            <div className='box is-flex is-flex-direction-column is-justify-content-center p-6 pageMain has-background-light'>
+            <div className='box is-flex is-flex-direction-column is-justify-content-center p-6 pageMain has-background-light'
+            style={{border: "1px solid #D4D4D4", borderRadius: "8px"}}>
                 <div className="mainClientInfo columns">
                     <div className="bubble column is-half is-flex is-flex-direction-column is-align-content-center is-flex-wrap-wrap">
                         <div className="infoBubble">
