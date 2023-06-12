@@ -37,12 +37,11 @@ export function DetallesCliente() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response1 = await api.get(`/cliente/${id}/medicion-cliente`);
-                setClienteMed(response1.data);
-                const response2 = await api.get(`/cliente/${id}/plan-de-pago`);
-                setCliente(response2.data);
-                const response3 = await api.get(`/cliente/${id}`);
-                setClientePers(response3.data);
+                const response = await api.get(`/cliente/${id}`);
+                console.log(response.data)
+                setClientePers(response.data);
+                setClienteMed(response.data.mediciones_clientes);
+                setCliente(response.data.planes_de_pagos[0]);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
@@ -139,17 +138,18 @@ export function DetallesCliente() {
             confirmButtonText: 'Borrar',
             cancelButtonText: 'Cancelar',
             reverseButtons: true,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 Swal.fire(
                     'Borrado',
                 )
-                axios.delete(`http://localhost:8000/mediciones-clientes/${medicionId}`)
-                    .then(() => {
-                        console.log('deleted');
-                        fetchClienteMed();
-                    })
-                    .catch((error) => console.error(error));
+                try {
+                    const response = await api.delete(`/mediciones-clientes/${medicionId}`);
+                    console.log('deleted');
+                    fetchClienteMed();
+                } catch (error) {
+                    console.log(error);
+                }
             }
         })
 
@@ -215,7 +215,8 @@ export function DetallesCliente() {
                 </div>
             </div>
 
-            <div className='box is-flex is-flex-direction-column is-justify-content-center p-6 pageMain has-background-light'>
+            <div className='box is-flex is-flex-direction-column is-justify-content-center p-6 pageMain has-background-light'
+            style={{border: "1px solid #D4D4D4", borderRadius: "8px"}}>
                 <div className="mainClientInfo columns">
                     <div className="bubble column is-half is-flex is-flex-direction-column is-align-content-center is-flex-wrap-wrap">
                         <div className="infoBubble">

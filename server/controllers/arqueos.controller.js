@@ -111,7 +111,7 @@ export class Arqueos {
     getByParams = async (req, res) => {
         try {
             const { id } = req.params;
-            const result = await this.getById(id);
+            const result = await this.getById(id);  
             return res.json(result);
         } catch (error) {
             res.json(error).status(500);

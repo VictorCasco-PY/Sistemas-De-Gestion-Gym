@@ -1,5 +1,5 @@
 import { models } from "../models/models.js";
-import { getDateNow, nuevaFechaVencimiento, toDate } from "../tools/date.js";
+import { esPlanVencido, getDateNow, nuevaFechaVencimiento, toDate } from "../tools/date.js";
 import { Cliente } from "./clientes.controller.js";
 import { Op } from "sequelize";
 import { TipoModalidadDePago } from "./tipos_modalidades_de_pagos.js";
@@ -83,7 +83,6 @@ export class PlanesDePagos {
   // Devuelve todos los planes de pago registrados
   getAll = async (req, res) => {
     try {
-      await this.actualizarEstados();
       const { nombre, estado, ordenNombre, plan, ...querys } = req.query;
 
       const where = {
@@ -111,7 +110,7 @@ export class PlanesDePagos {
   // Obtiene un plan de pago consultando por su ID
   getByParams = async (req, res) => {
     try {
-      await this.actualizarEstados();
+
       const { id } = req.params;
       const result = await planes_de_pagos.findOne({ where: { id }});
       if (!result)
@@ -160,40 +159,24 @@ export class PlanesDePagos {
   cobrarPlan = async (id) => {
     try {
       const plan = await this.getById(id);
-      const date_fecha_de_vencimiento = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento);
-      console.log(date_fecha_de_vencimiento);
-      const {date_fecha_de_pago} = getDateNow();
 
+      // calcula una nueva fecha para pago
+      const date_fecha_de_vencimiento = nuevaFechaVencimiento(plan.date_fecha_de_vencimiento, plan.id_tipo_modalidad_de_pago);
+      
+      // actualiza la fecha del ultimo pago
+      const date_fecha_de_pago = getDateNow();
+
+      // actualizamos el estado del plan de pago
+      let estado_de_pago = plan.estado_de_pago;      
+      if (!esPlanVencido(date_fecha_de_vencimiento)) estado_de_pago = "pagado";
+      
       await planes_de_pagos.update({
-        estado_de_pago: "pagado",
+        estado_de_pago,
         date_fecha_de_vencimiento,
         date_fecha_de_pago
       }, {where:{id}});
     } catch (error) {
       throw new Error(error.message);
-    }
-  };
-
-  actualizarEstados = async () => {
-    const today = new Date().toISOString().split("T")[0]; //fecha de hoy es 2023-06-02
-
-    try {
-      const planesVencidos = await planes_de_pagos.findAll({
-        where: {
-          date_fecha_de_vencimiento: {
-            [Op.lt]: today, //fecha de pago es menor a la fecha actual
-          },
-        },
-      });
-
-      planesVencidos.forEach(async (plan) => {
-        await planes_de_pagos.update(
-          { estado_de_pago: "atrasado" },
-          { where: { id: plan.id } }
-        );
-      });
-    } catch (error) {
-      console.log(error.message);
     }
   };
 }
