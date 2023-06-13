@@ -3,6 +3,7 @@ import { getDateNow } from "../tools/date.js";
 import {Cliente} from "./clientes.controller.js";
 import { Op } from "sequelize";
 import facturas_detalles from "../models/facturas_detalles.js";
+import productos from "../models/productos.js";
 const cliente = new Cliente();
 const { facturas } = models;
 
@@ -105,7 +106,7 @@ export class Factura {
   // obtiene por id
   getById = async (id) => {
     try {
-      const result = await facturas.findOne({ where: { id }, include:{model:facturas_detalles} });
+      const result = await facturas.findOne({ where: { id }, include:{model:facturas_detalles, include:productos} });
       return result;
     } catch (error) {
       throw new Error(error.message);
