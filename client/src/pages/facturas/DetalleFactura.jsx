@@ -9,6 +9,7 @@ const DetalleFactura = ({ id, onClose }) => {
             try {
                 const response = await api.get(`/factura/${id}`);
                 setFacturaDetalle(response.data);
+                console.log(response.data)
             } catch (error) {
                 console.log(error);
             }
@@ -78,7 +79,13 @@ const DetalleFactura = ({ id, onClose }) => {
                             {facturaDetalle.facturas_detalles &&
                                 facturaDetalle.facturas_detalles.map((detalle) => (
                                     <tr key={detalle.id}>
-                                        <td>{detalle.id_producto}</td>
+                                        <td>
+                                            {detalle.id_producto ? (
+                                                detalle.producto.str_nombre
+                                            ) : (
+                                                'Cuota'
+                                            )}
+                                        </td>
                                         <td>{detalle.subtotal}</td>
                                         <td>{detalle.cantidad}</td>
                                         <td>{detalle.precio}</td>
