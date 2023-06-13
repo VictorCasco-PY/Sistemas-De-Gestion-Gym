@@ -28,6 +28,7 @@ import DetalleFactura from './pages/facturas/DetalleFactura';
 import ListaEmpleados from './pages/empleados/ListaEmpleados';
 import ListaProveedor from './pages/proveedores/ListaProveedor';
 import ListaProducto from './pages/productos/ListaProducto'
+import VentasNew from './pages/VentasNew';
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -58,7 +59,7 @@ function App() {
           // Rutas de Cajero
           <Route element={<ProtectedRoute isAllowed={!!user && (isCajero || isAdmin)} redirectTo='/home' />}>
             <Route path='/caja' element={<NewLayout><Caja /></NewLayout>} />
-            <Route path='/ventas' element={<NewLayout><Ventas /></NewLayout>} />
+            <Route path='/ventas' element={<NewLayout><VentasNew /></NewLayout>} />
             <Route path='/compras' element={<NewLayout><Compras /></NewLayout>} />
           </Route>
 

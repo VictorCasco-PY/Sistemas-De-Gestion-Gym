@@ -31,7 +31,7 @@ const ListaFacturas = () => {
             if (fechaInicio && fechaFin) {
                 url += `?fechaIn=${fechaInicio}&fechaFin=${fechaFin}`;
             }
-
+            // setSelectedOption(url);
             const response = await api.get(url);
             setFacturas(response.data);
         } catch (error) {
@@ -121,21 +121,27 @@ const ListaFacturas = () => {
                                     <option value='11'>Diciembre</option>
                                 </select>
                             </div>
-                            <div className='column is-one-third'>
-                                <label htmlFor=''>Fecha Inicio:</label>
-                                <input
-                                    className='input mb'
-                                    type='date'
-                                    value={fechaInicio}
-                                    onChange={(e) => setFechaInicio(e.target.value)}
-                                />
-                                <label htmlFor=''>Fecha Fin:</label>
-                                <input
-                                    className='input'
-                                    type='date'
-                                    value={fechaFin}
-                                    onChange={(e) => setFechaFin(e.target.value)}
-                                />
+                        </div>
+                        <div className='column'>
+                            <div className='columns'>
+                                <div className='column'>
+                                    <label htmlFor='' className='label'>Fecha Inicio:</label>
+                                    <input
+                                        className='input mb'
+                                        type='date'
+                                        value={fechaInicio}
+                                        onChange={(e) => setFechaInicio(e.target.value)}
+                                    />
+                                </div>
+                                <div className='column'>
+                                    <label htmlFor='' className='label'>Fecha Fin:</label>
+                                    <input
+                                        className='input'
+                                        type='date'
+                                        value={fechaFin}
+                                        onChange={(e) => setFechaFin(e.target.value)}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
