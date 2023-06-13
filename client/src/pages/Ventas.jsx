@@ -234,6 +234,7 @@ const Ventas = () => {
                                     value={cliente?.str_nombre || ' '}
                                 />
                             </div>
+
                         </div>
                         <div>
                             <header className='card-header has-background-info'>
