@@ -16,10 +16,7 @@ export const toDate = (fecha) => {
   return date;
 };
 
-export const esFechaVencida = (fecha1) => {
-  const fechaHoy = new Date();
-  return Math.floor((fecha1 - fechaHoy) / (1000 * 60 * 60 * 24)) < 0;
-};
+export const getHourNow = () => moment().format("HH:mm:ss");
 
 export const nuevaFechaVencimiento = (fecha, id_modalidad) => {
   const date = moment(fecha, "YYYY-MM-DD");
