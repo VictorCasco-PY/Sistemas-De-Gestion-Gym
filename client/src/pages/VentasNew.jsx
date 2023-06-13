@@ -183,21 +183,24 @@ const VentasNew = () => {
     const handleSubmitVenta = async () => {
         try {
             const detallesVenta = {
-                plan_de_pago: {
-                    id_plan_de_pago: planDePago.id,
-                    subtotal: PrecioPlanDePago,
-                    cantidad: 1,
-                    precio: PrecioPlanDePago,
-                    iva: 0
-                },
+                ...(planDePago.estado_de_pago === 'pendiente' && {
+                    plan_de_pago: {
+                        id_plan_de_pago: planDePago.id,
+                        subtotal: PrecioPlanDePago,
+                        cantidad: 1,
+                        precio: PrecioPlanDePago,
+                        iva: 0
+                    }
+                }),
                 productos: selectedItems.map((producto) => ({
                     id: producto.id,
                     cantidad: cantidadProducto,
                     precio: parseInt(producto.precio),
                     iva: parseInt(producto.iva),
-                    subtotal: cantidadProducto * producto.precio
+                    subtotal: cantidadProducto * parseInt(producto.precio)
                 }))
             };
+
 
             const dataVentas = {
                 id_cliente: cliente.id,
