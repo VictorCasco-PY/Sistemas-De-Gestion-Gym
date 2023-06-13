@@ -1,12 +1,12 @@
 import {models} from "../models/models.js";
 
-const {cobros} = models;
+const {cobros,cobros_detalles} = models;
 
 export class Cobros {
     crear = async (req, res) => {
         try {
             const {body} = req;
-            const result = await cobros.create({...body});
+            const result = await this.nuevoCobro(body);
             res.json(result);
         } catch (error) {
             const {message} = error;
@@ -33,6 +33,16 @@ export class Cobros {
             return res.status(500).json({error:message});
         }
     }
+
+    nuevoCobro = async (values) => {
+        try {
+            const result = await cobros.create({...values});
+            return result;
+        }catch (error){
+            throw new Error(error.message);
+        }
+
+    }
     getAll = async (req, res) => {
     }
 
@@ -40,5 +50,11 @@ export class Cobros {
     } // obtiene por id
 
     getById = async (id) => {
+        try{
+            const result = await cobros.findOne({where:{id}, include:{model:cobros_detalles}});
+            return result;
+        }catch (error){
+            throw new Error(error.message);
+        }
     }
 }
