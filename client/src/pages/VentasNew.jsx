@@ -23,6 +23,7 @@ const VentasNew = () => {
     const [iva10, setIVA10] = useState(0);
     const [PrecioPlanDePago, setPrecioPlanDePago] = useState(0);
     const [cantidadProducto, setCantidadProducto] = useState([]);
+    const [fechaActual, setFechaActual] = useState('');
 
     /* Obtencion de datos del cliente */
     const getCliente = async (ruc) => {
@@ -225,6 +226,19 @@ const VentasNew = () => {
         }
     }
 
+    useEffect(() => {
+        const obtenerFechaActual = () => {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const fecha = `${year}-${month}-${day}`;
+            setFechaActual(fecha);
+        };
+
+        obtenerFechaActual();
+    }, []);
+
 
     return (
         <div className='is-serif is-flex is-flex-direction-column'>
@@ -254,6 +268,14 @@ const VentasNew = () => {
                                             style={{ backgroundColor: "#D4D4D4", color: "black", textAlign: "center" }}
                                             type="text"
                                             value={nombreCliente}
+                                            readOnly
+                                        />
+
+                                        <input
+                                            className='input input-radius placeholder-black'
+                                            style={{ backgroundColor: "#D4D4D4", color: "black", textAlign: "center" }}
+                                            type="date"
+                                            value={fechaActual}
                                             readOnly
                                         />
                                     </div>

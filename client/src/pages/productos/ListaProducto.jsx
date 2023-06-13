@@ -8,7 +8,7 @@ const ListaProducto = () => {
     return (
         <div className='column'>
             <div className="headerTitle">
-                <h1 className='is-size-2'>Lista de Productos</h1>
+                <h1 className='title is-size-2'>Lista de Productos</h1>
             </div>
             <div className='is-flex is-flex-direction-column p-5 pageMain has-background-light'>
                 <div className="columns column is-four-fifths is-flex is-flex-direction-column">
