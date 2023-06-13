@@ -99,7 +99,7 @@ const ListaProductos = () => {
         <table className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
           <thead>
             <tr>
-              <th>
+              <th className='is-size-5'>
                 <button
                   className="button is-light is-small"
                   onClick={() => handleSortClick("nombre")}
@@ -108,9 +108,9 @@ const ListaProductos = () => {
                 </button>
                 Nombre
               </th>
-              <th>Descripción</th>
-              <th>IVA</th>
-              <th>
+              <th className='is-size-5'>Descripción</th>
+              <th className='is-size-5'>IVA</th>
+              <th className='is-size-5'>
                 <button
                   className="button is-light is-small"
                   onClick={() => handleSortClick("precio")}
@@ -119,21 +119,21 @@ const ListaProductos = () => {
                 </button>
                 Precio
               </th>
-              <th>Código</th>
-              <th>Cantidad</th>
+              <th className='is-size-5'>Código</th>
+              <th className='is-size-5'>Cantidad</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {productos.map((producto) => (
               <tr key={producto.id}>
-                <td>{producto.str_nombre}</td>
-                <td>{producto.str_descripcion}</td>
-                <td>{producto.iva}</td>
-                <td>{producto.precio}</td>
-                <td>{producto.str_codigo}</td>
-                <td>{producto.cantidad}</td>
-                <td>
+                <td className='is-size-5'>{producto.str_nombre}</td>
+                <td className='is-size-5'>{producto.str_descripcion}</td>
+                <td className='is-size-5'>{producto.iva}</td>
+                <td className='is-size-5'>{producto.precio}</td>
+                <td className='is-size-5'>{producto.str_codigo}</td>
+                <td className='is-size-5'>{producto.cantidad}</td>
+                <td className='is-size-5'>
                   <Link to={`/detallesProducto/${producto.id}`}>
                     <button className="button is-info is-outlined mr-2 is-rounded ">
                       <RemoveRedEyeIcon fontSize="string" />{" "}
