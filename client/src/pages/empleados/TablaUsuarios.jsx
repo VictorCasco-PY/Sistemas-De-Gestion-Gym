@@ -90,7 +90,7 @@ const TablaUsuarios = () => {
         <table className="table table is-bordered tableNew has-background-light is-bordered p-3" style={{ width: "100%" }}>
           <thead className='has-text-centered'>
             <tr className='is-size-6'>
-              <th >
+              <th className='is-size-5'>
                 <button
                   className="button is-light is-small"
                   onClick={handleSortClick}
@@ -99,9 +99,9 @@ const TablaUsuarios = () => {
                 </button>
                 Nombre
               </th >
-              <th>Cédula</th>
-              <th>Rol</th>
-              <th></th>
+              <th className='is-size-5'>Cédula</th>
+              <th className='is-size-5'>Rol</th>
+              <th className='is-size-5'></th>
             </tr>
           </thead>
           <tbody>

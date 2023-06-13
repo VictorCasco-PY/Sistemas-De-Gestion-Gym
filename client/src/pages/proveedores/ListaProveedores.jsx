@@ -96,23 +96,23 @@ const ListaProveedores = () => {
                 <table className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
                     <thead >
                         <tr>
-                            <th>RUC</th>
-                            <th>Nombre</th>
-                            <th>Teléfono</th>
-                            <th>Dirección</th>
-                            <th>Correo</th>
-                            <th></th>
+                            <th className='is-size-5'>RUC</th>
+                            <th className='is-size-5'>Nombre</th>
+                            <th className='is-size-5'>Teléfono</th>
+                            <th className='is-size-5'>Dirección</th>
+                            <th className='is-size-5'>Correo</th>
+                            <th className='is-size-5'></th>
                         </tr>
                     </thead>
                     <tbody >
                         {proveedores.map((proveedor) => (
                             <tr key={proveedor.id}>
-                                <td>{proveedor.str_ruc}</td>
-                                <td>{proveedor.str_nombre}</td>
-                                <td>{proveedor.str_telefono}</td>
-                                <td>{proveedor.str_direccion}</td>
-                                <td>{proveedor.str_correo}</td>
-                                <td>
+                                <td className='is-size-5'>{proveedor.str_ruc}</td>
+                                <td className='is-size-5'>{proveedor.str_nombre}</td>
+                                <td className='is-size-5'>{proveedor.str_telefono}</td>
+                                <td className='is-size-5'>{proveedor.str_direccion}</td>
+                                <td className='is-size-5'>{proveedor.str_correo}</td>
+                                <td className='is-size-5'>
                                     <button className='button is-rounded is-info is-outlined' onClick={() => navigate(`/proveedor/detalle/${proveedor.id}`)}><EditIcon fontSize='string' /></button>
                                     <button className='button is-rounded is-danger is-outlined ml-2' onClick={() => handleDeleteProveedor(proveedor.id)}><DeleteIcon fontSize='string' /></button>
                                 </td>
