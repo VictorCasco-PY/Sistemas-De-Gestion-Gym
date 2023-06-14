@@ -173,8 +173,10 @@ export function DetallesCliente() {
     });
 
     return (
-        <div className='is-serif is-flex-direction-column is-align-content-center is-multiline is-centered'>
+        <div className='is-serif is-flex-direction-column is-align-content-center is-multiline is-centered column'
+        style={{maxWidth:"1100px"}}>
             <h1 className='title'>Detalles del Cliente</h1>
+            <hr />
             <div className=" columns headerTitle clienteHeader m-2">
                 <div className='is-half title is-flex is-justify-content-center is-align-items-center column headerTitle has-text-centered'>
                     {isLoading ? (
