@@ -86,7 +86,7 @@ export class PlanesDePagos {
       const { nombre, estado, ordenNombre, plan, ...querys } = req.query;
 
       const where = {
-        atvivo:true,
+        activo:true,
         ...querys,
       };
 
