@@ -24,6 +24,9 @@ const VentasNew = () => {
     const [PrecioPlanDePago, setPrecioPlanDePago] = useState(0);
     const [cantidadProducto, setCantidadProducto] = useState([]);
     const [fechaActual, setFechaActual] = useState('');
+    const [efectivo, setEfectivo] = useState('');
+    const [credito, setCredito] = useState('');
+    const [debito, setDebito] = useState('');
 
     const resetFields = () => {
         setCliente({});
@@ -43,6 +46,9 @@ const VentasNew = () => {
         setPrecioPlanDePago(0);
         setCantidadProducto([]);
         setFechaActual('');
+        setEfectivo('');
+        setCredito('');
+        setDebito('');
     };
 
     /* Obtencion de datos del cliente */
@@ -222,6 +228,19 @@ const VentasNew = () => {
                 }))
             };
 
+            const detallesCobro = [];
+            if (efectivo) {
+                detallesCobro.push({ id_tipo_de_pago: 1, monto: parseInt(efectivo) });
+            }
+
+            if (credito) {
+                detallesCobro.push({ id_tipo_de_pago: 2, monto: parseInt(credito) });
+            }
+
+            if (debito) {
+                detallesCobro.push({ id_tipo_de_pago: 3, monto: parseInt(debito) });
+            }
+
 
             const dataVentas = {
                 id_cliente: cliente.id,
@@ -231,7 +250,8 @@ const VentasNew = () => {
                 iva_5: iva5,
                 iva_10: iva10,
                 iva_exenta: 0,
-                detalles: detallesVenta
+                detalles: detallesVenta,
+                cobros_detalles: detallesCobro
             };
             console.log(dataVentas);
             const response = await api.post("/ventas", dataVentas);
@@ -434,6 +454,32 @@ const VentasNew = () => {
                     style={{ maxWidth: "300px" }}>
                     <div className='is-flex is-flex-direction-column'>
                         <p className='title m-0'>Detalles</p>
+                        <label htmlFor='efectivo'>Efectivo</label>
+                        <input
+                            type='text'
+                            id='efectivo'
+                            className='input'
+                            value={efectivo}
+                            onChange={(e) => setEfectivo(e.target.value)}
+                        />
+
+                        <label htmlFor='credito'>Tarjeta(Credito)</label>
+                        <input
+                            type='text'
+                            id='credito'
+                            className='input'
+                            value={credito}
+                            onChange={(e) => setCredito(e.target.value)}
+                        />
+
+                        <label htmlFor='debito'>Tarjeta(Debito)</label>
+                        <input
+                            type='text'
+                            id='debito'
+                            className='input'
+                            value={debito}
+                            onChange={(e) => setDebito(e.target.value)}
+                        />
                         <div className='is-flex is-flex-direction-column box mt-6'>
                             <div className=' mb-2 is-flex is-flex-direction-column'>
                                 <p className='subtitle m-3'>Subtotal: {subtotal.toLocaleString('es-ES')}</p>
