@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export const getDateNow = () => {
-  const date = moment().add(1,'day').format("YYYY/MM/DD");
+  const date = moment().add(1,'day').format("YYYY-MM-DD");
 
   return date;
 };
@@ -37,7 +37,7 @@ export const nuevaFechaVencimiento = (fecha, id_modalidad) => {
 
 export const esPlanVencido = (fecha) => {
   const fechaActual = moment();
-  const fechaComparar = moment(fecha, "YYYY/MM/DD");
+  const fechaComparar = moment(fecha, "YYYY-MM-DD");
   const result = fechaComparar.isBefore(fechaActual);
   console.log(result);
   return result

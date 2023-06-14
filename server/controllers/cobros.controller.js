@@ -39,9 +39,10 @@ export class Cobros {
             const result = await cobros.create({...values});
             return result;
         }catch (error){
+            console.log("Error en crear un nuevo cobro")
+            console.log(error.message);
             throw new Error(error.message);
         }
-
     }
     getAll = async (req, res) => {
     }
