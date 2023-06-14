@@ -27,6 +27,7 @@ const VentasNew = () => {
     const [efectivo, setEfectivo] = useState('');
     const [credito, setCredito] = useState('');
     const [debito, setDebito] = useState('');
+    const [totalConfirm, setTotalConfirm] = useState(0);
 
     const resetFields = () => {
         setCliente({});
@@ -208,63 +209,74 @@ const VentasNew = () => {
 
     /* Envio de la venta realizada */
     const handleSubmitVenta = async () => {
-        try {
-            const detallesVenta = {
-                ...(planDePago.estado_de_pago === 'pendiente' && {
-                    plan_de_pago: {
-                        id_plan_de_pago: planDePago.id,
-                        subtotal: PrecioPlanDePago,
-                        cantidad: 1,
-                        precio: PrecioPlanDePago,
-                        iva: 0
-                    }
-                }),
-                productos: selectedItems.map((producto) => ({
-                    id: producto.id,
-                    cantidad: cantidadProducto,
-                    precio: parseInt(producto.precio),
-                    iva: parseInt(producto.iva),
-                    subtotal: cantidadProducto * parseInt(producto.precio)
-                }))
-            };
+        const detallesVenta = {
+            ...(planDePago.estado_de_pago === 'pendiente' && {
+                plan_de_pago: {
+                    id_plan_de_pago: planDePago.id,
+                    subtotal: PrecioPlanDePago,
+                    cantidad: 1,
+                    precio: PrecioPlanDePago,
+                    iva: 0
+                }
+            }),
+            productos: selectedItems.map((producto) => ({
+                id: producto.id,
+                cantidad: cantidadProducto,
+                precio: parseInt(producto.precio),
+                iva: parseInt(producto.iva),
+                subtotal: cantidadProducto * parseInt(producto.precio)
+            }))
+        };
 
-            const detallesCobro = [];
-            if (efectivo) {
-                detallesCobro.push({ id_forma_de_pago: 1, monto: parseInt(efectivo) });
-            }
-
-            if (credito) {
-                detallesCobro.push({ id_forma_de_pago: 2, monto: parseInt(credito) });
-            }
-
-            if (debito) {
-                detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
-            }
-
-
-            const dataVentas = {
-                id_cliente: cliente.id,
-                id_timbrado: 1,
-                total: total,
-                saldo: 0,
-                iva_5: iva5,
-                iva_10: iva10,
-                iva_exenta: 0,
-                detalles: detallesVenta,
-                cobros_detalles: detallesCobro
-            };
-            console.log(dataVentas);
-            const response = await api.post("/ventas", dataVentas);
-            console.log(response.data.ok);
-            Swal.fire(
-                `${response.data.ok}`,
-                'Se ha generado una factura nueva!',
-                'success'
-            );
-            resetFields();
-        } catch (error) {
-            console.log(error);
+        const detallesCobro = [];
+        if (efectivo) {
+            detallesCobro.push({ id_forma_de_pago: 1, monto: parseInt(efectivo) });
         }
+
+        if (credito) {
+            detallesCobro.push({ id_forma_de_pago: 2, monto: parseInt(credito) });
+        }
+
+        if (debito) {
+            detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
+        }
+
+        let totalC = 0;
+        for (const detalle of detallesCobro) {
+            totalC += detalle.monto;
+        }
+
+        total == totalC ? console.log('Igual') : console.log('No Igual')
+        const dataVentas = {
+            id_cliente: cliente.id,
+            id_timbrado: 1,
+            total: total,
+            saldo: 0,
+            iva_5: iva5,
+            iva_10: iva10,
+            iva_exenta: 0,
+            detalles: detallesVenta,
+            cobros_detalles: detallesCobro
+        };
+        console.log(dataVentas);
+
+        if (total == totalC) {
+            try {
+                const response = await api.post("/ventas", dataVentas);
+                console.log(response.data.ok);
+                Swal.fire(
+                    `${response.data.ok}`,
+                    'Se ha generado una factura nueva!',
+                    'success'
+                );
+                resetFields();
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            alert("Los valores de total no coinciden con el cobro");
+        }
+
     }
 
     useEffect(() => {
