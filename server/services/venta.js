@@ -33,8 +33,7 @@ export class Venta {
 
         const nuevoCobro = await cobroController.nuevoCobro(cobro);
         console.log("Hecho: cobro")
-        cobros_detalles.id_cobro = nuevoCobro.id;
-        await cobroDetalleController(...cobros_detalles);
+        await cobroDetalleController.crear(...cobros_detalles);
 
         console.log('Nuevo cobro: ');
         console.log(nuevoCobro)
