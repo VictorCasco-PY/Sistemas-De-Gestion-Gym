@@ -30,6 +30,10 @@ export default class facturas_proveedores extends Model {
         type: DataTypes.STRING(200),
         allowNull: true
       },
+      nro_factura:{
+        type :DataTypes.STRING(200),
+        allowNull:true
+      },
       activo: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
