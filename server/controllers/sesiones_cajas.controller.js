@@ -76,7 +76,7 @@ export class SesionesCajas {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await sesiones_cajas.destroy({ where: { id } });
+            const rowsAffected = await sesiones_cajas.update({activo:false, where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe una relación empleado-caja con ese ID");
             }
@@ -88,7 +88,7 @@ export class SesionesCajas {
     //Obtiene todos los objetos
     getAll = async (req, res) => {
         try {
-            const result = await sesiones_cajas.findAll();
+            const result = await sesiones_cajas.findAll({ where: { activo: true } });
             res.json(result);
         } catch (error) {
             res.status(500).json(error);

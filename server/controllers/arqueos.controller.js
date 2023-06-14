@@ -75,7 +75,7 @@ export class Arqueos {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await arqueos.destroy({ where: { id } });
+            const rowsAffected = await arqueos.update({activo:false, where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe un arqueo con ese ID");
             }
@@ -87,7 +87,7 @@ export class Arqueos {
     //Obtiene todos los objetos
     getAll = async (req, res) => {
         try {
-            const result = await arqueos.findAll();
+            const result = await arqueos.findAll({ where: { activo: true } });
             res.json(result);
         } catch (error) {
             res.status(500).json(error);

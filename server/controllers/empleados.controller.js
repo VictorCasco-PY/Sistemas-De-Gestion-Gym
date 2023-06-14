@@ -46,7 +46,7 @@ export class Empleado {
         return res
           .status(404)
           .json({ error: "No existe un empleado con este id" });
-      await empleados.destroy({ where: { id } });
+      await empleados.update({activo:false, where: { id } });
       res.status(200).send("Empleado eliminado");
     } catch (error) {
       const { message } = error;
@@ -58,6 +58,7 @@ export class Empleado {
       const { nombre, user, ordenNombre,cedula, ...querys } = req.query;
 
       const where = {
+        activo:true,
         ...querys
       };
       

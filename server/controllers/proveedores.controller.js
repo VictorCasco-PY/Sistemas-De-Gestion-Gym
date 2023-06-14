@@ -31,7 +31,7 @@ export class Proveedores {
     try {
       const { id } = req.params;
       if (!(await this.getById(id))) return req.status(404).json({ error: "No existe un proveedor con ese ID" });
-      await proveedores.destroy({ where: { id } });
+      await proveedores.update({activo:false, where: { id } });
       res.status(200).send("Proveedor eliminado");
     } catch (error) {
       return res.status(500).json(error)
@@ -39,7 +39,7 @@ export class Proveedores {
   }
   getAll = async (req, res) => {
     try {
-      const result = await proveedores.findAll();
+      const result = await proveedores.findAll({ where: { activo: true } });
       res.json(result);
     } catch (error) {
       res.json(error.message).status(500);

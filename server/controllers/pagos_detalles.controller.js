@@ -43,7 +43,7 @@ export class Pagos_proveedores_detalles {
             const { id } = req.params;
             if (!(await this.getById(id)))
                 return res.status(404).send("No existe un pago_proveedor_detalle con ese id");
-            await pagos_proveedores_detalles.update({ where: { id } });
+            await pagos_proveedores_detalles.update({activo:false, where: { id } });
             return res.send("detalle eliminada correctamente");
         } catch (error) {
             const { message } = error;
@@ -58,10 +58,10 @@ export class Pagos_proveedores_detalles {
             if (montoOrden === 'asc') options.order = [['monto', 'ASC']];
             if (montoOrden === 'desc') options.order = [['monto', 'DESC']];
 
-            let where = {};
+            let where = {activo:true};
 
             const result = await pagos_proveedores_detalles.findAll({
-                ...options
+               where, ...options
             });
 
             res.json(result);

@@ -72,7 +72,7 @@ export class PlanesDePagos {
       const { id } = req.params;
       if (!(await this.getById(id)))
         return res.status(404).json({ error: "No existe ese plan de pago" });
-      await planes_de_pagos.destroy({ where: { id } });
+      await planes_de_pagos.update({activo:false, where: { id } });
       res.status(200).send("Plan de pago eliminado");
     } catch (error) {
       console.log(error);
@@ -86,6 +86,7 @@ export class PlanesDePagos {
       const { nombre, estado, ordenNombre, plan, ...querys } = req.query;
 
       const where = {
+        atvivo:true,
         ...querys,
       };
 

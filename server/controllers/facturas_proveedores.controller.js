@@ -1,5 +1,4 @@
-import { models } from "../models/models.js";
-import { getDateNow } from "../tools/date.js"
+import { models } from "../models/models.js"
 import { Proveedores } from "./proveedores.controller.js";
 const { facturas_proveedores } = models;
 const proveedor = new Proveedores();
@@ -10,7 +9,7 @@ export class Facturas_proveedores {
         try {
             const { body } = req;
             const result = await this.createFacturaProveedor(...body);
-            return res.json({result});
+            return res.json({ result });
         } catch (error) {
             const { message } = error;
             return res.status(500).json({ error: message });
@@ -21,12 +20,12 @@ export class Facturas_proveedores {
 
     createFacturaProveedor = async (query) => {
         try {
-            const{id_proveedor}=query;
-            const proveedorTemp=await proveedor.getById(id_proveedor);
-            if(!proveedorTemp) return res.status(404).json({erorr:"No existe proveedor con ese id"}); 
-            const {str_nombre}=proveedorTemp.str_nombre;
-            const {str_ruc}= proveedorTemp.str_ruc;
-            const result = await facturas_proveedores.create({ ...query, str_nombre, str_ruc,nro_factura,date_fecha });
+            const { id_proveedor } = query;
+            const proveedorTemp = await proveedor.getById(id_proveedor);
+            if (!proveedorTemp) return res.status(404).json({ erorr: "No existe proveedor con ese id" });
+            const { str_nombre } = proveedorTemp.str_nombre;
+            const { str_ruc } = proveedorTemp.str_ruc;
+            const result = await facturas_proveedores.create({ ...query, str_nombre, str_ruc, nro_factura, date_fecha });
             return result;
         } catch (error) {
             throw new Error("Error al crear la factura-proveedor");
@@ -49,7 +48,7 @@ export class Facturas_proveedores {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await facturas_proveedores.destroy({ where: { id } });
+            const rowsAffected = await facturas_proveedores.update({activo:false, where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe una factura-proveedor con ese ID");
             }
@@ -63,6 +62,7 @@ export class Facturas_proveedores {
             const { ordenTotal, ordenFecha, startDate, endDate, ...querys } = req.query;
 
             const where = {
+                activo:true,
                 ...querys
             };
 

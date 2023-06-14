@@ -31,7 +31,7 @@ export class Productos {
     try {
       const { id } = req.params;
       if (!(await this.getById(id))) return req.status(404).json({ error: "No existe un producto con ese ID" });
-      await productos.destroy({ where: { id } });
+      await productos.update({activo:false, where: { id } });
       res.status(200).send("Producto eliminado");
     } catch (error) {
       return res.status(500).json(error)
@@ -63,6 +63,7 @@ export class Productos {
       const { nombre, precio, ordenNombre,ordenPrecio,codigo, ...querys } = req.query;
 
       const where = {
+        activo:true,
         ...querys
       };
       

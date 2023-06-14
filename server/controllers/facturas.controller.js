@@ -41,7 +41,7 @@ export class Factura {
       const { id } = req.params;
       if (!(await this.getById(id)))
         return res.status(404).send("No existe una factura con ese id");
-      await facturas.destroy({ where: { id } });
+      await facturas.update({activo:false, where: { id } });
       return res.send("Factura eliminada correctamente");
     } catch (error) {
       const { message } = error;
@@ -77,7 +77,7 @@ export class Factura {
     try {
       const { fechaIn, fechaFin, ruc } = req.query;
   
-      const where = {};
+      const where = {activo:true};
       if (fechaIn && fechaFin) where.date_fecha = { [Op.between]: [fechaIn, fechaFin] };
       if(ruc) where.str_ruc_cliente = ruc;
   
