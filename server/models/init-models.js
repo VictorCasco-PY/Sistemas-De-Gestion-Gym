@@ -80,8 +80,8 @@ export default function initModels(sequelize) {
   empleados.hasMany(sesiones_cajas, { foreignKey: "id_empleado" });
   facturas_detalles.belongsTo(facturas, { foreignKey: "id_factura" });
   facturas.hasMany(facturas_detalles, { foreignKey: "id_factura" });
-  cobros.belongsTo(facturas_proveedores, { foreignKey: "id_factura" });
-  facturas_proveedores.hasMany(cobros, { foreignKey: "id_factura" });
+  cobros.belongsTo(facturas, { foreignKey: "id_factura" });
+  facturas.hasMany(cobros, { foreignKey: "id_factura" });
   facturas_proveedores_detalles.belongsTo(facturas_proveedores, {
     foreignKey: "id_factura_proveedor",
   });

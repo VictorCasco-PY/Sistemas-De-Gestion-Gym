@@ -17,24 +17,27 @@ export class Venta {
         const {id_cliente, id_timbrado, total, saldo, iva_5,iva_10, iva_exenta, detalles, cobros_detalles} = req.body;
 
         factura = await facturaController.nuevaFactura({id_cliente, id_timbrado, total, saldo, iva_5, iva_10, iva_exenta});
-
+        console.log("hecho: factura")
         detalles.id_factura = factura.id;	//guardar el id de la factura
         await facturaDetalleController.nuevaFacturaDetalle(detalles); // se guardan los detalles
+        console.log("hecho: factura_detalle")
 
+        const date_fecha = getDateNow();
+        const time_hora = getHourNow();
         const cobro = {
             id_factura: factura.id,
-            id_sesion_caja: nul,
-            date_fecha: getDateNow(),
-            time_hora: getHourNow(),
+            id_sesion_caja: null,
+            date_fecha,
+            time_hora,
         };
 
         const nuevoCobro = await cobroController.nuevoCobro(cobro);
-
+        console.log("Hecho: cobro")
         cobros_detalles.id_cobro = nuevoCobro.id;
         await cobroDetalleController(...cobros_detalles);
 
         console.log('Nuevo cobro: ');
-        console.log()
+        console.log(nuevoCobro)
 
         const nuevaFactura = facturaController.getById(factura.id);
 
