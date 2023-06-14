@@ -19,7 +19,7 @@ export class Compra {
             factura_proveedor_detalle = await facturaProveedorDetalleController.createFacturaProveedorDetalle(detalles);
             console.log("hecho factura_detalles");
 
-            const pago = { id_factura_proveedor: factura_proveedor.id, id_sesion_caja: null, date_fecha }
+            const pago = { id_factura_proveedor: factura_proveedor.id, id_sesion_caja: null, date_fecha,total }
             const nuevoPago = await pagoController.createPagoProveedor(pago);
             console.log("Hecho pago");
             await  pagoDetallesController.createPagoProveedorDetalle(...pagos_detalles);
