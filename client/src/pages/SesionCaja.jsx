@@ -1,125 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { isSameDay, parseISO } from 'date-fns';
+import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import api from '../services/api';
 
 const SesionCaja = () => {
-  const [ventas, setVentas] = useState([]);
-  const [totalVentasDelDia, setTotalVentasDelDia] = useState(0);
-  const [compras, setCompras] = useState([]);
-  const [totalComprasDelDia, setTotalComprasDelDia] = useState(0);
-  const [cajaAbierta, setCajaAbierta] = useState(false);
-  const [valorCaja, setValorCaja] = useState('');
-  const [efectivoFinal, setEfectivoFinal] = useState(null);
+  const [abrirCaja, setAbrirCaja] = useState(false);
+  const [montoInicial, setMontoInicial] = useState('');
+  const [horaCierre, setHoraCierre] = useState('');
 
+  // Al cargar el componente, verifica si existe una sesión de caja en el almacenamiento local
   useEffect(() => {
-    const fetchVentas = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/facturas');
-        setVentas(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const fetchCompras = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/facturas-proveedores');
-        setCompras(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchVentas();
-    fetchCompras();
+    const sesionCajaId = localStorage.getItem('sesionCajaId');
+    if (sesionCajaId) {
+      // Si hay una sesión de caja existente, significa que la caja está abierta
+      setAbrirCaja(true);
+    }
   }, []);
 
-  useEffect(() => {
-    const fechaActual = new Date();
+  const handleAbrirCerrarCaja = () => {
+    if (!abrirCaja) {
+      // Si la caja está cerrada, se hace clic en "Abrir Caja"
+      const fechaApertura = new Date();
+      setAbrirCaja(true);
 
-    const ventasDelDia = ventas.filter(venta =>
-      isSameDay(parseISO(venta.date_fecha), fechaActual)
-    );
+      const user = JSON.parse(localStorage.getItem('user'));
+      const data = {
+        id_empleado: user.id,
+        id_caja: 1,
+        monto_inicial: montoInicial,
+        monto_final: montoInicial,
+        date_fecha: format(fechaApertura, 'yyyy-MM-dd'),
+        time_inicio: format(fechaApertura, 'HH:mm'),
+        time_cierre: format(fechaApertura, 'HH:mm'),
+      };
 
-    const totalVentas = ventasDelDia.reduce(
-      (accum, venta) => accum + parseInt(venta.total, 10),
-      0
-    );
+      // Realizar la solicitud POST para abrir la caja
+      api.post('/sesiones-cajas', data)
+        .then(response => {
+          console.log(response.data);
+          localStorage.setItem('sesionCajaId', response.data.id);
+        })
+        .catch(error => { console.log(error) });
 
-    setTotalVentasDelDia(totalVentas);
-  }, [ventas]);
-
-  useEffect(() => {
-    const fechaActual = new Date();
-
-    const comprasDelDia = compras.filter(compra =>
-      isSameDay(parseISO(compra.date_fecha), fechaActual)
-    );
-
-    const totalCompras = comprasDelDia.reduce(
-      (accum, compra) => accum + parseInt(compra.total, 10),
-      0
-    );
-
-    setTotalComprasDelDia(totalCompras);
-  }, [compras]);
-
-  const toggleCaja = () => {
-    if (!cajaAbierta) {
-      setCajaAbierta(true);
-      //setVentasCerradas(ventas);
-      //setComprasCerradas(compras);
-    } else {
-      setCajaAbierta(false);
-      setValorCaja('');
-      setEfectivoFinal(null);
-    }
-  };
-
-  const calcularEfectivoFinal = () => {
-    const efectivoFinalValue =
-      parseInt(valorCaja, 10) + totalVentasDelDia - totalComprasDelDia;
-
-    setEfectivoFinal(efectivoFinalValue);
+      } else {
+        // Si la caja está abierta, se hace clic en "Cerrar Caja"
+        setMontoInicial('');
+        const fechaCierre = new Date();
+        setHoraCierre(fechaCierre.toLocaleTimeString());
+      
+        // Obtener el ID de la sesión de caja
+        const sesionCajaId = localStorage.getItem('sesionCajaId');
+      
+        const data = {
+          time_cierre: format(fechaCierre, 'HH:mm'),
+        };
+      
+        // Realizar la solicitud PUT para cerrar la caja
+        api.put(`/sesion-caja/${sesionCajaId}`, data)
+          .then(response => {
+            console.log(response.data);
+            localStorage.removeItem('sesionCajaId'); // Eliminar el ID de la sesión de caja del almacenamiento local
+            setAbrirCaja(false); // Asegurarse de que el estado de abrirCaja esté actualizado correctamente
+          })
+          .catch(error => { console.log(error) });
+      }
   };
 
   return (
-    <div className="container">
-      <h2 className="title">Sesión Caja</h2>
-      {!cajaAbierta ? (
-        <button className="button" onClick={toggleCaja}>
-          Abrir caja
-        </button>
-      ) : (
-        <button className="button" onClick={toggleCaja}>
-          Cerrar caja
-        </button>
-      )}
-
-      {cajaAbierta && (
-        <div>
-          <input
-            type="text"
-            value={valorCaja}
-            onChange={e => setValorCaja(e.target.value)}
-            placeholder="Ingrese el valor de la caja física"
-          />
-
-          {valorCaja && (
-            <p className="subtitle">Valor ingresado: {valorCaja}</p>
-          )}
-
-          {/*<p className="subtitle">Total de ventas del día: {totalVentasDelDia}</p>
-          //<p className="subtitle">Total de compras del día: {totalComprasDelDia}</p>*/}
-
-          <button className="button" onClick={calcularEfectivoFinal}>
-            Calcular efectivo final
-          </button>
-
-          {efectivoFinal !== null && (
-            <p className="subtitle">Efectivo final: {efectivoFinal}</p>
-          )}
-        </div>
+    <div>
+      <h1>Sesión de Caja</h1>
+      <label htmlFor="montoInicial">Monto inicial:</label>
+      <input
+        type="number"
+        id="montoInicial"
+        value={montoInicial}
+        onChange={(e) => setMontoInicial(e.target.value)}
+        disabled={abrirCaja} // Deshabilitar el campo cuando la caja esté abierta
+      />
+      <button onClick={handleAbrirCerrarCaja}>
+        {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
+      </button>
+      {horaCierre && (
+        <p>Hora de cierre de la sesión: {horaCierre}</p>
       )}
     </div>
   );
