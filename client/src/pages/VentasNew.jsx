@@ -25,6 +25,26 @@ const VentasNew = () => {
     const [cantidadProducto, setCantidadProducto] = useState([]);
     const [fechaActual, setFechaActual] = useState('');
 
+    const resetFields = () => {
+        setCliente({});
+        setDocumentoCliente('');
+        setNombreCliente('');
+        setProductos([]);
+        setModalVisible(false);
+        setSelectedItems([]);
+        setSearchQuery('');
+        setisLoading(false);
+        setModalidadesPago([]);
+        setPlanDePago({});
+        setTotal(0);
+        setSubtotal(0);
+        setIVA5(0);
+        setIVA10(0);
+        setPrecioPlanDePago(0);
+        setCantidadProducto([]);
+        setFechaActual('');
+    };
+
     /* Obtencion de datos del cliente */
     const getCliente = async (ruc) => {
         try {
@@ -220,7 +240,8 @@ const VentasNew = () => {
                 `${response.data.ok}`,
                 'Se ha generado una factura nueva!',
                 'success'
-            )
+            );
+            resetFields();
         } catch (error) {
             console.log(error);
         }
@@ -308,28 +329,32 @@ const VentasNew = () => {
                                                 item.str_nombre.toLowerCase().includes(searchQuery.toLowerCase())
                                             )
                                             .map((item, index) => (
-                                                <div
-                                                    key={index}
-                                                    className='itemResult'
-                                                    onMouseDown={handleMouseDown}
-                                                    onClick={() => handleItemSelect(item)}
-                                                >
-                                                    <div className='is-flex is-justify-content-space-between'>
-                                                        <div>
-                                                            <p>{item.str_nombre}</p>
-                                                            <p>{item.str_descripcion}</p>
+                                                // Agregar condición para verificar si la cantidad es mayor que 0
+                                                item.cantidad > 0 && (
+                                                    <div
+                                                        key={index}
+                                                        className='itemResult'
+                                                        onMouseDown={handleMouseDown}
+                                                        onClick={() => handleItemSelect(item)}
+                                                    >
+                                                        <div className='is-flex is-justify-content-space-between'>
+                                                            <div>
+                                                                <p>{item.str_nombre}</p>
+                                                                <p>{item.str_descripcion}</p>
+                                                            </div>
+                                                            <p>
+                                                                {parseFloat(item.precio).toLocaleString('en-US', {
+                                                                    useGrouping: true,
+                                                                    minimumFractionDigits: 0,
+                                                                })}Gs
+                                                            </p>
                                                         </div>
-                                                        <p>
-                                                            {parseFloat(item.precio).toLocaleString('en-US', {
-                                                                useGrouping: true,
-                                                                minimumFractionDigits: 0,
-                                                            })}Gs
-                                                        </p>
+                                                        <hr className='itemSeparator m-0 mb-1' />
                                                     </div>
-                                                    <hr className='itemSeparator m-0 mb-1' />
-                                                </div>
+                                                )
                                             ))}
                                     </div>
+
                                 )}
                                 {/*  //////// */}
                             </div>
