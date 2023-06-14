@@ -4,6 +4,7 @@ import api from "../services/api";
 import AddIcon from '@mui/icons-material/Add';
 import CircularProgress from '@mui/material/CircularProgress';
 import Swal from 'sweetalert2'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Compras() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -333,7 +334,7 @@ export default function Compras() {
                           className="button icon-button is-danger is-small is-outlined is-rounded"
 
                         >
-                          Eliminar
+                          <DeleteIcon fontSize="string" />
                         </button>
                       </td>
                     </tr>
