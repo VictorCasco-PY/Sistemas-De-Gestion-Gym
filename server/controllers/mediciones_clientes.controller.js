@@ -47,7 +47,7 @@ export class MedicionCliente {
         try {
             const {id} = req.params
             if (!(await this.getById(id))) return req.status(404).json({error: "No existe esa medicion"});
-            await mediciones_clientes.destroy({where: {id}});
+            await mediciones_clientes.update({activo:false, where: { id } });
             res.status(200).send("Medicion eliminada");
         } catch (error) {
             const { message } = error;
@@ -60,7 +60,7 @@ export class MedicionCliente {
      */
     getAll = async (req, res) => {
         try {
-            const result = await mediciones_clientes.findAll();
+            const result = await mediciones_clientes.findAll({ where: { activo: true } });
             res.json(result);
         } catch (e) {
             return res.status(500).json({error: "Error al obtener mediciones"});

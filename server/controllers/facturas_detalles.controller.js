@@ -94,7 +94,7 @@ export class FacturaDetalle {
       const { id } = req.params;
       if (!(await this.getById(id)))
         return res.status(404).send("No existe una factura_detalle con ese id");
-      await facturas_detalles.destroy({ where: { id } });
+      await facturas_detalles.update({activo:false, where: { id } });
       return res.send("Factura eliminada correctamente");
     } catch (error) {
       const { message } = error;
@@ -104,7 +104,7 @@ export class FacturaDetalle {
 
   getAll = async (req, res) => {
     try {
-      const result = await facturas_detalles.findAll();
+      const result = await facturas_detalles.findAll({ where: { activo: true } });
       res.json(result);
     } catch (error) {
       const { message } = error;

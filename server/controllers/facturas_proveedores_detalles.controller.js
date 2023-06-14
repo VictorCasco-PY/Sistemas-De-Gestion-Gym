@@ -64,7 +64,7 @@ export class Facturas_proveedores_detalles {
             const { id } = req.params;
             if (!(await this.getById(id)))
                 return res.status(404).send("No existe una factura_proveedor_detalle con ese id");
-            await facturas_proveedores_detalles.update({ where: { id } });
+            await facturas_proveedores_detalles.update({activo:false, where: { id } });
             return res.send("Factura eliminada correctamente");
         } catch (error) {
             const { message } = error;
@@ -81,7 +81,7 @@ export class Facturas_proveedores_detalles {
             if (subtotalOrden === 'asc') options.order = [['subtotal', 'ASC']];
             if (subtotalOrden === 'desc') options.order = [['subtotal', 'DESC']];
 
-            let where = {};
+            let where = {activo:true};
             if (str_nombre) where = { str_nombre };
 
             const result = await facturas_proveedores_detalles.findAll({

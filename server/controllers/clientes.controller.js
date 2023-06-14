@@ -40,7 +40,7 @@ export class Cliente {
         try {
             const {id} = req.params;
             if (!(await this.getById(id))) return req.status(404).json({error: "No existe un usuario con ese ID"});
-            await clientes.destroy({where: {id}});
+            await clientes.update({activo:false, where: { id } });
             res.status(200).send("Cliente eliminado");
         } catch (error) {
             const {message} = error;
@@ -53,6 +53,7 @@ export class Cliente {
             const {nombre, ...querys} = req.query;
 
             const where = {
+                activo:true,
                 ...querys
               };
 

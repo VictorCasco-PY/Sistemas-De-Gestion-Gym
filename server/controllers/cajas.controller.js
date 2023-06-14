@@ -31,7 +31,7 @@ export class Cajas {
     try {
       const { id } = req.params;
       if (!(await this.getById(id))) return req.status(404).json({ error: "No existe una caja con ese ID" });
-      await cajas.destroy({ where: { id } });
+      await cajas.update({activo:false, where: { id } });
       res.status(200).send("Caja Eliminada");
     } catch (error) {
       return res.status(500).json(error)
@@ -39,7 +39,7 @@ export class Cajas {
   }
   getAll = async (req, res) => {
     try {
-      const result = await cajas.findAll();
+      const result = await cajas.findAll({ where: { activo: true } });
       res.json(result);
     } catch (error) {
       res.json(error.message).status(500);
