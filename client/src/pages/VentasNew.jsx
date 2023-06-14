@@ -230,15 +230,15 @@ const VentasNew = () => {
 
             const detallesCobro = [];
             if (efectivo) {
-                detallesCobro.push({ id_tipo_de_pago: 1, monto: parseInt(efectivo) });
+                detallesCobro.push({ id_forma_de_pago: 1, monto: parseInt(efectivo) });
             }
 
             if (credito) {
-                detallesCobro.push({ id_tipo_de_pago: 2, monto: parseInt(credito) });
+                detallesCobro.push({ id_forma_de_pago: 2, monto: parseInt(credito) });
             }
 
             if (debito) {
-                detallesCobro.push({ id_tipo_de_pago: 3, monto: parseInt(debito) });
+                detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
             }
 
 
