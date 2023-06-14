@@ -31,9 +31,9 @@ export class Venta {
             time_hora,
         };
 
-        const nuevoCobro = await cobroController.nuevoCobro(cobro);
+        const nuevoCobro = (await cobroController.nuevoCobro(cobro)).dataValues;
         console.log("Hecho: cobro")
-        await cobroDetalleController.crear(...cobros_detalles);
+        await cobroDetalleController.crear(nuevoCobro.id, ...cobros_detalles);
 
         console.log('Nuevo cobro: ');
         console.log(nuevoCobro)

@@ -4,9 +4,9 @@ const {cobros_detalles} = models;
 
 export class CobrosDetalles{
 
-    crear = async (values) => {
+    crear = async (id_cobro, values) => {
         try{
-            const result = await cobros_detalles.create({...values});
+            const result = await cobros_detalles.create({id_cobro,...values});
             return result;
         }catch (error){
             throw new Error(error.message);
