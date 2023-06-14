@@ -8,7 +8,6 @@ import ListaClientes from './pages/ListaClientes';
 import { DetallesCliente } from './pages/DetallesCliente';
 import RegistroProveedores from './pages/proveedores/RegistroProveedores';
 import RegistroEmpleado from './pages/empleados/RegistroEmpleado';
-import TablaUsuarios from './pages/empleados/TablaUsuarios';
 import ProtectedRoute from './components/ProtectedRoute';
 import Caja from './pages/Caja';
 import ListaProveedores from './pages/proveedores/ListaProveedores';
@@ -17,11 +16,10 @@ import DetalleProveedor from './pages/proveedores/DetalleProveedor';
 import Ventas from './pages/Ventas';
 import DetallesUsuario from './pages/empleados/DetallesUsuario';
 import RegistroProductos from './pages/productos/RegistroProductos';
-import ListaProductos from './pages/productos/ListaProductos';
 import WizardFormCliente from './pages/clientes/WizardFormCliente';
 import NewLayout from './Layout/NewLayout';
 import DetallesProducto from './pages/productos/DetallesProducto';
-import ArqueoCaja from './pages/ArqueoCaja';
+import SesionCaja from './pages/SesionCaja';
 import Compras from './pages/Compras';
 import ListaFacturas from './pages/facturas/ListaFacturas'
 import DetalleFactura from './pages/facturas/DetalleFactura';
@@ -73,7 +71,7 @@ function App() {
             <Route path='/registroProducto' element={<NewLayout><RegistroProductos /></NewLayout>} />
             <Route path='/listaProductos' element={<NewLayout>< ListaProducto /></NewLayout>} />
             <Route path='/detallesProducto/:id' element={<NewLayout><DetallesProducto /></NewLayout>} />
-            <Route path='/arqueo' element={<NewLayout>< ArqueoCaja /></NewLayout>} />
+            <Route path='/sesionCaja' element={<NewLayout>< SesionCaja /></NewLayout>} />
             <Route path='/facturas' element={<NewLayout><ListaFacturas /></NewLayout>} />
             <Route path='/detalleFactura' element={<DetalleFactura />}></Route>
           </Route>

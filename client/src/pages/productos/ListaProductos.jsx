@@ -4,7 +4,6 @@ import api from "../../services/api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Link } from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
 import SortIcon from "@mui/icons-material/Sort";
 
 const ListaProductos = () => {
@@ -82,7 +81,6 @@ const ListaProductos = () => {
 
   return (
     <div className="column is-flex is-flex-direction-column">
-
       <div className="column is-flex mb-0 pb-0">
         <div style={{ width: "20rem" }}>
           <input
