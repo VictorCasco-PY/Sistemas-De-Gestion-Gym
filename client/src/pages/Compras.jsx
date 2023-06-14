@@ -158,8 +158,8 @@ export default function Compras() {
     <div className='is-serif is-flex is-flex-direction-column'>
       <h1 className='title is-size-2'>Nueva Compra</h1>
       <hr />
-      <div className='column has-background-light p-5 is-flex'
-        style={{ border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth:"1100px"}}>
+      <div className='column has-background-light p-5 is-flex mr-auto ml-auto'
+        style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width:"100%", maxWidth:"1200px"}}>
         <div className='listaItems column '>
           <div className='is-flex mb-6'>
             <div className="proveedorTab mb-5 is-flex is-align-content-center">

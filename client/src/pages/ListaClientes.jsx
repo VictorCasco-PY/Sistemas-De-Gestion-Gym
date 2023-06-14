@@ -11,8 +11,8 @@ const ListaClientes = () => {
                 <h1 className='is-size-2'>Lista de Clientes</h1>
             </div>
             <hr />
-            <div className='is-flex is-flex-direction-column p-5 has-background-light column'
-            style={{border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth:"1100px"}}>
+            <div className='is-flex is-flex-direction-column p-5 has-background-light column ml-auto mr-auto'
+            style={{border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth:"1200px"}}>
                 <div className="columns column is-flex is-flex-direction-column">
                     <div className='column is-flex is-justify-content-flex-end m-0 p-0'>
                         <Link className="custom-link is-flex" to="/registro_cliente"><button className='button is-success'><AddIcon /> Agregar Cliente</button></Link>
