@@ -4,7 +4,8 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-    
+    await  queryInterface.removeConstraint('cobros', 'cobros_ibfk_4');
+    await queryInterface.removeColumn('cobros', 'id_factura');
     await queryInterface.addColumn('cobros', 'id_factura', {
       type: Sequelize.INTEGER,
       allowNull: true,
