@@ -284,12 +284,14 @@ const VentasNew = () => {
     return (
         <div className='is-serif is-flex is-flex-direction-column'>
             <h1 className='title is-size-2'>Nueva Venta</h1>
-            <div className='column has-background-light p-5 is-two-thirds-desktop is-full-tablet is-flex'
-                style={{ border: "1px solid #D4D4D4", borderRadius: "8px" }}>
+            <hr />
+            <div className='column has-background-light p-5 is-flex mr-auto ml-auto'
+                style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width:"100%", maxWidth:"1200px" }}>
                 <div className='listaItems column'>
                     <div className='is-flex mb-6'>
                         <div className="proveedorTab mb-5 is-flex is-align-content-center">
-                            <p className='is-3 title m-0 mr-5'>Cliente</p>
+                            <p className='is-3 title m-0 mr-5'
+                            style={{width:"120px"}}>Cliente</p>
                             <div className='is-flex is-flex-direction-column'
                                 style={{ "gap": "10px" }}>
                                 <div className='is-flex is-flex-direction-column '>
