@@ -2,12 +2,13 @@ import { Facturas_proveedores } from "../controllers/facturas_proveedores.contro
 import { Facturas_proveedores_detalles } from "../controllers/facturas_proveedores_detalles.controller.js";
 import { Pagos_proveedores } from "../controllers/pagos.controller.js";
 import { Pagos_proveedores_detalles } from "../controllers/pagos_detalles.controller.js";
+import { SesionesCajas } from "../controllers/sesiones_cajas.controller.js";
 
 const facturaProveedorController = new Facturas_proveedores();
 const facturaProveedorDetalleController = new Facturas_proveedores_detalles();
 const pagoController = new Pagos_proveedores();
 const pagoDetallesController = new Pagos_proveedores_detalles();
-
+const sesionController= new SesionesCajas();
 export class Compra {
     crear = async (req, res) => {
         let factura_proveedor, factura_proveedor_detalle;
@@ -20,6 +21,7 @@ export class Compra {
             console.log("hecho factura_detalles");
 
             const pago = { id_factura_proveedor: factura_proveedor.id, id_sesion_caja: null, date_fecha,total }
+            sesionController.pagar(id_sesion_caja,total);
             const nuevoPago = await pagoController.createPagoProveedor(pago);
             console.log("Hecho pago");
             await  pagoDetallesController.createPagoProveedorDetalle(...pagos_detalles);

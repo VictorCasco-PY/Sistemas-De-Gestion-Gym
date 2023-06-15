@@ -118,4 +118,22 @@ export class SesionesCajas {
             res.json(error).status(500);
         }
     }
+    pagar = async (id, monto) => {
+        try{
+          const sesion = await this.getById(id);
+          const newMontoFinal = sesion.monto_final - monto;
+          await sesiones_cajas.update({monto_final:newMontoFinal}, {where:{id}});
+        }catch(error){
+          throw new Error("Error a descontar monto en la sesion");
+        }
+      }
+      cobrar = async (id, monto) => {
+        try{
+          const sesion = await this.getById(id);
+          const newMontoFinal = sesion.monto_final + monto;
+          await sesiones_cajas.update({monto_final:newMontoFinal}, {where:{id}});
+        }catch(error){
+          throw new Error("Error a descontar monto en la sesion");
+        }
+      }
 }
