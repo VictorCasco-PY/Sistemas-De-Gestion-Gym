@@ -25,7 +25,7 @@ export class Facturas_proveedores {
             if (!proveedorTemp) return res.status(404).json({ erorr: "No existe proveedor con ese id" });
             const { str_nombre } = proveedorTemp.str_nombre;
             const { str_ruc } = proveedorTemp.str_ruc;
-            const result = await facturas_proveedores.create({ ...query, str_nombre, str_ruc, nro_factura, date_fecha });
+            const result = await facturas_proveedores.create({ ...query, str_nombre, str_ruc});
             return result;
         } catch (error) {
             throw new Error("Error al crear la factura-proveedor");
