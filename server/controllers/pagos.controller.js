@@ -88,9 +88,9 @@ export class Pagos_proveedores {
                 return res.status(404).json("No se encontró una pago-proveedor con ese ID");
             }
 
-            res.json(result);
+            return result;
         } catch (error) {
-            res.status(500).json(error);
+            throw Error(error.message);
         }
     };
     getByParams = async (req, res) => {

@@ -81,9 +81,8 @@ export class Facturas_proveedores {
             res.status(500).json({ error: error.message });
         }
     };
-    getById = async (req, res) => {
+    getById = async (id) => {
         try {
-            const { id } = req.params;
             console.log("Se busca el  id");
             const result = await facturas_proveedores.findOne({ where: { id } });
 
@@ -91,9 +90,9 @@ export class Facturas_proveedores {
                 return res.status(404).json("No se encontró una factura-proveedor con ese ID");
             }
 
-            res.json(result);
+            return result;
         } catch (error) {
-            res.status(500).json(error);
+            throw new Error(error.message);
         }
     };
     getByParams = async (req, res) => {
