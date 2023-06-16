@@ -48,17 +48,17 @@ export default class arqueos extends Model {
         ]
       },
       {
-        name: "id_sesion_caja",
-        using: "BTREE",
-        fields: [
-          { name: "id_sesion_caja" },
-        ]
-      },
-      {
         name: "id_empleado",
         using: "BTREE",
         fields: [
           { name: "id_empleado" },
+        ]
+      },
+      {
+        name: "id_sesion_caja",
+        using: "BTREE",
+        fields: [
+          { name: "id_sesion_caja" },
         ]
       },
     ]

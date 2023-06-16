@@ -16,8 +16,8 @@ export default class formas_de_pagos extends Model {
     },
     activo: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
+      allowNull: true,
+      defaultValue: 1
     }
   }, {
     sequelize,
