@@ -27,6 +27,10 @@ export default function Compras() {
   const [RUCProveedor, setRUCProveedor] = useState('');
   const [direccionProveedor, setDireccionProveedor] = useState('');
 
+  const [efectivo, setEfectivo] = useState('');
+  const [credito, setCredito] = useState('');
+  const [debito, setDebito] = useState('');
+
   useEffect(() => {
     const fetchProductos = async () => {
       try {
@@ -110,6 +114,13 @@ export default function Compras() {
     );
   };
 
+  const handleItemDelete = (index) => {
+    const updatedItems = [...selectedItems];
+    updatedItems.splice(index, 1);
+    setSelectedItems(updatedItems);
+  };
+
+
   const handleSubmit = async () => {
     if (selectedItems.length === 0) { //si el carrito esta vacio
       setCompraAceptado(true);
@@ -119,6 +130,18 @@ export default function Compras() {
     if (!selectedProveedor) { //si no hay proveedor
       setProveedorAceptado(true);
       return;
+    }
+    const detallesCobro = [];
+    if (efectivo) {
+      detallesCobro.push({ id_forma_de_pago: 1, monto: parseInt(efectivo) });
+    }
+
+    if (credito) {
+      detallesCobro.push({ id_forma_de_pago: 2, monto: parseInt(credito) });
+    }
+
+    if (debito) {
+      detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
     }
 
     const cargaDeCompras = {
@@ -133,8 +156,9 @@ export default function Compras() {
           iva: item.iva,
         })),
       },
+      cobros_detalles: detallesCobro,
     };
-
+    console.log(cargaDeCompras)
     try {
       setIsLoading(true);
       const response = await api.post("/compras", cargaDeCompras);
@@ -151,6 +175,11 @@ export default function Compras() {
       setProveedorAceptado(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      Swal.fire({
+        title: error.response.data.error,
+        confirmButtonText: 'Aceptar',
+      })
     }
   };
 
@@ -159,7 +188,7 @@ export default function Compras() {
       <h1 className='title is-size-2'>Nueva Compra</h1>
       <hr />
       <div className='column has-background-light p-5 is-flex mr-auto ml-auto'
-        style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width:"100%", maxWidth:"1200px"}}>
+        style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width: "100%", maxWidth: "1200px" }}>
         <div className='listaItems column '>
           <div className='is-flex mb-6'>
             <div className="proveedorTab mb-5 is-flex is-align-content-center">
@@ -332,7 +361,7 @@ export default function Compras() {
                       <td>
                         <button
                           className="button icon-button is-danger is-small is-outlined is-rounded"
-
+                          onClick={() => handleItemDelete(index)}
                         >
                           <DeleteIcon fontSize="string" />
                         </button>
@@ -375,7 +404,37 @@ export default function Compras() {
             </fieldset>
           </div>
 
-          <div className='is-flex is-flex-direction-column box mt-6'>
+
+          <p className='title m-0 mt-6'>Detalles</p>
+          <label htmlFor='efectivo'>Efectivo</label>
+          <input
+            type='text'
+            id='efectivo'
+            className='input'
+            value={efectivo}
+            onChange={(e) => setEfectivo(e.target.value)}
+          />
+
+          <label htmlFor='credito'>Tarjeta(Credito)</label>
+          <input
+            type='text'
+            id='credito'
+            className='input'
+            value={credito}
+            onChange={(e) => setCredito(e.target.value)}
+          />
+
+          <label htmlFor='debito'>Tarjeta(Debito)</label>
+          <input
+            type='text'
+            id='debito'
+            className='input'
+            value={debito}
+            onChange={(e) => setDebito(e.target.value)}
+          />
+
+
+          <div className='is-flex is-flex-direction-column box mt-1'>
             <div className=' mb-2 is-flex is-flex-direction-column'>
               <h1 className='title m-2'>Total:</h1>
               <button className='button is-danger is-outlined is-static'>
