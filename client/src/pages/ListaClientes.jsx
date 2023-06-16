@@ -8,7 +8,7 @@ const ListaClientes = () => {
     return (
         <div className='column'>
             <div className="headerTitle">
-                <h1 className='is-size-2'>Lista de Clientes</h1>
+                <h1 className='title is-size-2'>Lista de Clientes</h1>
             </div>
             <hr />
             <div className='is-flex is-flex-direction-column p-5 has-background-light column ml-auto mr-auto'
