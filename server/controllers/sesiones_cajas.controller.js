@@ -94,9 +94,8 @@ export class SesionesCajas {
             res.status(500).json(error);
         }
     };
-    getById = async (req, res) => {
+    getById = async (id) => {
         try {
-            const { id } = req.params;
             console.log("Se busca el  id");
             const result = await sesiones_cajas.findOne({ where: { id } });
 
@@ -104,9 +103,9 @@ export class SesionesCajas {
                 return res.status(404).json("No se encontró una relación empleado-caja con ese ID");
             }
 
-            res.json(result);
+            return result;
         } catch (error) {
-            res.status(500).json(error);
+            throw Error(error.message);
         }
     };
     getByParams = async (req, res) => {

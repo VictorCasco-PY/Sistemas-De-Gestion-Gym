@@ -30,6 +30,14 @@ export default class pagos_proveedores extends Model {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: 1
+    },
+    id_forma_de_pago: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'formas_de_pagos',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -49,6 +57,13 @@ export default class pagos_proveedores extends Model {
         using: "BTREE",
         fields: [
           { name: "id_factura_proveedor" },
+        ]
+      },
+      {
+        name: "pagos_proveedores_id_forma_de_pago_foreign_idx",
+        using: "BTREE",
+        fields: [
+          { name: "id_forma_de_pago" },
         ]
       },
     ]

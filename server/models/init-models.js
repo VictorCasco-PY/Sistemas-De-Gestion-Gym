@@ -83,6 +83,8 @@ export default function initModels(sequelize) {
   formas_de_pagos.hasMany(arqueos_detalles, { foreignKey: "id_forma_de_pago"});
   cobros_detalles.belongsTo(formas_de_pagos, { foreignKey: "id_forma_de_pago"});
   formas_de_pagos.hasMany(cobros_detalles, { foreignKey: "id_forma_de_pago"});
+  pagos_proveedores.belongsTo(formas_de_pagos, { foreignKey: "id_forma_de_pago"});
+  formas_de_pagos.hasMany(pagos_proveedores, { foreignKey: "id_forma_de_pago"});
   pagos_proveedores_detalles.belongsTo(formas_de_pagos, { foreignKey: "id_forma_de_pago"});
   formas_de_pagos.hasMany(pagos_proveedores_detalles, { foreignKey: "id_forma_de_pago"});
   transacciones_detalles.belongsTo(formas_de_pagos, { foreignKey: "id_forma_de_pago"});
