@@ -27,6 +27,8 @@ const VentasNew = () => {
     const [efectivo, setEfectivo] = useState('');
     const [credito, setCredito] = useState('');
     const [debito, setDebito] = useState('');
+    const inputRefNroDoc = useRef(null);
+    const idCaja = localStorage.getItem('sesionCajaId');
 
     const resetFields = () => {
         setCliente({});
@@ -45,10 +47,10 @@ const VentasNew = () => {
         setIVA10(0);
         setPrecioPlanDePago(0);
         setCantidadProducto([]);
-        setFechaActual('');
         setEfectivo('');
         setCredito('');
         setDebito('');
+        inputRefNroDoc.current.value = '';
     };
 
     /* Obtencion de datos del cliente */
@@ -247,6 +249,7 @@ const VentasNew = () => {
 
         total == totalC ? console.log('Igual') : console.log('No Igual')
         const dataVentas = {
+            id_sesion_caja: idCaja,
             id_cliente: cliente.id,
             id_timbrado: 1,
             total: total,
@@ -259,23 +262,25 @@ const VentasNew = () => {
         };
         console.log(dataVentas);
 
-        if (total == totalC) {
-            try {
-                const response = await api.post("/ventas", dataVentas);
-                console.log(response.data.ok);
-                Swal.fire(
-                    `${response.data.ok}`,
-                    'Se ha generado una factura nueva!',
-                    'success'
-                );
-                resetFields();
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            alert("Los valores de total no coinciden con el cobro");
-        }
-
+        /* if (total == totalC) {
+             try {
+                 const response = await api.post("/ventas", dataVentas);
+                 console.log(response.data.nuevaFactura);
+                 setFactura(response.data.nuevaFactura);
+                 Swal.fire(
+                     'Factura guardada',
+                     'Se ha generado una factura nueva!',
+                     'success'
+                 );
+                 resetFields();
+                 { factura && <PrintFactura factura={factura} /> }
+             } catch (error) {
+                 console.log(error);
+             }
+         } else {
+             alert("Los valores de total no coinciden con el cobro");
+         }
+ */
     }
 
     useEffect(() => {
@@ -316,6 +321,7 @@ const VentasNew = () => {
                                             placeholder='Nro Documento'
                                             onChange={handleRucChange}
                                             onKeyDown={handleKeyDown}
+                                            ref={inputRefNroDoc}
                                         />
                                         <input
                                             className='input input-radius placeholder-black'
