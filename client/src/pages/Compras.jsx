@@ -246,7 +246,7 @@ export default function Compras() {
           <hr />
           <div className='column has-background-light p-5 is-flex is-flex-direction-column mr-auto ml-auto'
             style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width: "100%", maxWidth: "800px" }}>
-            <div class="notification is-warning is-flex is-flex-direction-column">
+            <div className="notification is-warning is-flex is-flex-direction-column">
               <p className='title'>Error</p>
               <p className='subtitle'>La caja no esta abierta</p>
             </div>

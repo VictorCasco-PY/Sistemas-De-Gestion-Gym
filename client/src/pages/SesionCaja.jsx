@@ -17,7 +17,7 @@ const SesionCaja = () => {
   const [montoInicial, setMontoInicial] = useState('');
   const [montoFinal, setMontoFinal] = useState('');
   const [horaCierre, setHoraCierre] = useState('');
-  const [isLoading, setLoading] = useState(false); 
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const sesionCajaId = localStorage.getItem('sesionCajaId');
@@ -33,11 +33,8 @@ const SesionCaja = () => {
         Swal.fire('Error', 'El monto inicial no puede ser menor a 0', 'error');
         return;
       }
-
-      const fechaApertura = new Date();
-      setAbrirCaja(true);
-
       const user = JSON.parse(localStorage.getItem('user'));
+      const fechaApertura = new Date();
       const data = {
         id_empleado: user.id,
         id_caja: 1,
@@ -52,29 +49,27 @@ const SesionCaja = () => {
         .then(response => {
           console.log(response.data);
           localStorage.setItem('sesionCajaId', response.data.id);
-          Swal.fire('Caja abierta', 'success');
+          Swal.fire('Caja abierta');
         })
         .catch(error => {
           console.log(error);
         });
 
+      setAbrirCaja(true);
+
     } else {
-      setMontoInicial('');
       const fechaCierre = new Date();
       setHoraCierre(fechaCierre.toLocaleTimeString());
-
-      const sesionCajaId = localStorage.getItem('sesionCajaId');
-
       const data = {
         time_cierre: format(fechaCierre, 'HH:mm'),
       };
-
+      const sesionCajaId = localStorage.getItem('sesionCajaId');
       await api.put(`/sesion-caja/${sesionCajaId}`, data)
-        .then(response => {
+        .then(async response => {
           console.log(response.data);
           setAbrirCaja(false);
 
-          api.get(`/sesion-caja/${sesionCajaId}`)
+          await api.get(`/sesion-caja/${sesionCajaId}`)
             .then(response => {
               console.log(response.data);
               setMontoFinal(response.data.monto_final);
@@ -89,6 +84,7 @@ const SesionCaja = () => {
           console.log(error);
         });
     }
+    setMontoInicial('');
     setLoading(false);
   };
 
@@ -106,16 +102,16 @@ const SesionCaja = () => {
           <h1 className='title'>Sesión de Caja</h1>
           <div className='is-flex is-flex-wrap-nowrap is-align-content-stretch tags has-addons'>
             <label className='ml-0 pl-0 pr-1 pl-1 mb-0 tag is-info is-light is-large is-size-5' htmlFor="montoInicial"
-            style={{border:"1px solid hsl(217, 71%, 53%)", borderRight:"none"}}>Monto inicial</label>
+              style={{ border: "1px solid hsl(217, 71%, 53%)", borderRight: "none" }}>Monto inicial</label>
             <input
-              className='input '
+              className='input is-link'
               type="text"
               id="montoInicial"
               value={montoInicial}
               onChange={handleMontoInicialChange}
               disabled={abrirCaja}
               required
-              />
+            />
           </div>
           <button className='button is-primary is-small mb-3' onClick={handleAbrirCerrarCaja}>
             {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
