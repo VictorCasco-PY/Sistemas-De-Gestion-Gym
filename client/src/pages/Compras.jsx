@@ -32,6 +32,8 @@ export default function Compras() {
   const [credito, setCredito] = useState('');
   const [debito, setDebito] = useState('');
 
+  const idCaja = localStorage.getItem('sesionCajaId');
+
   useEffect(() => {
     const fetchProductos = async () => {
       try {
@@ -147,7 +149,7 @@ export default function Compras() {
     const nro_factura = generateRandomAlphaNumeric(6); //generacion aleatoria de nro factura
     const cargaDeCompras = {
       id_proveedor: selectedProveedor.id,
-      id_sesion_caja: 2, 
+      id_sesion_caja: idCaja,
 
       nro_factura: nro_factura,
 
