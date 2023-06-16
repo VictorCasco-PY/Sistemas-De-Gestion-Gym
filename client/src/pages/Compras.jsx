@@ -114,7 +114,6 @@ export default function Compras() {
       0
     );
   };
-
   const handleItemDelete = (index) => {
     const updatedItems = [...selectedItems];
     updatedItems.splice(index, 1);
@@ -151,15 +150,15 @@ export default function Compras() {
       id_sesion_caja: 2, 
 
       nro_factura: nro_factura,
-      str_nombre: selectedProveedor.str_nombre,
-      _str_ruc: selectedProveedor.str_ruc,
 
       date_fecha: fechaActual,
       total: calculateTotal(),
       detalles: selectedItems.map((item) => ({
         producto: item.id,
         cantidad: item.quantity,
-        precio_unitario: item.precio,
+        precio: item.precio,
+        subtotal:  parseInt(item.precio)* parseInt(item.quantity),
+        iva: item.iva,
       })),
       pagos_detalles: detallesCobro,
     };
