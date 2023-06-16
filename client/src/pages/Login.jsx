@@ -51,7 +51,6 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <img src={Logo} alt="Logo de la aplicación" className="logo" />
-        <h2 className="login-heading">Iniciar Sesión</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <input

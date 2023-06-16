@@ -81,10 +81,16 @@ const SesionCaja = () => {
 
   return (
     <div>
-      <h1>Sesión de Caja</h1>
+      <h1 className='title'>Sesión de Caja</h1>
+      <div className='infoBubble'>
+      <div className='bubbleTitle has-text-white'>
       <label htmlFor="montoInicial">Monto inicial:</label>
+      </div>
+      </div>
+      <div className='infoBubble'>
+      <div className='editable-title'>
       <input
-        className='input is-primary'
+        className=''
         type="number"
         id="montoInicial"
         value={montoInicial}
@@ -93,6 +99,9 @@ const SesionCaja = () => {
         required
         min="0"
       />
+      </div>
+      </div>
+
       <button className='button is-primary is-outlined' onClick={handleAbrirCerrarCaja}>
         {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
       </button>
