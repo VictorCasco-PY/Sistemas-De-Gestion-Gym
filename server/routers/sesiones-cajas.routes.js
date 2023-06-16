@@ -11,7 +11,7 @@ const sesionesCajasRoutes = Router();
 
 sesionesCajasRoutes.get('/sesiones-cajas', sesiones_cajas.getAll);
 
-sesionesCajasRoutes.get('/sesion-caja/:id', sesiones_cajas.getById);
+sesionesCajasRoutes.get('/sesion-caja/:id', sesiones_cajas.getByParams);
 
 sesionesCajasRoutes.post('/sesiones-cajas',
     authMiddleware(['caja', 'entrenador']),
