@@ -3,6 +3,7 @@ import api from '../services/api';
 import { CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
+import FacturaImpresa from './facturas/FacturaImpresa';
 
 const VentasNew = () => {
 
@@ -29,7 +30,8 @@ const VentasNew = () => {
     const [debito, setDebito] = useState('');
     const inputRefNroDoc = useRef(null);
     const idCaja = localStorage.getItem('sesionCajaId');
-
+    const [facturaPrint, setFacturaPrint] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     const resetFields = () => {
         setCliente({});
@@ -283,12 +285,14 @@ const VentasNew = () => {
             try {
                 const response = await api.post("/ventas", dataVentas);
                 console.log(response.data.nuevaFactura);
+                setFacturaPrint(response.data.nuevaFactura);
                 Swal.fire(
                     'Factura guardada',
                     'Se ha generado una factura nueva!',
                     'success'
                 );
                 resetFields();
+                setShowModal(true);
             } catch (error) {
                 console.log(error);
             }
@@ -315,12 +319,28 @@ const VentasNew = () => {
     }, []);
 
 
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
+
     return (
         <div className='is-serif is-flex is-flex-direction-column'>
             <h1 className='title is-size-2'>Nueva Venta</h1>
             <hr />
             <div className='column has-background-light p-5 is-flex mr-auto ml-auto'
                 style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width: "100%", maxWidth: "1200px" }}>
+                {showModal && (
+                    <div className="modal is-active">
+                        <div className="modal-background" onClick={closeModal}></div>
+                        <div className="modal-content">
+                            <div className="box">
+                                <FacturaImpresa factura={facturaPrint} />
+                            </div>
+                        </div>
+                        <button className="modal-close is-large" aria-label="close" onClick={closeModal}></button>
+                    </div>
+                )}
                 <div className='listaItems column'>
                     <div className='is-flex mb-6'>
                         <div className="proveedorTab mb-5 is-flex is-align-content-center">
