@@ -28,6 +28,7 @@ import ListaProveedor from './pages/proveedores/ListaProveedor';
 import ListaProducto from './pages/productos/ListaProducto'
 import VentasNew from './pages/VentasNew';
 
+
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
   const isAdmin = user?.rol === "admin";
