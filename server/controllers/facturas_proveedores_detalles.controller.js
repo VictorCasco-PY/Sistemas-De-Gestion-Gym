@@ -22,7 +22,7 @@ export class Facturas_proveedores_detalles {
             if (!productos)
                 return { error: "Debes enviar productos" };
             let result = {};
-
+            console.log(productos)
             // si hay productos, se intentan comprar
             if (productos && productos.length > 0) {
                 // se crea una factura_proveedor_detalle para cada producto
