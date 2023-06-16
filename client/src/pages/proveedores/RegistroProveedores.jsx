@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 const RegistroProveedores = () => {
   const [proveedores, setProveedores] = useState({
@@ -9,6 +10,9 @@ const RegistroProveedores = () => {
     str_ruc: "",
     str_correo: "",
   });
+
+  const navigate = useNavigate();
+
   const handleChange = (event) => {
     setProveedores({
       ...proveedores,
@@ -22,6 +26,7 @@ const RegistroProveedores = () => {
     axios.post('http://localhost:8000/proveedores', proveedores)
       .then(response => {
         console.log(response.data);
+        navigate('/lista_proveedores');
       })
       .catch(error => {
         console.log(error);
@@ -84,16 +89,16 @@ const RegistroProveedores = () => {
               </div>
             </div>
             <div>
-                <input
-                  className="input is-primary has-text-centered"
-                  type="email"
-                  name="str_correo"
-                  value={proveedores.str_correo}
-                  onChange={handleChange}
-                  placeholder="Correo Electronico"
-                />
-              </div>
-              <div className="buttons">
+              <input
+                className="input is-primary has-text-centered"
+                type="email"
+                name="str_correo"
+                value={proveedores.str_correo}
+                onChange={handleChange}
+                placeholder="Correo Electronico"
+              />
+            </div>
+            <div className="buttons">
               <button
                 className="ml-auto mt-2 button is-primary is-outlined"
                 type="submit"
