@@ -18,7 +18,6 @@ export class Venta {
         const {id_cliente,id_sesion_caja, id_timbrado, total, saldo, iva_5,iva_10, iva_exenta, detalles, cobros_detalles} = req.body;
 
         factura = await facturaController.nuevaFactura({id_cliente, id_timbrado, total, saldo, iva_5, iva_10, iva_exenta});
-        console.log("hecho: factura")
         detalles.id_factura = factura.id;	//guardar el id de la factura
         await facturaDetalleController.nuevaFacturaDetalle(detalles); // se guardan los detalles
         console.log("hecho: factura_detalle")
@@ -31,10 +30,10 @@ export class Venta {
             date_fecha,
             time_hora,
         };
-        sesionController.cobrar(id_sesion_caja,total);
+        await sesionController.cobrar(id_sesion_caja,total);
         const nuevoCobro = (await cobroController.nuevoCobro(cobro)).dataValues;
 
-        await cobroDetalleController.crear(nuevoCobro.id, ...cobros_detalles);
+        await cobroDetalleController.crear(nuevoCobro.id, cobros_detalles);
 
         const nuevaFactura = await facturaController.getById(factura.id);
 

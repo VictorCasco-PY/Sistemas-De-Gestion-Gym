@@ -6,9 +6,12 @@ export class CobrosDetalles{
 
     crear = async (id_cobro, values) => {
         try{
-            const result = await cobros_detalles.create({id_cobro,...values});
-            return result;
+            console.log('cobro detalles');
+            await values.forEach(async (field) => await cobros_detalles.create({id_cobro,...field}))
+
+            return true;
         }catch (error){
+            console.log(error.message);
             throw new Error(error.message);
         }
     }
