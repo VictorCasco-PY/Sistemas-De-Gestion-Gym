@@ -14,15 +14,14 @@ const ListaFacturas = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
-    const [isActive, setisActive] = useState("");
     const [activeId, setActiveId] = useState(null);
-    const [showFacturas, setShowFacturas] = useState(false);
-    const [showVentas, setShowVentas] = useState(false);
     const [selectedOption, setSelectedOption] = useState('facturas');
+    const [nombreCliente, setNombreCliente] = useState('');
 
     useEffect(() => {
         fetchData();
-    }, [selectedOption]);
+        console.log(fechaInicio);
+    }, [selectedOption, fechaFin]);
 
     const fetchData = async () => {
         try {
@@ -31,7 +30,7 @@ const ListaFacturas = () => {
             if (fechaInicio && fechaFin) {
                 url += `?fechaIn=${fechaInicio}&fechaFin=${fechaFin}`;
             }
-            // setSelectedOption(url);
+            setSelectedOption(url);
             const response = await api.get(url);
             setFacturas(response.data);
         } catch (error) {
@@ -69,17 +68,31 @@ const ListaFacturas = () => {
         setPage(0);
     };
 
-    const facturasFiltradas = mesSeleccionado
-        ? facturas.filter(
-            (factura) => getMonth(new Date(factura.date_fecha)) === mesSeleccionado
-        )
-        : facturas;
+    const handleFiltrarPorNombre = (event) => {
+        setNombreCliente(event.target.value);
+    };
+
+    const handleResetFilters = () => {
+        setMesSeleccionado('');
+        setNombreCliente('');
+        setFechaInicio('');
+        setFechaFin('');
+    };
+
+    const facturasFiltradas = facturas.filter((factura) => {
+        const mesFiltrado =
+            mesSeleccionado === '' ||
+            getMonth(new Date(factura.date_fecha)) === mesSeleccionado;
+        const nombreFiltrado =
+            nombreCliente === '' ||
+            factura.str_nombre_cliente.toLowerCase().includes(nombreCliente.toLowerCase());
+        return mesFiltrado && nombreFiltrado;
+    });
 
     const paginatedFacturas = facturasFiltradas.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
-
     const showModal = (id) => {
         setActiveId(id);
     };
@@ -88,15 +101,29 @@ const ListaFacturas = () => {
         setActiveId(null);
     };
 
+    const resetFechas = () => {
+        setFechaInicio('');
+        setFechaFin('');
+    };
+
     return (
-        <div className='is-flex is-flex-direction-column p-5 has-background-light ml-auto mr-auto'
-        style={{border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth:"1500px"}}>
-            <div className="columns column is-flex is-flex-direction-column">
-                <div className="column is-flex is-flex-direction-column">
-                    {activeId !== null && (
-                        <DetalleFactura id={activeId} onClose={closeModal} />
-                    )}
-                    <h1 className='title is-1'>Facturas</h1>
+        <div
+            className='is-flex is-flex-direction-column p-5 has-background-light ml-auto mr-auto'
+            style={{ border: '1px solid #D4D4D4', borderRadius: '8px', maxWidth: '1500px' }}
+        >
+
+            <div className='columns column is-flex is-flex-direction-column'>
+                <div className='column is-flex is-flex-direction-column'>
+
+
+                    {activeId !== null && <DetalleFactura id={activeId} onClose={closeModal} />}
+                    <h1 className='title is-1'>Facturas
+                        <div className='buttons'>
+                            <button className='button is-info ml-auto' onClick={handleResetFilters}>
+                                Reiniciar filtros
+                            </button>
+                        </div></h1>
+
                     <div className='columns'>
                         <div className='column'>
                             <label className='label' htmlFor='mes'>
@@ -124,9 +151,23 @@ const ListaFacturas = () => {
                             </div>
                         </div>
                         <div className='column'>
+                            <label htmlFor='nombreCliente' className='label'>
+                                Filtrar por nombre de cliente:
+                            </label>
+                            <input
+                                id='nombreCliente'
+                                className='input'
+                                type='text'
+                                value={nombreCliente}
+                                onChange={handleFiltrarPorNombre}
+                            />
+                        </div>
+                        <div className='column'>
                             <div className='columns'>
                                 <div className='column'>
-                                    <label htmlFor='' className='label'>Fecha Inicio:</label>
+                                    <label htmlFor='' className='label'>
+                                        Fecha Inicio:
+                                    </label>
                                     <input
                                         className='input mb'
                                         type='date'
@@ -135,7 +176,9 @@ const ListaFacturas = () => {
                                     />
                                 </div>
                                 <div className='column'>
-                                    <label htmlFor='' className='label'>Fecha Fin:</label>
+                                    <label htmlFor='' className='label'>
+                                        Fecha Fin:
+                                    </label>
                                     <input
                                         className='input'
                                         type='date'
@@ -145,10 +188,14 @@ const ListaFacturas = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="column is-flex is-justify-content-center is-flex-direction-column m-0 p-0">
-                        <table className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
+
+                    </div>
+                    <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
+                        <table
+                            className='table table is-bordered tableNew has-background-light is-bordered p-3'
+                            style={{ width: '100%' }}
+                        >
                             <thead>
                                 <tr>
                                     <th className='is-size-5'>Fecha</th>
@@ -160,11 +207,20 @@ const ListaFacturas = () => {
                             <tbody>
                                 {paginatedFacturas.map((factura, index) => (
                                     <tr key={index}>
-                                        <td className='is-size-5'>{format(new Date(factura.date_fecha), 'dd-MM-yyyy')}</td>
-                                        <td className='is-size-5'>{factura.str_nombre_cliente}</td>
-                                        <td className='is-size-5'>{Number(factura.total).toLocaleString('es-ES')}</td>
                                         <td className='is-size-5'>
-                                            <button className='button is-text mr-2' onClick={() => showModal(factura.id)}>Detalle</button>
+                                            {format(new Date(factura.date_fecha), 'dd-MM-yyyy')}
+                                        </td>
+                                        <td className='is-size-5'>{factura.str_nombre_cliente}</td>
+                                        <td className='is-size-5'>
+                                            {Number(factura.total).toLocaleString('es-ES')}
+                                        </td>
+                                        <td className='is-size-5'>
+                                            <button
+                                                className='button is-text mr-2'
+                                                onClick={() => showModal(factura.id)}
+                                            >
+                                                Detalle
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -184,8 +240,6 @@ const ListaFacturas = () => {
                 </div>
             </div>
         </div>
-
-
     );
 };
 
