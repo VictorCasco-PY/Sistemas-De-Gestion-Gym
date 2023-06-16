@@ -33,6 +33,11 @@ export default class transacciones_detalles extends Model {
     subtotal: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
+    },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: 1
     }
   }, {
     sequelize,
@@ -48,17 +53,17 @@ export default class transacciones_detalles extends Model {
         ]
       },
       {
-        name: "id_transaccion",
-        using: "BTREE",
-        fields: [
-          { name: "id_transaccion" },
-        ]
-      },
-      {
         name: "id_forma_de_pago",
         using: "BTREE",
         fields: [
           { name: "id_forma_de_pago" },
+        ]
+      },
+      {
+        name: "id_transaccion",
+        using: "BTREE",
+        fields: [
+          { name: "id_transaccion" },
         ]
       },
     ]
