@@ -94,8 +94,8 @@ export default function initModels(sequelize) {
     foreignKey: "id_factura_proveedor",
   });
 
-  pagos_proveedores_detalles.belongsTo(pagos_proveedores, {foreignKey:"id_pago_proveedor"});
-  pagos_proveedores.hasMany(pagos_proveedores_detalles, {foreignKey:"id_pago_proveedor"});
+  pagos_proveedores_detalles.belongsTo(pagos_proveedores, {foreignKey:"id_pago_proveedor"})
+  pagos_proveedores.hasMany(pagos_proveedores_detalles, {foreignKey:"id_pago_proveedor"});l
   facturas_proveedores.hasMany(pagos_proveedores, {
     as: "pagos_proveedores",
     foreignKey: "id_factura_proveedor",
@@ -170,5 +170,6 @@ export default function initModels(sequelize) {
     tipos_modalidades_de_pagos,
     transacciones,
     transacciones_detalles,
+    pagos_proveedores_detalles
   };
 }
