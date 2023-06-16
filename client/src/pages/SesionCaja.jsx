@@ -3,6 +3,14 @@ import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 import api from '../services/api';
 
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const removeCommasFromString = (string) => {
+  return string.replace(/,/g, '');
+};
+
 const SesionCaja = () => {
   const [abrirCaja, setAbrirCaja] = useState(false);
   const [montoInicial, setMontoInicial] = useState('');
