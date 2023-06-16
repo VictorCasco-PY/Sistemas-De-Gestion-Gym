@@ -46,8 +46,8 @@ export class MedicionCliente {
     delete = async (req, res) => {
         try {
             const {id} = req.params
-            if (!(await this.getById(id))) return req.status(404).json({error: "No existe esa medicion"});
-            await mediciones_clientes.update({activo:false, where: { id } });
+            if (!await this.getById(id)) return req.status(404).json({error: "No existe esa medicion"});
+            await mediciones_clientes.update({activo:false}, {where: { id } });
             res.status(200).send("Medicion eliminada");
         } catch (error) {
             const { message } = error;

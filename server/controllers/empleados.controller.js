@@ -42,11 +42,11 @@ export class Empleado {
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      if (!(await this.getById(id)))
+      if (!await this.getById(id))
         return res
           .status(404)
           .json({ error: "No existe un empleado con este id" });
-      await empleados.update({activo:false, where: { id } });
+      await empleados.update({activo:false}, {where: { id } });
       res.status(200).send("Empleado eliminado");
     } catch (error) {
       const { message } = error;
