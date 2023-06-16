@@ -14,6 +14,7 @@ import _facturas_proveedores_detalles from "./facturas_proveedores_detalles.js";
 import _formas_de_pagos from "./formas_de_pagos.js";
 import _mediciones_clientes from "./mediciones_clientes.js";
 import _pagos_proveedores from "./pagos_proveedores.js";
+import _pagos_proveedores_detalles from "./pagos_proveedores_detalles.js"
 import _planes_de_pagos from "./planes_de_pagos.js";
 import _productos from "./productos.js";
 import _proveedores from "./proveedores.js";
@@ -41,6 +42,7 @@ export default function initModels(sequelize) {
   const formas_de_pagos = _formas_de_pagos.init(sequelize, DataTypes);
   const mediciones_clientes = _mediciones_clientes.init(sequelize, DataTypes);
   const pagos_proveedores = _pagos_proveedores.init(sequelize, DataTypes);
+  const pagos_proveedores_detalles = _planes_de_pagos.init(sequelize, DataTypes);
   const planes_de_pagos = _planes_de_pagos.init(sequelize, DataTypes);
   const productos = _productos.init(sequelize, DataTypes);
   const proveedores = _proveedores.init(sequelize, DataTypes);
@@ -91,6 +93,9 @@ export default function initModels(sequelize) {
   pagos_proveedores.belongsTo(facturas_proveedores, {
     foreignKey: "id_factura_proveedor",
   });
+
+  pagos_proveedores_detalles.belongsTo(pagos_proveedores, {foreignKey:"id_pago_proveedor"});
+  pagos_proveedores.hasMany(pagos_proveedores_detalles, {foreignKey:"id_pago_proveedor"});
   facturas_proveedores.hasMany(pagos_proveedores, {
     as: "pagos_proveedores",
     foreignKey: "id_factura_proveedor",
