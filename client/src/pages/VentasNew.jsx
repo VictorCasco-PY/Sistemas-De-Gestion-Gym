@@ -376,7 +376,7 @@ const VentasNew = () => {
                                                     >
                                                         <div className='is-flex is-justify-content-space-between'>
                                                             <div>
-                                                                <p>{item.str_nombre}</p>
+                                                                <p className='has-text-weight-bold is-size-5 m-0'>{item.str_nombre}</p>
                                                                 <p>{item.str_descripcion}</p>
                                                             </div>
                                                             <p>

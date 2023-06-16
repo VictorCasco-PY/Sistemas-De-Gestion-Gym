@@ -77,7 +77,6 @@ export default function Compras() {
     setModalProveedorVisible(false);
   };
   const updateProveedorInfo = () => {
-    console.log(selectedProveedor);
     setEmailProveedor(selectedProveedor?.str_correo || '');
     setTelefonoProveedor(selectedProveedor?.str_telefono || '');
     setRUCProveedor(selectedProveedor?.str_ruc || '');
@@ -146,6 +145,15 @@ export default function Compras() {
       detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
     }
 
+
+    let totalC = 0;
+    let totalActual = calculateTotal()
+    for (const detalle of detallesCobro) {
+      totalC += detalle.monto;
+    }
+
+    totalActual == totalC ? console.log('Igual') : console.log('No Igual')
+
     const nro_factura = generateRandomAlphaNumeric(6); //generacion aleatoria de nro factura
     const cargaDeCompras = {
       id_proveedor: selectedProveedor.id,
@@ -154,39 +162,50 @@ export default function Compras() {
       nro_factura: nro_factura,
 
       date_fecha: fechaActual,
-      total: calculateTotal(),
+      total: totalActual,
       detalles: selectedItems.map((item) => ({
         producto: item.id,
         cantidad: item.quantity,
         precio: item.precio,
-        subtotal:  parseInt(item.precio)* parseInt(item.quantity),
+        subtotal: parseInt(item.precio) * parseInt(item.quantity),
         iva: item.iva,
       })),
       pagos_detalles: detallesCobro,
     };
 
-    console.log(cargaDeCompras)
-    try {
-      setIsLoading(true);
-      const response = await api.post("/compras", cargaDeCompras);
-      console.log(response.data);
-      setIsLoading(false);
-      setSearchQuery('');
-      setSelectedItems([]);
+    if (totalActual == totalC) {
+      try {
+        setIsLoading(true);
+        const response = await api.post("/compras", cargaDeCompras);
+        console.log(response.data);
+        setIsLoading(false);
+        setSearchQuery('');
+        setSelectedItems([]);
+        Swal.fire({
+          title: 'Compra Realizada',
+          cancelButtonColor: '',
+          confirmButtonText: 'Aceptar',
+        })
+        setCompraAceptado(false);
+        setProveedorAceptado(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+        Swal.fire({
+          title: error.response.data.error,
+          confirmButtonText: 'Aceptar',
+        })
+        setCompraAceptado(false);
+        setProveedorAceptado(false);
+      }
+    } else {
       Swal.fire({
-        title: 'Compra Realizada',
+        title: 'Los valores del total no coinciden con el cobro',
         cancelButtonColor: '',
         confirmButtonText: 'Aceptar',
       })
       setCompraAceptado(false);
       setProveedorAceptado(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-      Swal.fire({
-        title: error.response.data.error,
-        confirmButtonText: 'Aceptar',
-      })
     }
   };
 
@@ -252,7 +271,7 @@ export default function Compras() {
                             onClick={() => handleProveedorSelect(item)}
                           >
                             <div className='is-flex is-flex-direction-column'>
-                              <p>{item.str_nombre}</p>
+                              <p className='has-text-weight-bold is-size-5 m-0'>{item.str_nombre}</p>
                               <p>{item.str_ruc}</p>
                             </div>
                             <hr className='itemSeparator m-0 mb-1' />
@@ -320,14 +339,11 @@ export default function Compras() {
                         >
                           <div className='is-flex is-justify-content-space-between'>
                             <div>
-                              <p>{item.str_nombre}</p>
+                              <p className='has-text-weight-bold is-size-5 m-0'>{item.str_nombre}</p>
                               <p>{item.str_descripcion}</p>
                             </div>
                             <p>
-                              {parseFloat(item.precio).toLocaleString('en-US', {
-                                useGrouping: true,
-                                minimumFractionDigits: 0,
-                              })}Gs
+                              {item.precio.toLocaleString('es-ES')}Gs
                             </p>
                           </div>
                           <hr className='itemSeparator m-0 mb-1' />
@@ -373,11 +389,7 @@ export default function Compras() {
                     <tr key={index}>
                       <td className='is-size-5'>{item.str_nombre}</td>
                       <td className='is-size-5'>{item.str_descripcion}</td>
-                      <td className='is-size-5'>{parseFloat(item.precio).toLocaleString('en-US', {
-                        useGrouping: true,
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 2,
-                      })}Gs</td>
+                      <td className='is-size-5'>{item.precio.toLocaleString('es-ES')}Gs</td>
                       <td className='is-size-5'>
                         <input
                           type='number'
@@ -434,46 +446,39 @@ export default function Compras() {
             </fieldset>
           </div>
 
-
-          <p className='title m-0 mt-6'>Detalles</p>
-          <label htmlFor='efectivo'>Efectivo</label>
-          <input
-            type='text'
-            id='efectivo'
-            className='input'
-            value={efectivo}
-            onChange={(e) => setEfectivo(e.target.value)}
-          />
-
-          <label htmlFor='credito'>Tarjeta(Credito)</label>
-          <input
-            type='text'
-            id='credito'
-            className='input'
-            value={credito}
-            onChange={(e) => setCredito(e.target.value)}
-          />
-
-          <label htmlFor='debito'>Tarjeta(Debito)</label>
-          <input
-            type='text'
-            id='debito'
-            className='input'
-            value={debito}
-            onChange={(e) => setDebito(e.target.value)}
-          />
-
-
-          <div className='is-flex is-flex-direction-column box mt-1'>
+          <div className='is-flex is-flex-direction-column box mt-6'>
             <div className=' mb-2 is-flex is-flex-direction-column'>
               <h1 className='title m-2'>Total:</h1>
-              <button className='button is-danger is-outlined is-static'>
+              <label htmlFor='efectivo'>Efectivo</label>
+              <input
+                type='text'
+                id='efectivo'
+                className='input'
+                value={efectivo}
+                onChange={(e) => setEfectivo(e.target.value)}
+              />
+
+              <label htmlFor='credito'>Tarjeta(Credito)</label>
+              <input
+                type='text'
+                id='credito'
+                className='input'
+                value={credito}
+                onChange={(e) => setCredito(e.target.value)}
+              />
+
+              <label htmlFor='debito'>Tarjeta(Debito)</label>
+              <input
+                type='text'
+                id='debito'
+                className='input'
+                value={debito}
+                onChange={(e) => setDebito(e.target.value)}
+              />
+
+              <button className='button is-danger is-outlined is-static mt-3'>
                 <p className="is-size-4">
-                  {parseFloat(calculateTotal()).toLocaleString('en-US', {
-                    useGrouping: true,
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 2,
-                  })}Gs
+                  {calculateTotal().toLocaleString('es-ES')}Gs
                 </p>
               </button>
             </div>
