@@ -60,6 +60,7 @@ export default function Layout({ children }) {
                         <>
                             <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
                             <Divider />
+                            <CustomListItem icon={<AddShoppingCartIcon />} text='Caja' to='/sesionCaja' />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
                             <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
                             <CustomListItem icon={<DescriptionIcon />} text='Facturas' to='/facturas' />
@@ -70,8 +71,10 @@ export default function Layout({ children }) {
                         </>
                     ) : user.rol === 'caja' ? (
                         <>
-                            <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
                             <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
+                            <CustomListItem icon={<AddShoppingCartIcon />} text='Caja' to='/sesionCaja' />
+                            <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
+                            <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
                         </>
                     ) : user.rol === 'entrenador' ? (
                         <>

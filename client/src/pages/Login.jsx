@@ -28,7 +28,7 @@ const Login = () => {
       .then((response) => {
         console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data));
-        navigate("/home");
+        navigate("/listaClientes");
         window.location.reload();
       })
       .catch((error) => {
