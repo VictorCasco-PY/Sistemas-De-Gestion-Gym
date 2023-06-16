@@ -356,7 +356,7 @@ const VentasNew = () => {
                                             style={{ backgroundColor: "#D4D4D4", color: "black", textAlign: "center" }}
                                             type="text"
                                             name="str_ruc"
-                                            placeholder='Nro Documento'
+                                            placeholder='Ingrese RUC'
                                             onChange={handleRucChange}
                                             onKeyDown={handleKeyDown}
                                             ref={inputRefNroDoc}
