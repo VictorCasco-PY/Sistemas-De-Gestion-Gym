@@ -21,6 +21,8 @@ import _proveedores from  "./proveedores.js";
 import _sesiones_cajas from  "./sesiones_cajas.js";
 import _timbrados from  "./timbrados.js";
 import _tipos_modalidades_de_pagos from  "./tipos_modalidades_de_pagos.js";
+import _transacciones from  "./transacciones.js";
+import _transacciones_detalles from  "./transacciones_detalles.js";
 
 export default function initModels(sequelize) {
   const arqueos = _arqueos.init(sequelize, DataTypes);
@@ -44,6 +46,8 @@ export default function initModels(sequelize) {
   const sesiones_cajas = _sesiones_cajas.init(sequelize, DataTypes);
   const timbrados = _timbrados.init(sequelize, DataTypes);
   const tipos_modalidades_de_pagos = _tipos_modalidades_de_pagos.init(sequelize, DataTypes);
+  const transacciones = _transacciones.init(sequelize, DataTypes);
+  const transacciones_detalles = _transacciones_detalles.init(sequelize, DataTypes);
 
   arqueos_detalles.belongsTo(arqueos, { foreignKey: "id_arqueo"});
   arqueos.hasMany(arqueos_detalles, { foreignKey: "id_arqueo"});
@@ -57,6 +61,8 @@ export default function initModels(sequelize) {
   clientes.hasMany(planes_de_pagos, { foreignKey: "id_cliente"});
   cobros_detalles.belongsTo(cobros, { foreignKey: "id_cobro"});
   cobros.hasMany(cobros_detalles, { foreignKey: "id_cobro"});
+  transacciones.belongsTo(cobros, { foreignKey: "id_cobro"});
+  cobros.hasMany(transacciones, { foreignKey: "id_cobro"});
   arqueos.belongsTo(empleados, { foreignKey: "id_empleado"});
   empleados.hasMany(arqueos, { foreignKey: "id_empleado"});
   mediciones_clientes.belongsTo(empleados, { foreignKey: "id_empleado"});
@@ -79,8 +85,12 @@ export default function initModels(sequelize) {
   formas_de_pagos.hasMany(cobros_detalles, { foreignKey: "id_forma_de_pago"});
   pagos_proveedores_detalles.belongsTo(formas_de_pagos, { foreignKey: "id_forma_de_pago"});
   formas_de_pagos.hasMany(pagos_proveedores_detalles, { foreignKey: "id_forma_de_pago"});
+  transacciones_detalles.belongsTo(formas_de_pagos, { foreignKey: "id_forma_de_pago"});
+  formas_de_pagos.hasMany(transacciones_detalles, { foreignKey: "id_forma_de_pago"});
   pagos_proveedores_detalles.belongsTo(pagos_proveedores, { foreignKey: "id_pago_proveedor"});
   pagos_proveedores.hasMany(pagos_proveedores_detalles, { foreignKey: "id_pago_proveedor"});
+  transacciones.belongsTo(pagos_proveedores, { foreignKey: "id_pago_proveedor"});
+  pagos_proveedores.hasMany(transacciones, { foreignKey: "id_pago_proveedor"});
   facturas_detalles.belongsTo(planes_de_pagos, { foreignKey: "id_plan_de_pago"});
   planes_de_pagos.hasMany(facturas_detalles, { foreignKey: "id_plan_de_pago"});
   facturas_detalles.belongsTo(productos, { foreignKey: "id_producto"});
@@ -91,12 +101,16 @@ export default function initModels(sequelize) {
   sesiones_cajas.hasMany(arqueos, { foreignKey: "id_sesion_caja"});
   cobros.belongsTo(sesiones_cajas, { foreignKey: "id_sesion_caja"});
   sesiones_cajas.hasMany(cobros, { foreignKey: "id_sesion_caja"});
+  transacciones.belongsTo(sesiones_cajas, { foreignKey: "id_sesion_caja"});
+  sesiones_cajas.hasMany(transacciones, { foreignKey: "id_sesion_caja"});
   facturas.belongsTo(timbrados, { foreignKey: "id_timbrado"});
   timbrados.hasMany(facturas, { foreignKey: "id_timbrado"});
   planes_de_pagos.belongsTo(tipos_modalidades_de_pagos, { foreignKey: "id_tipo_modalidad_de_pago"});
   tipos_modalidades_de_pagos.hasMany(planes_de_pagos, { foreignKey: "id_tipo_modalidad_de_pago"});
   arqueos_detalles.belongsTo(transacciones, { foreignKey: "id_transaccion"});
   transacciones.hasMany(arqueos_detalles, { foreignKey: "id_transaccion"});
+  transacciones_detalles.belongsTo(transacciones, { foreignKey: "id_transaccion"});
+  transacciones.hasMany(transacciones_detalles, { foreignKey: "id_transaccion"});
 
   return {
     arqueos,
@@ -120,5 +134,7 @@ export default function initModels(sequelize) {
     sesiones_cajas,
     timbrados,
     tipos_modalidades_de_pagos,
+    transacciones,
+    transacciones_detalles,
   };
 }
