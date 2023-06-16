@@ -58,10 +58,8 @@ export class Factura {
       if (!str_nombre)return res.status(404).json({ error: "No se ha encontrado un cliente con ese id" });
 
       const ultimaFactura = await this.getUltimoID();
-
-      console.log(`ultimo id de factura : ${ultimaFactura}`);
-
-      const numero_factura = ultimaFactura.getDataValue('id') || 0;
+      
+      let numero_factura = ultimaFactura || 0;
 
       numero_factura = numero_factura.toString().padStart(7, '0');
 
@@ -95,17 +93,13 @@ export class Factura {
     }
   };
 
-  getUltimoID = async (req,res) => {
+  getUltimoID = async() => {
     try {
-      console.log('obteniendo ultimo id');
       const last = await facturas.findOne({order: [['id', 'DESC']]});
-      console.log(last);
-      // return last.getDataValue('id');
-      res.json(last.getDataValue('id'));
+      return last.getDataValue('id');
     }
     catch (error) {
-        // throw new Error(error.message);
-        res.json();
+        throw new Error(error.message);
     }
   }
   

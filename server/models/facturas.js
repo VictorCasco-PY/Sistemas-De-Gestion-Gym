@@ -27,7 +27,7 @@ export default class facturas extends Model {
       }
     },
     numero_factura: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     date_fecha: {
