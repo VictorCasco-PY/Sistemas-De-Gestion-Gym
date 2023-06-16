@@ -3,6 +3,10 @@ import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 import api from '../services/api';
 
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
 const SesionCaja = () => {
   const [abrirCaja, setAbrirCaja] = useState(false);
   const [montoInicial, setMontoInicial] = useState('');
@@ -80,7 +84,7 @@ const SesionCaja = () => {
   };
 
   return (
-    <div className="is-flex is-justify-content-center is-align-items-center vh-100"> {/* Agregado is-flex, is-justify-content-center y is-align-items-center */}
+    <div className="is-flex is-justify-content-center is-align-items-center vh-100">
       <div>
         <h1 className='title'>Sesión de Caja</h1>
         <div className='tags has-addons'>
@@ -104,7 +108,7 @@ const SesionCaja = () => {
         )}
         {montoFinal && (
           <div>
-            <p className='subtitle'>Monto Final de la sesión: {montoFinal}</p>
+            <p className='subtitle'>Monto Final de la sesión: {formatNumberWithCommas(montoFinal)}</p>
             <p className='subtitle'>Sesión de caja finalizada. La sesión ha sido eliminada.</p>
           </div>
         )}
