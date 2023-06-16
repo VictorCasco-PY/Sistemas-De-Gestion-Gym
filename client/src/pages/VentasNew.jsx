@@ -324,6 +324,24 @@ const VentasNew = () => {
     };
 
 
+    if (!idCaja) {
+        return (
+            <div>
+                <div className='is-serif is-flex is-flex-direction-column'>
+                    <h1 className='title is-size-2'>Nueva Venta</h1>
+                    <hr />
+                    <div className='column has-background-light p-5 is-flex is-flex-direction-column mr-auto ml-auto'
+                        style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width: "100%", maxWidth: "800px" }}>
+                        <div class="notification is-warning is-flex is-flex-direction-column">
+                           <p className='title'>Error</p>
+                           <p className='subtitle'>La caja no esta abierta</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className='is-serif is-flex is-flex-direction-column'>
             <h1 className='title is-size-2'>Nueva Venta</h1>
