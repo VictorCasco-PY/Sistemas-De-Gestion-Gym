@@ -120,6 +120,7 @@ export class Factura {
   // obtiene por id
   getById = async (id) => {
     try {
+      console.log('obteniendo factura por id');
       const result = await facturas.findOne({ where: { id }, include:{model:facturas_detalles, include:productos} });
       return result;
     } catch (error) {
