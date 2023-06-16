@@ -257,14 +257,14 @@ const VentasNew = () => {
         }
 
         // Comprobación de los detalles
-        if (detallesVenta.productos.length === 0) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Lo siento...',
-                text: 'No hay productos seleccionados!',
-            })
-            return;
-        }
+        /*  if (detallesVenta.productos.length === 0) {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Lo siento...',
+                  text: 'No hay productos seleccionados!',
+              })
+              return;
+          }*/
 
         total == totalC ? console.log('Igual') : console.log('No Igual')
         const dataVentas = {
