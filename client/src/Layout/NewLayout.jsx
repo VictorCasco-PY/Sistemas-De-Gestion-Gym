@@ -17,7 +17,7 @@ import StoreIcon from '@mui/icons-material/Store';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 const drawerWidth = 240;
@@ -52,7 +52,9 @@ export default function Layout({ children }) {
                 anchor="left"
             >
                 <Toolbar>
-                    <img src={Logo} width={240} height={60} />
+                    <Link className="custom-link is-flex" to="/home">
+                        <img src={Logo} width={240} height={60} />
+                    </Link>
                 </Toolbar>
                 <Divider />
                 <List sx={{ flexGrow: 1 }}>
