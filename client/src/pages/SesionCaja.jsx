@@ -70,13 +70,15 @@ const SesionCaja = () => {
       <h1>Sesión de Caja</h1>
       <label htmlFor="montoInicial">Monto inicial:</label>
       <input
+      className='input is-primary'
         type="number"
         id="montoInicial"
         value={montoInicial}
         onChange={(e) => setMontoInicial(e.target.value)}
         disabled={abrirCaja} // Deshabilitar el campo cuando la caja esté abierta
+        required
       />
-      <button onClick={handleAbrirCerrarCaja}>
+      <button className='button is-primary is-outlined' onClick={handleAbrirCerrarCaja}>
         {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
       </button>
       {horaCierre && (

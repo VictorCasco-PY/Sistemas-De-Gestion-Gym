@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Logo from "../assets/logo.png";
+import "../login.css";
 
 const Login = () => {
   const [usuario, setUsuario] = useState({
@@ -41,65 +43,52 @@ const Login = () => {
       });
   };
 
-
   const toggleMostrarPassword = () => {
     setMostrarPassword(!mostrarPassword);
   };
 
   return (
-    <div className="columns is-flex is-justify-content-center is-align-items-center mt-6">
-      <div className="column is-one-third mt-6">
-        <div className="box has-shadow mt-6">
-          <h3 className="has-text-centered mb-2 title is-3 has-text-primary">
-            Iniciar Sesión
-          </h3>
-          <form onSubmit={handleSubmit}>
-            <div className="field">
-              <p className="control">
-                <input
-                  name="user"
-                  value={usuario.user}
-                  className="input is-primary has-text-centered"
-                  type="text"
-                  placeholder="Nombre de Usuario"
-                  onChange={handleChange}
-                />
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <input
-                  name="password"
-                  value={usuario.password}
-                  className="input is-primary has-text-centered"
-                  type={mostrarPassword ? "text" : "password"}
-                  placeholder="Contraseña"
-                  onChange={handleChange}
-                />
-              </p>
-            </div>
-            <div className="field">
-              <p className="control">
-                <label className="checkbox">
-                  <input
-                    type="checkbox"
-                    onChange={toggleMostrarPassword}
-                    checked={mostrarPassword}
-                  />{" "}
-                  Mostrar contraseña
-                </label>
-              </p>
-            </div>
-            <div className="buttons">
-              <button
-                type="submit"
-                className="m-auto button is-primary is-outlined"
-              >
-                Iniciar Sesión
-              </button>
-            </div>
-          </form>
-        </div>
+    <div className="login-container">
+      <div className="login-card">
+        <img src={Logo} alt="Logo de la aplicación" className="logo" />
+        <h2 className="login-heading">Iniciar Sesión</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <input
+              name="user"
+              value={usuario.user}
+              className="form-control"
+              type="text"
+              placeholder="Nombre de Usuario"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              name="password"
+              value={usuario.password}
+              className="form-control"
+              type={mostrarPassword ? "text" : "password"}
+              placeholder="Contraseña"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              <input
+                type="checkbox"
+                onChange={toggleMostrarPassword}
+                checked={mostrarPassword}
+              />{" "}
+              Mostrar contraseña
+            </label>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="login-button button is-primary is-outlined">
+              Iniciar Sesión
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
