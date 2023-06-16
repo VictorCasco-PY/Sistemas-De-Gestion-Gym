@@ -198,7 +198,7 @@ const VentasNew = () => {
         totalVenta = subtotalVenta + iva5Venta + iva10Venta;
 
         // Agrega el precio del plan de pago solo si el estado de pago es "pendiente" o "atrasado"
-        if (cliente.planes_de_pagos && cliente.planes_de_pagos.length > 0 && planDePago.estado_de_pago === 'pendiente') {
+        if (cliente.planes_de_pagos && cliente.planes_de_pagos.length > 0 && (planDePago.estado_de_pago === 'pendiente' || planDePago.estado_de_pago === 'atrasado')) {
             setPrecioPlanDePago(Number(modalidadesPago[planDePago.id_tipo_modalidad_de_pago - 1].precio));
             console.log('Precio: ' + PrecioPlanDePago);
             totalVenta += PrecioPlanDePago;
@@ -220,7 +220,7 @@ const VentasNew = () => {
     /* Envio de la venta realizada */
     const handleSubmitVenta = async () => {
         const detallesVenta = {
-            ...(planDePago.estado_de_pago === 'pendiente' && {
+            ...((planDePago.estado_de_pago === 'pendiente' || planDePago.estado_de_pago === 'atrasado') && {
                 plan_de_pago: {
                     id_plan_de_pago: planDePago.id,
                     subtotal: PrecioPlanDePago,
@@ -458,7 +458,7 @@ const VentasNew = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {cliente.planes_de_pagos && cliente.planes_de_pagos.length > 0 && planDePago.estado_de_pago === 'pendiente' && (
+                                    {cliente.planes_de_pagos && cliente.planes_de_pagos.length > 0 && (planDePago.estado_de_pago === 'pendiente' || planDePago.estado_de_pago === 'atrasado') && (
                                         <tr>
                                             <td className='is-size-5'>Pago cuota</td>
                                             <td className='is-size-5'>Cuota {planDePago.str_modalidad}</td>
