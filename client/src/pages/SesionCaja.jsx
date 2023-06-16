@@ -4,6 +4,14 @@ import Swal from 'sweetalert2';
 import api from '../services/api';
 import CircularProgress from '@mui/material/CircularProgress';
 
+const formatNumberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const removeCommasFromString = (string) => {
+  return string.replace(/,/g, '');
+};
+
 const SesionCaja = () => {
   const [abrirCaja, setAbrirCaja] = useState(false);
   const [montoInicial, setMontoInicial] = useState('');
@@ -21,7 +29,7 @@ const SesionCaja = () => {
   const handleAbrirCerrarCaja = async () => {
     setLoading(true);
     if (!abrirCaja) {
-      if (montoInicial === '' || Number(montoInicial) < 0) {
+      if (montoInicial === '' || Number(removeCommasFromString(montoInicial)) < 0) {
         Swal.fire('Error', 'El monto inicial no puede ser menor a 0', 'error');
         return;
       }
@@ -33,8 +41,8 @@ const SesionCaja = () => {
       const data = {
         id_empleado: user.id,
         id_caja: 1,
-        monto_inicial: montoInicial,
-        monto_final: montoInicial,
+        monto_inicial: removeCommasFromString(montoInicial),
+        monto_final: removeCommasFromString(montoInicial),
         date_fecha: format(fechaApertura, 'yyyy-MM-dd'),
         time_inicio: format(fechaApertura, 'HH:mm'),
         time_cierre: format(fechaApertura, 'HH:mm'),
@@ -71,7 +79,7 @@ const SesionCaja = () => {
               console.log(response.data);
               setMontoFinal(response.data.monto_final);
               localStorage.removeItem('sesionCajaId'); // Eliminar la clave sesionCajaId del almacenamiento local
-              Swal.fire('Caja cerrada', `Monto Final: ${response.data.monto_final}`);
+              Swal.fire('Caja cerrada', `Monto Final: ${formatNumberWithCommas(response.data.monto_final)}`);
             })
             .catch(error => {
               console.log(error);
@@ -84,24 +92,30 @@ const SesionCaja = () => {
     setLoading(false);
   };
 
+  const handleMontoInicialChange = (e) => {
+    const value = e.target.value;
+    const formattedValue = formatNumberWithCommas(removeCommasFromString(value));
+    setMontoInicial(formattedValue);
+  };
+
   return (
     <div className='is-flex is-flex-direction-column p-5 has-background-light column ml-auto mr-auto'
       style={{ border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth: "500px" }}>
-      <div className="is-flex is-justify-content-center is-align-items-center vh-100"> {/* Agregado is-flex, is-justify-content-center y is-align-items-center */}
+      <div className="is-flex is-justify-content-center is-align-items-center vh-100">
         <div>
           <h1 className='title'>Sesión de Caja</h1>
-          <div className='tags has-addons'>
-            <label className='ml-0 pl-0 tag is-info is-light is-large' htmlFor="montoInicial">Monto inicial:</label>
+          <div className='is-flex is-flex-wrap-nowrap is-align-content-stretch tags has-addons'>
+            <label className='ml-0 pl-0 pr-1 pl-1 mb-0 tag is-info is-light is-large is-size-5' htmlFor="montoInicial"
+            style={{border:"1px solid hsl(217, 71%, 53%)", borderRight:"none"}}>Monto inicial</label>
             <input
               className='input '
-              type="number"
+              type="text"
               id="montoInicial"
               value={montoInicial}
-              onChange={(e) => setMontoInicial(e.target.value)}
+              onChange={handleMontoInicialChange}
               disabled={abrirCaja}
               required
-              min="0"
-            />
+              />
           </div>
           <button className='button is-primary is-small mb-3' onClick={handleAbrirCerrarCaja}>
             {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
@@ -112,7 +126,7 @@ const SesionCaja = () => {
           )}
           {montoFinal && (
             <div>
-              <p className='subtitle'>Monto Final de la sesión: {montoFinal}</p>
+              <p className='subtitle'>Monto Final de la sesión: {formatNumberWithCommas(montoFinal)}</p>
               <p className='subtitle'>Sesión de caja finalizada. La sesión ha sido eliminada.</p>
             </div>
           )}
