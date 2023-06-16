@@ -58,8 +58,7 @@ export default function Layout({ children }) {
                 <List sx={{ flexGrow: 1 }}>
                     {user.rol === 'admin' ? (
                         <>
-                            <CustomListItem icon={<DashboardIcon />} text='Dashboard' to='/reporte' />
-                            <Divider />
+
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Caja' to='/sesionCaja' />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
                             <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
