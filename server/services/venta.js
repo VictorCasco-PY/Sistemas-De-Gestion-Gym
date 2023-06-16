@@ -35,7 +35,7 @@ export class Venta {
 
         await cobroDetalleController.crear(nuevoCobro.id, ...cobros_detalles);
 
-        const nuevaFactura = facturaController.getById(factura.id);
+        const nuevaFactura = await facturaController.getById(factura.id);
 
 
         res.status(200).json({nuevaFactura});
