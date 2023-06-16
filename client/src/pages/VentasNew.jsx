@@ -266,7 +266,6 @@ const VentasNew = () => {
             try {
                 const response = await api.post("/ventas", dataVentas);
                 console.log(response.data.nuevaFactura);
-                setFactura(response.data.nuevaFactura);
                 Swal.fire(
                     'Factura guardada',
                     'Se ha generado una factura nueva!',
