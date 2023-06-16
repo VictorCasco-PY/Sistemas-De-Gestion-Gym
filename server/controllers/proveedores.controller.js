@@ -30,8 +30,8 @@ export class Proveedores {
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      if (!(await this.getById(id))) return req.status(404).json({ error: "No existe un proveedor con ese ID" });
-      await proveedores.update({activo:false, where: { id } });
+      if (!await this.getById(id)) return req.status(404).json({ error: "No existe un proveedor con ese ID" });
+      await proveedores.update({activo:false}, {where: { id } });
       res.status(200).send("Proveedor eliminado");
     } catch (error) {
       return res.status(500).json(error)

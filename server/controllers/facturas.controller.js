@@ -39,9 +39,9 @@ export class Factura {
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      if (!(await this.getById(id)))
+      if (!await this.getById(id))
         return res.status(404).send("No existe una factura con ese id");
-      await facturas.update({activo:false, where: { id } });
+      await facturas.update({activo:false}, {where: { id } });
       return res.send("Factura eliminada correctamente");
     } catch (error) {
       const { message } = error;

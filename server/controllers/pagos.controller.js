@@ -45,7 +45,7 @@ export class Pagos_proveedores {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await pagos_proveedores.update({activo:false, where: { id } });
+            const rowsAffected = await pagos_proveedores.update({activo:false}, {where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe una factura-proveedor con ese ID");
             }
