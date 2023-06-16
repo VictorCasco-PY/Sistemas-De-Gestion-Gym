@@ -96,7 +96,12 @@ export class Factura {
   getUltimoID = async() => {
     try {
       const last = await facturas.findOne({order: [['id', 'DESC']]});
-      return last.getDataValue('id');
+      if(last) {
+        return last.getDataValue('id');
+      }else{
+        return 0;
+      }
+      
     }
     catch (error) {
         throw new Error(error.message);
