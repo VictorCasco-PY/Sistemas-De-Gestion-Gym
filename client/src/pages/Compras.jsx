@@ -14,6 +14,7 @@ export default function Compras() {
   const [selectedItems, setSelectedItems] = useState([]);
   const inputRef = useRef(null);
   const [productos, setProductos] = useState([]);
+  const [fechaActual, setFechaActual] = useState('');
 
   const [compraAceptado, setCompraAceptado] = useState(false);
   const [proveedorAceptado, setProveedorAceptado] = useState(false);
@@ -145,19 +146,18 @@ export default function Compras() {
     }
 
     const cargaDeCompras = {
-      id_proveedor: selectedProveedor ? selectedProveedor.id : null,
+      id_proveedor: selectedProveedor.id,
+      id_sesion_caja: 2, // 
+      date_fecha: fechaActual, 
       total: calculateTotal(),
-      detalles: {
-        productos: selectedItems.map((item) => ({
-          id: item.id,
-          subtotal: item.precio * item.quantity,
-          cantidad: item.quantity,
-          precio: item.precio,
-          iva: item.iva,
-        })),
-      },
-      cobros_detalles: detallesCobro,
+      detalles: selectedItems.map((item) => ({
+        producto: item.producto,
+        cantidad: item.quantity,
+        precio_unitario: item.precio,
+      })),
+      pagos_detalles: detallesCobro,
     };
+
     console.log(cargaDeCompras)
     try {
       setIsLoading(true);
@@ -182,6 +182,20 @@ export default function Compras() {
       })
     }
   };
+
+  useEffect(() => {
+    const obtenerFechaActual = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const fecha = `${year}-${month}-${day}`;
+        setFechaActual(fecha);
+    };
+
+    obtenerFechaActual();
+}, []);
+
 
   return (
     <div className='is-serif is-flex is-flex-direction-column'>
