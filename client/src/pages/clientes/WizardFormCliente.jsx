@@ -138,12 +138,14 @@ const WizardFormCliente = () => {
         }
     }
     return (
-        <div className="columns is-centered mt-6">
-            <div className="container is-max-desktop is-centered">
-                <div className="box is-centered">
-                    <h1 className="title is-1 mb-6">Registro De Cliente</h1>
+        <div className="is-flex is-flex-direction-colum">
+            <div className=" p-5 is-flex mr-auto ml-auto"
+            style={{ border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth: "1200px" }}>
+                <div className="">
+                    <h1 className="title mb-0">Registro De Cliente</h1>
                     <hr />
-                    <form>
+                    <form className="box has-background-light"
+                    style={{border: "1px solid #D4D4D4", borderRadius: "8px"}}>
                         {pasoActual === 1 && (
                             <DatosClienteForm
                                 cliente={cliente}
