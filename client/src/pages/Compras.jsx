@@ -153,36 +153,30 @@ export default function Compras() {
     }
 
     totalActual == totalC ? console.log('Igual') : console.log('No Igual')
+    //MAPEO DE PRODUCTOS DETalles
+    const detalles = selectedItems.map((item) => ({
+      producto: item.id,
+      cantidad: item.quantity,
+      precio: item.precio,
+      subtotal: parseInt(item.precio) * parseInt(item.quantity),
+      iva: item.iva,
+    }));
 
     const nro_factura = generateRandomAlphaNumeric(6); //generacion aleatoria de nro factura
     const cargaDeCompras = {
       id_proveedor: selectedProveedor.id,
       id_sesion_caja: idCaja,
-
+      str_nombre: selectedProveedor.str_nombre,
+      str_ruc: selectedProveedor.str_ruc,
       nro_factura: nro_factura,
 
       date_fecha: fechaActual,
       total: totalActual,
-      detalles: selectedItems.map((item) => ({
-        producto: item.id,
-        cantidad: item.quantity,
-        precio: item.precio,
-        subtotal: parseInt(item.precio) * parseInt(item.quantity),
-        iva: item.iva,
-      })),
+      detalles,
       pagos_detalles: detallesCobro,
     };
 
-    let dineroCaja = localStorage.getItem('sesionCajaId');
-    try {
-      setIsLoading(true);
-      const response = await api.get("/caja");
-      dineroCaja = response;
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-
+    console.log(cargaDeCompras)
     if (totalActual == totalC) {
       try {
         setIsLoading(true);

@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <>
-      <h1 className='title is-1'></h1>
+      <h1 className='title is-1'>HOLA</h1>
     </>
   )
 }

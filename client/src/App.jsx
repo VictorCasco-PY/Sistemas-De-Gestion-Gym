@@ -31,6 +31,7 @@ import VentasNew from './pages/VentasNew';
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const isAuthenticated = !!user;
   const isAdmin = user?.rol === "admin";
   const isCajero = user?.rol === "caja";
   const isEntrenador = user?.rol === "entrenador";
