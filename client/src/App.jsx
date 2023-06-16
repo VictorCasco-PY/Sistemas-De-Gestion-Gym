@@ -41,7 +41,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           // Ruta publica principal
-          <Route index element={<Login />} />
+          {isAuthenticated && <Route path="/" element={<Navigate to="/home" replace />} />}
+          {!isAuthenticated && <Route index element={<Login />} />}
 
           // Rutas semi-publicas
           <Route element={<ProtectedRoute isAllowed={!!user} />}>
