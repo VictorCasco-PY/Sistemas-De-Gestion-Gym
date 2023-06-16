@@ -31,11 +31,11 @@ export default class pagos_proveedores extends Model {
       allowNull: true,
       defaultValue: 1
     },
-    id_forma_de_pago: {
+    id_sesion_caja: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'formas_de_pagos',
+        model: 'sesiones_cajas',
         key: 'id'
       }
     }
@@ -60,10 +60,10 @@ export default class pagos_proveedores extends Model {
         ]
       },
       {
-        name: "pagos_proveedores_id_forma_de_pago_foreign_idx",
+        name: "pagos_proveedores_id_sesion_caja_foreign_idx",
         using: "BTREE",
         fields: [
-          { name: "id_forma_de_pago" },
+          { name: "id_sesion_caja" },
         ]
       },
     ]
