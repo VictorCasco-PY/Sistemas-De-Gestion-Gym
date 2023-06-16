@@ -41,6 +41,11 @@ export default class transacciones extends Model {
     time_hora: {
       type: DataTypes.TIME,
       allowNull: true
+    },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: 1
     }
   }, {
     sequelize,
@@ -56,10 +61,10 @@ export default class transacciones extends Model {
         ]
       },
       {
-        name: "id_sesion_caja",
+        name: "id_cobro",
         using: "BTREE",
         fields: [
-          { name: "id_sesion_caja" },
+          { name: "id_cobro" },
         ]
       },
       {
@@ -70,10 +75,10 @@ export default class transacciones extends Model {
         ]
       },
       {
-        name: "id_cobro",
+        name: "id_sesion_caja",
         using: "BTREE",
         fields: [
-          { name: "id_cobro" },
+          { name: "id_sesion_caja" },
         ]
       },
     ]
