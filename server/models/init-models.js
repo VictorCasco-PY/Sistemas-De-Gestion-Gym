@@ -95,7 +95,7 @@ export default function initModels(sequelize) {
   });
 
   pagos_proveedores_detalles.belongsTo(pagos_proveedores, {foreignKey:"id_pago_proveedor"})
-  pagos_proveedores.hasMany(pagos_proveedores_detalles, {foreignKey:"id_pago_proveedor"});l
+  pagos_proveedores.hasMany(pagos_proveedores_detalles, {foreignKey:"id_pago_proveedor"});
   facturas_proveedores.hasMany(pagos_proveedores, {
     as: "pagos_proveedores",
     foreignKey: "id_factura_proveedor",
