@@ -173,6 +173,16 @@ export default function Compras() {
       pagos_detalles: detallesCobro,
     };
 
+    let dineroCaja = localStorage.getItem('sesionCajaId');
+    try {
+      setIsLoading(true);
+      const response = await api.get("/caja");
+      dineroCaja = response;
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+
     if (totalActual == totalC) {
       try {
         setIsLoading(true);

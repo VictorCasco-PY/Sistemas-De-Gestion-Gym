@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import Swal from 'sweetalert2'
 import Select from 'react-select';
 import api from '../services/api';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -90,6 +90,32 @@ export default function ClientesTable() {
     }
     return 0;
   });
+
+  const handleDeleteClient = async (cliente) => {
+    Swal.fire({ //ALERTA DE BORRADO
+      title: 'Confirmacion de borrado',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '',
+      confirmButtonText: 'Borrar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Borrado',
+        )
+        try {
+          const response = await api.delete(`/planes-de-pagos/${cliente.id}`);
+          setClientes((prevClientes) => prevClientes.filter((c) => c.id_cliente !== cliente.id));
+          console.log(response)
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })
+
+  };
 
   // Calculate pagination indexes
   const indexOfLastClient = currentPage * clientsPerPage;
@@ -248,7 +274,7 @@ export default function ClientesTable() {
                       <Link to={`/detallesCliente/${cliente.id_cliente}`}>
                         <button className="button is-link is-rounded is-outlined">Ver Mas</button>
                       </Link>
-                      <button className="button is-danger is-rounded is-outlined">Borrar</button>
+                      <button className="button is-danger is-rounded is-outlined" onClick={() => handleDeleteClient(cliente)}>Borrar</button>
                     </td>
                   </tr>
                 ))

@@ -3,7 +3,7 @@ import React from 'react'
 const DatosClienteForm = ({ cliente, handleChangeCliente, datosCompletos, handleSubmitCliente }) => {
     return (
         <>
-            <h2 className="title is-2 has-text-centered mt-6">Datos del cliente</h2>
+            <h2 className="title has-text-centered mt-5">Datos del cliente</h2>
             <div className="columns">
                 <div className="column is-half">
                     <input className="input is-primary mb-2" type="text" name="str_nombre" placeholder="Nombre Y Apellido" value={cliente.str_nombre} onChange={handleChangeCliente} />
