@@ -30,6 +30,7 @@ const VentasNew = () => {
     const inputRefNroDoc = useRef(null);
     const idCaja = localStorage.getItem('sesionCajaId');
 
+
     const resetFields = () => {
         setCliente({});
         setDocumentoCliente('');
@@ -71,7 +72,13 @@ const VentasNew = () => {
             }
             console.log(clienteData.planes_de_pagos[0])
         } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lo siento...',
+                text: 'El cliente con ese RUC no existe!',
+            })
             console.log(error.message);
+
         }
     }
 
@@ -247,6 +254,16 @@ const VentasNew = () => {
             totalC += detalle.monto;
         }
 
+        // Comprobación de los detalles
+        if (detallesVenta.productos.length === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lo siento...',
+                text: 'No hay productos seleccionados!',
+            })
+            return;
+        }
+
         total == totalC ? console.log('Igual') : console.log('No Igual')
         const dataVentas = {
             id_sesion_caja: idCaja,
@@ -276,7 +293,11 @@ const VentasNew = () => {
                 console.log(error);
             }
         } else {
-            alert("Los valores de total no coinciden con el cobro");
+            Swal.fire({
+                icon: 'error',
+                title: 'Lo siento...',
+                text: 'El total no coincide con el cobro!',
+            })
         }
     }
 
