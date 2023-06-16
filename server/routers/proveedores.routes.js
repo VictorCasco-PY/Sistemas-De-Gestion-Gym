@@ -16,12 +16,18 @@ proveedoresRoutes.get("/proveedor/:id", proveedores.getByParams);
 
 // Crear un nuevo proveedor, los checks sirven para comprobar que los campos esten completos
 proveedoresRoutes.post(
-    "/proveedores",
-    checkMiddleWare(['str_nombre', 'str_direccion', 'str_telefono', 'str_ruc', 'str_correo']),
-    proveedores.crear
+  "/proveedores",
+  checkMiddleWare([
+    "str_nombre",
+    "str_direccion",
+    "str_telefono",
+    "str_ruc",
+    "str_correo",
+  ]),
+  proveedores.crear
 );
 
-proveedoresRoutes.put("/proveedor/:id", proveedores.update)
-proveedoresRoutes.delete("/proveedor/:id", proveedores.delete)
+proveedoresRoutes.put("/proveedor/:id", proveedores.update);
+proveedoresRoutes.delete("/proveedor/:id", proveedores.delete);
 
 export default proveedoresRoutes;

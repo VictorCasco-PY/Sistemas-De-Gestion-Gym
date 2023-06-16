@@ -28,6 +28,7 @@ import ListaProveedor from './pages/proveedores/ListaProveedor';
 import ListaProducto from './pages/productos/ListaProducto'
 import VentasNew from './pages/VentasNew';
 
+
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
   const isAdmin = user?.rol === "admin";
@@ -56,9 +57,9 @@ function App() {
 
           // Rutas de Cajero
           <Route element={<ProtectedRoute isAllowed={!!user && (isCajero || isAdmin)} redirectTo='/home' />}>
-            <Route path='/caja' element={<NewLayout><Caja /></NewLayout>} />
             <Route path='/ventas' element={<NewLayout><VentasNew /></NewLayout>} />
             <Route path='/compras' element={<NewLayout><Compras /></NewLayout>} />
+            <Route path='/sesionCaja' element={<NewLayout>< SesionCaja /></NewLayout>} />
           </Route>
 
           <Route element={<ProtectedRoute isAllowed={!!user && isAdmin} redirectTo='/home' />}>
@@ -72,7 +73,6 @@ function App() {
             <Route path='/registroProducto' element={<NewLayout><RegistroProductos /></NewLayout>} />
             <Route path='/listaProductos' element={<NewLayout>< ListaProducto /></NewLayout>} />
             <Route path='/detallesProducto/:id' element={<NewLayout><DetallesProducto /></NewLayout>} />
-            <Route path='/sesionCaja' element={<NewLayout>< SesionCaja /></NewLayout>} />
             <Route path='/facturas' element={<NewLayout><ListaFacturas /></NewLayout>} />
             <Route path='/detalleFactura' element={<DetalleFactura />}></Route>
           </Route>

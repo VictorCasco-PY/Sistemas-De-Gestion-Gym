@@ -27,6 +27,8 @@ const VentasNew = () => {
     const [efectivo, setEfectivo] = useState('');
     const [credito, setCredito] = useState('');
     const [debito, setDebito] = useState('');
+    const inputRefNroDoc = useRef(null);
+    const idCaja = localStorage.getItem('sesionCajaId');
 
     const resetFields = () => {
         setCliente({});
@@ -45,10 +47,10 @@ const VentasNew = () => {
         setIVA10(0);
         setPrecioPlanDePago(0);
         setCantidadProducto([]);
-        setFechaActual('');
         setEfectivo('');
         setCredito('');
         setDebito('');
+        inputRefNroDoc.current.value = '';
     };
 
     /* Obtencion de datos del cliente */
@@ -208,62 +210,74 @@ const VentasNew = () => {
 
     /* Envio de la venta realizada */
     const handleSubmitVenta = async () => {
-        try {
-            const detallesVenta = {
-                ...(planDePago.estado_de_pago === 'pendiente' && {
-                    plan_de_pago: {
-                        id_plan_de_pago: planDePago.id,
-                        subtotal: PrecioPlanDePago,
-                        cantidad: 1,
-                        precio: PrecioPlanDePago,
-                        iva: 0
-                    }
-                }),
-                productos: selectedItems.map((producto) => ({
-                    id: producto.id,
-                    cantidad: cantidadProducto,
-                    precio: parseInt(producto.precio),
-                    iva: parseInt(producto.iva),
-                    subtotal: cantidadProducto * parseInt(producto.precio)
-                }))
-            };
+        const detallesVenta = {
+            ...(planDePago.estado_de_pago === 'pendiente' && {
+                plan_de_pago: {
+                    id_plan_de_pago: planDePago.id,
+                    subtotal: PrecioPlanDePago,
+                    cantidad: 1,
+                    precio: PrecioPlanDePago,
+                    iva: 0
+                }
+            }),
+            productos: selectedItems.map((producto) => ({
+                id: producto.id,
+                cantidad: cantidadProducto,
+                precio: parseInt(producto.precio),
+                iva: parseInt(producto.iva),
+                subtotal: cantidadProducto * parseInt(producto.precio)
+            }))
+        };
 
-            const detallesCobro = [];
-            if (efectivo) {
-                detallesCobro.push({ id_forma_de_pago: 1, monto: parseInt(efectivo) });
+        const detallesCobro = [];
+        if (efectivo) {
+            detallesCobro.push({ id_forma_de_pago: 1, monto: parseInt(efectivo) });
+        }
+
+        if (credito) {
+            detallesCobro.push({ id_forma_de_pago: 2, monto: parseInt(credito) });
+        }
+
+        if (debito) {
+            detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
+        }
+
+        let totalC = 0;
+        for (const detalle of detallesCobro) {
+            totalC += detalle.monto;
+        }
+
+        total == totalC ? console.log('Igual') : console.log('No Igual')
+        const dataVentas = {
+            id_sesion_caja: idCaja,
+            id_cliente: cliente.id,
+            id_timbrado: 1,
+            total: total,
+            saldo: 0,
+            iva_5: iva5,
+            iva_10: iva10,
+            iva_exenta: 0,
+            detalles: detallesVenta,
+            cobros_detalles: detallesCobro
+        };
+        console.log(dataVentas);
+
+        if (total == totalC) {
+            try {
+                const response = await api.post("/ventas", dataVentas);
+                console.log(response.data.nuevaFactura);
+                setFactura(response.data.nuevaFactura);
+                Swal.fire(
+                    'Factura guardada',
+                    'Se ha generado una factura nueva!',
+                    'success'
+                );
+                resetFields();
+            } catch (error) {
+                console.log(error);
             }
-
-            if (credito) {
-                detallesCobro.push({ id_forma_de_pago: 2, monto: parseInt(credito) });
-            }
-
-            if (debito) {
-                detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
-            }
-
-
-            const dataVentas = {
-                id_cliente: cliente.id,
-                id_timbrado: 1,
-                total: total,
-                saldo: 0,
-                iva_5: iva5,
-                iva_10: iva10,
-                iva_exenta: 0,
-                detalles: detallesVenta,
-                cobros_detalles: detallesCobro
-            };
-            console.log(dataVentas);
-            const response = await api.post("/ventas", dataVentas);
-            console.log(response.data.ok);
-            Swal.fire(
-                `${response.data.ok}`,
-                'Se ha generado una factura nueva!',
-                'success'
-            );
-            resetFields();
-        } catch (error) {
-            console.log(error);
+        } else {
+            alert("Los valores de total no coinciden con el cobro");
         }
     }
 
@@ -286,12 +300,12 @@ const VentasNew = () => {
             <h1 className='title is-size-2'>Nueva Venta</h1>
             <hr />
             <div className='column has-background-light p-5 is-flex mr-auto ml-auto'
-                style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width:"100%", maxWidth:"1200px" }}>
+                style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width: "100%", maxWidth: "1200px" }}>
                 <div className='listaItems column'>
                     <div className='is-flex mb-6'>
                         <div className="proveedorTab mb-5 is-flex is-align-content-center">
                             <p className='is-3 title m-0 mr-5'
-                            style={{width:"120px"}}>Cliente</p>
+                                style={{ width: "120px" }}>Cliente</p>
                             <div className='is-flex is-flex-direction-column'
                                 style={{ "gap": "10px" }}>
                                 <div className='is-flex is-flex-direction-column '>
@@ -305,6 +319,7 @@ const VentasNew = () => {
                                             placeholder='Nro Documento'
                                             onChange={handleRucChange}
                                             onKeyDown={handleKeyDown}
+                                            ref={inputRefNroDoc}
                                         />
                                         <input
                                             className='input input-radius placeholder-black'
@@ -361,7 +376,7 @@ const VentasNew = () => {
                                                     >
                                                         <div className='is-flex is-justify-content-space-between'>
                                                             <div>
-                                                                <p>{item.str_nombre}</p>
+                                                                <p className='has-text-weight-bold is-size-5 m-0'>{item.str_nombre}</p>
                                                                 <p>{item.str_descripcion}</p>
                                                             </div>
                                                             <p>

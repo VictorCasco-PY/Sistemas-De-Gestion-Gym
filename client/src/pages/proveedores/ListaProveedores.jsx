@@ -10,11 +10,12 @@ import api from '../../services/api';
 
 const ListaProveedores = () => {
     const navigate = useNavigate();
-    const [proveedores, setProveedores] = useState([])
+    const [proveedores, setProveedores] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    //  Obtener proveedores
+    // Obtener proveedores
     const getProveedores = async () => {
         try {
             const response = await api.get("/proveedores");
@@ -66,16 +67,25 @@ const ListaProveedores = () => {
         })
     }
 
+    // Filtrar proveedores por RUC y nombre
+    const filteredProveedores = proveedores.filter((proveedor) => {
+        const rucMatch = proveedor.str_ruc.toLowerCase().includes(searchTerm.toLowerCase());
+        const nombreMatch = proveedor.str_nombre.toLowerCase().includes(searchTerm.toLowerCase());
+        return rucMatch || nombreMatch;
+    });
+
     // Otros
     if (isLoading) {
-        return <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-        }}>
-            <CircularProgress />
-        </Box>;
+        return (
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+            }}>
+                <CircularProgress />
+            </Box>
+        );
     }
     if (error) {
         return <p>Error al cargar los proveedores: {error}</p>;
@@ -87,14 +97,15 @@ const ListaProveedores = () => {
                     <input
                         className="input"
                         type="search"
-                        placeholder="Buscar por RUC"
-
+                        placeholder="Buscar por RUC o Nombre"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
             </div>
             <div className='column is-flex is-justify-content-center is-flex-direction-column m-0 p-0'>
                 <table className='table table is-bordered tableNew has-background-light is-bordered p-3' style={{ width: "100%" }}>
-                    <thead >
+                    <thead>
                         <tr>
                             <th className='is-size-5'>RUC</th>
                             <th className='is-size-5'>Nombre</th>
@@ -104,8 +115,8 @@ const ListaProveedores = () => {
                             <th className='is-size-5'></th>
                         </tr>
                     </thead>
-                    <tbody >
-                        {proveedores.map((proveedor) => (
+                    <tbody>
+                        {filteredProveedores.map((proveedor) => (
                             <tr key={proveedor.id}>
                                 <td className='is-size-5'>{proveedor.str_ruc}</td>
                                 <td className='is-size-5'>{proveedor.str_nombre}</td>
@@ -121,10 +132,8 @@ const ListaProveedores = () => {
                     </tbody>
                 </table>
             </div>
-
         </div>
-
     )
 }
 
-export default ListaProveedores
+export default ListaProveedores;
