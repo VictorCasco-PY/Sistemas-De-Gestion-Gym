@@ -53,15 +53,19 @@ export class Factura {
     try {
       const { id_cliente } = query;
       const date_fecha = getDateNow();
-      const { str_nombre, str_ruc } = (await cliente.getById(id_cliente))
-        .dataValues;
-      if (!str_nombre)
-        return res
-          .status(404)
-          .json({ error: "No se ha encontrado un cliente con ese id" });
+      const { str_nombre, str_ruc } = (await cliente.getById(id_cliente)).dataValues;
+      
+      if (!str_nombre)return res.status(404).json({ error: "No se ha encontrado un cliente con ese id" });
+
+      const ultimaFactura = await this.getUltimoID();
+      
+      let numero_factura = ultimaFactura || 0;
+
+      numero_factura = numero_factura.toString().padStart(7, '0');
 
       const result = await facturas.create({
         ...query,
+        numero_factura,
         date_fecha,
         str_nombre_cliente: str_nombre,
         str_ruc_cliente: str_ruc,
@@ -88,6 +92,16 @@ export class Factura {
       return res.status(500).json({ error: message });
     }
   };
+
+  getUltimoID = async() => {
+    try {
+      const last = await facturas.findOne({order: [['id', 'DESC']]});
+      return last.getDataValue('id');
+    }
+    catch (error) {
+        throw new Error(error.message);
+    }
+  }
   
   getByParams = async (req, res) => {
     try {
