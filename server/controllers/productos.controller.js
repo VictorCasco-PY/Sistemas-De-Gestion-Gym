@@ -50,7 +50,7 @@ export class Productos {
   comprar = async (id, cantidad) => {
     try{
       const producto = await this.getById(id);
-      const newCantidad = producto.cantidad + cantidad;
+      const newCantidad = parseInt(producto.cantidad) + parseInt(cantidad);
       await productos.update({cantidad:newCantidad}, {where:{id}});
     }catch(error){
       throw new Error("Error al aumentar producto en el stock");
