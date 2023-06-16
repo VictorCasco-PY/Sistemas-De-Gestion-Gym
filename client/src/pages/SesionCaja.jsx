@@ -80,40 +80,35 @@ const SesionCaja = () => {
   };
 
   return (
-    <div>
-      <h1 className='title'>Sesión de Caja</h1>
-      <div className='infoBubble'>
-      <div className='bubbleTitle has-text-white'>
-      <label htmlFor="montoInicial">Monto inicial:</label>
-      </div>
-      </div>
-      <div className='infoBubble'>
-      <div className='editable-title'>
-      <input
-        className=''
-        type="number"
-        id="montoInicial"
-        value={montoInicial}
-        onChange={(e) => setMontoInicial(e.target.value)}
-        disabled={abrirCaja}
-        required
-        min="0"
-      />
-      </div>
-      </div>
-
-      <button className='button is-primary is-outlined' onClick={handleAbrirCerrarCaja}>
-        {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
-      </button>
-      {horaCierre && (
-        <p>Hora de cierre de la sesión: {horaCierre}</p>
-      )}
-      {montoFinal && (
-        <div>
-          <p>Monto Final de la sesión: {montoFinal}</p>
-          <p>Sesión de caja finalizada. La sesión ha sido eliminada.</p>
+    <div className="is-flex is-justify-content-center is-align-items-center vh-100"> {/* Agregado is-flex, is-justify-content-center y is-align-items-center */}
+      <div>
+        <h1 className='title'>Sesión de Caja</h1>
+        <div className='tags has-addons'>
+          <label className='tag is-info is-light is-large' htmlFor="montoInicial">Monto inicial:</label>
+          <input
+            className='tag is-large'
+            type="number"
+            id="montoInicial"
+            value={montoInicial}
+            onChange={(e) => setMontoInicial(e.target.value)}
+            disabled={abrirCaja}
+            required
+            min="0"
+          />
         </div>
-      )}
+        <button className='button is-primary is-outlined is-small' onClick={handleAbrirCerrarCaja}>
+          {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
+        </button>
+        {horaCierre && (
+          <p className='subtitle'>Hora de cierre de la sesión: {horaCierre}</p>
+        )}
+        {montoFinal && (
+          <div>
+            <p className='subtitle'>Monto Final de la sesión: {montoFinal}</p>
+            <p className='subtitle'>Sesión de caja finalizada. La sesión ha sido eliminada.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
