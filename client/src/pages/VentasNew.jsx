@@ -262,25 +262,23 @@ const VentasNew = () => {
         };
         console.log(dataVentas);
 
-        /* if (total == totalC) {
-             try {
-                 const response = await api.post("/ventas", dataVentas);
-                 console.log(response.data.nuevaFactura);
-                 setFactura(response.data.nuevaFactura);
-                 Swal.fire(
-                     'Factura guardada',
-                     'Se ha generado una factura nueva!',
-                     'success'
-                 );
-                 resetFields();
-                 { factura && <PrintFactura factura={factura} /> }
-             } catch (error) {
-                 console.log(error);
-             }
-         } else {
-             alert("Los valores de total no coinciden con el cobro");
-         }
- */
+        if (total == totalC) {
+            try {
+                const response = await api.post("/ventas", dataVentas);
+                console.log(response.data.nuevaFactura);
+                setFactura(response.data.nuevaFactura);
+                Swal.fire(
+                    'Factura guardada',
+                    'Se ha generado una factura nueva!',
+                    'success'
+                );
+                resetFields();
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            alert("Los valores de total no coinciden con el cobro");
+        }
     }
 
     useEffect(() => {
