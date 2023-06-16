@@ -154,8 +154,8 @@ export default function Compras() {
 
     totalActual == totalC ? console.log('Igual') : console.log('No Igual')
     //MAPEO DE PRODUCTOS DETalles
-    const detalles = selectedItems.map((item) => ({
-      producto: item.id,
+    const detallesMap = selectedItems.map((item) => ({
+      id: item.id,
       cantidad: item.quantity,
       precio: item.precio,
       subtotal: parseInt(item.precio) * parseInt(item.quantity),
@@ -172,10 +172,12 @@ export default function Compras() {
 
       date_fecha: fechaActual,
       total: totalActual,
-      detalles,
+      detalles: {
+        productos: detallesMap
+      },
       pagos_detalles: detallesCobro,
     };
-
+    
     console.log(cargaDeCompras)
     if (totalActual == totalC) {
       try {
