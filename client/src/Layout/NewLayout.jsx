@@ -18,6 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const drawerWidth = 240;
 
@@ -61,7 +62,7 @@ export default function Layout({ children }) {
                             <Divider />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
                             <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
-                            <CustomListItem icon={<StoreIcon />} text='Facturas' to='/facturas' />
+                            <CustomListItem icon={<DescriptionIcon />} text='Facturas' to='/facturas' />
                             <CustomListItem icon={<PersonIcon />} text='Clientes' to='/listaClientes' />
                             <CustomListItem icon={<PersonIcon />} text='Empleados' to='/listaEmpleados' />
                             <CustomListItem icon={<InventoryIcon />} text='Productos' to='/listaProductos' />
