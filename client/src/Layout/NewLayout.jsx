@@ -26,8 +26,8 @@ export default function Layout({ children }) {
     const user = JSON.parse(localStorage.getItem("user"));
 
     const navigate = useNavigate();
-    const handleLogout = () => {
-        localStorage.removeItem("user");
+    const handleLogout =  async () => {
+        await localStorage.removeItem("user");
         navigate("/");
     }
 
