@@ -21,10 +21,9 @@ export class Facturas_proveedores {
     createFacturaProveedor = async (query) => {
         try {
             const { id_proveedor } = query;
-            const proveedorTemp = await proveedor.getById(id_proveedor);
+            const proveedorTemp = (await proveedor.getById(id_proveedor)).dataValues;
             if (!proveedorTemp) return res.status(404).json({ erorr: "No existe proveedor con ese id" });
-            const { str_nombre } = proveedorTemp.str_nombre;
-            const { str_ruc } = proveedorTemp.str_ruc;
+            const { str_nombre, str_ruc } = proveedorTemp;
             const result = await facturas_proveedores.create({ ...query, str_nombre, str_ruc});
             return result;
         } catch (error) {
