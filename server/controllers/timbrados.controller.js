@@ -30,8 +30,8 @@ export class Timbrados {
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      if (!(await this.getById(id))) return req.status(404).json({ error: "No existe un timbradp con ese ID" });
-      await timbrados.update({activo:false, where: { id } });
+      if (!await this.getById(id)) return req.status(404).json({ error: "No existe un timbradp con ese ID" });
+      await timbrados.update({activo:false}, {where: { id } });
       res.status(200).send("timbrado eliminado");
     } catch (error) {
       return res.status(500).json(error)

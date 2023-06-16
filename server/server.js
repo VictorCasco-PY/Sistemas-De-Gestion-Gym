@@ -21,6 +21,8 @@ import facturasProveedoresDetallesRoutes from "./routers/facturas_proveedores_de
 import ventasRoutes from "./routers/ventas.routes.js";
 import comprasRoutes from "./routers/compras.routes.js";
 import {actualizarEstados} from "./services/actualizarPlanesDePago.js"
+import {getArqueo} from "./services/arqueoCaja.js";
+import arqueoCajaRoutes from "./routers/arqueoCaja.routes.js";
 const app = express();
 
 app.use(
@@ -54,6 +56,7 @@ app.use(facturasProveedoresRoutes)
 app.use(facturasProveedoresDetallesRoutes)
 app.use(ventasRoutes);
 app.use(comprasRoutes);
+app.use(arqueoCajaRoutes);
 
 
 cron.schedule('0 0 * * *', actualizarEstados, {

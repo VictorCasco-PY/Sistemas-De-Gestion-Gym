@@ -76,7 +76,7 @@ export class SesionesCajas {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await sesiones_cajas.update({activo:false, where: { id } });
+            const rowsAffected = await sesiones_cajas.update({activo:false}, {where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe una relación empleado-caja con ese ID");
             }

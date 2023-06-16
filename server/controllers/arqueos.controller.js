@@ -75,7 +75,7 @@ export class Arqueos {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await arqueos.update({activo:false, where: { id } });
+            const rowsAffected = await arqueos.update({activo:false},{ where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe un arqueo con ese ID");
             }

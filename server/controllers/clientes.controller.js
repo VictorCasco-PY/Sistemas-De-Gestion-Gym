@@ -39,8 +39,8 @@ export class Cliente {
     delete = async (req, res) => {
         try {
             const {id} = req.params;
-            if (!(await this.getById(id))) return req.status(404).json({error: "No existe un usuario con ese ID"});
-            await clientes.update({activo:false, where: { id } });
+            if (!await this.getById(id)) return req.status(404).json({error: "No existe un usuario con ese ID"});
+            await clientes.update({activo:false}, {where: { id } });
             res.status(200).send("Cliente eliminado");
         } catch (error) {
             const {message} = error;
