@@ -14,6 +14,7 @@ export default function Compras() {
   const [selectedItems, setSelectedItems] = useState([]);
   const inputRef = useRef(null);
   const [productos, setProductos] = useState([]);
+  const [fechaActual, setFechaActual] = useState('');
 
   const [compraAceptado, setCompraAceptado] = useState(false);
   const [proveedorAceptado, setProveedorAceptado] = useState(false);
@@ -113,7 +114,6 @@ export default function Compras() {
       0
     );
   };
-
   const handleItemDelete = (index) => {
     const updatedItems = [...selectedItems];
     updatedItems.splice(index, 1);
@@ -144,20 +144,25 @@ export default function Compras() {
       detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
     }
 
+    const nro_factura = generateRandomAlphaNumeric(6); //generacion aleatoria de nro factura
     const cargaDeCompras = {
-      id_proveedor: selectedProveedor ? selectedProveedor.id : null,
+      id_proveedor: selectedProveedor.id,
+      id_sesion_caja: 2, 
+
+      nro_factura: nro_factura,
+
+      date_fecha: fechaActual,
       total: calculateTotal(),
-      detalles: {
-        productos: selectedItems.map((item) => ({
-          id: item.id,
-          subtotal: item.precio * item.quantity,
-          cantidad: item.quantity,
-          precio: item.precio,
-          iva: item.iva,
-        })),
-      },
-      cobros_detalles: detallesCobro,
+      detalles: selectedItems.map((item) => ({
+        producto: item.id,
+        cantidad: item.quantity,
+        precio: item.precio,
+        subtotal:  parseInt(item.precio)* parseInt(item.quantity),
+        iva: item.iva,
+      })),
+      pagos_detalles: detallesCobro,
     };
+
     console.log(cargaDeCompras)
     try {
       setIsLoading(true);
@@ -181,6 +186,29 @@ export default function Compras() {
         confirmButtonText: 'Aceptar',
       })
     }
+  };
+
+  useEffect(() => {
+    const obtenerFechaActual = () => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const fecha = `${year}-${month}-${day}`;
+      setFechaActual(fecha);
+    };
+
+    obtenerFechaActual();
+  }, []);
+
+  const generateRandomAlphaNumeric = (length) => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
   };
 
   return (

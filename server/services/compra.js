@@ -27,7 +27,7 @@ export class Compra {
             await  pagoDetallesController.crear(nuevoPago.id,...pagos_detalles);
             console.log("nuevo pago");
             console.log(nuevoPago);
-            nuevaFactura=await facturaProveedorController.getById(factura_proveedor.id);
+            const nuevaFactura = await facturaProveedorController.getById(factura_proveedor.id);
             res.status(200).json({ nuevaFactura })
 
         } catch (error) {
