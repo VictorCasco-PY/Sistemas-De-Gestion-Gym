@@ -145,13 +145,19 @@ export default function Compras() {
       detallesCobro.push({ id_forma_de_pago: 3, monto: parseInt(debito) });
     }
 
+    const nro_factura = generateRandomAlphaNumeric(6); //generacion aleatoria de nro factura
     const cargaDeCompras = {
       id_proveedor: selectedProveedor.id,
-      id_sesion_caja: 2, // 
-      date_fecha: fechaActual, 
+      id_sesion_caja: 2, 
+
+      nro_factura: nro_factura,
+      str_nombre: selectedProveedor.str_nombre,
+      _str_ruc: selectedProveedor.str_ruc,
+
+      date_fecha: fechaActual,
       total: calculateTotal(),
       detalles: selectedItems.map((item) => ({
-        producto: item.producto,
+        producto: item.id,
         cantidad: item.quantity,
         precio_unitario: item.precio,
       })),
@@ -185,17 +191,26 @@ export default function Compras() {
 
   useEffect(() => {
     const obtenerFechaActual = () => {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        const fecha = `${year}-${month}-${day}`;
-        setFechaActual(fecha);
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const fecha = `${year}-${month}-${day}`;
+      setFechaActual(fecha);
     };
 
     obtenerFechaActual();
-}, []);
+  }, []);
 
+  const generateRandomAlphaNumeric = (length) => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
+  };
 
   return (
     <div className='is-serif is-flex is-flex-direction-column'>
