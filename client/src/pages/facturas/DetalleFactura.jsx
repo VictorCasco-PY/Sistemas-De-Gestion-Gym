@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import api from '../../services/api';
+import { format } from 'date-fns';
 
 const DetalleFactura = ({ id, onClose }) => {
     const [facturaDetalle, setFacturaDetalle] = useState({});
