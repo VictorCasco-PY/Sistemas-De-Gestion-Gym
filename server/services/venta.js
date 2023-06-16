@@ -42,6 +42,7 @@ export class Venta {
         res.status(200).json({nuevaFactura});
 
     } catch (error) {
+      console.log(error.message);
       res.status(500).json({ error: error.message });
     }
   };
