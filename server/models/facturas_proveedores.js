@@ -26,10 +26,6 @@ export default class facturas_proveedores extends Model {
         type: DataTypes.STRING(200),
         allowNull: true
       },
-      str_timbrado: {
-        type: DataTypes.STRING(200),
-        allowNull: true
-      },
       str_ruc: {
         type: DataTypes.STRING(200),
         allowNull: true
