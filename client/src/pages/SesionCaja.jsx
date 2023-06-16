@@ -103,10 +103,10 @@ const SesionCaja = () => {
               min="0"
             />
           </div>
-          <div className='is-flex is-align-items-center is-justify-content-center'>{isLoading && <CircularProgress />}</div>
-          <button className='button is-primary is-small' onClick={handleAbrirCerrarCaja}>
+          <button className='button is-primary is-small mb-3' onClick={handleAbrirCerrarCaja}>
             {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
           </button>
+          <div className='is-flex is-align-items-center is-justify-content-center'>{isLoading && <CircularProgress />}</div>
           {horaCierre && (
             <p className='subtitle'>Hora de cierre de la sesión: {horaCierre}</p>
           )}
