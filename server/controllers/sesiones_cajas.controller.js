@@ -96,7 +96,7 @@ export class SesionesCajas {
     };
     getById = async (id) => {
         try {
-            console.log("Se busca el  id");
+
             const result = await sesiones_cajas.findOne({ where: { id } });
 
             if (!result) {
@@ -104,7 +104,7 @@ export class SesionesCajas {
             }
 
             return result;
-        } catch (error) {
+        } catch (error) { 
             throw Error(error.message);
         }
     };
