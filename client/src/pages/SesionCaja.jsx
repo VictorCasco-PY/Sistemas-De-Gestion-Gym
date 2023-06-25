@@ -93,6 +93,9 @@ const SesionCaja = () => {
     setMontoInicial(formattedValue);
   };
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isAdmin = user && user.rol === 'admin';
+
   return (
     <div className="is-flex is-justify-content-center is-align-items-center vh-100">
       <div>
@@ -120,6 +123,11 @@ const SesionCaja = () => {
             <p className='subtitle'>Monto Final de la sesión: {formatNumberWithCommas(montoFinal)}</p>
             <p className='subtitle'>Sesión de caja finalizada. La sesión ha sido eliminada.</p>
           </div>
+        )}
+        {isAdmin && (
+          <button className='button is-primary is-outlined is-small'>
+            Sesiones de Caja
+          </button>
         )}
       </div>
     </div>
