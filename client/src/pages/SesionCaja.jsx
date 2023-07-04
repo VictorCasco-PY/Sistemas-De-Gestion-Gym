@@ -94,6 +94,9 @@ const SesionCaja = () => {
     setMontoInicial(formattedValue);
   };
 
+  const user = JSON.parse(localStorage.getItem('user'));
+  const isAdmin = user && user.rol === 'admin';
+
   return (
     <div className='is-flex is-flex-direction-column p-5 has-background-light column ml-auto mr-auto'
       style={{ border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth: "500px" }}>
@@ -113,6 +116,7 @@ const SesionCaja = () => {
               required
             />
           </div>
+<<<<<<< HEAD
           <button className='button is-primary is-small mb-3' onClick={handleAbrirCerrarCaja}>
             {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
           </button>
@@ -127,6 +131,14 @@ const SesionCaja = () => {
             </div>
           )}
         </div>
+=======
+        )}
+        {isAdmin && (
+          <button className='button is-primary is-outlined is-small'>
+            Sesiones de Caja
+          </button>
+        )}
+>>>>>>> master
       </div>
     </div >
   );
