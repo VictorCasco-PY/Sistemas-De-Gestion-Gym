@@ -21,7 +21,7 @@ pagosRoutes.get("/pago/:id", pagos.getByParams);
 pagosRoutes.post(
     "/pagos",
     authMiddleware(['caja','entrenador']),
-    checkMiddleWare(['str_nombre','str_descripcion','precio','iva','str_codigo','cantidad']),
+    checkMiddleWare([]),
     pagos.crear
 );
 
