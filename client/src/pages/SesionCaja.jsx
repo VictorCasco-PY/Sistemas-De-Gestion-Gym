@@ -116,29 +116,12 @@ const SesionCaja = () => {
               required
             />
           </div>
-<<<<<<< HEAD
-          <button className='button is-primary is-small mb-3' onClick={handleAbrirCerrarCaja}>
-            {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
-          </button>
-          <div className='is-flex is-align-items-center is-justify-content-center'>{isLoading && <CircularProgress />}</div>
-          {horaCierre && (
-            <p className='subtitle'>Hora de cierre de la sesión: {horaCierre}</p>
-          )}
-          {montoFinal && (
-            <div>
-              <p className='subtitle'>Monto Final de la sesión: {formatNumberWithCommas(montoFinal)}</p>
-              <p className='subtitle'>Sesión de caja finalizada. La sesión ha sido eliminada.</p>
-            </div>
-          )}
-        </div>
-=======
         )}
         {isAdmin && (
           <button className='button is-primary is-outlined is-small'>
             Sesiones de Caja
           </button>
         )}
->>>>>>> master
       </div>
     </div >
   );
