@@ -31,7 +31,6 @@ import VentasNew from './pages/VentasNew';
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
-  const isAuthenticated = !!user;
   const isAdmin = user?.rol === "admin";
   const isCajero = user?.rol === "caja";
   const isEntrenador = user?.rol === "entrenador";
@@ -41,8 +40,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           // Ruta publica principal
-          {isAuthenticated && <Route path="/" element={<Navigate to="/home" replace />} />}
-          {!isAuthenticated && <Route index element={<Login />} />}
+          <Route index element={<Login />} />
 
           // Rutas semi-publicas
           <Route element={<ProtectedRoute isAllowed={!!user} />}>

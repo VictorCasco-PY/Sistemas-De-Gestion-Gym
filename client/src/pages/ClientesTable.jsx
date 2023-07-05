@@ -14,8 +14,8 @@ const estadosOptions = [
 const planesOptions = [
   { value: '', label: 'Seleccione un plan' },
   { value: 'diario', label: 'Diario' },
+  { value: 'semanal', label: 'Semanal' },
   { value: 'mensual', label: 'Mensual' },
-  { value: 'anual', label: 'Anual' },
 ];
 
 export default function ClientesTable() {
@@ -270,7 +270,7 @@ export default function ClientesTable() {
                           .join(' ')}
                       </button>
                     </td>
-                    <td className='is-size-5 is-flex is-justify-content-center' style={{ width: '100%', gap: '8px' }}>
+                    <td className='is-size-5 is-flex is-justify-content-center' style={{ width:'400px',gap: '8px' }}>
                       <Link to={`/detallesCliente/${cliente.id_cliente}`}>
                         <button className="button is-link is-rounded is-outlined">Ver Mas</button>
                       </Link>
