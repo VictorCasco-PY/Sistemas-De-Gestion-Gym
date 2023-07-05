@@ -180,22 +180,14 @@ const VentasNew = () => {
     const calcularTotal = () => {
         let totalVenta = 0;
         let subtotalVenta = 0;
-        let iva5Venta = 0;
-        let iva10Venta = 0;
+
 
         selectedItems.forEach((producto, index) => {
-            const cantidadProductos = cantidadProducto[index] || 0;
-
-            if (producto.iva === '5') {
-                iva5Venta += (cantidadProductos * producto.precio * 5) / 100;
-            } else if (producto.iva === '10') {
-                iva10Venta += (cantidadProductos * producto.precio * 10) / 100;
-            }
-
+            const cantidadProductos = cantidadProducto[index] || 1;
             subtotalVenta += cantidadProductos * producto.precio;
         });
 
-        totalVenta = subtotalVenta + iva5Venta + iva10Venta;
+        totalVenta = subtotalVenta;
 
         // Agrega el precio del plan de pago solo si el estado de pago es "pendiente" o "atrasado"
         if (cliente.planes_de_pagos && cliente.planes_de_pagos.length > 0 && (planDePago.estado_de_pago === 'pendiente' || planDePago.estado_de_pago === 'atrasado')) {
@@ -205,8 +197,6 @@ const VentasNew = () => {
         }
 
         setSubtotal(subtotalVenta);
-        setIVA5(iva5Venta);
-        setIVA10(iva10Venta);
         setTotal(totalVenta);
     };
 
@@ -332,6 +322,9 @@ const VentasNew = () => {
                     <hr />
                     <div className='column has-background-light p-5 is-flex is-flex-direction-column mr-auto ml-auto'
                         style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width: "100%", maxWidth: "800px" }}>
+                        <div class="notification is-warning is-flex is-flex-direction-column">
+                            <p className='title'>Error</p>
+                            <p className='subtitle'>La caja no esta abierta</p>
                         <div className="notification is-warning is-flex is-flex-direction-column">
                            <p className='title'>Error</p>
                            <p className='subtitle'>La caja no esta abierta</p>
@@ -341,6 +334,7 @@ const VentasNew = () => {
             </div>
         );
     }
+
 
     return (
         <div className='is-serif is-flex is-flex-direction-column'>
@@ -465,10 +459,16 @@ const VentasNew = () => {
                                             Descripcion
                                         </th>
                                         <th >
-                                            Precio
+                                            Precio Unitario(Gs)
+                                        </th>
+                                        <th>
+                                            IVA(%)
                                         </th>
                                         <th >
                                             Cantidad
+                                        </th>
+                                        <th>
+                                            Subtotal
                                         </th>
                                         <th >
 
@@ -482,14 +482,16 @@ const VentasNew = () => {
                                             <td className='is-size-5'>Cuota {planDePago.str_modalidad}</td>
                                             <td className='is-size-5'>
                                                 {modalidadesPago && modalidadesPago.length > 0
-                                                    ? Number(modalidadesPago[planDePago.id_tipo_modalidad_de_pago - 1].precio.toLocaleString('es-ES', {
-                                                        useGrouping: true,
-                                                        minimumFractionDigits: 0,
-                                                        maximumFractionDigits: 2,
-                                                    }))
+                                                    ? (Number(modalidadesPago[planDePago.id_tipo_modalidad_de_pago - 1].precio).toLocaleString('es-ES'))
                                                     : ''}
                                             </td>
+                                            <td className='is-size-5'>10</td>
                                             <td className='is-size-5'>1</td>
+                                            <td className='is-size-5'>
+                                                {modalidadesPago && modalidadesPago.length > 0
+                                                    ? (Number(modalidadesPago[planDePago.id_tipo_modalidad_de_pago - 1].precio).toLocaleString('es-ES'))
+                                                    : ''}
+                                            </td>
                                             <td className='is-size-5'>
                                                 <button className='button icon-button is-danger is-small is-outlined is-rounded' onClick={handleRemovePlanDePago}>
                                                     <DeleteIcon />
@@ -504,14 +506,18 @@ const VentasNew = () => {
                                             <td className='is-size-5'>{item.str_nombre}</td>
                                             <td className='is-size-5'>{item.str_descripcion}</td>
                                             <td className='is-size-5'>{Number(item.precio).toLocaleString('es-ES')}</td>
+                                            <td className='is-size-5'>{item.iva}</td>
                                             <td className='is-size-5'>
                                                 <input
                                                     type="number"
                                                     min="1"
                                                     max={item.cantidad}
-                                                    value={cantidadProducto[index] || ''}
+                                                    value={cantidadProducto[index] || 1}
                                                     onChange={(event) => handleCantidadChange(event, index)}
                                                 />
+                                            </td>
+                                            <td className='is-size-5'>
+                                                {(item.precio * (cantidadProducto[index] || 1)).toLocaleString('es-ES')}
                                             </td>
                                             <td>
                                                 <button className="button icon-button is-danger is-small is-outlined is-rounded" onClick={handleDeleteProducto}>
@@ -557,13 +563,10 @@ const VentasNew = () => {
                         />
                         <div className='is-flex is-flex-direction-column box mt-6'>
                             <div className=' mb-2 is-flex is-flex-direction-column'>
-                                <p className='subtitle m-3'>Subtotal: {subtotal.toLocaleString('es-ES')}</p>
-                                <p className='subtitle m-3'>IVA(5%): {iva5.toLocaleString('es-ES')}</p>
-                                <p className='subtitle m-3'>IVA(10%): {iva10.toLocaleString('es-ES')}</p>
                                 <p className='title m-2'>Total:</p>
                                 <button className='button is-outlined is-static'>
                                     <p className="is-size-4">
-                                        {total.toLocaleString('es-ES')}
+                                        Gs. {total.toLocaleString('es-ES')}
                                     </p>
                                 </button>
                             </div>

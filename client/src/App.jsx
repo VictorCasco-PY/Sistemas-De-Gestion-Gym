@@ -13,7 +13,6 @@ import Caja from './pages/Caja';
 import ListaProveedores from './pages/proveedores/ListaProveedores';
 import Reporte from './pages/Reporte';
 import DetalleProveedor from './pages/proveedores/DetalleProveedor';
-import Ventas from './pages/Ventas';
 import DetallesUsuario from './pages/empleados/DetallesUsuario';
 import RegistroProductos from './pages/productos/RegistroProductos';
 import WizardFormCliente from './pages/clientes/WizardFormCliente';
