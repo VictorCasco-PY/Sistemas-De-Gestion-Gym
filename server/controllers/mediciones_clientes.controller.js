@@ -70,7 +70,7 @@ export class MedicionCliente {
     getByParams = async (req, res) => {
         try {
             const {id} = req.params;
-            const result = await mediciones_clientes.findOne({where: {id}});
+            const result = await mediciones_clientes.findOne({where: {id,  activo: true }});
             if (!result) res.status(404)
             res.json(result);
         } catch (error) {
@@ -82,7 +82,7 @@ export class MedicionCliente {
     getMedicionesDeCliente = async (req, res) => {
         try {
             const {id_cliente} = req.params;
-            const result = await mediciones_clientes.findAll({where: {id_cliente}});
+            const result = await mediciones_clientes.findAll({where: {id_cliente,  activo: true }});
             if (!result) return res.status(404).json({error: "No existe un registro de medicion del usuario o no existe el usuario"});
             return res.json(result);
         } catch (error) {
