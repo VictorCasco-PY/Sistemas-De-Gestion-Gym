@@ -45,8 +45,34 @@ export class Cobros {
         }
     }
     getAll = async (req, res) => {
-    }
+        try {
+            const { ordenTotal, ordenFecha, startDate, endDate, ...querys } = req.query;
 
+            const where = {
+                activo: true,
+                ...querys
+            };
+
+
+            let options = {};
+            if (ordenTotal == 'asc') options.order = [['total', 'ASC']];
+            if (ordenTotal == 'desc') options.order = [['total', 'DESC']];
+            if (ordenFecha == 'asc') options.order = [['date_fecha', 'ASC']];
+            if (ordenFecha == 'desc') options.order = [['date_fecha', 'DESC']];
+            // Add date range filtering
+            if (startDate && endDate) {
+                where.date_fecha = { [Op.between]: [new Date(startDate), new Date(endDate)] };
+
+            }
+            console.log(where);
+
+            const result = await cobros.findAll({ where, ...options }) || cobros.findAll({ where });
+
+            res.json(result);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    };
     getByParams = async (req, res) => {
     } // obtiene por id
 

@@ -18,6 +18,10 @@ export default class productos extends Model {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
     },
+    costo_compra: {
+      type: DataTypes.DECIMAL(10,0),
+      allowNull: true
+    },
     iva: {
       type: DataTypes.DECIMAL(10,0),
       allowNull: true
