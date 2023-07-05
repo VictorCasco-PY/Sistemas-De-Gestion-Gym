@@ -1,0 +1,93 @@
+body {
+    background-color: #ffffff;
+    width: 800px;
+    height: 650px;
+    margin: 20px auto;
+}
+
+.head_container {
+    display: flex;
+}
+
+.head1 {
+    width: 500px;
+    height: 120px;
+    margin-right: 10px;
+    border-radius: 15px;
+    border: 1px solid black;
+    padding: 0px 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.head2 {
+    width: 300px;
+    height: 120px;
+    border-radius: 15px;
+    border: 1px solid black;
+    padding: 0px 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.item {
+    margin: 0px;
+}
+
+.datos {
+    border-radius: 15px;
+    border: 1px solid black;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.item-datos {
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.span-dato {
+    margin: 0 15px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "column1 column2"
+        ". ."
+        ". .";
+}
+
+.column1 {
+    grid-area: column1;
+    margin-left: 10px;
+}
+
+.column2 {
+    grid-area: column2;
+}
+
+.logotipo {
+    width: 150px;
+}
+
+.tabla-container {
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.tabla-detalles {
+    width: 100%;
+}

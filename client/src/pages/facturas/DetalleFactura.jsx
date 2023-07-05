@@ -1,21 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import api from '../../services/api';
-import { format } from 'date-fns';
+import Logo from '../../assets/logo.png';
+import { useReactToPrint } from 'react-to-print'
+
 
 const DetalleFactura = ({ id, onClose }) => {
     const [facturaDetalle, setFacturaDetalle] = useState({});
-    const componentRef = useRef(null);
-
-    const handlePrint = () => {
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write('<html><head><title>Print</title></head><body>');
-        printWindow.document.write('<div style="margin: 20px;">');
-        printWindow.document.write(componentRef.current.innerHTML);
-        printWindow.document.write('</div></body></html>');
-        printWindow.document.close();
-        printWindow.print();
-    };
-
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: 'Factura',
+    });
 
     useEffect(() => {
         const getFacturaById = async () => {
@@ -37,48 +32,45 @@ const DetalleFactura = ({ id, onClose }) => {
     }, [id]);
 
     return (
-        <div >
+        <div>
             <div className={`modal is-active`} >
                 <div className="modal-background"></div>
-                <div className="modal-card" id="print-component" ref={componentRef}>
+                <div className="modal-card">
                     <header className="modal-card-head">
                         <p className="modal-card-title">Detalle de Factura</p>
                         <button className="delete" aria-label="close" onClick={onClose}></button>
                     </header>
-                    <section className="modal-card-body">
-                        <table className="table is-fullwidth">
-                            <tbody>
-                                <tr>
-                                    <td>Nombre:</td>
-                                    <td>{facturaDetalle.str_nombre_cliente}</td>
-                                </tr>
-                                <tr>
-                                    <td>RUC:</td>
-                                    <td>{facturaDetalle.str_ruc_cliente}</td>
-                                </tr>
-                                <tr>
-                                    <td>Fecha:</td>
-                                    <td>{facturaDetalle.date_fecha}</td>
-                                </tr>
-                                <tr>
-                                    <td>Total:</td>
-                                    <td>{facturaDetalle.total}</td>
-                                </tr>
-                                <tr>
-                                    <td>Iva 5%:</td>
-                                    <td>{facturaDetalle.iva_5}</td>
-                                </tr>
-                                <tr>
-                                    <td>Iva 10%:</td>
-                                    <td>{facturaDetalle.iva_10}</td>
-                                </tr>
-                                <tr>
-                                    <td>Iva exenta:</td>
-                                    <td>{facturaDetalle.iva_exenta}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p>Productos/Servicios:</p>
+                    <section className="modal-card-body" ref={componentRef}>
+                        <div className="columns">
+                            <div className="column has-text-centered">
+                                <img src={Logo} alt="logo" width={'150px'} />
+                                <p>Avda. Caballero c/ Gral. Artigas</p>
+                                <p>Encarnacion - Paraguay</p>
+                                <p>Tel. (+595) 777 888</p>
+                            </div>
+                            <div className="column has-text-centered">
+                                <p>TIMBRADO N°. xxxxxxxx</p>
+                                <p>Fecha Inicio Vigencia: 14/06/2023</p>
+                                <p>Fecha Fin Vigencia: 30/06/2024</p>
+                                <p><strong>RUC: xxxxxxx-x</strong></p>
+                                <p><strong>FACTURA</strong></p>
+                                <p>N°. 001-001-0000259</p>
+                            </div>
+                        </div>
+
+                        <div className="columns is-rounded is-align-items-center">
+                            <div className="column is-size-6 ">
+                                <p>FECHA DE EMISION: <strong>{facturaDetalle.date_fecha}</strong></p>
+                                <p>NOMBRE O RAZON SOCIAL: <strong>{facturaDetalle.str_nombre_cliente}</strong></p>
+                                <p>RUC/CI N°: <strong>{facturaDetalle.str_ruc_cliente}</strong></p>
+                            </div>
+                            <div className="column">
+                                <p>CONDICION DE VENTA: <strong>CONTADO</strong></p>
+                                <p>VENCIMIENTO: <strong>23/06/2023</strong></p>
+                                <p>NOTA DE REMISION N°: <strong>123</strong></p>
+                            </div>
+                        </div>
+
                         <table className="table is-fullwidth">
                             <thead>
                                 <tr>
@@ -100,9 +92,9 @@ const DetalleFactura = ({ id, onClose }) => {
                                                     'Cuota'
                                                 )}
                                             </td>
-                                            <td>{detalle.subtotal}</td>
+                                            <td>{(detalle.subtotal).toLocaleString('es-ES')}</td>
                                             <td>{detalle.cantidad}</td>
-                                            <td>{detalle.precio}</td>
+                                            <td>{detalle.precio.toLocaleString('es-ES')}</td>
                                             <td>{detalle.iva}</td>
                                         </tr>
                                     ))}

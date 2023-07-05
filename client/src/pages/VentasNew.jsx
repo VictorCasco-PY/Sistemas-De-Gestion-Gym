@@ -183,7 +183,7 @@ const VentasNew = () => {
 
 
         selectedItems.forEach((producto, index) => {
-            const cantidadProductos = cantidadProducto[index] || 0;
+            const cantidadProductos = cantidadProducto[index] || 1;
             subtotalVenta += cantidadProductos * producto.precio;
         });
 
@@ -486,7 +486,7 @@ const VentasNew = () => {
                                             <td className='is-size-5'>1</td>
                                             <td className='is-size-5'>
                                                 {modalidadesPago && modalidadesPago.length > 0
-                                                    ? (Number(modalidadesPago[planDePago.id_tipo_modalidad_de_pago - 1].precio).toLocaleString('es-ES',))
+                                                    ? (Number(modalidadesPago[planDePago.id_tipo_modalidad_de_pago - 1].precio).toLocaleString('es-ES'))
                                                     : ''}
                                             </td>
                                             <td className='is-size-5'>
@@ -509,12 +509,12 @@ const VentasNew = () => {
                                                     type="number"
                                                     min="1"
                                                     max={item.cantidad}
-                                                    value={cantidadProducto[index] || ''}
+                                                    value={cantidadProducto[index] || 1}
                                                     onChange={(event) => handleCantidadChange(event, index)}
                                                 />
                                             </td>
                                             <td className='is-size-5'>
-                                                {(item.precio * cantidadProducto[index]).toLocaleString('es-ES')}
+                                                {(item.precio * (cantidadProducto[index] || 1)).toLocaleString('es-ES')}
                                             </td>
                                             <td>
                                                 <button className="button icon-button is-danger is-small is-outlined is-rounded" onClick={handleDeleteProducto}>
@@ -563,7 +563,7 @@ const VentasNew = () => {
                                 <p className='title m-2'>Total:</p>
                                 <button className='button is-outlined is-static'>
                                     <p className="is-size-4">
-                                        {total.toLocaleString('es-ES')}
+                                        Gs. {total.toLocaleString('es-ES')}
                                     </p>
                                 </button>
                             </div>
