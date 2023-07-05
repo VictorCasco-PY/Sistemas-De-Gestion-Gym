@@ -14,8 +14,8 @@ const estadosOptions = [
 const planesOptions = [
   { value: '', label: 'Seleccione un plan' },
   { value: 'diario', label: 'Diario' },
+  { value: 'semanal', label: 'Semanal' },
   { value: 'mensual', label: 'Mensual' },
-  { value: 'anual', label: 'Anual' },
 ];
 
 export default function ClientesTable() {
