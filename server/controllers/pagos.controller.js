@@ -1,4 +1,5 @@
 import { models } from "../models/models.js";
+import { Op } from "sequelize"; // Agrega esta importación
 import { getDateNow } from "../tools/date.js"
 import { Facturas_proveedores } from "./facturas_proveedores.controller.js";
 const { pagos_proveedores } = models;
@@ -10,7 +11,7 @@ export class Pagos_proveedores {
         try {
             const { body } = req;
             const result = await this.createPagoProveedor(...body);
-            return res.json({result});
+            return res.json({ result });
         } catch (error) {
             const { message } = error;
             return res.status(500).json({ error: message });
@@ -21,7 +22,7 @@ export class Pagos_proveedores {
 
     createPagoProveedor = async (query) => {
         try {
-            const{id_factura_proveedor}=query;
+            const { id_factura_proveedor } = query;
             const result = await pagos_proveedores.create({ ...query, id_factura_proveedor });
             return result;
         } catch (error) {
@@ -45,7 +46,7 @@ export class Pagos_proveedores {
     delete = async (req, res) => {
         try {
             const { id } = req.params;
-            const rowsAffected = await pagos_proveedores.update({activo:false}, {where: { id } });
+            const rowsAffected = await pagos_proveedores.update({ activo: false }, { where: { id } });
             if (rowsAffected === 0) {
                 return res.status(404).json("No existe una factura-proveedor con ese ID");
             }
@@ -59,9 +60,10 @@ export class Pagos_proveedores {
             const { ordenTotal, ordenFecha, startDate, endDate, ...querys } = req.query;
 
             const where = {
-                activo:true,
+                activo: true,
                 ...querys
             };
+
 
             let options = {};
             if (ordenTotal == 'asc') options.order = [['total', 'ASC']];
@@ -69,7 +71,11 @@ export class Pagos_proveedores {
             if (ordenFecha == 'asc') options.order = [['date_fecha', 'ASC']];
             if (ordenFecha == 'desc') options.order = [['date_fecha', 'DESC']];
             // Add date range filtering
-            if (startDate && endDate) { where.date_fecha = { [Op.between]: [new Date(startDate), new Date(endDate)] }; }
+            if (startDate && endDate) {
+                where.date_fecha = { [Op.between]: [new Date(startDate), new Date(endDate)] };
+
+            }
+            console.log(where);
 
             const result = await pagos_proveedores.findAll({ where, ...options }) || pagos_proveedores.findAll({ where });
 
