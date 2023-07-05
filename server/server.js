@@ -1,5 +1,6 @@
 import express from "express";
 import cron from "node-cron";
+import compression from "compression";
 import clientesRouter from "./routers/clientes.routes.js";
 import bodyParser from "body-parser";
 import planesPagosRouter from "./routers/planes-de-pagos.routes.js";
@@ -25,6 +26,7 @@ import {getArqueo} from "./services/arqueoCaja.js";
 import arqueoCajaRoutes from "./routers/arqueoCaja.routes.js";
 import pagosRoutes from "./routers/pagos.routes.js";
 import cobrosRoutes from "./routers/cobros.routes.js";
+
 const app = express();
 
 app.use(
@@ -38,7 +40,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // parse application/json
 app.use(bodyParser.json());
-
+app.use(compression())
 // Usamos los enrutadores
 app.use(planesPagosRouter);
 app.use(clientesRouter);
