@@ -241,6 +241,10 @@ export default function Compras() {
     return result;
   };
 
+  const formatNumberWithCommas = (number) => { //formateo
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   if (!idCaja) {
     return (
       <div>
@@ -369,9 +373,11 @@ export default function Compras() {
                               <p className='has-text-weight-bold is-size-5 m-0'>{item.str_nombre}</p>
                               <p>{item.str_descripcion}</p>
                             </div>
-                            <p>
-                              {item.costo_compra}Gs
-                            </p>
+                            {item.costo_compra ? (
+                              <p>{formatNumberWithCommas(item.costo_compra)} Gs</p>
+                            ) : (
+                              <p>No disponible</p>
+                            )}
                           </div>
                           <hr className='itemSeparator m-0 mb-1' />
                         </div>
@@ -411,12 +417,15 @@ export default function Compras() {
                   </tr>
                 </thead>
                 <tbody>
-
                   {selectedItems.map((item, index) => (
                     <tr key={index}>
                       <td className='is-size-5'>{item.str_nombre}</td>
                       <td className='is-size-5'>{item.str_descripcion}</td>
-                      <td className='is-size-5'>{item.costo_compra}Gs</td>
+                      {item.costo_compra ? (
+                        <td className='is-size-5'>{formatNumberWithCommas(item.costo_compra)} Gs</td>
+                      ) : (
+                        <td className='is-size-5'>No disponible</td>
+                      )}
                       <td className='is-size-5'>
                         <input
                           type='number'
@@ -505,12 +514,12 @@ export default function Compras() {
 
               <button className='button is-danger is-outlined is-static mt-3'>
                 <p className="is-size-4">
-                  {calculateTotal()}Gs
+                  {formatNumberWithCommas(calculateTotal())}Gs
                 </p>
               </button>
             </div>
 
-            <button className={`button is-success ${isLoading && 'is-loading' }`} onClick={handleSubmit}>
+            <button className={`button is-success ${isLoading && 'is-loading'}`} onClick={handleSubmit}>
               Guardar
             </button>
           </div>
