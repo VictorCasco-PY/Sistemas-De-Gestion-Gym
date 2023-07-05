@@ -160,7 +160,7 @@ export default function Compras() {
     const detallesMap = selectedItems.map((item) => ({
       id: item.id,
       cantidad: item.quantity,
-      precio: item.costo_compra,
+      precio_compra: item.costo_compra,
       subtotal: parseInt(item.costo_compra) * parseInt(item.quantity),
       iva: item.iva,
     }));
