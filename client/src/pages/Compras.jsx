@@ -32,6 +32,8 @@ export default function Compras() {
   const [credito, setCredito] = useState('');
   const [debito, setDebito] = useState('');
 
+  const [cargadoSubmit, setCargadoSubmit] = useState(false);
+
   const idCaja = localStorage.getItem('sesionCajaId');
 
   useEffect(() => {
@@ -67,6 +69,7 @@ export default function Compras() {
 
   const handleItemSelect = (item) => {
     setSelectedItems([...selectedItems, { ...item, quantity: 1 }]);
+    console.log(item)
     setSearchQuery('');
     setModalVisible(false);
   };
@@ -111,7 +114,7 @@ export default function Compras() {
 
   const calculateTotal = () => {
     return selectedItems.reduce(
-      (total, item) => total + item.precio * item.quantity,
+      (total, item) => total + item.costo_compra * item.quantity,
       0
     );
   };
@@ -157,8 +160,8 @@ export default function Compras() {
     const detallesMap = selectedItems.map((item) => ({
       id: item.id,
       cantidad: item.quantity,
-      precio: item.precio,
-      subtotal: parseInt(item.precio) * parseInt(item.quantity),
+      precio_compra: item.costo_compra,
+      subtotal: parseInt(item.costo_compra) * parseInt(item.quantity),
       iva: item.iva,
     }));
 
@@ -238,6 +241,10 @@ export default function Compras() {
     return result;
   };
 
+  const formatNumberWithCommas = (number) => { //formateo
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   if (!idCaja) {
     return (
       <div>
@@ -246,7 +253,7 @@ export default function Compras() {
           <hr />
           <div className='column has-background-light p-5 is-flex is-flex-direction-column mr-auto ml-auto'
             style={{ border: "1px solid #D4D4D4", borderRadius: "8px", width: "100%", maxWidth: "800px" }}>
-            <div class="notification is-warning is-flex is-flex-direction-column">
+            <div className="notification is-warning is-flex is-flex-direction-column">
               <p className='title'>Error</p>
               <p className='subtitle'>La caja no esta abierta</p>
             </div>
@@ -366,9 +373,11 @@ export default function Compras() {
                               <p className='has-text-weight-bold is-size-5 m-0'>{item.str_nombre}</p>
                               <p>{item.str_descripcion}</p>
                             </div>
-                            <p>
-                              {item.precio.toLocaleString('es-ES')}Gs
-                            </p>
+                            {item.costo_compra ? (
+                              <p>{formatNumberWithCommas(item.costo_compra)} Gs</p>
+                            ) : (
+                              <p>No disponible</p>
+                            )}
                           </div>
                           <hr className='itemSeparator m-0 mb-1' />
                         </div>
@@ -397,7 +406,7 @@ export default function Compras() {
                       Descripcion
                     </th>
                     <th >
-                      Precio
+                      Costo
                     </th>
                     <th >
                       Cantidad
@@ -408,12 +417,15 @@ export default function Compras() {
                   </tr>
                 </thead>
                 <tbody>
-
                   {selectedItems.map((item, index) => (
                     <tr key={index}>
                       <td className='is-size-5'>{item.str_nombre}</td>
                       <td className='is-size-5'>{item.str_descripcion}</td>
-                      <td className='is-size-5'>{item.precio.toLocaleString('es-ES')}Gs</td>
+                      {item.costo_compra ? (
+                        <td className='is-size-5'>{formatNumberWithCommas(item.costo_compra)} Gs</td>
+                      ) : (
+                        <td className='is-size-5'>No disponible</td>
+                      )}
                       <td className='is-size-5'>
                         <input
                           type='number'
@@ -502,15 +514,14 @@ export default function Compras() {
 
               <button className='button is-danger is-outlined is-static mt-3'>
                 <p className="is-size-4">
-                  {calculateTotal().toLocaleString('es-ES')}Gs
+                  {formatNumberWithCommas(calculateTotal())}Gs
                 </p>
               </button>
             </div>
 
-            <button className='button is-success' onClick={handleSubmit}>
+            <button className={`button is-success ${isLoading && 'is-loading'}`} onClick={handleSubmit}>
               Guardar
             </button>
-            <div className='is-flex is-align-items-center is-justify-content-center'>{isLoading && <CircularProgress />}</div>
           </div>
 
         </div>

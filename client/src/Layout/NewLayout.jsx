@@ -30,7 +30,7 @@ export default function Layout({ children }) {
         await localStorage.removeItem("user");
         navigate("/");
     }
-
+    
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
