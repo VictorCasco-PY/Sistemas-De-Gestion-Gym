@@ -12,6 +12,7 @@ const RegistroProductos = () => {
     str_nombre: "",
     str_codigo: "",
     cantidad: 0,
+    costo_compra: "",
   };
 
   const [productos, setProductos] = useState(productosData);
@@ -25,12 +26,27 @@ const RegistroProductos = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setProductos({
-      ...productos,
-      [name]: value,
-    });
+  
+    if (name === 'costo_compra') {
+      const costo = parseFloat(value);
+      let precio = costo + costo * 0.4; // Calcular el precio con el aumento del 40%
+  
+      // Redondear el precio al múltiplo de 500 más cercano
+      precio = Math.round(precio / 500) * 500;
+  
+      setProductos({
+        ...productos,
+        [name]: costo,
+        precio: precio,
+      });
+    } else {
+      setProductos({
+        ...productos,
+        [name]: value,
+      });
+    }
   };
-
+  
   // función para manejar el envío del formulario
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -127,10 +143,10 @@ const RegistroProductos = () => {
                 <input
                   className="input is-primary is-primary has-text-centered"
                   type="text"
-                  name="precio"
-                  value={productos.precio}
+                  name="costo_compra"
+                  value={productos.costo_compra}
                   onChange={handleChange}
-                  placeholder="Precio"
+                  placeholder="Costo"
                   required
                 />
               </div>
