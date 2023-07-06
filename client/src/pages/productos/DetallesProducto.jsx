@@ -1,27 +1,100 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import EditableInput from "../../components/EditableInput";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams, Link } from "react-router-dom";
 import api from "../../services/api";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const DetallesProducto = () => {
   const id = useParams().id;
-  const [productos, setproductos] = useState(null);
-
-  // Función para formatear la cadena de tiempo (hh:mm)
+  const [productos, setProductos] = useState(null);
+  const focusedInputRef = useRef(null); // Referencia al input actualmente enfocado
 
   useEffect(() => {
     api
       .get(`producto/${id}`)
       .then((response) => {
-        setproductos(response.data);
+        setProductos(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setProductos((prevProductos) => ({
+      ...prevProductos,
+      [name]: value
+    }));
+  };
+
+  
+const handleInputKeyDown = (event) => {
+  if (event.key === "Enter") {
+    const { name, value } = event.target;
+
+    // Realizar PUT para el campo actual
+    api
+      .put(`producto/${id}`, { [name]: value })
+      .then((response) => {
+        // Actualizar el estado de productos con el campo actualizado
+        setProductos((prevProductos) => ({
+          ...prevProductos,
+          [name]: value
+        }));
+
+        // Si el campo actual es "costo_compra", calcular el nuevo precio
+        if (name === "costo_compra") {
+          const costo = parseFloat(value);
+          const precio = costo + costo * 0.4;
+
+          // Realizar PUT para el campo de "precio"
+          api
+            .put(`producto/${id}`, { precio })
+            .then((response) => {
+              // Actualizar el estado de productos con el precio actualizado
+              setProductos((prevProductos) => ({
+                ...prevProductos,
+                precio
+              }));
+
+              focusedInputRef.current.blur(); // Quitar el foco del input actualmente enfocado
+
+              // Mostrar mensaje de éxito
+              Swal.fire({
+                text: "Campo actualizado correctamente!",
+                icon: "success",
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          focusedInputRef.current.blur(); // Quitar el foco del input actualmente enfocado
+
+          // Mostrar mensaje de éxito
+          Swal.fire({
+            text: "Campo actualizado correctamente!",
+            icon: "success",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+};
+
+
+  
   if (!productos) {
     return <div>Cargando detalles del producto...</div>;
   }
@@ -37,65 +110,91 @@ const DetallesProducto = () => {
         <h1 className="title is-3 has-text-primary">Detalles del Producto</h1>
       </div>
       <div className="columns">
-        <div className="column">
-          <h4>Nombre</h4>
-          <EditableInput
-            valorInicial={productos.str_nombre}
-            id={id}
-            apiUrl="http://localhost:8000/producto"
-            campoCambiar="str_nombre"
+        <div className="column tags has-addons">
+          <label className="tag is-info is-light">Nombre</label>
+          <input
+            type="text"
+            className="tag"
+            value={productos.str_nombre}
+            name="str_nombre"
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={focusedInputRef} // Establecer la referencia al input actualmente enfocado
           />
         </div>
-        <div className="column">
-          <h4>Costo</h4>
-          <EditableInput
-            valorInicial={productos.costo_compra}
-            id={id}
-            apiUrl="http://localhost:8000/producto"
-            campoCambiar="costo_compra"
-          />
-        </div>
-      </div>
-      <div className="columns">
-        <div className="column">
-          <h4>IVA</h4>
-          <EditableInput
-            valorInicial={productos.iva}
-            id={id}
-            apiUrl="http://localhost:8000/producto"
-            campoCambiar="iva"
-          />
-        </div>
-        <div className="column">
-          <h4>Descripción</h4>
-          <EditableInput
-            valorInicial={productos.str_descripcion}
-            id={id}
-            apiUrl="http://localhost:8000/producto"
-            campoCambiar="str_descripcion"
+        <div className="column tags has-addons">
+          <label className="tag is-info is-light">Costo</label>
+          <input
+            type="text"
+            className="tag"
+            value={productos.costo_compra}
+            name="costo_compra"
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={focusedInputRef} 
           />
         </div>
       </div>
       <div className="columns">
-        <div className="column">
-          <h4>Codigo</h4>
-          <EditableInput
-            valorInicial={productos.str_codigo}
-            id={id}
-            apiUrl="http://localhost:8000/producto"
-            campoCambiar="str_codigo"
+        <div className="column tags has-addons">
+          <label className="tag is-info is-light">IVA</label>
+          <input
+            type="text"
+            className="tag"
+            value={productos.iva}
+            name="iva"
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={focusedInputRef} 
           />
         </div>
-        <div className="column">
-          <h4>Cantidad</h4>
-          <div className="column">
-            <EditableInput
-              valorInicial={productos.cantidad}
-              id={id}
-              apiUrl="http://localhost:8000/producto"
-              campoCambiar="cantidad"
-            />
-          </div>
+        <div className="column tags has-addons">
+          <label className="tag is-info is-light">Descripción</label>
+          <input
+            type="text"
+            className="tag"
+            value={productos.str_descripcion}
+            name="str_descripcion"
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={focusedInputRef} 
+          />
+        </div>
+      </div>
+      <div className="columns">
+        <div className="column tags has-addons">
+          <label className="tag is-info is-light">Código</label>
+          <input
+            type="text"
+            className="tag"
+            value={productos.str_codigo}
+            name="str_codigo"
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={focusedInputRef} 
+          />
+        </div>
+        <div className="column tags has-addons">
+          <label className="tag is-info is-light">Cantidad</label>
+          <input
+            type="text"
+            className="tag"
+            value={productos.cantidad}
+            name="cantidad"
+            readOnly
+          />
+        </div>
+      </div>
+      <div className="columns">
+        <div className="column tags has-addons">
+          <label className="tag is-info is-light">Precio</label>
+          <input
+            type="text"
+            className="tag"
+            value={productos.precio}
+            name="precio"
+            readOnly
+          />
         </div>
       </div>
     </div>
