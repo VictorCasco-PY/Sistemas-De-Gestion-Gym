@@ -3,10 +3,10 @@ import { esPlanVencido, getDateNow, nuevaFechaVencimiento, toDate } from "../too
 import { Cliente } from "./clientes.controller.js";
 import { Op } from "sequelize";
 import { TipoModalidadDePago } from "./tipos_modalidades_de_pagos.js";
-const { planes_de_pagos } = models;
+const { planes_de_pagos, clientes } = models;
 
 const tiposModalidadesDePagos = new TipoModalidadDePago();
-const clientes = new Cliente();
+const clientesController = new Cliente();
 
 export class PlanesDePagos {
   /*
@@ -21,7 +21,7 @@ export class PlanesDePagos {
         id_tipo_modalidad_de_pago
       );
 
-      if (!(await clientes.getById(id_cliente)))
+      if (!(await clientesController.getById(id_cliente)))
         return res
           .status(404)
           .json({ error: "No existe un usuario con ese ID" });
@@ -31,7 +31,7 @@ export class PlanesDePagos {
           .json({ error: "El cliente ya posee un plan de pago" });
       }
 
-      const str_nombre_cliente = (await clientes.getById(id_cliente))
+      const str_nombre_cliente = (await clientesController.getById(id_cliente))
         .str_nombre;
 
       const result = await planes_de_pagos.create({
@@ -180,4 +180,24 @@ export class PlanesDePagos {
       throw new Error(error.message);
     }
   };
+
+  getReporte = async(req,res) =>{
+    try {
+      const where = {
+        activo: true,
+        estado_de_pago: "atrasado"
+      }
+      const result = await planes_de_pagos.findAll({
+        where,
+        include: {
+          model: clientes,
+          attributes: ['str_nombre', 'str_ruc', 'str_direccion', 'str_telefono']
+        }
+      });
+      res.json(result)
+    } catch (error) {
+      res.json({ error: error.message });
+    }
+  }
+
 }

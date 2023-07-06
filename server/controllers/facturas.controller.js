@@ -147,22 +147,20 @@ export class Factura {
       if (!fechaInit || !fechaFin) {
         const today = new Date();
         fechaInit = today.toISOString().split('T')[0];
-        console.log(fechaInit);
         fechaFin = today.toISOString().split('T')[0];
       }
 
       const result = await facturas.sequelize.query(`  
-      SELECT productos.id, productos.str_nombre,
-      SUM(facturas_detalles.cantidad) as 'cantidad',
-      SUM(facturas_detalles.cantidad * facturas_detalles.precio) as 'monto_total'
-      FROM facturas_detalles
-      INNER JOIN productos ON facturas_detalles.id_producto = productos.id
-      INNER JOIN facturas ON facturas_detalles.id_factura = facturas.id
-      WHERE facturas.date_fecha BETWEEN ? AND ?
-      GROUP BY productos.id
-      ORDER BY SUM(facturas_detalles.cantidad) DESC
-      LIMIT 10
-      `, {replacements: [fechaInit,fechaFin]});
+        SELECT productos.id, productos.str_nombre,
+        SUM(facturas_detalles.cantidad) as 'cantidad',
+        SUM(facturas_detalles.cantidad * facturas_detalles.precio) as 'monto_total'
+        FROM facturas_detalles
+        INNER JOIN productos ON facturas_detalles.id_producto = productos.id
+        INNER JOIN facturas ON facturas_detalles.id_factura = facturas.id
+        WHERE facturas.date_fecha BETWEEN ? AND ?
+        GROUP BY productos.id
+        ORDER BY SUM(facturas_detalles.cantidad) DESC
+        LIMIT 10`, {replacements: [fechaInit,fechaFin]});
       res.json(result[0])
     } catch (error) {
       res.status(500).json({error:error.message});
