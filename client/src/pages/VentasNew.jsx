@@ -325,9 +325,6 @@ const VentasNew = () => {
                         <div class="notification is-warning is-flex is-flex-direction-column">
                             <p className='title'>Error</p>
                             <p className='subtitle'>La caja no esta abierta</p>
-                        <div className="notification is-warning is-flex is-flex-direction-column">
-                           <p className='title'>Error</p>
-                           <p className='subtitle'>La caja no esta abierta</p>
                         </div>
                     </div>
                 </div>
@@ -581,6 +578,6 @@ const VentasNew = () => {
             </div>
         </div >
     )
-}
+};
 
 export default VentasNew
