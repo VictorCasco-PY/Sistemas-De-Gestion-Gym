@@ -11,11 +11,7 @@ import TabPanel from '@mui/lab/TabPanel';
 const Reportes = () => {
 
     const [reportesVentas, setReportesVentas] = useState([]);
-    const [reportesClientesAtrasados, setReportesClientesAtrasados] = useState([{
-        nombre: "Victor Casco",
-        telefono: "0975 620 720",
-        deuda: "Cuota mensual"
-    }]);
+    const [reportesClientesAtrasados, setReportesClientesAtrasados] = useState([]);
     const [value, setValue] = useState('1');
     const [fechaInit, setFechaInit] = useState('');
     const [fechaFin, setFechaFin] = useState('');
@@ -39,9 +35,23 @@ const Reportes = () => {
         }
     }
 
+    const getReporteDeudores = async () => {
+        try {
+            const response = await api.get("/reporteatrasados");
+            console.log('Deudor', response.data);
+            setReportesClientesAtrasados(response.data);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
     useEffect(() => {
         getReporteVentas();
     }, [fechaInit, fechaFin]);
+
+    useEffect(() => {
+        getReporteDeudores();
+    }, []);
 
     const handleFechaInitChange = (event) => {
         setFechaInit(event.target.value);
@@ -61,13 +71,15 @@ const Reportes = () => {
     ];
 
     const dataDeudores = [
-        ['Nombre', 'Telefono', 'Deuda'],
-        ...reportesClientesAtrasados.map((item) => [
-            item.nombre,
-            item.telefono,
-            item.deuda
-        ])
-    ]
+        ['Nombre', 'Telefono', 'RUC', 'Estado de pago'],
+        ...(reportesClientesAtrasados ? reportesClientesAtrasados.map((item) => [
+            item.cliente.str_nombre,
+            item.cliente.str_telefono,
+            item.cliente.str_ruc,
+            'Atrasado'
+        ]) : [])
+    ];
+
 
     return (
         <div className='is-flex is-flex-direction-column p-5 has-background-light ml-auto mr-auto'
@@ -134,18 +146,20 @@ const Reportes = () => {
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Telefono</th>
-                                    <th>Deuda</th>
+                                    <th>RUC</th>
+                                    <th>Estado de pago</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {reportesClientesAtrasados.map((item, index) => {
+                                {reportesClientesAtrasados && reportesClientesAtrasados.map((item, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{item.nombre}</td>
-                                            <td>{item.telefono}</td>
-                                            <td>{item.deuda}</td>
+                                            <td>{item.cliente.str_nombre}</td>
+                                            <td>{item.cliente.str_telefono}</td>
+                                            <td>{item.cliente.str_ruc}</td>
+                                            <td>Atrasado</td>
                                         </tr>
-                                    )
+                                    );
                                 })}
                             </tbody>
                         </table>
