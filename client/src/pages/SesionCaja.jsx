@@ -16,11 +16,37 @@ const SesionCaja = () => {
   const [montoInicial, setMontoInicial] = useState('');
   const [montoFinal, setMontoFinal] = useState('');
   const [horaCierre, setHoraCierre] = useState('');
+  const [totalEgresos, setTotalEgresos] = useState(null);
+  const [totalIngresos, setTotalIngresos] = useState(null);
 
   useEffect(() => {
     const sesionCajaId = localStorage.getItem('sesionCajaId');
     if (sesionCajaId) {
       setAbrirCaja(true);
+      api.get(`/sesion-caja/${sesionCajaId}`)
+        .then(response => {
+          setMontoInicial(response.data.monto_inicial);
+          setMontoFinal(response.data.monto_final);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      api.get(`/pagos?id_sesion_caja=${sesionCajaId}`)
+        .then(response => {
+          const egresos = response.data.reduce((total, pago) => total + pago.total, 0);
+          setTotalEgresos(egresos || 0);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      api.get(`/cobros?id_sesion_caja=${sesionCajaId}`)
+        .then(response => {
+          const ingresos = response.data.reduce((total, cobro) => total + cobro.total, 0);
+          setTotalIngresos(ingresos || 0);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }, []);
 
@@ -47,8 +73,9 @@ const SesionCaja = () => {
 
       api.post('/sesiones-cajas', data)
         .then(response => {
-          console.log(response.data);
           localStorage.setItem('sesionCajaId', response.data.id);
+          setMontoInicial(response.data.monto_inicial);
+          setMontoFinal(response.data.monto_final);
         })
         .catch(error => {
           console.log(error);
@@ -59,7 +86,7 @@ const SesionCaja = () => {
       const fechaCierre = new Date();
       setHoraCierre(fechaCierre.toLocaleTimeString());
 
-      const sesionCajaId = localStorage.getItem('sesionCajaId');
+     const sesionCajaId = localStorage.getItem('sesionCajaId');
 
       const data = {
         time_cierre: format(fechaCierre, 'HH:mm'),
@@ -67,19 +94,10 @@ const SesionCaja = () => {
 
       api.put(`/sesion-caja/${sesionCajaId}`, data)
         .then(response => {
-          console.log(response.data);
           setAbrirCaja(false);
-
-          api.get(`/sesion-caja/${sesionCajaId}`)
-            .then(response => {
-              console.log(response.data);
-              setMontoFinal(response.data.monto_final);
-              localStorage.removeItem('sesionCajaId'); // Eliminar la clave sesionCajaId del almacenamiento local
-              Swal.fire('Caja cerrada', `Monto Final: ${formatNumberWithCommas(response.data.monto_final)}`, 'success');
-            })
-            .catch(error => {
-              console.log(error);
-            });
+          setMontoFinal(response.data.monto_final);
+          localStorage.removeItem('sesionCajaId');
+          Swal.fire('Caja cerrada', `Monto de Apertura: ${formatNumberWithCommas(montoInicial)}\nMonto de Cierre: ${formatNumberWithCommas(response.data.monto_final)}`, 'success');
         })
         .catch(error => {
           console.log(error);
@@ -112,17 +130,23 @@ const SesionCaja = () => {
             required
           />
         </div>
+        {montoInicial && (
+          <p className='subtitle'>Monto de Apertura: {formatNumberWithCommas(montoInicial)}</p>
+        )}
+        {totalIngresos !== null && (
+          <p className='subtitle'>Ingresos: {formatNumberWithCommas(totalIngresos)}</p>
+        )}
+        {totalEgresos !== null && (
+          <p className='subtitle'>Egresos: {formatNumberWithCommas(totalEgresos)}</p>
+        )}
+        {montoFinal && (
+          <p className='subtitle'>Monto de Cierre: {formatNumberWithCommas(montoFinal)}</p>
+        )}
         <button className='button is-primary is-outlined is-small' onClick={handleAbrirCerrarCaja}>
           {abrirCaja ? 'Cerrar Caja' : 'Abrir Caja'}
         </button>
         {horaCierre && (
           <p className='subtitle'>Hora de cierre de la sesión: {horaCierre}</p>
-        )}
-        {montoFinal && (
-          <div>
-            <p className='subtitle'>Monto Final de la sesión: {formatNumberWithCommas(montoFinal)}</p>
-            <p className='subtitle'>Sesión de caja finalizada. La sesión ha sido eliminada.</p>
-          </div>
         )}
         {isAdmin && (
           <button className='button is-primary is-outlined is-small'>
