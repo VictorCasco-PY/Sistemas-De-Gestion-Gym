@@ -61,7 +61,7 @@ const DetalleFactura = ({ id, onClose }) => {
                         <div className="columns is-rounded is-align-items-center">
                             <div className="column is-size-6 ">
                                 <p>FECHA DE EMISION: <strong>{facturaDetalle.date_fecha}</strong></p>
-                                <p>NOMBRE O RAZON SOCIAL: <strong>{facturaDetalle.str_nombre_cliente}</strong></p>
+                                <p>NOMBRE: <strong>{facturaDetalle.str_nombre_cliente}</strong></p>
                                 <p>RUC/CI N°: <strong>{facturaDetalle.str_ruc_cliente}</strong></p>
                             </div>
                             <div className="column">
