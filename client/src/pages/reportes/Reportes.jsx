@@ -11,6 +11,7 @@ import TabPanel from '@mui/lab/TabPanel';
 const Reportes = () => {
 
     const [reportesVentas, setReportesVentas] = useState([]);
+    const [reportesClientesAtrasados, setReportesClientesAtrasados] = useState([]);
     const [value, setValue] = useState('1');
     const [fechaInit, setFechaInit] = useState('');
     const [fechaFin, setFechaFin] = useState('');
@@ -34,9 +35,23 @@ const Reportes = () => {
         }
     }
 
+    const getReporteDeudores = async () => {
+        try {
+            const response = await api.get("/reporteatrasados");
+            console.log('Deudor', response.data);
+            setReportesClientesAtrasados(response.data);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
     useEffect(() => {
         getReporteVentas();
     }, [fechaInit, fechaFin]);
+
+    useEffect(() => {
+        getReporteDeudores();
+    }, []);
 
     const handleFechaInitChange = (event) => {
         setFechaInit(event.target.value);
@@ -46,7 +61,7 @@ const Reportes = () => {
         setFechaFin(event.target.value);
     }
 
-    const data = [
+    const dataVentas = [
         ['Nombre', 'Cantidad', 'Monto total(Gs)'],
         ...reportesVentas.map((item) => [
             item.str_nombre,
@@ -55,16 +70,27 @@ const Reportes = () => {
         ])
     ];
 
+    const dataDeudores = [
+        ['Nombre', 'Telefono', 'RUC', 'Estado de pago'],
+        ...(reportesClientesAtrasados ? reportesClientesAtrasados.map((item) => [
+            item.cliente.str_nombre,
+            item.cliente.str_telefono,
+            item.cliente.str_ruc,
+            'Atrasado'
+        ]) : [])
+    ];
+
 
     return (
-        <>
-            <p className='title is-size-2'>Reporte de ventas</p>
+        <div className='is-flex is-flex-direction-column p-5 has-background-light ml-auto mr-auto'
+            style={{ border: "1px solid #D4D4D4", borderRadius: "8px", maxWidth: "1200px" }}>
+            <p className='title is-size-2'>Reportes</p>
             <Box sx={{ width: '100%', typography: 'body1' }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange} aria-label="lab API tabs example">
                             <Tab label="Ventas" value="1" />
-                            <Tab label="Compras" value="2" />
+                            <Tab label="Deudores" value="2" />
                         </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -77,9 +103,9 @@ const Reportes = () => {
                                 <label className='label' htmlFor="fin">Fecha Fin:</label>
                                 <input className='input mr-2' type="date" name="fin" id="" value={fechaFin} onChange={handleFechaFinChange} />
                             </div>
-                            <div className="column">
-                                <label className='label' htmlFor="fin">.</label>
-                                <CSVLink data={data} filename="reporte_ventas.csv" className='button is-primary mb-6'>
+                            <div className="column is-flex is-justify-content-end">
+                                <label className='label' htmlFor=""></label>
+                                <CSVLink data={dataVentas} filename="reporte_ventas.csv" className='button is-info'>
                                     Descargar CSV
                                 </CSVLink>
                             </div>
@@ -88,7 +114,7 @@ const Reportes = () => {
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>Cantidad</th>
+                                    <th>Cantidad vendida</th>
                                     <th>Monto total(Gs)</th>
                                 </tr>
                             </thead>
@@ -106,12 +132,43 @@ const Reportes = () => {
                             </tbody>
                         </table>
                     </TabPanel>
-                    <TabPanel value="2">Compras</TabPanel>
+                    <TabPanel value="2">
+                        <div className='is-flex is-justify-content-center is-align-content-center'>
+                            <div className="column is-flex is-justify-content-end">
+                                <label className='label' htmlFor=""></label>
+                                <CSVLink data={dataDeudores} filename="reporte_ventas.csv" className='button is-info'>
+                                    Descargar CSV
+                                </CSVLink>
+                            </div>
+                        </div>
+                        <table className='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Telefono</th>
+                                    <th>RUC</th>
+                                    <th>Estado de pago</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reportesClientesAtrasados && reportesClientesAtrasados.map((item, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{item.cliente.str_nombre}</td>
+                                            <td>{item.cliente.str_telefono}</td>
+                                            <td>{item.cliente.str_ruc}</td>
+                                            <td>Atrasado</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </TabPanel>
                 </TabContext>
             </Box>
 
 
-        </>
+        </div>
     )
 }
 
