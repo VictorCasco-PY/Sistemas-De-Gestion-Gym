@@ -147,6 +147,7 @@ export class Factura {
       if (!fechaInit || !fechaFin) {
         const today = new Date();
         fechaInit = today.toISOString().split('T')[0];
+        console.log(fechaInit);
         fechaFin = today.toISOString().split('T')[0];
       }
 
@@ -159,10 +160,10 @@ export class Factura {
       INNER JOIN facturas ON facturas_detalles.id_factura = facturas.id
       WHERE facturas.date_fecha BETWEEN ? AND ?
       GROUP BY productos.id
-      ORDER BY SUM(facturas_detalles.cantidad) DESC;
+      ORDER BY SUM(facturas_detalles.cantidad) DESC
+      LIMIT 10
       `, {replacements: [fechaInit,fechaFin]});
-      console.log(result);
-      res.json(result)
+      res.json(result[0])
     } catch (error) {
       res.status(500).json({error:error.message});
     }
