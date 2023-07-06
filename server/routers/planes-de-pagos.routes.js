@@ -8,6 +8,8 @@ const planesPagosRoutes = Router();
 
 planesPagosRoutes.get('/planes-de-pagos', planesDePagos.getAll);
 
+planesPagosRoutes.get('/reporteatrasados', planesDePagos.getReporte);
+
 planesPagosRoutes.get('/planes-de-pagos/:id', planesDePagos.getByParams);
 
 planesPagosRoutes.post('/planes-de-pagos',
