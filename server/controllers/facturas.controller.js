@@ -1,6 +1,6 @@
 import { models } from "../models/models.js";
 import { getDateNow } from "../tools/date.js";
-import {Cliente} from "./clientes.controller.js";
+import { Cliente } from "./clientes.controller.js";
 import { Op } from "sequelize";
 import facturas_detalles from "../models/facturas_detalles.js";
 import productos from "../models/productos.js";
@@ -39,9 +39,9 @@ export class Factura {
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      if (!await this.getById(id))
+      if (!(await this.getById(id)))
         return res.status(404).send("No existe una factura con ese id");
-      await facturas.update({activo:false}, {where: { id } });
+      await facturas.update({ activo: false }, { where: { id } });
       return res.send("Factura eliminada correctamente");
     } catch (error) {
       const { message } = error;
@@ -53,15 +53,19 @@ export class Factura {
     try {
       const { id_cliente } = query;
       const date_fecha = getDateNow();
-      const { str_nombre, str_ruc } = (await cliente.getById(id_cliente)).dataValues;
-      
-      if (!str_nombre)return res.status(404).json({ error: "No se ha encontrado un cliente con ese id" });
+      const { str_nombre, str_ruc } = (await cliente.getById(id_cliente))
+        .dataValues;
+
+      if (!str_nombre)
+        return res
+          .status(404)
+          .json({ error: "No se ha encontrado un cliente con ese id" });
 
       const ultimaFactura = await this.getUltimoID();
-      
+
       let numero_factura = ultimaFactura || 0;
 
-      numero_factura = numero_factura.toString().padStart(7, '0');
+      numero_factura = numero_factura.toString().padStart(7, "0");
 
       const result = await facturas.create({
         ...query,
@@ -80,11 +84,12 @@ export class Factura {
   getAll = async (req, res) => {
     try {
       const { fechaIn, fechaFin, ruc } = req.query;
-  
-      const where = {activo:true};
-      if (fechaIn && fechaFin) where.date_fecha = { [Op.between]: [fechaIn, fechaFin] };
-      if(ruc) where.str_ruc_cliente = ruc;
-  
+
+      const where = { activo: true };
+      if (fechaIn && fechaFin)
+        where.date_fecha = { [Op.between]: [fechaIn, fechaFin] };
+      if (ruc) where.str_ruc_cliente = ruc;
+
       const result = await facturas.findAll({ where });
       res.json(result);
     } catch (error) {
@@ -93,21 +98,19 @@ export class Factura {
     }
   };
 
-  getUltimoID = async() => {
+  getUltimoID = async () => {
     try {
-      const last = await facturas.findOne({order: [['id', 'DESC']]});
-      if(last) {
-        return last.getDataValue('id');
-      }else{
+      const last = await facturas.findOne({ order: [["id", "DESC"]] });
+      if (last) {
+        return last.getDataValue("id");
+      } else {
         return 0;
       }
-      
+    } catch (error) {
+      throw new Error(error.message);
     }
-    catch (error) {
-        throw new Error(error.message);
-    }
-  }
-  
+  };
+
   getByParams = async (req, res) => {
     try {
       const { id } = req.params;
@@ -125,11 +128,44 @@ export class Factura {
   // obtiene por id
   getById = async (id) => {
     try {
-      console.log('obteniendo factura por id');
-      const result = await facturas.findOne({ where: { id }, include:{model:facturas_detalles, include:productos} });
+      console.log("obteniendo factura por id");
+      const result = await facturas.findOne({
+        where: { id },
+        include: { model: facturas_detalles, include: productos },
+      });
       return result;
     } catch (error) {
       throw new Error(error.message);
+    }
+  };
+
+  getReporte = async (req, res) => {
+    try {
+
+      let {fechaInit, fechaFin} = req.query;
+
+      if (!fechaInit || !fechaFin) {
+        const today = new Date();
+        fechaInit = today.toISOString().split('T')[0];
+        console.log(fechaInit);
+        fechaFin = today.toISOString().split('T')[0];
+      }
+
+      const result = await facturas.sequelize.query(`  
+      SELECT productos.id, productos.str_nombre,
+      SUM(facturas_detalles.cantidad) as 'cantidad',
+      SUM(facturas_detalles.cantidad * facturas_detalles.precio) as 'monto_total'
+      FROM facturas_detalles
+      INNER JOIN productos ON facturas_detalles.id_producto = productos.id
+      INNER JOIN facturas ON facturas_detalles.id_factura = facturas.id
+      WHERE facturas.date_fecha BETWEEN ? AND ?
+      GROUP BY productos.id
+      ORDER BY SUM(facturas_detalles.cantidad) DESC
+      LIMIT 10
+      `, {replacements: [fechaInit,fechaFin]});
+      res.json(result[0])
+    } catch (error) {
+      res.status(500).json({error:error.message});
     }
   };
 }

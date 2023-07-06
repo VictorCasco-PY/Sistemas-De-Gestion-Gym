@@ -47,12 +47,12 @@ const DetallesProducto = () => {
           />
         </div>
         <div className="column">
-          <h4>Precio</h4>
+          <h4>Costo</h4>
           <EditableInput
-            valorInicial={productos.precio}
+            valorInicial={productos.costo_compra}
             id={id}
             apiUrl="http://localhost:8000/producto"
-            campoCambiar="precio"
+            campoCambiar="costo_compra"
           />
         </div>
       </div>

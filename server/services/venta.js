@@ -28,6 +28,7 @@ export class Venta {
             id_factura: factura.id,
             id_sesion_caja: id_sesion_caja,
             date_fecha,
+            total,
             time_hora,
         };
         await sesionController.cobrar(id_sesion_caja,total);
