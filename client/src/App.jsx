@@ -26,6 +26,7 @@ import ListaEmpleados from './pages/empleados/ListaEmpleados';
 import ListaProveedor from './pages/proveedores/ListaProveedor';
 import ListaProducto from './pages/productos/ListaProducto'
 import VentasNew from './pages/VentasNew';
+import Reportes from './pages/reportes/Reportes';
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
             <Route path='/detallesProducto/:id' element={<NewLayout><DetallesProducto /></NewLayout>} />
             <Route path='/facturas' element={<NewLayout><ListaFacturas /></NewLayout>} />
             <Route path='/detalleFactura' element={<DetalleFactura />}></Route>
+            <Route path='/reportes' element={<NewLayout><Reportes /></NewLayout>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
