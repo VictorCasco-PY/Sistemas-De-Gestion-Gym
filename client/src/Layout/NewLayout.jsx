@@ -26,11 +26,11 @@ export default function Layout({ children }) {
     const user = JSON.parse(localStorage.getItem("user"));
 
     const navigate = useNavigate();
-    const handleLogout =  async () => {
+    const handleLogout = async () => {
         await localStorage.removeItem("user");
         navigate("/");
     }
-    
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -61,6 +61,8 @@ export default function Layout({ children }) {
                     {user.rol === 'admin' ? (
                         <>
 
+                            <CustomListItem icon={<DashboardIcon />} text='Reportes' to='/reportes' />
+                            <Divider />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Caja' to='/sesionCaja' />
                             <CustomListItem icon={<AddShoppingCartIcon />} text='Ventas' to='/ventas' />
                             <CustomListItem icon={<StoreIcon />} text='Compras' to='/compras' />
