@@ -13,6 +13,8 @@ facturasRoutes.post('/facturas',
 
 facturasRoutes.get('/facturas', factura.getAll)
 
+facturasRoutes.get('/reporteVentas', factura.getReporte)
+
 facturasRoutes.get('/factura/:id', factura.getByParams);
 
 facturasRoutes.put('/factura/:id', factura.update)
