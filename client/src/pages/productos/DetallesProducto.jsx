@@ -183,7 +183,9 @@ const handleInputKeyDown = (event) => {
             className="tag"
             value={productos.cantidad}
             name="cantidad"
-            readOnly
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={focusedInputRef} 
           />
         </div>
       </div>

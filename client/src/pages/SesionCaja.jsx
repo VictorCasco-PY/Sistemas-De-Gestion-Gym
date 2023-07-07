@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 import api from '../services/api';
+import { Link } from "react-router-dom";
 
 const formatNumberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -33,7 +34,7 @@ const SesionCaja = () => {
         });
       api.get(`/pagos?id_sesion_caja=${sesionCajaId}`)
         .then(response => {
-          const egresos = response.data.reduce((total, pago) => total + pago.total, 0);
+          const egresos = response.data.reduce((total, pago) => total + parseInt(pago.total), 0);
           setTotalEgresos(egresos || 0);
         })
         .catch(error => {
@@ -41,7 +42,7 @@ const SesionCaja = () => {
         });
       api.get(`/cobros?id_sesion_caja=${sesionCajaId}`)
         .then(response => {
-          const ingresos = response.data.reduce((total, cobro) => total + cobro.total, 0);
+          const ingresos = response.data.reduce((total, cobro) => total + parseInt(cobro.total), 0);
           setTotalIngresos(ingresos || 0);
         })
         .catch(error => {
@@ -86,7 +87,7 @@ const SesionCaja = () => {
       const fechaCierre = new Date();
       setHoraCierre(fechaCierre.toLocaleTimeString());
 
-     const sesionCajaId = localStorage.getItem('sesionCajaId');
+      const sesionCajaId = localStorage.getItem('sesionCajaId');
 
       const data = {
         time_cierre: format(fechaCierre, 'HH:mm'),
@@ -149,9 +150,11 @@ const SesionCaja = () => {
           <p className='subtitle'>Hora de cierre de la sesión: {horaCierre}</p>
         )}
         {isAdmin && (
-          <button className='button is-primary is-outlined is-small'>
-            Sesiones de Caja
-          </button>
+          <Link to={`/sesiones`}>
+            <button className='button is-primary is-outlined is-small'>
+              Sesiones de Caja
+            </button>
+          </Link>
         )}
       </div>
     </div>
