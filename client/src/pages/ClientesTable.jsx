@@ -4,6 +4,8 @@ import Swal from 'sweetalert2'
 import Select from 'react-select';
 import api from '../services/api';
 import CircularProgress from '@mui/material/CircularProgress';
+import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const estadosOptions = [
   { value: '', label: 'Seleccione un estado' },
@@ -272,9 +274,9 @@ export default function ClientesTable() {
                     </td>
                     <td className='is-size-5 is-flex is-justify-content-center' style={{ width:'400px',gap: '8px' }}>
                       <Link to={`/detallesCliente/${cliente.id_cliente}`}>
-                        <button className="button is-link is-rounded is-outlined">Ver Mas</button>
+                        <button className="button is-link is-rounded is-outlined"><RemoveRedEyeIcon fontSize="string" /></button>
                       </Link>
-                      <button className="button is-danger is-rounded is-outlined" onClick={() => handleDeleteClient(cliente)}>Borrar</button>
+                      <button className="button is-danger is-rounded is-outlined" onClick={() => handleDeleteClient(cliente)}><DeleteIcon fontSize="string" /></button>
                     </td>
                   </tr>
                 ))
