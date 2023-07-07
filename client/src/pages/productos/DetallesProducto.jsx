@@ -46,7 +46,9 @@ const handleInputKeyDown = (event) => {
         // Si el campo actual es "costo_compra", calcular el nuevo precio
         if (name === "costo_compra") {
           const costo = parseFloat(value);
-          const precio = costo + costo * 0.4;
+
+          const preci0 = costo + costo * 0.4;
+          const precio = Math.round(preci0 / 500) * 500;
 
           // Realizar PUT para el campo de "precio"
           api
@@ -63,12 +65,12 @@ const handleInputKeyDown = (event) => {
               // Mostrar mensaje de éxito
               Swal.fire({
                 text: "Campo actualizado correctamente!",
-                icon: "success",
+                position: 'top-end',
                 toast: true,
-                position: "top-end",
+                icon: 'success',
                 showConfirmButton: false,
                 timer: 3000
-              });
+            })
             })
             .catch((error) => {
               console.log(error);
