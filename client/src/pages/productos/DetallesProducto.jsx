@@ -113,10 +113,10 @@ const handleInputKeyDown = (event) => {
       </div>
       <div className="columns">
         <div className="column tags has-addons">
-          <label className="tag is-info is-light">Nombre</label>
+          <label className="tag is-info is-light is-large">Nombre</label>
           <input
             type="text"
-            className="tag"
+            className="tag is-large"
             value={productos.str_nombre}
             name="str_nombre"
             onChange={handleInputChange}
@@ -125,10 +125,10 @@ const handleInputKeyDown = (event) => {
           />
         </div>
         <div className="column tags has-addons">
-          <label className="tag is-info is-light">Costo</label>
+          <label className="tag is-info is-light is-large">Costo</label>
           <input
             type="text"
-            className="tag"
+            className="tag is-large"
             value={productos.costo_compra}
             name="costo_compra"
             onChange={handleInputChange}
@@ -139,10 +139,10 @@ const handleInputKeyDown = (event) => {
       </div>
       <div className="columns">
         <div className="column tags has-addons">
-          <label className="tag is-info is-light">IVA</label>
+          <label className="tag is-info is-light is-large">IVA</label>
           <input
             type="text"
-            className="tag"
+            className="tag is-large"
             value={productos.iva}
             name="iva"
             onChange={handleInputChange}
@@ -151,10 +151,10 @@ const handleInputKeyDown = (event) => {
           />
         </div>
         <div className="column tags has-addons">
-          <label className="tag is-info is-light">Descripción</label>
+          <label className="tag is-info is-light is-large">Descripción</label>
           <input
             type="text"
-            className="tag"
+            className="tag is-large"
             value={productos.str_descripcion}
             name="str_descripcion"
             onChange={handleInputChange}
@@ -165,10 +165,10 @@ const handleInputKeyDown = (event) => {
       </div>
       <div className="columns">
         <div className="column tags has-addons">
-          <label className="tag is-info is-light">Código</label>
+          <label className="tag is-info is-light is-large">Código</label>
           <input
             type="text"
-            className="tag"
+            className="tag is-large"
             value={productos.str_codigo}
             name="str_codigo"
             onChange={handleInputChange}
@@ -177,22 +177,24 @@ const handleInputKeyDown = (event) => {
           />
         </div>
         <div className="column tags has-addons">
-          <label className="tag is-info is-light">Cantidad</label>
+          <label className="tag is-info is-light is-large">Cantidad</label>
           <input
             type="text"
-            className="tag"
+            className="tag is-large"
             value={productos.cantidad}
             name="cantidad"
-            readOnly
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            ref={focusedInputRef} 
           />
         </div>
       </div>
       <div className="columns">
         <div className="column tags has-addons">
-          <label className="tag is-info is-light">Precio</label>
+          <label className="tag is-info is-light is-large">Precio</label>
           <input
             type="text"
-            className="tag"
+            className="tag is-large"
             value={productos.precio}
             name="precio"
             readOnly
