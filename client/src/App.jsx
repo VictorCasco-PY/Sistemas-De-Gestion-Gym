@@ -28,6 +28,7 @@ import ListaProducto from './pages/productos/ListaProducto'
 import VentasNew from './pages/VentasNew';
 import Reportes from './pages/reportes/Reportes';
 import TablaSesiones from './pages/TablaSesiones';
+import DetallesSesion from './pages/DetallesSesion';
 
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
             <Route path='/detalleFactura' element={<DetalleFactura />}></Route>
             <Route path='/reportes' element={<NewLayout><Reportes /></NewLayout>}></Route>
             <Route path='/sesiones' element={<NewLayout><TablaSesiones /></NewLayout>}></Route>
+            <Route path='/detallesSesion/:id' element={<NewLayout><DetallesSesion /></NewLayout>} />
           </Route>
         </Routes>
       </BrowserRouter>
